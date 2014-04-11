@@ -101,7 +101,6 @@
 		EA595FD1184FCF8D0043C023 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA595FCF184FCF8D0043C023 /* InfoPlist.strings */; };
 		EA59609D185112F10043C023 /* LGSRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = EA596088185112F10043C023 /* LGSRWebSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA59609E185112F10043C023 /* LGSRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = EA596089185112F10043C023 /* LGSRWebSocket.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		EA84FE0018A99BB300F180DC /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA84FDFF18A99BB300F180DC /* GoogleCast.framework */; };
 		EA95E64D18A5541E00D5C1E0 /* CastService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA95E64B18A5541E00D5C1E0 /* CastService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA95E64E18A5541E00D5C1E0 /* CastService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA95E64C18A5541E00D5C1E0 /* CastService.m */; };
 		EA95E65118A5547200D5C1E0 /* CastDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EA95E64F18A5547200D5C1E0 /* CastDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -220,7 +219,6 @@
 		EA595FD0184FCF8D0043C023 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EA596088185112F10043C023 /* LGSRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGSRWebSocket.h; sourceTree = "<group>"; };
 		EA596089185112F10043C023 /* LGSRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGSRWebSocket.m; sourceTree = "<group>"; };
-		EA84FDFF18A99BB300F180DC /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = ConnectSDK/Frameworks/GoogleCast.framework; sourceTree = "<group>"; };
 		EA95E64B18A5541E00D5C1E0 /* CastService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CastService.h; sourceTree = "<group>"; };
 		EA95E64C18A5541E00D5C1E0 /* CastService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CastService.m; sourceTree = "<group>"; };
 		EA95E64F18A5547200D5C1E0 /* CastDiscoveryProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CastDiscoveryProvider.h; sourceTree = "<group>"; };
@@ -252,7 +250,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA84FE0018A99BB300F180DC /* GoogleCast.framework in Frameworks */,
 				EADD381E1899C46D00877C17 /* MobileCoreServices.framework in Frameworks */,
 				F6F2351A17F1E34600575BDD /* CFNetwork.framework in Frameworks */,
 				F6F2351917F1E32700575BDD /* Security.framework in Frameworks */,
@@ -498,7 +495,6 @@
 		F695FBEF17D9D204003FCF5A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EA84FDFF18A99BB300F180DC /* GoogleCast.framework */,
 				EADD381D1899C46D00877C17 /* MobileCoreServices.framework */,
 				F68F370C17E0ECBF000C84DA /* CFNetwork.framework */,
 				F68F370817E0ECA2000C84DA /* Security.framework */,
