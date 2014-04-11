@@ -21,7 +21,7 @@
 	int _socket;
 }
 
-- (id)initWithAddress:(NSString *)anAddress andPort:(NSInteger)aPort
+- (instancetype)initWithAddress:(NSString *)anAddress andPort:(NSInteger)aPort
 {
 	self = [super init];
 	if (self)

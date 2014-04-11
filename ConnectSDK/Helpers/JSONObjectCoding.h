@@ -9,7 +9,7 @@
 
 @protocol JSONObjectCoding <NSObject>
 
-- (instancetype) initWithJSONObject:(NSDictionary*)dict;
+- (id) initWithJSONObject:(NSDictionary*)dict;
 - (NSDictionary*) toJSONObject;
 
 @end

@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSONObjectCoding.h"
 
-@interface ServiceDescription : NSObject <NSCoding>
+@interface ServiceDescription : NSObject <JSONObjectCoding>
 
 @property (nonatomic, strong) NSString *address;
 @property (nonatomic, strong) NSString *serviceId;

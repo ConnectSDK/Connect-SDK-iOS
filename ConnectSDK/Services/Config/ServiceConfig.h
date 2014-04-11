@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "ServiceDescription.h"
 #import "ServiceConfigDelegate.h"
+#import "JSONObjectCoding.h"
 
-@interface ServiceConfig :  NSObject <NSCoding>
+@interface ServiceConfig :  NSObject <JSONObjectCoding>
 
 @property (nonatomic, strong) NSString *UUID;
 @property (nonatomic) BOOL connected;
@@ -19,6 +20,7 @@
 
 @property (nonatomic, weak) id<ServiceConfigDelegate> delegate;
 
++ (instancetype) serviceConfigWithJSONObject:(NSDictionary *)dictionary;
 - (instancetype) initWithServiceDescription:(ServiceDescription *)serviceDescription;
 - (void) addObservers;
 - (void) removeObservers;

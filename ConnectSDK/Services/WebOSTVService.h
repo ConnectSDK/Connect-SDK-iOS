@@ -25,7 +25,7 @@
 
 @class WebOSWebAppSession;
 
-@interface WebOSTVService : DeviceService <NSCoding, Launcher, MediaPlayer, MediaControl, VolumeControl, TVControl, KeyControl, MouseControl, PowerControl, WebAppLauncher, ExternalInputControl, ToastControl, TextInputControl>
+@interface WebOSTVService : DeviceService <Launcher, MediaPlayer, MediaControl, VolumeControl, TVControl, KeyControl, MouseControl, PowerControl, WebAppLauncher, ExternalInputControl, ToastControl, TextInputControl>
 
 typedef enum {
     LAUNCH = 0,

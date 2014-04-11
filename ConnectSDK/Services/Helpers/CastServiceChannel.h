@@ -15,6 +15,6 @@
 @property (nonatomic, copy) SuccessBlock connectionSuccess;
 @property (nonatomic, copy) FailureBlock connectionFailure;
 
-- (id)initWithAppId:(NSString *)appId session:(CastWebAppSession *)session;
+- (instancetype)initWithAppId:(NSString *)appId session:(CastWebAppSession *)session;
 
 @end

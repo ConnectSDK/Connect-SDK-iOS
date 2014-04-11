@@ -44,8 +44,25 @@ typedef enum {
 
 @protocol MediaControl <NSObject>
 
+/*!
+ * Success block that is called upon any change in a media file's play state.
+ *
+ * @param playState Play state of the current media file
+ */
 typedef void (^ MediaPlayStateSuccessBlock)(MediaControlPlayState playState);
+
+/*!
+ * Success block that is called upon successfully getting the media file's current playhead position.
+ *
+ * @param position Current playhead position of the current media file, in seconds
+ */
 typedef void (^ MediaPositionSuccessBlock)(NSTimeInterval position);
+
+/*!
+ * Success block that is called upon successfully getting the media file's duration.
+ *
+ * @param duration Duration of the current media file, in seconds
+ */
 typedef void (^ MediaDurationSuccessBlock)(NSTimeInterval duration);
 
 - (id<MediaControl>) mediaControl;

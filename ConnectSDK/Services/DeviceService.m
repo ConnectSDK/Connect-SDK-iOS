@@ -14,6 +14,9 @@
 #import "ConnectError.h"
 
 @implementation DeviceService
+{
+    NSMutableArray *_capabilities;
+}
 
 - (NSString *)serviceName
 {
@@ -33,7 +36,8 @@
 
     if (self)
     {
-        self.connected = NO;
+        _connected = NO;
+        _capabilities = [NSMutableArray new];
     }
 
     return self;
@@ -45,7 +49,7 @@
 
     if (self)
     {
-        self.serviceConfig = serviceConfig;
+        _serviceConfig = serviceConfig;
     }
 
     return self;
@@ -53,12 +57,12 @@
 
 #pragma mark - Capabilities
 
-- (NSArray *) capabilities { return [NSArray array]; }
+- (NSArray *) capabilities { return [NSArray arrayWithArray:_capabilities]; }
 
 - (BOOL) hasCapability:(NSString *)capability
 {
     NSRange anyRange = [capability rangeOfString:@".Any"];
-
+    
     if (anyRange.location != NSNotFound)
     {
         NSString *matchedCapability = [capability substringToIndex:anyRange.location];
@@ -110,6 +114,74 @@
     }];
 
     return hasAnyCap;
+}
+
+- (void) addCapability:(NSString *)capability
+{
+    if (!capability || capability.length == 0)
+        return;
+
+    if ([self hasCapability:capability])
+        return;
+
+    [_capabilities addObject:capability];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:capabilitiesAdded:removed:)])
+        [self.delegate deviceService:self capabilitiesAdded:@[capability] removed:[NSArray array]];
+}
+
+- (void) addCapabilities:(NSArray *)capabilities
+{
+    [capabilities enumerateObjectsUsingBlock:^(NSString *capability, NSUInteger idx, BOOL *stop)
+    {
+        if (!capability || capability.length == 0)
+            return;
+
+        if ([self hasCapability:capability])
+            return;
+
+        [_capabilities addObject:capability];
+    }];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:capabilitiesAdded:removed:)])
+        [self.delegate deviceService:self capabilitiesAdded:capabilities removed:[NSArray array]];
+}
+
+- (void) removeCapability:(NSString *)capability
+{
+    if (!capability || capability.length == 0)
+        return;
+
+    if (![self hasCapability:capability])
+        return;
+
+    do
+    {
+        [_capabilities removeObject:capability];
+    } while ([_capabilities containsObject:capability]);
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:capabilitiesAdded:removed:)])
+        [self.delegate deviceService:self capabilitiesAdded:[NSArray array] removed:@[capability]];
+}
+
+- (void) removeCapabilities:(NSArray *)capabilities
+{
+    [capabilities enumerateObjectsUsingBlock:^(NSString *capability, NSUInteger idx, BOOL *stop)
+    {
+        if (!capability || capability.length == 0)
+            return;
+
+        if (![self hasCapability:capability])
+            return;
+
+        do
+        {
+            [_capabilities removeObject:capability];
+        } while ([_capabilities containsObject:capability]);
+    }];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:capabilitiesAdded:removed:)])
+        [self.delegate deviceService:self capabilitiesAdded:[NSArray array] removed:capabilities];
 }
 
 #pragma mark - Connection
@@ -200,26 +272,41 @@ id ensureString(id value)
     }
 }
 
-#pragma mark - NSCoding methods
+#pragma mark - JSONObjectCoding methods
 
-- (id) initWithCoder:(NSCoder *)aDecoder
+- (instancetype) initWithJSONObject:(NSDictionary *)dict
 {
-    ServiceConfig *serviceConfig = [aDecoder decodeObjectForKey:@"serviceConfig-key"];
-
-    self = [DeviceService deviceServiceWithClass:[DeviceService class] serviceConfig:serviceConfig];
+    self = [self init];
 
     if (self)
     {
-        self.serviceDescription = [aDecoder decodeObjectForKey:@"serviceDescription-key"];
+        NSDictionary *configDictionary = dict[@"config"];
+
+        if (configDictionary)
+            self.serviceConfig = [ServiceConfig serviceConfigWithJSONObject:configDictionary];
+
+        NSDictionary *descriptionDictionary = dict[@"description"];
+
+        if (descriptionDictionary)
+            self.serviceDescription = [[ServiceDescription alloc] initWithJSONObject:descriptionDictionary];
     }
 
     return self;
 }
 
-- (void) encodeWithCoder:(NSCoder *)aCoder
+- (NSDictionary *) toJSONObject
 {
-    [aCoder encodeObject:self.serviceConfig forKey:@"serviceConfig-key"];
-    [aCoder encodeObject:self.serviceDescription forKey:@"serviceDescription-key"];
+    NSMutableDictionary *dictionary = [NSMutableDictionary new];
+
+    dictionary[@"class"] = NSStringFromClass([self class]);
+
+    if (self.serviceConfig)
+        dictionary[@"config"] = [self.serviceConfig toJSONObject];
+
+    if (self.serviceDescription)
+        dictionary[@"description"] = [self.serviceDescription toJSONObject];
+
+    return dictionary;
 }
 
 @end

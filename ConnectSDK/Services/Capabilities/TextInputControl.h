@@ -26,6 +26,7 @@
 
 /*!
  * Response block that is fired on any change of keyboard visibility.
+ *
  * @param textInputStatusInfo provides keyboard type & visibility information
  */
 typedef void (^ TextInputStatusInfoSuccessBlock)(TextInputStatusInfo *textInputStatusInfo);

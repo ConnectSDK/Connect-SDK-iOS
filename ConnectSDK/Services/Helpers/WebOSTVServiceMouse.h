@@ -21,8 +21,8 @@ typedef enum {
 @interface WebOSTVServiceMouse : NSObject
 
 - (instancetype) initWithSocket:(NSString*)socket success:(SuccessBlock)success failure:(FailureBlock)failure;
-- (void) moveWithX:(double)xVal andY:(double)yVal;
-- (void) scrollWithX:(double)xVal andY:(double)yVal;
+- (void) move:(CGVector)distance;
+- (void) scroll:(CGVector)distance;
 - (void) click;
 - (void) button:(WebOSTVMouseButton)keyName;
 - (void) disconnect;

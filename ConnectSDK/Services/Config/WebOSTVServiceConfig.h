@@ -8,7 +8,7 @@
 
 #import "ServiceConfig.h"
 
-@interface WebOSTVServiceConfig : ServiceConfig <NSCoding>
+@interface WebOSTVServiceConfig : ServiceConfig <JSONObjectCoding>
 
 @property (nonatomic, strong) NSString *clientKey;
 @property (nonatomic, strong) NSArray *SSLCertificates;

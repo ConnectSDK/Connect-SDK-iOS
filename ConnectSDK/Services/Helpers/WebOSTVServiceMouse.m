@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 LG Electronics. All rights reserved.
 //
 
+#import <CoreGraphics/CGGeometry.h>
 #import "WebOSTVServiceMouse.h"
 #import "LGSRWebSocket.h"
 #import "ConnectError.h"
@@ -21,9 +22,11 @@
     SuccessBlock _success;
     FailureBlock _failure;
 
-    double _mouseMoveX;
-    double _mouseMoveY;
+    CGVector _mouseDistance;
+    CGVector _scrollDistance;
+
     BOOL _mouseIsMoving;
+    BOOL _mouseIsScrolling;
 }
 
 - (instancetype) initWithSocket:(NSString*)socket success:(SuccessBlock)success failure:(FailureBlock)failure
@@ -43,10 +46,12 @@
     return self;
 }
 
-- (void)moveWithX:(double)xVal andY:(double)yVal
+- (void) move:(CGVector)distance
 {
-    _mouseMoveX += xVal;
-    _mouseMoveY += yVal;
+    _mouseDistance = CGVectorMake(
+        _mouseDistance.dx + distance.dx,
+        _mouseDistance.dy + distance.dy
+    );
 
     if (!_mouseIsMoving)
     {
@@ -58,18 +63,35 @@
 
 - (void) moveMouse
 {
-    NSString *moveString = [NSString stringWithFormat:@"type:move\ndx:%f\ndy:%f\ndown:%d\n\n", _mouseMoveX, _mouseMoveY, 0];
+    NSString *moveString = [NSString stringWithFormat:@"type:move\ndx:%f\ndy:%f\ndown:%d\n\n", _mouseDistance.dx, _mouseDistance.dy, 0];
     [self sendPackage:moveString];
 
-    _mouseMoveX = 0;
-    _mouseMoveY = 0;
+    _mouseDistance = CGVectorMake(0, 0);
     _mouseIsMoving = NO;
 }
 
-- (void) scrollWithX:(double)xVal andY:(double)yVal
+- (void) scroll:(CGVector)distance
 {
-    NSString *scrollString = [NSString stringWithFormat:@"type:scroll\ndx:%f\ndy:%f\n\n", xVal, yVal];
+    _scrollDistance = CGVectorMake(
+        _scrollDistance.dx + distance.dx,
+        _scrollDistance.dy + distance.dy
+    );
+
+    if (!_mouseIsScrolling)
+    {
+        _mouseIsScrolling = YES;
+
+        [self scroll];
+    }
+}
+
+- (void) scroll
+{
+    NSString *scrollString = [NSString stringWithFormat:@"type:scroll\ndx:%f\ndy:%f\n\n", _scrollDistance.dx, _scrollDistance.dy];
     [self sendPackage:scrollString];
+
+    _scrollDistance = CGVectorMake(0, 0);
+    _mouseIsScrolling = NO;
 }
 
 - (void) click
@@ -108,9 +130,11 @@
 
 - (void) disconnect
 {
-    _mouseMoveX = 0;
-    _mouseMoveY = 0;
+    _mouseDistance = CGVectorMake(0, 0);
     _mouseIsMoving = NO;
+
+    _scrollDistance = CGVectorMake(0, 0);
+    _mouseIsScrolling = NO;
 
     [_mouseSocket close];
     _mouseSocket.delegate = nil;
@@ -124,9 +148,11 @@
 
 - (void)webSocketDidOpen:(LGSRWebSocket *)webSocket
 {
-    _mouseMoveX = 0;
-    _mouseMoveY = 0;
+    _mouseDistance = CGVectorMake(0, 0);
     _mouseIsMoving = NO;
+
+    _scrollDistance = CGVectorMake(0, 0);
+    _mouseIsScrolling = NO;
 
     if (_success)
         _success(nil);
@@ -147,9 +173,11 @@
 {
     if (wasClean)
     {
-        _mouseMoveX = 0;
-        _mouseMoveY = 0;
+        _mouseDistance = CGVectorMake(0, 0);
         _mouseIsMoving = NO;
+
+        _scrollDistance = CGVectorMake(0, 0);
+        _mouseIsScrolling = NO;
 
         _success = nil;
         _failure = nil;

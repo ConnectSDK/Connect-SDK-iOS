@@ -28,8 +28,8 @@
 {
     return @[
             kMediaPlayerDisplayImage,
-            kMediaPlayerDisplayVideo,
-            kMediaPlayerDisplayAudio,
+            kMediaPlayerPlayVideo,
+            kMediaPlayerPlayAudio,
             kMediaPlayerClose,
             kMediaPlayerMetaDataTitle,
             kMediaPlayerMetaDataMimeType,

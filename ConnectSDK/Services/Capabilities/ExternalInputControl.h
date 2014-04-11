@@ -24,6 +24,11 @@
 
 @protocol ExternalInputControl <NSObject>
 
+/*!
+ * Success block that is called upon successfully getting the external input list.
+ *
+ * @param externalInputList Array containing an ExternalInputInfo object for each available external input on the device
+ */
 typedef void (^ ExternalInputListSuccessBlock)(NSArray *externalInputList);
 
 - (id<ExternalInputControl>)externalInputControl;

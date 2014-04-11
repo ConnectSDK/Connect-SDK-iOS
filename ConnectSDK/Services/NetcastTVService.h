@@ -15,7 +15,7 @@
 #import "MediaControl.h"
 #import "ExternalInputControl.h"
 
-@interface NetcastTVService : DeviceService <NSCoding, Launcher, MediaPlayer, MediaControl, VolumeControl, TVControl, KeyControl, MouseControl, PowerControl, ExternalInputControl, TextInputControl>
+@interface NetcastTVService : DeviceService <Launcher, MediaPlayer, MediaControl, VolumeControl, TVControl, KeyControl, MouseControl, PowerControl, ExternalInputControl, TextInputControl>
 
 @property (nonatomic, strong) NetcastTVServiceConfig *serviceConfig;
 
@@ -93,7 +93,9 @@ enum {
     NetcastTVKeyCodeMyApps = 417
 };
 
+// @cond INTERNAL
 typedef NSUInteger NetcastTVKeyCode;
+// @endcond
 
 - (void) pairWithData:(NSString *)pairingData;
 

@@ -29,8 +29,8 @@
 - (void) showToast:(NSString *)message success:(SuccessBlock)success failure:(FailureBlock)failure;
 - (void) showToast:(NSString *)message iconData:(NSString *)iconData iconExtension:(NSString *)iconExtension success:(SuccessBlock)success failure:(FailureBlock)failure;
 
-- (void) showClickableToast:(NSString *)message appInfo:(AppInfo *)appInfo params:(NSDictionary *)appParams success:(SuccessBlock)success failure:(FailureBlock)failure;
-- (void) showClickableToast:(NSString *)message appInfo:(AppInfo *)appInfo params:(NSDictionary *)launchParams iconData:(NSString *)iconData iconExtension:(NSString *)iconExtension success:(SuccessBlock)success failure:(FailureBlock)failure;
+- (void) showClickableToast:(NSString *)message appInfo:(AppInfo *)appInfo params:(NSDictionary *)params success:(SuccessBlock)success failure:(FailureBlock)failure;
+- (void) showClickableToast:(NSString *)message appInfo:(AppInfo *)appInfo params:(NSDictionary *)params iconData:(NSString *)iconData iconExtension:(NSString *)iconExtension success:(SuccessBlock)success failure:(FailureBlock)failure;
 
 - (void) showClickableToast:(NSString *)message URL:(NSURL *)URL success:(SuccessBlock)success failure:(FailureBlock)failure;
 - (void) showClickableToast:(NSString *)message URL:(NSURL *)URL iconData:(NSString *)iconData iconExtension:(NSString *)iconExtension success:(SuccessBlock)success failure:(FailureBlock)failure;

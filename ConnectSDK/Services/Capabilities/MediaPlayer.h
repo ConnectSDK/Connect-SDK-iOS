@@ -11,8 +11,8 @@
 #define kMediaPlayerAny @"MediaPlayer.Any"
 
 #define kMediaPlayerDisplayImage @"MediaPlayer.Display.Image"
-#define kMediaPlayerDisplayVideo @"MediaPlayer.Display.Video"
-#define kMediaPlayerDisplayAudio @"MediaPlayer.Display.Audio"
+#define kMediaPlayerPlayVideo @"MediaPlayer.Play.Video"
+#define kMediaPlayerPlayAudio @"MediaPlayer.Play.Audio"
 #define kMediaPlayerClose @"MediaPlayer.Close"
 #define kMediaPlayerMetaDataTitle @"MediaPlayer.MetaData.Title"
 #define kMediaPlayerMetaDataDescription @"MediaPlayer.MetaData.Description"
@@ -21,8 +21,8 @@
 
 #define kMediaPlayerCapabilities @[\
     kMediaPlayerDisplayImage,\
-    kMediaPlayerDisplayVideo,\
-    kMediaPlayerDisplayAudio,\
+    kMediaPlayerPlayVideo,\
+    kMediaPlayerPlayAudio,\
     kMediaPlayerClose,\
     kMediaPlayerMetaDataTitle,\
     kMediaPlayerMetaDataDescription,\
@@ -32,9 +32,11 @@
 
 @protocol MediaPlayer <NSObject>
 
-/**
+/*!
+ * Success block that is called upon successfully playing/displaying a media file.
+ *
  * @param launchSession LaunchSession to allow closing this media player
- * @param mediaControl MediaControl instance used to control playback
+ * @param mediaControl MediaControl object used to control playback
  */
 typedef void (^MediaPlayerDisplaySuccessBlock)(LaunchSession *launchSession, id<MediaControl> mediaControl);
 

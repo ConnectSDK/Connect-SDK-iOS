@@ -22,17 +22,28 @@
 @synthesize serviceDescription = _serviceDescription;
 @synthesize delegate = _delegate;
 
-- (instancetype) initWithDescription:(ServiceDescription *)description
+- (instancetype) init
 {
     self = [super init];
-    
+
     if (self)
     {
-        _serviceDescription = description;
         _consolidatedServiceDescription = [ServiceDescription new];
         _services = [[NSMutableDictionary alloc] init];
     }
-    
+
+    return self;
+}
+
+- (instancetype) initWithDescription:(ServiceDescription *)description
+{
+    self = [self init];
+
+    if (self)
+    {
+        _serviceDescription = description;
+    }
+
     return self;
 }
 
@@ -44,7 +55,7 @@
 - (void) setDelegate:(id<ConnectableDeviceDelegate>)delegate
 {
     _delegate = delegate;
-    
+
     if (_delegate && [self.delegate respondsToSelector:@selector(connectableDeviceConnectionRequired:forService:)])
     {
         [_services enumerateKeysAndObjectsUsingBlock:^(id key, DeviceService *service, BOOL *stop) {
@@ -88,8 +99,26 @@
     }];
 
     serviceNames = [serviceNames substringToIndex:serviceNames.length - 2];
-    
+
     return serviceNames;
+}
+
+- (BOOL) connected
+{
+    __block int connectedCount = 0;
+
+    [_services enumerateKeysAndObjectsUsingBlock:^(id key, DeviceService *service, BOOL *stop)
+    {
+        if (!service.isConnectable)
+            connectedCount++;
+        else
+        {
+            if (service.connected)
+                connectedCount++;
+        }
+    }];
+
+    return connectedCount >= _services.count;
 }
 
 - (void) connect
@@ -105,6 +134,8 @@
     {
         if (self.delegate && [self.delegate respondsToSelector:@selector(connectableDeviceReady:)])
             dispatch_on_main(^{ [self.delegate connectableDeviceReady:self]; });
+
+        self.lastConnected = [[NSDate date] timeIntervalSince1970];
     }
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disconnect) name:kConnectSDKWirelessSSIDChanged object:nil];
@@ -162,38 +193,17 @@
     return count;
 }
 
-#pragma mark - NSCoding methods
-
-- (id) initWithCoder:(NSCoder *)aDecoder
+- (int) connectableServiceCount
 {
-    self = [super init];
+    __block int count = 0;
 
-    if (self)
+    [_services enumerateKeysAndObjectsUsingBlock:^(id key, DeviceService *service, BOOL *stop)
     {
-        _services = [NSMutableDictionary new];
+        if ([service isConnectable])
+            count++;
+    }];
 
-        _consolidatedServiceDescription = [[ServiceDescription alloc] init];
-        _consolidatedServiceDescription.modelName = [aDecoder decodeObjectForKey:@"modelName-key"];
-        _consolidatedServiceDescription.modelNumber = [aDecoder decodeObjectForKey:@"modelNumber-key"];
-        _consolidatedServiceDescription.address = [aDecoder decodeObjectForKey:@"address-key"];
-
-        NSArray *services = [aDecoder decodeObjectForKey:@"services-key"];
-
-        [services enumerateObjectsUsingBlock:^(DeviceService *service, NSUInteger idx, BOOL *stop)
-        {
-            [self addService:service];
-        }];
-    }
-
-    return self;
-}
-
-- (void) encodeWithCoder:(NSCoder *)aCoder
-{
-    [aCoder encodeObject:self.modelName forKey:@"modelName-key"];
-    [aCoder encodeObject:self.modelNumber forKey:@"modelNumber-key"];
-    [aCoder encodeObject:self.address forKey:@"address-key"];
-    [aCoder encodeObject:self.services forKey:@"services-key"];
+    return count;
 }
 
 #pragma mark - Service management
@@ -211,63 +221,65 @@
 - (void) addService:(DeviceService *)service
 {
     DeviceService *existingService = [_services objectForKey:service.serviceName];
-    
+
     if (existingService)
         return;
-    
+
     NSArray *oldCapabilities = self.capabilities;
-    
+
     [_services setObject:service forKey:service.serviceName];
-    service.delegate = self;
     
+    if (service.delegate == nil)
+        service.delegate = self;
+
     if (service.isConnectable && !service.connected)
     {
         if (self.delegate && [self.delegate respondsToSelector:@selector(connectableDeviceConnectionRequired:forService:)])
             dispatch_on_main(^{ [_delegate connectableDeviceConnectionRequired:self forService:service]; });
     }
-    
+
     [self updateCapabilitiesList:oldCapabilities];
-    
+
     [self updateConsolidatedServiceDescription:service.serviceDescription];
 }
 
 - (void) removeServiceWithId:(NSString *)serviceId
 {
     DeviceService *service = [_services objectForKey:serviceId];
-    
+
     if (service == nil)
         return;
-    
+
     NSArray *oldCapabilities = self.capabilities;
-    
+
     [service disconnect];
-    
+
     [_services removeObjectForKey:serviceId];
-    
+
     [self updateCapabilitiesList:oldCapabilities];
 }
 
 - (void) updateCapabilitiesList:(NSArray *)oldCapabilities
 {
     NSArray *newCapabilities = self.capabilities;
-    
+
     NSMutableArray *removedCapabilities = [NSMutableArray new];
-    
+
     [oldCapabilities enumerateObjectsUsingBlock:^(NSString *capability, NSUInteger idx, BOOL *stop) {
         if (![newCapabilities containsObject:capability])
             [removedCapabilities addObject:capability];
     }];
-    
+
     NSMutableArray *addedCapabilities = [NSMutableArray new];
-    
+
     [newCapabilities enumerateObjectsUsingBlock:^(NSString *capability, NSUInteger idx, BOOL *stop) {
         if (![oldCapabilities containsObject:capability])
             [addedCapabilities addObject:capability];
     }];
-    
+
     NSArray *added = [NSArray arrayWithArray:addedCapabilities];
     NSArray *removed = [NSArray arrayWithArray:removedCapabilities];
-    
+
     if (self.delegate && [self.delegate respondsToSelector:@selector(connectableDevice:capabilitiesAdded:removed:)])
         dispatch_on_main(^{ [self.delegate connectableDevice:self capabilitiesAdded:added removed:removed]; });
 }
@@ -276,24 +288,24 @@
 {
     if (serviceDescription.address)
         _consolidatedServiceDescription.address = serviceDescription.address;
-    
+
     if (serviceDescription.friendlyName)
         _consolidatedServiceDescription.friendlyName = serviceDescription.friendlyName;
-    
+
     if (serviceDescription.modelName)
         _consolidatedServiceDescription.modelName = serviceDescription.modelName;
-    
+
     if (serviceDescription.modelNumber)
         _consolidatedServiceDescription.modelNumber = serviceDescription.modelNumber;
 }
 
-- (DeviceService *)serviceWithName:(NSString *)serviceName
+- (DeviceService *)serviceWithName:(NSString *)serviceId
 {
     __block DeviceService *foundService;
 
-    [_services enumerateKeysAndObjectsUsingBlock:^(NSString *name, DeviceService *service, BOOL *stop)
+    [_services enumerateKeysAndObjectsUsingBlock:^(NSString *id, DeviceService *service, BOOL *stop)
     {
-        if ([name isEqualToString:serviceName])
+        if ([id isEqualToString:serviceId])
         {
             foundService = service;
             *stop = YES;
@@ -317,9 +329,11 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(connectableDeviceConnectionSuccess:forService:)])
         dispatch_on_main(^{ [self.delegate connectableDeviceConnectionSuccess:self forService:service]; });
 
-    if (self.connectedServiceCount == _services.count)
+    if (self.connected)
     {
         dispatch_on_main(^{ [self.delegate connectableDeviceReady:self]; });
+
+        self.lastConnected = [[NSDate date] timeIntervalSince1970];
     }
 }
 
@@ -362,6 +376,16 @@
         dispatch_on_main(^{ [self.delegate connectableDevice:self service:service pairingFailedWithError:error]; });
 }
 
+#pragma mark Capability updates
+
+- (void) deviceService:(DeviceService *)service capabilitiesAdded:(NSArray *)added removed:(NSArray *)removed
+{
+    [[DiscoveryManager sharedManager] connectableDevice:self capabilitiesAdded:added removed:removed];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(connectableDevice:capabilitiesAdded:removed:)])
+        dispatch_on_main(^{ [self.delegate connectableDevice:self capabilitiesAdded:added removed:removed]; });
+}
+
 #pragma mark - Capabilities
 
 - (NSArray *) capabilities
@@ -399,11 +423,10 @@
 - (BOOL) hasCapabilities:(NSArray *)capabilities
 {
     __block BOOL hasCaps = YES;
-    NSArray *myCapabilities = [self capabilities];
 
     [capabilities enumerateObjectsUsingBlock:^(NSString *capability, NSUInteger idx, BOOL *stop)
     {
-        if (![myCapabilities containsObject:capability])
+        if (![self hasCapability:capability])
         {
             hasCaps = NO;
             *stop = YES;
@@ -437,9 +460,9 @@
     {
         if (![service respondsToSelector:@selector(launcher)])
             return;
-        
+
         id<Launcher> launcher = [service launcher];
-        
+
         if (launcher)
         {
             if (foundLauncher)

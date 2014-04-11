@@ -70,7 +70,7 @@
 {
     DiscoveryManager *manager = [self _sharedManager];
 
-    if (!manager.deviceStore)
+    if (!manager.deviceStore && manager.useDeviceStore)
         [manager setDeviceStore:[DefaultConnectableDeviceStore new]];
 
     return manager;
@@ -80,10 +80,16 @@
 {
     DiscoveryManager *manager = [self _sharedManager];
 
-    if (manager.deviceStore != deviceStore)
+    if (deviceStore == nil || manager.deviceStore != deviceStore)
         [manager setDeviceStore:deviceStore];
 
     return manager;
+}
+
+- (void) setDeviceStore:(id <ConnectableDeviceStore>)deviceStore
+{
+    _deviceStore = deviceStore;
+    _useDeviceStore = (_deviceStore != nil);
 }
 
 - (instancetype) init
@@ -440,6 +446,10 @@
         deviceIsNew = YES;
     }
 
+    device.lastDetection = [[NSDate date] timeIntervalSince1970];
+    device.lastKnownIPAddress = description.address;
+    device.lastSeenOnWifi = _currentSSID;
+
     Class deviceServiceClass;
 
     if ([self descriptionIsNetcastTV:description])
@@ -465,7 +475,7 @@
 
     if (self.useDeviceStore)
     {
-        serviceConfig = [self lookupMatchServiceConfigFromDeviceStore:description.UUID];
+        serviceConfig = [self lookupMatchingServiceConfigFromDeviceStore:description.UUID];
         serviceConfig.delegate = self;
         serviceConfig.lastDetection = [NSDate date].timeIntervalSince1970;
     }
@@ -532,9 +542,20 @@
     NSLog(@"DiscoveryManager::discoveryProvider::didFailWithError %@", error.localizedDescription);
 }
 
+#pragma mark - ConnectableDeviceDelegate methods
+
+- (void) connectableDevice:(ConnectableDevice *)device capabilitiesAdded:(NSArray *)added removed:(NSArray *)removed
+{
+    [self handleDeviceUpdate:device];
+}
+
+- (void)connectableDeviceReady:(ConnectableDevice *)device { }
+
+- (void)connectableDeviceDisconnected:(ConnectableDevice *)device withError:(NSError *)error { }
+
 #pragma mark - Device Store
 
-- (ServiceConfig *)lookupMatchServiceConfigFromDeviceStore:(NSString *)UUID
+- (ServiceConfig *) lookupMatchingServiceConfigFromDeviceStore:(NSString *)UUID
 {
     __block ServiceConfig *serviceConfig;
 
@@ -542,7 +563,7 @@
     {
         [device.services enumerateObjectsUsingBlock:^(DeviceService *service, NSUInteger serviceIdx, BOOL *serviceStop)
         {
-            if ([service.serviceConfig.UUID isEqualToString:UUID])
+            if ([service.serviceDescription.UUID isEqualToString:UUID])
             {
                 serviceConfig = service.serviceConfig;
 
@@ -555,11 +576,11 @@
     return serviceConfig;
 }
 
-- (ConnectableDevice *)lookupMatchDeviceFromDeviceStore:(ServiceConfig *)serviceConfig
+- (ConnectableDevice *) lookupMatchingDeviceForDeviceStore:(ServiceConfig *)serviceConfig
 {
     __block ConnectableDevice *foundDevice;
 
-    [[self.deviceStore storedDevices] enumerateObjectsUsingBlock:^(ConnectableDevice *device, NSUInteger deviceIdx, BOOL *deviceStop)
+    [_allDevices enumerateKeysAndObjectsUsingBlock:^(id key, ConnectableDevice *device, BOOL *deviceStop)
     {
         [device.services enumerateObjectsUsingBlock:^(DeviceService *service, NSUInteger serviceIdx, BOOL *serviceStop)
         {
@@ -623,7 +644,7 @@
 {
     if (_useDeviceStore && self.deviceStore)
     {
-        ConnectableDevice *device = [self lookupMatchDeviceFromDeviceStore:serviceConfig];
+        ConnectableDevice *device = [self lookupMatchingDeviceForDeviceStore:serviceConfig];
 
         if (device)
             [self.deviceStore updateDevice:device];

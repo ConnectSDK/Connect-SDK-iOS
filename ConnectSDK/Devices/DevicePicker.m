@@ -19,6 +19,8 @@
     UITableViewController *_tableViewController;
     UIPopoverController *_popover;
     UIActionSheet *_actionSheet;
+    
+    NSDictionary *_popoverParams;
 
     dispatch_queue_t _sortQueue;
 }
@@ -82,7 +84,33 @@
     } else if ([source isKindOfClass:[UIView class]])
     {
         UIView *sourceView = (UIView *)source;
-        [_popover presentPopoverFromRect:sourceView.frame inView:sourceView.superview permittedArrowDirections:UIPopoverArrowDirectionAny animated:self.shouldAnimatePicker];
+        CGRect sourceRect;
+        UIView *targetView;
+        UIPopoverArrowDirection permittedArrowDirections;
+        
+        if (sourceView.superview && ![sourceView.superview isKindOfClass:[UIWindow class]])
+        {
+            sourceRect = sourceView.bounds;
+            targetView = sourceView.superview;
+            permittedArrowDirections = UIPopoverArrowDirectionAny;
+        } else
+        {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRotation) name:UIDeviceOrientationDidChangeNotification object:nil];
+            
+            sourceRect = sourceView.bounds;
+            targetView = sourceView;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wint-conversion"
+            permittedArrowDirections = NULL;
+#pragma clang diagnostic pop
+            
+            _popoverParams = @{
+                               @"sourceView" : sourceView,
+                               @"targetView" : targetView
+                               };
+        }
+        
+        [_popover presentPopoverFromRect:sourceRect inView:targetView permittedArrowDirections:permittedArrowDirections animated:self.shouldAnimatePicker];
     } else
     {
         NSLog(@"DevicePicker::showPicker sender should be a subclass of either UIBarButtonItem or UIView");
@@ -166,7 +194,10 @@
     _actionSheetDeviceList = nil;
     _navigationController = nil;
     _tableViewController = nil;
+    _popoverParams = nil;
     _popover = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 - (void) sortDevices
@@ -195,6 +226,26 @@
         name = NSLocalizedStringFromTable(@"Connect_SDK_Unnamed_Device", @"ConnectSDKStrings", nil);
     
     return name;
+}
+
+- (void) handleRotation
+{
+    if (!_popover || !_popoverParams)
+        return;
+
+    UIView *sourceView = [_popoverParams objectForKey:@"sourceView"];
+    UIView *targetView = [_popoverParams objectForKey:@"targetView"];
+
+    if (!sourceView || !targetView)
+        return;
+
+    CGRect sourceRect = sourceView.bounds;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wint-conversion"
+    UIPopoverArrowDirection permittedArrowDirections = NULL;
+#pragma clang diagnostic pop
+    
+    [_popover presentPopoverFromRect:sourceRect inView:targetView permittedArrowDirections:permittedArrowDirections animated:self.shouldAnimatePicker];
 }
 
 #pragma mark UIActionSheet methods

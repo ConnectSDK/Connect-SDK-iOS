@@ -298,7 +298,7 @@
 
     GCKMediaInformation *mediaInformation = [[GCKMediaInformation alloc] initWithContentID:imageURL.absoluteString streamType:GCKMediaStreamTypeNone contentType:mimeType metadata:metaData streamDuration:0 customData:nil];
 
-    [self displayMedia:mediaInformation success:success failure:failure];
+    [self playMedia:mediaInformation webAppId:kGCKMediaDefaultReceiverApplicationID success:success failure:failure];
 }
 
 - (void) playMedia:(NSURL *)videoURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
@@ -315,10 +315,10 @@
 
     GCKMediaInformation *mediaInformation = [[GCKMediaInformation alloc] initWithContentID:videoURL.absoluteString streamType:GCKMediaStreamTypeBuffered contentType:mimeType metadata:metaData streamDuration:1000 customData:nil];
 
-    [self displayMedia:mediaInformation success:success failure:failure];
+    [self playMedia:mediaInformation webAppId:kGCKMediaDefaultReceiverApplicationID success:success failure:failure];
 }
 
-- (void) displayMedia:(GCKMediaInformation *)mediaInformation success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
+- (void) playMedia:(GCKMediaInformation *)mediaInformation webAppId:(NSString *)mediaAppId success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
     WebAppLaunchSuccessBlock webAppLaunchBlock = ^(WebAppSession *webAppSession)
     {
@@ -339,7 +339,6 @@
         }
     };
 
-    NSString *mediaAppId = kGCKMediaDefaultReceiverApplicationID; // HOME 07EAAB14 // LG 6F8A4929 // IDEAN 4D8A5DB1 // ALL kGCKMediaDefaultReceiverApplicationID
     _launchingAppId = mediaAppId;
 
     [_launchSuccessBlocks setObject:webAppLaunchBlock forKey:mediaAppId];
@@ -347,7 +346,7 @@
     if (failure)
         [_launchFailureBlocks setObject:failure forKey:mediaAppId];
 
-    BOOL result = [_castDeviceManager launchApplication:mediaAppId relaunchIfRunning:YES];
+    BOOL result = [_castDeviceManager launchApplication:mediaAppId relaunchIfRunning:NO];
 
     if (!result)
     {

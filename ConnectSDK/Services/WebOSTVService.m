@@ -78,6 +78,9 @@
 {
     _serviceDescription = serviceDescription;
 
+    if (!self.serviceConfig.UUID)
+        self.serviceConfig.UUID = serviceDescription.UUID;
+
     NSString *serverInfo = [_serviceDescription.locationResponseHeaders objectForKey:@"Server"];
     NSString *systemOS = [[serverInfo componentsSeparatedByString:@" "] firstObject];
     NSString *systemVersion = [[systemOS componentsSeparatedByString:@"/"] lastObject];
@@ -116,29 +119,25 @@
         caps = [caps arrayByAddingObjectsFromArray:kMediaControlCapabilities];
     } else
     {
+        caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
+        caps = [caps arrayByAddingObjectsFromArray:kMediaControlCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:@[
                 kLauncherApp,
                 kLauncherAppParams,
+                kLauncherAppStore,
+                kLauncherAppStoreParams
                 kLauncherAppClose,
                 kLauncherBrowser,
                 kLauncherBrowserParams,
                 kLauncherHulu,
-                kLauncherHuluParams,
                 kLauncherNetflix,
                 kLauncherNetflixParams,
                 kLauncherYouTube,
                 kLauncherYouTubeParams,
                 kLauncherAppState,
                 kLauncherAppStateSubscribe
-        ]];
-        caps = [caps arrayByAddingObjectsFromArray:@[
-                kMediaControlPlay,
-                kMediaControlPause,
-                kMediaControlStop,
-                kMediaControlRewind,
-                kMediaControlFastForward
         ]];
     }
 
@@ -148,7 +147,7 @@
 + (NSDictionary *) discoveryParameters
 {
     return @{
-             @"serviceId":@"WebOS TV",
+             @"serviceId":@"webOS TV",
              @"ssdp":@{
                      @"filter":@"urn:lge-com:service:webos-second-screen:1"
                   }
@@ -329,11 +328,11 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         
-        if ([self.delegate respondsToSelector:@selector(deviceServicePairingSuccess:)])
-            dispatch_on_main(^{ [self.delegate deviceServicePairingSuccess:self]; });
-
-        if ([self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
-            dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
+//        if ([self.delegate respondsToSelector:@selector(deviceServicePairingSuccess:)])
+//            dispatch_on_main(^{ [self.delegate deviceServicePairingSuccess:self]; });
+//
+//        if ([self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
+//            dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
 
         if([_commandQueue count] > 0)
         {
@@ -876,6 +875,22 @@
     [self launchApplication:appInfo.id withParams:params success:success failure:failure];
 }
 
+- (void) launchAppStore:(NSString *)appId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    AppInfo *appInfo = [AppInfo appInfoForId:@"com.webos.app.discovery"];
+    appInfo.name = @"LG Store";
+
+    NSDictionary *params;
+
+    if (appId && appId.length > 0)
+    {
+        NSString *query = [NSString stringWithFormat:@"category/GAME_APPS/%@", appId];
+        params = @{ @"query" : query };
+    }
+
+    [self launchAppWithInfo:appInfo params:params success:success failure:failure];
+}
+
 - (void)launchBrowser:(NSURL *)target success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://system.launcher/open"];
@@ -901,7 +916,7 @@
 {
     NSDictionary *params = @{ @"hulu" : contentId };
     
-    [self launchApplication:@"youtube.leanback.v4" withParams:params success:success failure:failure];
+    [self launchApplication:@"hulu" withParams:params success:success failure:failure];
 }
 
 - (void)launchNetflix:(NSString *)contentId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
@@ -1656,11 +1671,11 @@
     _mouseInit = NO;
 }
 
-- (void)moveWithX:(double)xVal andY:(double)yVal success:(SuccessBlock)success failure:(FailureBlock)failure
+- (void) move:(CGVector)distance success:(SuccessBlock)success failure:(FailureBlock)failure
 {
     if (self.mouseSocket)
     {
-        [self.mouseSocket moveWithX:xVal andY:yVal];
+        [self.mouseSocket move:distance];
 
         if (success)
             success(nil);
@@ -1671,11 +1686,11 @@
     }
 }
 
-- (void)scrollWithX:(double)xVal andY:(double)yVal success:(SuccessBlock)success failure:(FailureBlock)failure
+- (void) scroll:(CGVector)distance success:(SuccessBlock)success failure:(FailureBlock)failure
 {
     if (self.mouseSocket)
     {
-        [self.mouseSocket scrollWithX:xVal andY:yVal];
+        [self.mouseSocket scroll:distance];
 
         if (success)
             success(nil);
@@ -1822,6 +1837,11 @@
         return;
     }
 
+    WebOSWebAppSession *webAppSession = [[WebOSWebAppSession alloc] init];
+    webAppSession.launchSession = launchSession;
+
+    [self disconnectFromWebApp:webAppSession];
+
     NSURL *URL = [NSURL URLWithString:@"ssap://webapp/closeWebApp"];
 
     NSMutableDictionary *payload = [NSMutableDictionary new];
@@ -1888,8 +1908,7 @@
 
         if (connectionSubscription)
         {
-            // TODO: test this
-            if ([self.serviceDescription.version rangeOfString:@"4.0"].location != NSNotFound)
+            if ([self.serviceDescription.version rangeOfString:@"4.0."].location == NSNotFound)
             {
                 [connectionSubscription unsubscribe];
                 [_appToAppSubscriptions removeObjectForKey:webAppSession.launchSession.appId];
@@ -1936,8 +1955,7 @@
 
     if (connectionSubscription)
     {
-        // TODO: test this
-        if ([self.serviceDescription.version rangeOfString:@"4.0"].location != NSNotFound)
+        if ([self.serviceDescription.version rangeOfString:@"4.0."].location == NSNotFound)
         {
             [connectionSubscription unsubscribe];
             [_appToAppSubscriptions removeObjectForKey:webAppSession.launchSession.appId];

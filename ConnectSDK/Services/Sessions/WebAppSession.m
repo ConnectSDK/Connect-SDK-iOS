@@ -29,7 +29,7 @@
     return dict;
 }
 
-- (id)initWithLaunchSession:(LaunchSession *)launchSession service:(DeviceService *)service
+- (instancetype)initWithLaunchSession:(LaunchSession *)launchSession service:(DeviceService *)service
 {
     self = [super init];
 
@@ -91,17 +91,44 @@
     [self sendNotSupportedFailure:failure];
 }
 
+#pragma mark - Media Player
+
+- (id <MediaPlayer>) mediaPlayer
+{
+    return self;
+}
+
+- (CapabilityPriorityLevel) mediaPlayerPriority
+{
+    return CapabilityPriorityLevelLow;
+}
+
+- (void) displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
+{
+    [self sendNotSupportedFailure:failure];
+}
+
+- (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
+{
+    [self sendNotSupportedFailure:failure];
+}
+
+- (void) closeMedia:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self sendNotSupportedFailure:failure];
+}
+
 #pragma mark - MediaControl
 #pragma mark MediaControl required methods
 
 - (id <MediaControl>)mediaControl
 {
-    return nil;
+    return self;
 }
 
 - (CapabilityPriorityLevel)mediaControlPriority
 {
-    return CapabilityPriorityLevelVeryLow;
+    return CapabilityPriorityLevelLow;
 }
 
 - (void)playWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure

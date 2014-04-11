@@ -17,4 +17,8 @@
 @property (nonatomic, retain, readonly) CastServiceChannel *castServiceChannel;
 @property (nonatomic, retain, readonly) GCKMediaControlChannel *castMediaControlChannel;
 
+// @cond INTERNAL
+- (void) playMedia:(GCKMediaInformation *)mediaInformation webAppId:(NSString *)webAppId success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure;
+// @endcond
+
 @end

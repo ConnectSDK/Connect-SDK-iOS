@@ -8,23 +8,28 @@
 
 @implementation NetcastTVServiceConfig
 
-- (instancetype) initWithCoder:(NSCoder *)aDecoder
+- (instancetype) initWithJSONObject:(NSDictionary *)dict
 {
-    self = [super initWithCoder:aDecoder];
+    self = [super init];
 
     if (self)
     {
-        self.pairingCode = [aDecoder decodeObjectForKey:@"session-key"];
+        self.pairingCode = dict[@"pairingCode"];
     }
 
     return self;
 }
 
-- (void) encodeWithCoder:(NSCoder *)aCoder
+- (NSDictionary *) toJSONObject
 {
-    [super encodeWithCoder:aCoder];
+    NSDictionary *superDictionary = [super toJSONObject];
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:superDictionary];
 
-    [aCoder encodeObject:self.pairingCode forKey:@"session-key"];
+    dictionary[@"class"] = NSStringFromClass([self class]);
+
+    if (self.pairingCode) dictionary[@"pairingCode"] = self.pairingCode;
+
+    return [NSDictionary dictionaryWithDictionary:dictionary];
 }
 
 - (void) addObservers

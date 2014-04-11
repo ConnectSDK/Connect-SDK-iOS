@@ -18,6 +18,8 @@
 #define kLauncherAppParams @"Launcher.App.Params"
 #define kLauncherAppClose @"Launcher.App.Close"
 #define kLauncherAppList @"Launcher.App.List"
+#define kLauncherAppStore @"Launcher.AppStore"
+#define kLauncherAppStoreParams @"Launcher.AppStore.Params"
 #define kLauncherBrowser @"Launcher.Browser"
 #define kLauncherBrowserParams @"Launcher.Browser.Params"
 #define kLauncherHulu @"Launcher.Hulu"
@@ -36,6 +38,8 @@
     kLauncherAppParams,\
     kLauncherAppClose,\
     kLauncherAppList,\
+    kLauncherAppStore,\
+    kLauncherAppStoreParams,\
     kLauncherBrowser,\
     kLauncherBrowserParams,\
     kLauncherHulu,\
@@ -52,9 +56,33 @@
 
 @protocol Launcher <NSObject>
 
+/*!
+ * Success block that is called upon requesting info about the current running app.
+ *
+ * @param appInfo Object containing info about the running app
+ */
 typedef void (^ AppInfoSuccessBlock)(AppInfo *appInfo);
+
+/*!
+ * Success block that is called upon successfully launching an app.
+ *
+ * @param LaunchSession Object containing important information about the app's launch session
+ */
 typedef void (^ AppLaunchSuccessBlock)(LaunchSession *launchSession);
+
+/*!
+ * Success block that is called upon successfully getting the app list.
+ *
+ * @param appList Array containing an AppInfo object for each available app on the device
+ */
 typedef void (^ AppListSuccessBlock)(NSArray *appList);
+
+/*!
+ * Success block that is called upon successfully getting an app's state.
+ *
+ * @param running Whether the app is currently running
+ * @param visible Whether the app is currently visible on the screen
+ */
 typedef void (^ AppStateSuccessBlock)(BOOL running, BOOL visible);
 
 - (id<Launcher>) launcher;
@@ -76,10 +104,17 @@ typedef void (^ AppStateSuccessBlock)(BOOL running, BOOL visible);
 - (void)getAppState:(LaunchSession *)launchSession success:(AppStateSuccessBlock)success failure:(FailureBlock)failure;
 - (ServiceSubscription *)subscribeAppState:(LaunchSession *)launchSession success:(AppStateSuccessBlock)success failure:(FailureBlock)failure;
 
-#pragma mark 3rd party launch
+#pragma mark Helpers for deep linking
+- (void)launchAppStore:(NSString *)appId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure;
+
 - (void)launchBrowser:(NSURL *)target success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure;
 - (void)launchYouTube:(NSString *)contentId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure;
+
+// TODO: add app store deep linking
+
+// @cond INTERNAL
 - (void)launchNetflix:(NSString *)contentId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure;
 - (void)launchHulu:(NSString *)contentId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure;
+// @endcond
 
 @end

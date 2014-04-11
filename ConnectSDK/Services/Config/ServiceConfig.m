@@ -6,9 +6,19 @@
 //  Copyright (c) 2014 LG Electronics. All rights reserved.
 //
 
+#import <GoogleCast/GoogleCast.h>
 #import "ServiceConfig.h"
 
 @implementation ServiceConfig
+
++ (instancetype) serviceConfigWithJSONObject:(NSDictionary *)dictionary
+{
+    NSString *configClassName = dictionary[@"class"];
+    Class configClass = NSClassFromString(configClassName);
+
+    ServiceConfig *serviceConfig = [[configClass alloc] initWithJSONObject:dictionary];
+    return serviceConfig;
+}
 
 - (instancetype) initWithServiceDescription:(ServiceDescription *)serviceDescription
 {
@@ -23,29 +33,6 @@
     }
     
     return self;
-}
-
-- (instancetype) initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super init];
-    
-    if (self)
-    {
-        self.UUID = [aDecoder decodeObjectForKey:@"UUID-key"];
-        self.connected = [aDecoder decodeBoolForKey:@"connected-key"];
-        self.wasConnected = [aDecoder decodeBoolForKey:@"wasConnected-key"];
-        self.lastDetection = [aDecoder decodeDoubleForKey:@"lastDetection-key"];
-    }
-    
-    return self;
-}
-
-- (void) encodeWithCoder:(NSCoder *)aCoder
-{
-    [aCoder encodeObject:self.UUID forKey:@"UUID-key"];
-    [aCoder encodeBool:self.connected forKey:@"connected-key"];
-    [aCoder encodeBool:self.wasConnected forKey:@"wasConnected-key"];
-    [aCoder encodeDouble:self.lastDetection forKey:@"lastDetection-key"];
 }
 
 - (void) addObservers
@@ -89,6 +76,43 @@
 - (void) dealloc
 {
     self.delegate = nil;
+}
+
+#pragma mark - JSONObjectCoding methods
+
+- (instancetype) initWithJSONObject:(NSDictionary *)dictionary
+{
+    self = [super init];
+
+    if (self)
+    {
+        self.UUID = [dictionary objectForKey:@"UUID"];
+        self.connected = [[dictionary objectForKey:@"connected"] boolValue];
+        self.wasConnected = [[dictionary objectForKey:@"wasConnected"] boolValue];
+        self.lastDetection = [[dictionary objectForKey:@"lastDetection"] doubleValue];
+
+        if (self.connected)
+        {
+            self.connected = NO;
+            self.wasConnected = YES;
+        }
+    }
+
+    return self;
+}
+
+- (NSDictionary *) toJSONObject
+{
+    NSMutableDictionary *dictionary = [NSMutableDictionary new];
+
+    dictionary[@"class"] = NSStringFromClass([self class]);
+
+    if (self.UUID) dictionary[@"UUID"] = self.UUID;
+    if (self.connected) dictionary[@"connected"] = @(self.connected);
+    if (self.wasConnected) dictionary[@"wasConnected"] = @(self.wasConnected);
+    if (self.lastDetection) dictionary[@"lastDetection"] = @(self.lastDetection);
+
+    return [NSDictionary dictionaryWithDictionary:dictionary];
 }
 
 @end

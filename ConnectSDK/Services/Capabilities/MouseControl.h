@@ -31,7 +31,8 @@
 - (void) disconnectMouse;
 
 - (void) clickWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure;
-- (void) moveWithX:(double)xVal andY:(double)yVal success:(SuccessBlock)success failure:(FailureBlock)failure;
-- (void) scrollWithX:(double)xVal andY:(double)yVal success:(SuccessBlock)success failure:(FailureBlock)failure;
+
+- (void) move:(CGVector)distance success:(SuccessBlock)success failure:(FailureBlock)failure;
+- (void) scroll:(CGVector)distance success:(SuccessBlock)success failure:(FailureBlock)failure;
 
 @end

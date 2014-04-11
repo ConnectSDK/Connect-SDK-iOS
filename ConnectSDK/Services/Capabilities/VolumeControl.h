@@ -29,7 +29,18 @@
 
 @protocol VolumeControl <NSObject>
 
+/*!
+ * Success block that is called upon successfully getting the device's system volume.
+ *
+ * @param volume Current system volume, value is a float between 0.0 and 1.0
+ */
 typedef void (^ VolumeSuccessBlock)(float volume);
+
+/*!
+ * Success block that is called upon successfully getting the device's system mute status.
+ *
+ * @param mute Current system mute status
+ */
 typedef void (^ MuteSuccessBlock)(BOOL mute);
 
 - (id<VolumeControl>)volumeControl;

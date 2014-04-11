@@ -6,7 +6,7 @@
 #import <Foundation/Foundation.h>
 #import "ServiceConfig.h"
 
-@interface NetcastTVServiceConfig : ServiceConfig <NSCoding>
+@interface NetcastTVServiceConfig : ServiceConfig <JSONObjectCoding>
 
 @property (nonatomic, strong) NSString *pairingCode;
 

@@ -12,7 +12,7 @@
     __weak CastWebAppSession *_session;
 }
 
-- (id)initWithAppId:(NSString *)appId session:(CastWebAppSession *)session
+- (instancetype)initWithAppId:(NSString *)appId session:(CastWebAppSession *)session
 {
     self = [super initWithNamespace:@"urn:x-cast:com.connectsdk"];
 

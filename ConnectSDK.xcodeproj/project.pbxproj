@@ -99,24 +99,23 @@
 		EA3CBE2518AEC29700FA3C69 /* RokuService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA3CBE2318AEC29700FA3C69 /* RokuService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA3CBE2618AEC29700FA3C69 /* RokuService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3CBE2418AEC29700FA3C69 /* RokuService.m */; };
 		EA595FD1184FCF8D0043C023 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA595FCF184FCF8D0043C023 /* InfoPlist.strings */; };
-		EA59609B185112F10043C023 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = EA596086185112F10043C023 /* base64.c */; settings = {COMPILER_FLAGS = "-w"; }; };
-		EA59609C185112F10043C023 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = EA596087185112F10043C023 /* base64.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA59609D185112F10043C023 /* LGSRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = EA596088185112F10043C023 /* LGSRWebSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA59609E185112F10043C023 /* LGSRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = EA596089185112F10043C023 /* LGSRWebSocket.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		EA84FE0018A99BB300F180DC /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA84FDFF18A99BB300F180DC /* GoogleCast.framework */; };
 		EA95E64D18A5541E00D5C1E0 /* CastService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA95E64B18A5541E00D5C1E0 /* CastService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA95E64E18A5541E00D5C1E0 /* CastService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA95E64C18A5541E00D5C1E0 /* CastService.m */; };
 		EA95E65118A5547200D5C1E0 /* CastDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EA95E64F18A5547200D5C1E0 /* CastDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA95E65218A5547200D5C1E0 /* CastDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA95E65018A5547200D5C1E0 /* CastDiscoveryProvider.m */; };
 		EADD381E1899C46D00877C17 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EADD381D1899C46D00877C17 /* MobileCoreServices.framework */; };
 		EADD382B1899C80900877C17 /* GCDWebServer.h in Headers */ = {isa = PBXBuildFile; fileRef = EADD38221899C80900877C17 /* GCDWebServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EADD382C1899C80900877C17 /* GCDWebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD38231899C80900877C17 /* GCDWebServer.m */; };
+		EADD382C1899C80900877C17 /* GCDWebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD38231899C80900877C17 /* GCDWebServer.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		EADD382D1899C80900877C17 /* GCDWebServerConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = EADD38241899C80900877C17 /* GCDWebServerConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EADD382E1899C80900877C17 /* GCDWebServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD38251899C80900877C17 /* GCDWebServerConnection.m */; };
+		EADD382E1899C80900877C17 /* GCDWebServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD38251899C80900877C17 /* GCDWebServerConnection.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		EADD382F1899C80900877C17 /* GCDWebServerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = EADD38261899C80900877C17 /* GCDWebServerPrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EADD38301899C80900877C17 /* GCDWebServerRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EADD38271899C80900877C17 /* GCDWebServerRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EADD38311899C80900877C17 /* GCDWebServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD38281899C80900877C17 /* GCDWebServerRequest.m */; };
+		EADD38311899C80900877C17 /* GCDWebServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD38281899C80900877C17 /* GCDWebServerRequest.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		EADD38321899C80900877C17 /* GCDWebServerResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = EADD38291899C80900877C17 /* GCDWebServerResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EADD38331899C80900877C17 /* GCDWebServerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD382A1899C80900877C17 /* GCDWebServerResponse.m */; };
+		EADD38331899C80900877C17 /* GCDWebServerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD382A1899C80900877C17 /* GCDWebServerResponse.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		EAE17B9618B831AA00845157 /* LaunchSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EAE17B9418B831AA00845157 /* LaunchSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EAE17B9718B831AA00845157 /* LaunchSession.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE17B9518B831AA00845157 /* LaunchSession.m */; };
 		F6971D3917FB7E6B00447820 /* ConnectSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = F695FBF517D9D204003FCF5A /* ConnectSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -124,7 +123,6 @@
 		F6F2351817F1E1B500575BDD /* ConnectSDKStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = F692567817ECE17000B96F23 /* ConnectSDKStrings.strings */; };
 		F6F2351917F1E32700575BDD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F68F370817E0ECA2000C84DA /* Security.framework */; };
 		F6F2351A17F1E34600575BDD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F68F370C17E0ECBF000C84DA /* CFNetwork.framework */; };
-		F6F2351B17F1E35700575BDD /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F68F370A17E0ECB5000C84DA /* libicucore.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -220,10 +218,9 @@
 		EA3CBE2318AEC29700FA3C69 /* RokuService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RokuService.h; sourceTree = "<group>"; };
 		EA3CBE2418AEC29700FA3C69 /* RokuService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RokuService.m; sourceTree = "<group>"; };
 		EA595FD0184FCF8D0043C023 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		EA596086185112F10043C023 /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
-		EA596087185112F10043C023 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
 		EA596088185112F10043C023 /* LGSRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGSRWebSocket.h; sourceTree = "<group>"; };
 		EA596089185112F10043C023 /* LGSRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGSRWebSocket.m; sourceTree = "<group>"; };
+		EA84FDFF18A99BB300F180DC /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = ConnectSDK/Frameworks/GoogleCast.framework; sourceTree = "<group>"; };
 		EA95E64B18A5541E00D5C1E0 /* CastService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CastService.h; sourceTree = "<group>"; };
 		EA95E64C18A5541E00D5C1E0 /* CastService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CastService.m; sourceTree = "<group>"; };
 		EA95E64F18A5547200D5C1E0 /* CastDiscoveryProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CastDiscoveryProvider.h; sourceTree = "<group>"; };
@@ -241,7 +238,6 @@
 		EAE17B9418B831AA00845157 /* LaunchSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchSession.h; sourceTree = "<group>"; };
 		EAE17B9518B831AA00845157 /* LaunchSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchSession.m; sourceTree = "<group>"; };
 		F68F370817E0ECA2000C84DA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		F68F370A17E0ECB5000C84DA /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		F68F370C17E0ECBF000C84DA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		F692567817ECE17000B96F23 /* ConnectSDKStrings.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ConnectSDKStrings.strings; path = en.lproj/ConnectSDKStrings.strings; sourceTree = "<group>"; };
 		F695FBF017D9D204003FCF5A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -256,8 +252,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA84FE0018A99BB300F180DC /* GoogleCast.framework in Frameworks */,
 				EADD381E1899C46D00877C17 /* MobileCoreServices.framework in Frameworks */,
-				F6F2351B17F1E35700575BDD /* libicucore.dylib in Frameworks */,
 				F6F2351A17F1E34600575BDD /* CFNetwork.framework in Frameworks */,
 				F6F2351917F1E32700575BDD /* Security.framework in Frameworks */,
 				F6F234CD17F1E0EB00575BDD /* Foundation.framework in Frameworks */,
@@ -444,8 +440,6 @@
 		EA596085185112F10043C023 /* SocketRocket */ = {
 			isa = PBXGroup;
 			children = (
-				EA596086185112F10043C023 /* base64.c */,
-				EA596087185112F10043C023 /* base64.h */,
 				EA596088185112F10043C023 /* LGSRWebSocket.h */,
 				EA596089185112F10043C023 /* LGSRWebSocket.m */,
 			);
@@ -504,9 +498,9 @@
 		F695FBEF17D9D204003FCF5A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EA84FDFF18A99BB300F180DC /* GoogleCast.framework */,
 				EADD381D1899C46D00877C17 /* MobileCoreServices.framework */,
 				F68F370C17E0ECBF000C84DA /* CFNetwork.framework */,
-				F68F370A17E0ECB5000C84DA /* libicucore.dylib */,
 				F68F370817E0ECA2000C84DA /* Security.framework */,
 				F695FBF017D9D204003FCF5A /* Foundation.framework */,
 			);
@@ -583,7 +577,6 @@
 				EA397690188611A400972C12 /* VolumeControl.h in Headers */,
 				EA39769D188611A400972C12 /* ServiceConfigDelegate.h in Headers */,
 				F6971D3917FB7E6B00447820 /* ConnectSDK.h in Headers */,
-				EA59609C185112F10043C023 /* base64.h in Headers */,
 				BB9F70CA2114712865B38C27 /* ProgramInfo.h in Headers */,
 				BB9F77335DD08F12B8B30B0B /* MediaControl.h in Headers */,
 				BB9F74D33C205DCEBDD9F49F /* ExternalInputControl.h in Headers */,
@@ -719,7 +712,6 @@
 				EA39769C188611A400972C12 /* ServiceConfig.m in Sources */,
 				EA397687188611A400972C12 /* ChannelInfo.m in Sources */,
 				EA397698188611A400972C12 /* ServiceSubscription.m in Sources */,
-				EA59609B185112F10043C023 /* base64.c in Sources */,
 				EADD382E1899C80900877C17 /* GCDWebServerConnection.m in Sources */,
 				EADD38331899C80900877C17 /* GCDWebServerResponse.m in Sources */,
 				EADD38311899C80900877C17 /* GCDWebServerRequest.m in Sources */,
@@ -852,10 +844,7 @@
 				CODE_SIGN_IDENTITY = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = (
-					"./**",
-					"$(PROJECT_DIR)/ConnectSDK/Frameworks",
-				);
+				FRAMEWORK_SEARCH_PATHS = "./**";
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConnectSDK/ConnectSDK-Prefix.pch";
@@ -879,6 +868,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
+				WARNING_CFLAGS = "";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -890,10 +880,7 @@
 				CODE_SIGN_IDENTITY = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = (
-					"./**",
-					"$(PROJECT_DIR)/ConnectSDK/Frameworks",
-				);
+				FRAMEWORK_SEARCH_PATHS = "./**";
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConnectSDK/ConnectSDK-Prefix.pch";
@@ -913,6 +900,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
+				WARNING_CFLAGS = "";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;

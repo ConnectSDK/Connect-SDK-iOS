@@ -43,10 +43,39 @@
 
 @protocol TVControl <NSObject>
 
+/*!
+ * Success block that is called upon successfully getting the current channel's information.
+ *
+ * @param channelInfo Object containing information about the current channel
+ */
 typedef void (^ CurrentChannelSuccessBlock)(ChannelInfo *channelInfo);
+
+/*!
+ * Success block that is called upon successfully getting the channel list.
+ *
+ * @param channelList Array containing a ChannelInfo object for each available channel on the TV
+ */
 typedef void (^ ChannelListSuccessBlock)(NSArray *channelList);
+
+/*!
+ * Success block that is called upon successfully getting the current program's information.
+ *
+ * @param programInfo Object containing information about the current program
+ */
 typedef void (^ ProgramInfoSuccessBlock)(ProgramInfo *programInfo);
+
+/*!
+ * Success block that is called upon successfully getting the program list for the current channel.
+ *
+ * @param programList Array containing a ProgramInfo object for each available program on the TV's current channel
+ */
 typedef void (^ ProgramListSuccessBlock)(NSArray *programList);
+
+/*!
+ * Success block that is called upon successfully getting the TV's 3D mode
+ *
+ * @param tv3DEnabled Whether 3D mode is currently enabled on the TV
+ */
 typedef void (^ TV3DEnabledSuccessBlock)(BOOL tv3DEnabled);
 
 - (id<TVControl>)tvControl;

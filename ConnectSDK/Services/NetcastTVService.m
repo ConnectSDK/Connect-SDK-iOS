@@ -41,8 +41,7 @@ typedef enum {
 
     BOOL _reconnectOnWake;
 
-    double _mouseMoveX;
-    double _mouseMoveY;
+    CGVector _mouseDistance;
     BOOL _mouseIsMoving;
 }
 
@@ -89,6 +88,9 @@ NSString *lgeUDAPRequestURI[8] = {
 {
     [super setServiceDescription:serviceDescription];
 
+    if (!self.serviceConfig.UUID)
+        self.serviceConfig.UUID = serviceDescription.UUID;
+
     [_dlnaService setServiceDescription:serviceDescription];
 }
 
@@ -127,6 +129,8 @@ NSString *lgeUDAPRequestURI[8] = {
 
                 kLauncherApp,
                 kLauncherAppClose,
+                kLauncherAppStore,
+                kLauncherAppStoreParams
                 kLauncherAppList,
                 kLauncherAppState,
                 kLauncherBrowser,
@@ -805,6 +809,43 @@ NSString *lgeUDAPRequestURI[8] = {
         failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
 }
 
+- (void) launchAppStore:(NSString *)appId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    NSString *targetPath = [self.commandURL.absoluteString stringByAppendingPathComponent:@"roap"];
+    targetPath = [targetPath stringByAppendingPathComponent:@"api"];
+    targetPath = [targetPath stringByAppendingPathComponent:@"command"];
+    NSURL *targetURL = [NSURL URLWithString:targetPath];
+
+    NSString *payload = [NSString stringWithFormat:@
+                                                           "<envelope>"
+                                                           "<api type=\"command\">"
+                                                           "<name>SearchCMDPlaySDPContent</name>"
+                                                           "<content_type>4</content_type>"
+                                                           "<conts_exec_type />"
+                                                           "<conts_plex_type_flag />"
+                                                           "<conts_search_id />"
+                                                           "<conts_age>12</conts_age>"
+                                                           "<exec_id />"
+                                                           "<item_id>%@</item_id>"
+                                                           "<app_type>S</app_type>"
+                                                           "</api>"
+                                                           "</envelope>", [ConnectUtil urlEncode:appId]];
+
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:targetURL payload:payload];
+    command.callbackComplete = ^(id responseObject)
+    {
+        LaunchSession *launchSession = [LaunchSession launchSessionForAppId:@""];
+        launchSession.name = @"LG Smart World"; // TODO: this will not work in Korea, use "LG 스마트 월드" instead
+        launchSession.sessionType = LaunchSessionTypeApp;
+        launchSession.service = self;
+
+        if (success)
+            success(launchSession);
+    };
+    command.callbackError = failure;
+    [command send];
+}
+
 - (void)launchBrowser:(NSURL *)target success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
     [self launchApp:@"Internet" success:success failure:failure];
@@ -857,11 +898,11 @@ NSString *lgeUDAPRequestURI[8] = {
 - (void)launchYouTube:(NSString *)contentId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
     // TODO: fix this launch through DIAL
-//    if (self.dialService)
-//    {
-//        [self.dialService.launcher launchYouTube:contentId success:success failure:failure];
-//        return;
-//    }
+    if (self.dialService)
+    {
+        [self.dialService.launcher launchYouTube:contentId success:success failure:failure];
+        return;
+    }
 
     [self getAppInfoForId:@"YouTube" success:^(AppInfo *appInfo)
     {
@@ -1564,8 +1605,7 @@ NSString *lgeUDAPRequestURI[8] = {
 
 - (void) connectMouseWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    _mouseMoveX = 0;
-    _mouseMoveY = 0;
+    _mouseDistance = CGVectorMake(0, 0);
     _mouseIsMoving = NO;
 
     [self showMouseWithSuccess:success failure:failure];
@@ -1573,8 +1613,7 @@ NSString *lgeUDAPRequestURI[8] = {
 
 - (void)disconnectMouse
 {
-    _mouseMoveX = 0;
-    _mouseMoveY = 0;
+    _mouseDistance = CGVectorMake(0, 0);
     _mouseIsMoving = NO;
 
     [self hideMouseWithSuccess:nil failure:nil];
@@ -1646,10 +1685,12 @@ NSString *lgeUDAPRequestURI[8] = {
     [command send];
 }
 
-- (void)moveWithX:(double)xVal andY:(double)yVal success:(SuccessBlock)success failure:(FailureBlock)failure
+- (void) move:(CGVector)distance success:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    _mouseMoveX += xVal;
-    _mouseMoveY += yVal;
+    _mouseDistance = CGVectorMake(
+        _mouseDistance.dx + distance.dx,
+        _mouseDistance.dy + distance.dy
+    );
 
     if (!_mouseIsMoving)
     {
@@ -1671,15 +1712,14 @@ NSString *lgeUDAPRequestURI[8] = {
                                                                    "<x>%i</x>"
                                                                    "<y>%i</y>"
                                                                "</api>"
-                                                           "</envelope>", (int) round(_mouseMoveX), (int) round(_mouseMoveY)];
+                                                           "</envelope>", (int) round(_mouseDistance.dx), (int) round(_mouseDistance.dy)];
 
-    _mouseMoveX = 0;
-    _mouseMoveY = 0;
+    _mouseDistance = CGVectorMake(0, 0);
 
     ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:targetURL payload:payload];
     command.callbackComplete = ^(id responseObject)
     {
-        if (_mouseMoveX != 0 || _mouseMoveY != 0)
+        if (_mouseDistance.dx != 0 || _mouseDistance.dy != 0)
             [self moveMouseWithSuccess:nil failure:nil];
         else
             _mouseIsMoving = NO;
@@ -1697,12 +1737,12 @@ NSString *lgeUDAPRequestURI[8] = {
     [command send];
 }
 
-- (void)scrollWithX:(double)xVal andY:(double)yVal success:(SuccessBlock)success failure:(FailureBlock)failure
+- (void) scroll:(CGVector)distance success:(SuccessBlock)success failure:(FailureBlock)failure
 {
     NSString *targetPath = [self.commandURL.absoluteString stringByAppendingPathComponent:lgeUDAPRequestURI[LGE_COMMAND_REQUEST]];
     NSURL *targetURL = [NSURL URLWithString:targetPath];
 
-    NSString *direction = (yVal > 0) ? @"down" : @"up";
+    NSString *direction = (distance.dy > 0) ? @"down" : @"up";
 
     NSString *payload = [NSString stringWithFormat:@
                                                            "<envelope>"

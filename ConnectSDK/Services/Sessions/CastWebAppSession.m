@@ -171,6 +171,52 @@
     }
 }
 
+#pragma mark - Media Player
+
+- (id <MediaPlayer>) mediaPlayer
+{
+    return self;
+}
+
+- (CapabilityPriorityLevel) mediaPlayerPriority
+{
+    return CapabilityPriorityLevelHigh;
+}
+
+- (void) displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
+{
+    if (failure)
+        failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:nil]);
+}
+
+- (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
+{
+    GCKMediaMetadata *metaData = [[GCKMediaMetadata alloc] initWithMetadataType:GCKMediaMetadataTypeMovie];
+    [metaData setString:title forKey:kGCKMetadataKeyTitle];
+    [metaData setString:description forKey:kGCKMetadataKeySubtitle];
+
+    if (iconURL)
+    {
+        GCKImage *iconImage = [[GCKImage alloc] initWithURL:iconURL width:100 height:100];
+        [metaData addImage:iconImage];
+    }
+
+    GCKMediaInformation *mediaInformation = [[GCKMediaInformation alloc] initWithContentID:mediaURL.absoluteString streamType:GCKMediaStreamTypeBuffered contentType:mimeType metadata:metaData streamDuration:1000 customData:nil];
+
+    [self.service playMedia:mediaInformation webAppId:self.launchSession.appId success:^(LaunchSession *launchSession, id <MediaControl> mediaControl)
+    {
+        self.launchSession.sessionId = launchSession.sessionId;
+
+        if (success)
+            success(self.launchSession, self.mediaControl);
+    } failure:failure];
+}
+
+- (void) closeMedia:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self closeWithSuccess:success failure:failure];
+}
+
 #pragma mark - Media Control
 
 - (id <MediaControl>)mediaControl

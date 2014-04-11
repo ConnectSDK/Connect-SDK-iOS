@@ -21,7 +21,7 @@
 
 @implementation CastDiscoveryProvider
 
-- (id) init
+- (instancetype) init
 {
     self = [super init];
     
@@ -51,7 +51,8 @@
 
 - (BOOL) isEmpty
 {
-    return _devices.count == 0;
+    // Since we are only searching for one type of device & parameters are unnecessary
+    return NO;
 }
 
 #pragma mark - GCKDeviceScannerListenerDelegate

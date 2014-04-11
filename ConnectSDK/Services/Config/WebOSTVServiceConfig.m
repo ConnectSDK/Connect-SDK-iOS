@@ -10,25 +10,30 @@
 
 @implementation WebOSTVServiceConfig
 
-- (instancetype) initWithCoder:(NSCoder *)aDecoder
+- (instancetype) initWithJSONObject:(NSDictionary *)dict
 {
-    self = [super initWithCoder:aDecoder];
-    
+    self = [super init];
+
     if (self)
     {
-        self.clientKey = [aDecoder decodeObjectForKey:@"client-key"];
-        self.SSLCertificates = [aDecoder decodeObjectForKey:@"ssl-key"];
+        self.clientKey = dict[@"clientKey"];
+        self.SSLCertificates = dict[@"SSLCertificates"];
     }
-    
+
     return self;
 }
 
-- (void) encodeWithCoder:(NSCoder *)aCoder
+- (NSDictionary *) toJSONObject
 {
-    [super encodeWithCoder:aCoder];
-    
-    [aCoder encodeObject:self.clientKey forKey:@"client-key"];
-    [aCoder encodeObject:self.SSLCertificates forKey:@"ssl-key"];
+    NSDictionary *superDictionary = [super toJSONObject];
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:superDictionary];
+
+    dictionary[@"class"] = NSStringFromClass([self class]);
+
+    if (self.clientKey) dictionary[@"clientKey"] = self.clientKey;
+    if (self.SSLCertificates) dictionary[@"SSLCertificates"] = self.SSLCertificates;
+
+    return [NSDictionary dictionaryWithDictionary:dictionary];
 }
 
 - (void) addObservers
