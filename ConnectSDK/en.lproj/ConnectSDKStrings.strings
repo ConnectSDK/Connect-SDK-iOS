@@ -1,0 +1,19 @@
+/* 
+  ConnectSDKStrings.strings
+  Connect SDK
+
+  Created by Andrew Longstaff on 9/20/13.
+  Copyright (c) 2014 LG Electronics. All rights reserved.
+*/
+
+/* Search picker */
+"Connect_SDK_Search_Title" = "Pick a device";
+"Connect_SDK_Search_Cancel" = "Cancel";
+"Connect_SDK_Unnamed_Device" = "Unnamed device";
+
+/* Prompt strings */
+"Connect_SDK_Pair_Title" = "Pairing with device";
+"Connect_SDK_Pair_Request" = "Please confirm the connection on your device";
+"Connect_SDK_Pair_Request_Pin" = "Please enter the pin code";
+"Connect_SDK_Pair_OK" = "OK";
+"Connect_SDK_Pair_Cancel" = "Cancel";
