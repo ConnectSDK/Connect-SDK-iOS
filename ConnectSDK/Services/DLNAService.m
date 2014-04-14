@@ -506,15 +506,20 @@
 
 - (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    NSString *mediaType = [[mimeType componentsSeparatedByString:@"/"] firstObject];
+    NSArray *mediaElements = [mimeType componentsSeparatedByString:@"/"];
+    NSString *mediaType = mediaElements[0];
+    NSString *mediaFormat = mediaElements[1];
 
-    if (!mediaType || mediaType.length == 0)
+    if (!mediaType || mediaType.length == 0 || !mediaFormat || mediaFormat.length == 0)
     {
         if (failure)
             failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid mimeType (audio/*, video/*, etc"]);
 
         return;
     }
+
+    mediaFormat = [mediaFormat isEqualToString:@"mp3"] ? @"mpeg" : mediaFormat;
+    mimeType = [NSString stringWithFormat:@"%@/%@", mediaType, mediaFormat];
 
     NSString *shareXML = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>"
                                                             "<s:Envelope s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">"
@@ -523,12 +528,12 @@
                                                             "<InstanceID>0</InstanceID>"
                                                             "<CurrentURI>%@</CurrentURI>"
                                                             "<CurrentURIMetaData>"
-                                                            "&lt;DIDL-Lite xmlns=&quot;urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/&quot; xmlns:upnp=&quot;urn:schemas-upnp-org:metadata-1-0/upnp/&quot; xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;&gt;&lt;item id=&quot;1000&quot;parentID=&quot;0&quot; restricted=&quot;0&quot;&gt;&lt;dc:title&gt;%@&lt;/dc:title&gt;&lt;res protocolInfo=&quot;http-get:*:%@:DLNA.ORG_OP=01&quot;&gt;%@&lt;/res&gt;&lt;upnp:class&gt;object.item.%@Item&lt;/upnp:class&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;"
+                                                            "&lt;DIDL-Lite xmlns=&quot;urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/&quot; xmlns:upnp=&quot;urn:schemas-upnp-org:metadata-1-0/upnp/&quot; xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;&gt;&lt;item id=&quot;0&quot; parentID=&quot;0&quot; restricted=&quot;0&quot;&gt;&lt;dc:title&gt;%@&lt;/dc:title&gt;&lt;dc:description&gt;%@&lt;/dc:description&gt;&lt;res protocolInfo=&quot;http-get:*:%@:DLNA.ORG_PN=MP3;DLNA.ORG_OP=01;DLNA.ORG_FLAGS=01500000000000000000000000000000&quot;&gt;%@&lt;/res&gt;&lt;upnp:albumArtURI&gt;%@&lt;/upnp:albumArtURI&gt;&lt;upnp:class&gt;object.item.%@Item&lt;/upnp:class&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;"
                                                             "</CurrentURIMetaData>"
                                                             "</u:SetAVTransportURI>"
                                                             "</s:Body>"
                                                             "</s:Envelope>",
-                                                    mediaURL.absoluteString, title, mimeType, mediaURL.absoluteString, mediaType];
+                                                    mediaURL.absoluteString, title, description, mimeType, mediaURL.absoluteString, iconURL.absoluteString, mediaType];
     NSDictionary *sharePayload = @{
             kActionFieldName : @"\"urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI\"",
             kDataFieldName : shareXML
