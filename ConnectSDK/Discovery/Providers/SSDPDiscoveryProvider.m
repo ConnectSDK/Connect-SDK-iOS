@@ -33,7 +33,7 @@ NSString* machineName()
     SSDPSocketListener *_multicastSocket;
     SSDPSocketListener *_searchSocket;
 
-    NSMutableArray *_serviceFilters;
+    NSArray *_serviceFilters;
     NSMutableDictionary *_foundServices;
 
     NSTimer *_refreshTimer;
@@ -121,8 +121,8 @@ static double searchAttemptsBeforeKill = 3.0;
     
     NSString *searchFilter = [ssdpInfo objectForKey:@"filter"];
     NSAssert(searchFilter != nil, @"The ssdp info for this device filter has no search filter parameter");
-    
-    [_serviceFilters addObject:parameters];
+
+    _serviceFilters = [_serviceFilters arrayByAddingObject:parameters];
 }
 
 - (void)removeDeviceFilter:(NSDictionary *)parameters
@@ -143,7 +143,11 @@ static double searchAttemptsBeforeKill = 3.0;
     }];
     
     if (shouldRemove)
-        [_serviceFilters removeObjectAtIndex:removalIndex];
+    {
+        NSMutableArray *mutableFilters = [NSMutableArray arrayWithArray:_serviceFilters];
+        [mutableFilters removeObjectAtIndex:removalIndex];
+        _serviceFilters = [NSArray arrayWithArray:mutableFilters];
+    }
 }
 
 #pragma mark - SSDP M-SEARCH Request
@@ -168,31 +172,34 @@ static double searchAttemptsBeforeKill = 3.0;
         
         // 3 detection attempts, if still not present then kill it.
         double killPoint = [[NSDate date] timeIntervalSince1970] - (refreshTime * searchAttemptsBeforeKill);
-        
-        for (NSString *key in _foundServices)
-        {
-            ServiceDescription *service = (ServiceDescription *) [_foundServices objectForKey:key];
-            
-            if (service.lastDetection < killPoint)
-            {
-                [killKeys addObject:key];
-                refresh = YES;
-            }
-        }
-        
-        if (refresh)
-        {
-            [killKeys enumerateObjectsUsingBlock:^(id key, NSUInteger idx, BOOL *stop)
-            {
-                ServiceDescription *service = [_foundServices objectForKey:key];
 
-                dispatch_async(dispatch_get_main_queue(), ^
+        @synchronized (_foundServices)
+        {
+            for (NSString *key in _foundServices)
+            {
+                ServiceDescription *service = (ServiceDescription *) [_foundServices objectForKey:key];
+
+                if (service.lastDetection < killPoint)
                 {
-                    [self.delegate discoveryProvider:self didLoseService:service];
-                });
+                    [killKeys addObject:key];
+                    refresh = YES;
+                }
+            }
 
-                [_foundServices removeObjectForKey:key];
-            }];
+            if (refresh)
+            {
+                [killKeys enumerateObjectsUsingBlock:^(id key, NSUInteger idx, BOOL *stop)
+                {
+                    ServiceDescription *service = [_foundServices objectForKey:key];
+
+                    dispatch_async(dispatch_get_main_queue(), ^
+                    {
+                        [self.delegate discoveryProvider:self didLoseService:service];
+                    });
+
+                    [_foundServices removeObjectForKey:key];
+                }];
+            }
         }
     }
     
@@ -277,18 +284,21 @@ static double searchAttemptsBeforeKill = 3.0;
                 // If it is a NOTIFY - byebye message - try to find a device from a list and send him byebye
                 if ([theHeaderDictionary[@"NTS"] isEqualToString:@"ssdp:byebye"])
                 {
-                    ServiceDescription *theService = _foundServices[theUUID];
-
-                    if (theService != nil)
+                    @synchronized (_foundServices)
                     {
-                        dispatch_async(dispatch_get_main_queue(), ^
+                        ServiceDescription *theService = _foundServices[theUUID];
+
+                        if (theService != nil)
                         {
-                            [self.delegate discoveryProvider:self didLoseService:theService];
-                        });
+                            dispatch_async(dispatch_get_main_queue(), ^
+                            {
+                                [self.delegate discoveryProvider:self didLoseService:theService];
+                            });
 
-                        [_foundServices removeObjectForKey:theUUID];
+                            [_foundServices removeObjectForKey:theUUID];
 
-                        theService = nil;
+                            theService = nil;
+                        }
                     }
                 } else
                 {
@@ -298,8 +308,11 @@ static double searchAttemptsBeforeKill = 3.0;
                     {
                         // Advertising or search-respond
                         // Try to figure out if the device has been dicovered yet
-                        ServiceDescription *foundService = [_foundServices objectForKey:theUUID];
-                        ServiceDescription *helloService = [_helloDevices objectForKey:theUUID];
+                        ServiceDescription *foundService;
+                        ServiceDescription *helloService;
+
+                        @synchronized(_foundServices) { foundService = [_foundServices objectForKey:theUUID]; }
+                        @synchronized(_helloDevices) { helloService = [_helloDevices objectForKey:theUUID]; }
 
                         BOOL isNew = NO;
 
@@ -320,10 +333,14 @@ static double searchAttemptsBeforeKill = 3.0;
                         // If device - newly-created one notify about it's discovering
                         if (isNew)
                         {
-                            if (_helloDevices == nil)
-                                _helloDevices = [NSMutableDictionary dictionary];
+                            @synchronized (_helloDevices)
+                            {
+                                if (_helloDevices == nil)
+                                    _helloDevices = [NSMutableDictionary dictionary];
 
-                            [_helloDevices setObject:foundService forKey:theUUID];
+                                [_helloDevices setObject:foundService forKey:theUUID];
+                            }
+
                             [self getLocationData:location forKey:theUUID andType:theType];
                         }
                     }
@@ -354,7 +371,9 @@ static double searchAttemptsBeforeKill = 3.0;
                 
                 if (hasServices)
                 {
-                    ServiceDescription *service = [_helloDevices objectForKey:UUID];
+                    ServiceDescription *service;
+                    @synchronized(_helloDevices) { service = [_helloDevices objectForKey:UUID]; }
+
                     service.serviceId = [self serviceIdForFilter:theType];
                     service.type = theType;
                     service.friendlyName = friendlyName;
@@ -366,7 +385,7 @@ static double searchAttemptsBeforeKill = 3.0;
                     service.commandURL = response.URL;
                     service.locationResponseHeaders = [((NSHTTPURLResponse *)response) allHeaderFields];
                     
-                    [_foundServices setObject:service forKey:UUID];
+                    @synchronized(_foundServices) { [_foundServices setObject:service forKey:UUID]; }
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.delegate discoveryProvider:self didFindService:service];
@@ -375,7 +394,7 @@ static double searchAttemptsBeforeKill = 3.0;
             }
         }
         
-        [_helloDevices removeObjectForKey:UUID];
+        @synchronized(_helloDevices) { [_helloDevices removeObjectForKey:UUID]; }
     }];
 }
 
@@ -384,7 +403,7 @@ static double searchAttemptsBeforeKill = 3.0;
 - (BOOL) isSearchingForFilter:(NSString *)filter
 {
     __block BOOL containsFilter = NO;
-    
+
     [_serviceFilters enumerateObjectsUsingBlock:^(NSDictionary *serviceFilter, NSUInteger idx, BOOL *stop) {
         NSString *ssdpFilter = [[serviceFilter objectForKey:@"ssdp" ] objectForKey:@"filter"];
         
@@ -401,17 +420,17 @@ static double searchAttemptsBeforeKill = 3.0;
 - (BOOL)device:(NSDictionary *)device containsServicesWithFilter:(NSString *)filter
 {
     __block NSArray *servicesRequired;
-    
+
     [_serviceFilters enumerateObjectsUsingBlock:^(NSDictionary *serviceFilter, NSUInteger idx, BOOL *stop) {
         NSString *ssdpFilter = [[serviceFilter objectForKey:@"ssdp"] objectForKey:@"filter"];
-        
+
         if ([ssdpFilter isEqualToString:filter])
         {
             servicesRequired = [[serviceFilter objectForKey:@"ssdp"] objectForKey:@"requiredServices"];
             *stop = YES;
         }
     }];
-    
+
     if (!servicesRequired)
         return YES;
     
