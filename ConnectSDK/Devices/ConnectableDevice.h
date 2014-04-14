@@ -151,7 +151,7 @@ typedef enum {
  *
  * Example: `Launcher.App.Any`
  *
- * @property capability Capability to test against
+ * @param capability Capability to test against
  */
 - (BOOL) hasCapability:(NSString *)capability;
 
@@ -160,7 +160,7 @@ typedef enum {
  *
  * See hasCapability: for a description of the wildcard feature provided by this method.
  *
- * @property capabilities Array of capabilities to test against
+ * @param capabilities Array of capabilities to test against
  */
 - (BOOL) hasCapabilities:(NSArray *)capabilities;
 
@@ -169,7 +169,7 @@ typedef enum {
  *
  * See hasCapability: for a description of the wildcard feature provided by this method.
  *
- * @property capabilities Array of capabilities to test against
+ * @param capabilities Array of capabilities to test against
  */
 - (BOOL) hasAnyCapability:(NSArray *)capabilities;
 
