@@ -130,7 +130,7 @@ NSString *lgeUDAPRequestURI[8] = {
                 kLauncherApp,
                 kLauncherAppClose,
                 kLauncherAppStore,
-                kLauncherAppStoreParams
+                kLauncherAppStoreParams,
                 kLauncherAppList,
                 kLauncherAppState,
                 kLauncherBrowser,
@@ -171,7 +171,7 @@ NSString *lgeUDAPRequestURI[8] = {
                 kMediaPlayerMetaDataMimeType,
 
                 kLauncherYouTube,
-                kLauncherYouTubeParams,
+                kLauncherYouTubeParams
         ]];
     }
 
