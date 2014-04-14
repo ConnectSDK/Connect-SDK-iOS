@@ -70,6 +70,8 @@
 
 /*!
  * Create a CapabilityFilter with the given array required capabilities.
+ *
+ * @param capabilities Capabilities to be added to the new filter
  */
 + (CapabilityFilter *)filterWithCapabilities:(NSArray *)capabilities;
 
