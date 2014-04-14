@@ -51,8 +51,8 @@
     NSMutableDictionary *_allDevices;
     NSMutableDictionary *_compatibleDevices;
 
-    NSMutableArray *_discoveryProviders;
-    NSMutableDictionary *_deviceClasses;
+    NSArray *_discoveryProviders;
+    NSDictionary *_deviceClasses;
     
     BOOL _shouldResumeSearch;
     BOOL _searching;
@@ -162,13 +162,16 @@
     {
         discoveryProvider = [[discoveryClass alloc] init];
         discoveryProvider.delegate = self;
-        [_discoveryProviders addObject:discoveryProvider];
+        _discoveryProviders = [_discoveryProviders arrayByAddingObject:discoveryProvider];
     }
     
     NSDictionary *discoveryParameters = [deviceClass discoveryParameters];
     
     NSString *serviceId = [discoveryParameters objectForKey:@"serviceId"];
-    [_deviceClasses setObject:deviceClass forKey:serviceId];
+
+    NSMutableDictionary *mutableClasses = [NSMutableDictionary dictionaryWithDictionary:_deviceClasses];
+    [mutableClasses setObject:deviceClass forKey:serviceId];
+    _deviceClasses = [NSDictionary dictionaryWithDictionary:mutableClasses];
     
     [discoveryProvider addDeviceFilter:discoveryParameters];
 }
@@ -197,7 +200,10 @@
     NSDictionary *discoveryParameters = [discoveryClass discoveryParameters];
     
     NSString *serviceId = [discoveryParameters objectForKey:@"serviceId"];
-    [_deviceClasses removeObjectForKey:serviceId];
+
+    NSMutableDictionary *mutableClasses = [NSMutableDictionary dictionaryWithDictionary:_deviceClasses];
+    [mutableClasses removeObjectForKey:serviceId];
+    _deviceClasses = [NSDictionary dictionaryWithDictionary:mutableClasses];
     
     [discoveryProvider removeDeviceFilter:discoveryParameters];
     
@@ -205,7 +211,10 @@
     {
         [discoveryProvider stopDiscovery];
         discoveryProvider.delegate = nil;
-        [_discoveryProviders removeObject:discoveryProvider];
+
+        NSMutableArray *mutableProviders = [NSMutableArray arrayWithArray:_discoveryProviders];
+        [mutableProviders removeObject:discoveryProvider];
+        _discoveryProviders = [NSArray arrayWithArray:mutableProviders];
     }
 }
 
@@ -282,19 +291,26 @@
 {
     _capabilityFilters = capabilityFilters;
 
-    [_compatibleDevices enumerateKeysAndObjectsUsingBlock:^(NSString *address, ConnectableDevice *device, BOOL *stop)
+    @synchronized (_compatibleDevices)
     {
-        if (self.delegate)
-            [self.delegate discoveryManager:self didLoseDevice:device];
-    }];
+        [_compatibleDevices enumerateKeysAndObjectsUsingBlock:^(NSString *address, ConnectableDevice *device, BOOL *stop)
+        {
+            if (self.delegate)
+                [self.delegate discoveryManager:self didLoseDevice:device];
+        }];
+    }
 
     _compatibleDevices = [[NSMutableDictionary alloc] init];
 
-    [[_allDevices allValues] enumerateObjectsUsingBlock:^(ConnectableDevice *device, NSUInteger idx, BOOL *stop)
+    NSArray *allDevices;
+
+    @synchronized (_allDevices) { allDevices = [_allDevices allValues]; }
+
+    [allDevices enumerateObjectsUsingBlock:^(ConnectableDevice *device, NSUInteger idx, BOOL *stop)
     {
         if ([self deviceIsCompatible:device])
         {
-            [_compatibleDevices setValue:device forKey:device.address];
+            @synchronized (_compatibleDevices) { [_compatibleDevices setValue:device forKey:device.address]; }
 
             if (self.delegate)
                 [self.delegate discoveryManager:self didFindDevice:device];
@@ -355,7 +371,7 @@
     if (![self deviceIsCompatible:device])
         return;
 
-    [_compatibleDevices setValue:device forKey:device.address];
+    @synchronized (_compatibleDevices) { [_compatibleDevices setValue:device forKey:device.address]; }
 
     if (self.delegate)
         [self.delegate discoveryManager:self didFindDevice:device];
@@ -370,20 +386,23 @@
 
     if ([self deviceIsCompatible:device])
     {
-        if ([_compatibleDevices objectForKey:device.address])
-        {
-            if (self.delegate)
-                [self.delegate discoveryManager:self didUpdateDevice:device];
+        @synchronized (_compatibleDevices) {
+            if ([_compatibleDevices objectForKey:device.address])
+            {
+                if (self.delegate)
+                    [self.delegate discoveryManager:self didUpdateDevice:device];
 
-            if (_currentPicker)
-                [_currentPicker discoveryManager:self didUpdateDevice:device];
-        } else
-        {
-            [self handleDeviceAdd:device];
+                if (_currentPicker)
+                    [_currentPicker discoveryManager:self didUpdateDevice:device];
+            } else
+            {
+                [self handleDeviceAdd:device];
+            }
         }
     } else
     {
-        [_compatibleDevices removeObjectForKey:device.address];
+        @synchronized (_compatibleDevices) { [_compatibleDevices removeObjectForKey:device.address]; }
+
         [self handleDeviceLoss:device];
     }
 }
@@ -449,12 +468,14 @@
     NSLog(@"DiscoveryManager::discoveryProvider::didFindService %@ (%@)", description.friendlyName, description.serviceId);
     
     BOOL deviceIsNew = NO;
-    ConnectableDevice *device = [_allDevices objectForKey:description.address];
+    ConnectableDevice *device;
+
+    @synchronized (_allDevices) { device = [_allDevices objectForKey:description.address]; }
     
     if (device == nil)
     {
         device = [ConnectableDevice connectableDeviceWithDescription:description];
-        [_allDevices setObject:device forKey:description.address];
+        @synchronized (_allDevices) { [_allDevices setObject:device forKey:description.address]; }
         deviceIsNew = YES;
     }
 
@@ -527,7 +548,9 @@
 {
     NSLog(@"DiscoveryManager::discoveryProvider::didLoseService %@ (%@)", description.friendlyName, description.serviceId);
     
-    ConnectableDevice *device = [_allDevices objectForKey:description.address];
+    ConnectableDevice *device;
+
+    @synchronized (_allDevices) { device = [_allDevices objectForKey:description.address]; }
     
     if (device)
     {
@@ -538,8 +561,8 @@
         if (![device hasServices])
         {
             NSLog(@"DiscoveryManager::discoveryProvider::didLoseService device at address %@ has been orphaned (has no services)", description.address);
-            
-            [_allDevices removeObjectForKey:description.address];
+
+            @synchronized (_allDevices) { [_allDevices removeObjectForKey:description.address]; }
 
             [self handleDeviceLoss:device];
         } else
@@ -592,19 +615,21 @@
 {
     __block ConnectableDevice *foundDevice;
 
-    [_allDevices enumerateKeysAndObjectsUsingBlock:^(id key, ConnectableDevice *device, BOOL *deviceStop)
-    {
-        [device.services enumerateObjectsUsingBlock:^(DeviceService *service, NSUInteger serviceIdx, BOOL *serviceStop)
+    @synchronized (_allDevices) {
+        [_allDevices enumerateKeysAndObjectsUsingBlock:^(id key, ConnectableDevice *device, BOOL *deviceStop)
         {
-            if ([service.serviceConfig.UUID isEqualToString:serviceConfig.UUID])
+            [device.services enumerateObjectsUsingBlock:^(DeviceService *service, NSUInteger serviceIdx, BOOL *serviceStop)
             {
-                foundDevice = device;
+                if ([service.serviceConfig.UUID isEqualToString:serviceConfig.UUID])
+                {
+                    foundDevice = device;
 
-                *serviceStop = YES;
-                *deviceStop = YES;
-            }
+                    *serviceStop = YES;
+                    *deviceStop = YES;
+                }
+            }];
         }];
-    }];
+    }
 
     return foundDevice;
 }
