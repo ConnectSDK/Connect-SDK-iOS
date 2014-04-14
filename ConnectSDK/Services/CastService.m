@@ -641,12 +641,23 @@
 
 - (void)setVolume:(float)volume success:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    NSInteger result = [self.castMediaControlChannel setStreamVolume:volume];
+    NSInteger result;
+    NSString *failureMessage;
+
+    @try
+    {
+        result = [self.castMediaControlChannel setStreamVolume:volume];
+    } @catch (NSException *ex)
+    {
+        // this is likely caused by having no active media session
+        result = kGCKInvalidRequestID;
+        failureMessage = @"There is no active media session to set volume on";
+    }
 
     if (result == kGCKInvalidRequestID)
     {
         if (failure)
-            [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:nil];
+            [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:failureMessage];
     } else
     {
         if (success)
