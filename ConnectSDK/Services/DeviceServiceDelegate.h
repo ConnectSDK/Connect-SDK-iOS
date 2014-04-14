@@ -90,7 +90,7 @@ typedef enum {
 /*!
  * This method will be called upon pairing success. On pairing success, a connection to the DeviceService will be attempted.
  *
- * DeviceService that has successfully completed pairing
+ * @property service DeviceService that has successfully completed pairing
  */
 - (void) deviceServicePairingSuccess:(DeviceService*)service;
 

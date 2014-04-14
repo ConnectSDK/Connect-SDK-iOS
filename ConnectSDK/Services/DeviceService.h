@@ -53,11 +53,16 @@
 
 /*!
  * Returns an instantiated DeviceService of the proper subclass (CastService, WebOSTVService, etc).
+ *
+ * @property class DeviceService subclass to instantiate
+ * @property serviceConfig ServiceConfig with configuration data of device (UUID, etc)
  */
 + (DeviceService *)deviceServiceWithClass:(Class)class serviceConfig:(ServiceConfig *)serviceConfig;
 
 /*!
  * Returns an instantiated DeviceService of the proper subclass (CastService, WebOSTVService, etc).
+ *
+ * @property serviceConfig ServiceConfig with configuration data of device (UUID, etc)
  */
 - (instancetype) initWithServiceConfig:(ServiceConfig *)serviceConfig;
 

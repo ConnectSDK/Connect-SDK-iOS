@@ -137,7 +137,7 @@
 /*!
  * Get a DevicePicker to show compatible ConnectableDevices that have been found by DiscoveryManager.
  *
- * @return DevicePicker singleton
+ * @return DevicePicker DevicePicker singleton for use in picking devices
  */
 - (DevicePicker*) devicePicker;
 
