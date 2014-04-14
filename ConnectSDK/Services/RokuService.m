@@ -494,10 +494,11 @@ static NSMutableArray *registeredApps = nil;
         ];
     } else
     {
-        applicationPath = [NSString stringWithFormat:@"15985?t=a&u=%@&k=(null)&h=%@&songname=%@&songformat=%@",
+        applicationPath = [NSString stringWithFormat:@"15985?t=a&u=%@&k=(null)&h=%@&songname=%@&artistname=%@&songformat=%@",
                                                      [ConnectUtil urlEncode:mediaURL.absoluteString], // content path
                                                      [ConnectUtil urlEncode:host], // host
-                                                     title ? [ConnectUtil urlEncode:title] : @"(null)", // video name
+                                                     title ? [ConnectUtil urlEncode:title] : @"(null)", // song name
+                                                     description ? [ConnectUtil urlEncode:description] : @"(null)", // artist name
                                                      ensureString(mediaType) // audio format
         ];
     }
