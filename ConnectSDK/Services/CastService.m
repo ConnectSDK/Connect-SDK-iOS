@@ -18,6 +18,7 @@
 //  limitations under the License.
 //
 
+#import <GoogleCast/GoogleCast.h>
 #import "CastService.h"
 #import "ConnectError.h"
 #import "CastWebAppSession.h"
@@ -517,7 +518,7 @@
         _launchingAppId = nil;
 
         if (failure)
-            failure([ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:nil]);
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@"Could not detect if web app launched -- make sure you have the Google Cast Receiver JavaScript file in your web app"]);
     }
 }
 
