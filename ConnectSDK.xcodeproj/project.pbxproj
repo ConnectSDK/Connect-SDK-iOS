@@ -10,6 +10,7 @@
 		968C489D18DC5197000CDD38 /* JSONObjectCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 968C489C18DC4FB6000CDD38 /* JSONObjectCoding.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BB9F7045452B9806A4579544 /* CapabilityFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F722B8ADFFE27A3FDB4AC /* CapabilityFilter.m */; };
 		BB9F70CA2114712865B38C27 /* ProgramInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F7E67F387F632C54E4222 /* ProgramInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB9F70ECC8745781D2D26DAC /* DeviceServiceReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F7022A652F5BF5FC179D0 /* DeviceServiceReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BB9F7147DDD6073C12E8C025 /* ProgramInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F77FD23499EBCE1B3CF3B /* ProgramInfo.m */; };
 		BB9F716632D2F06FD7D9F13A /* WebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F76B7120A7C23592A675E /* WebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BB9F7184ABFCF4E78E39947C /* WebOSWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F71EBDA2987D47B5E2830 /* WebOSWebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -24,6 +25,7 @@
 		BB9F793F7191460A4614A575 /* WebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F72097D2470A85AA6BC53 /* WebAppSession.m */; };
 		BB9F79F95DB823388EE975BE /* ConnectUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F76F1355C1C5414ECBEF9 /* ConnectUtil.m */; };
 		BB9F7AA9A1301F513EAB5792 /* WebOSTVServiceMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F72328DDF635DC54D9913 /* WebOSTVServiceMouse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB9F7B8459BD8C8A0E4B9456 /* DeviceServiceReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7E23E6B0B02967932ECF /* DeviceServiceReachability.m */; };
 		BB9F7B9BB123E8C80BA2088A /* CastServiceChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F71FEE736F5B1A9D47351 /* CastServiceChannel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BB9F7BF7B376C8B04AE2002E /* WebAppSessionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F738EE56AE41E05B071CF /* WebAppSessionDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BB9F7C0CE8C057A9974849B7 /* TextInputControl.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F7C0FC0C956481B3361B7 /* TextInputControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -105,6 +107,7 @@
 		EA95E64E18A5541E00D5C1E0 /* CastService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA95E64C18A5541E00D5C1E0 /* CastService.m */; };
 		EA95E65118A5547200D5C1E0 /* CastDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EA95E64F18A5547200D5C1E0 /* CastDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA95E65218A5547200D5C1E0 /* CastDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA95E65018A5547200D5C1E0 /* CastDiscoveryProvider.m */; };
+		EAAADF7C18FCD6CC00986830 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAADF7B18FCD6CC00986830 /* SystemConfiguration.framework */; };
 		EADD381E1899C46D00877C17 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EADD381D1899C46D00877C17 /* MobileCoreServices.framework */; };
 		EADD382B1899C80900877C17 /* GCDWebServer.h in Headers */ = {isa = PBXBuildFile; fileRef = EADD38221899C80900877C17 /* GCDWebServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EADD382C1899C80900877C17 /* GCDWebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD38231899C80900877C17 /* GCDWebServer.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -126,6 +129,7 @@
 
 /* Begin PBXFileReference section */
 		968C489C18DC4FB6000CDD38 /* JSONObjectCoding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSONObjectCoding.h; sourceTree = "<group>"; };
+		BB9F7022A652F5BF5FC179D0 /* DeviceServiceReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceServiceReachability.h; sourceTree = "<group>"; };
 		BB9F71EBDA2987D47B5E2830 /* WebOSWebAppSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebOSWebAppSession.h; sourceTree = "<group>"; };
 		BB9F71FEE736F5B1A9D47351 /* CastServiceChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CastServiceChannel.h; sourceTree = "<group>"; };
 		BB9F72097D2470A85AA6BC53 /* WebAppSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebAppSession.m; sourceTree = "<group>"; };
@@ -149,6 +153,7 @@
 		BB9F7BDC6BB0CD34E9DA5EFE /* ExternalInputInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExternalInputInfo.h; sourceTree = "<group>"; };
 		BB9F7C0FC0C956481B3361B7 /* TextInputControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextInputControl.h; sourceTree = "<group>"; };
 		BB9F7DBAD4521F9DB5C2D191 /* CastServiceChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CastServiceChannel.m; sourceTree = "<group>"; };
+		BB9F7E23E6B0B02967932ECF /* DeviceServiceReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceServiceReachability.m; sourceTree = "<group>"; };
 		BB9F7E67F387F632C54E4222 /* ProgramInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgramInfo.h; sourceTree = "<group>"; };
 		BB9F7E9274577F3A6858A73C /* CastWebAppSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CastWebAppSession.h; sourceTree = "<group>"; };
 		BB9F7F96F5A90CA819142743 /* ConnectUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectUtil.h; sourceTree = "<group>"; };
@@ -223,6 +228,7 @@
 		EA95E64C18A5541E00D5C1E0 /* CastService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CastService.m; sourceTree = "<group>"; };
 		EA95E64F18A5547200D5C1E0 /* CastDiscoveryProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CastDiscoveryProvider.h; sourceTree = "<group>"; };
 		EA95E65018A5547200D5C1E0 /* CastDiscoveryProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CastDiscoveryProvider.m; sourceTree = "<group>"; };
+		EAAADF7B18FCD6CC00986830 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		EADD381D1899C46D00877C17 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		EADD38221899C80900877C17 /* GCDWebServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServer.h; sourceTree = "<group>"; };
 		EADD38231899C80900877C17 /* GCDWebServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServer.m; sourceTree = "<group>"; };
@@ -250,6 +256,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAAADF7C18FCD6CC00986830 /* SystemConfiguration.framework in Frameworks */,
 				EADD381E1899C46D00877C17 /* MobileCoreServices.framework in Frameworks */,
 				F6F2351A17F1E34600575BDD /* CFNetwork.framework in Frameworks */,
 				F6F2351917F1E32700575BDD /* Security.framework in Frameworks */,
@@ -332,6 +339,8 @@
 				BB9F76F1355C1C5414ECBEF9 /* ConnectUtil.m */,
 				BB9F7F96F5A90CA819142743 /* ConnectUtil.h */,
 				968C489C18DC4FB6000CDD38 /* JSONObjectCoding.h */,
+				BB9F7E23E6B0B02967932ECF /* DeviceServiceReachability.m */,
+				BB9F7022A652F5BF5FC179D0 /* DeviceServiceReachability.h */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -495,6 +504,7 @@
 		F695FBEF17D9D204003FCF5A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EAAADF7B18FCD6CC00986830 /* SystemConfiguration.framework */,
 				EADD381D1899C46D00877C17 /* MobileCoreServices.framework */,
 				F68F370C17E0ECBF000C84DA /* CFNetwork.framework */,
 				F68F370817E0ECA2000C84DA /* Security.framework */,
@@ -599,6 +609,7 @@
 				EA21338F18DF9B6A008132E1 /* DefaultConnectableDeviceStore.h in Headers */,
 				EA21338E18DF9B6A008132E1 /* ConnectableDeviceStore.h in Headers */,
 				BB9F7E5BFD98518325030643 /* ConnectUtil.h in Headers */,
+				BB9F70ECC8745781D2D26DAC /* DeviceServiceReachability.h in Headers */,
 				968C489D18DC5197000CDD38 /* JSONObjectCoding.h in Headers */,
 				BB9F7BF7B376C8B04AE2002E /* WebAppSessionDelegate.h in Headers */,
 				BB9F7B9BB123E8C80BA2088A /* CastServiceChannel.h in Headers */,
@@ -744,6 +755,7 @@
 				BB9F7518F5EEA20363CA9770 /* CastWebAppSession.m in Sources */,
 				BB9F79F95DB823388EE975BE /* ConnectUtil.m in Sources */,
 				BB9F77A5E500EAC60E55976F /* CastServiceChannel.m in Sources */,
+				BB9F7B8459BD8C8A0E4B9456 /* DeviceServiceReachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

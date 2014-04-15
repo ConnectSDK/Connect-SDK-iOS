@@ -123,34 +123,22 @@
 
 - (void) connect
 {
-    if (self.isConnectable)
+    [_services enumerateKeysAndObjectsUsingBlock:^(id key, DeviceService *service, BOOL *stop)
     {
-        [_services enumerateKeysAndObjectsUsingBlock:^(id key, DeviceService *service, BOOL *stop)
-        {
-            if (!service.connected)
-                [service connect];
-        }];
-    } else
-    {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(connectableDeviceReady:)])
-            dispatch_on_main(^{ [self.delegate connectableDeviceReady:self]; });
-
-        self.lastConnected = [[NSDate date] timeIntervalSince1970];
-    }
+        if (!service.connected)
+            [service connect];
+    }];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disconnect) name:kConnectSDKWirelessSSIDChanged object:nil];
 }
 
 - (void) disconnect
 {
-    if (self.isConnectable)
+    [_services enumerateKeysAndObjectsUsingBlock:^(id key, DeviceService *service, BOOL *stop)
     {
-        [_services enumerateKeysAndObjectsUsingBlock:^(id key, DeviceService *service, BOOL *stop)
-        {
-            if (service.connected)
-                [service disconnect];
-        }];
-    }
+        if (service.connected)
+            [service disconnect];
+    }];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kConnectSDKWirelessSSIDChanged object:nil];
 
@@ -349,7 +337,7 @@
 - (void)deviceService:(DeviceService *)service disconnectedWithError:(NSError *)error
 {
     // TODO: need to aggregate errors between disconnects
-    if (_services.count == 0)
+    if ([self connectedServiceCount] == 0 || _services.count == 0)
         dispatch_on_main(^{ [self.delegate connectableDeviceDisconnected:self withError:error]; });
 
     if (self.delegate && [self.delegate respondsToSelector:@selector(connectableDevice:service:disconnectedWithError:)])
