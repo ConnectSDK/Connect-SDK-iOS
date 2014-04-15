@@ -18,6 +18,8 @@
 //  limitations under the License.
 //
 
+#define kConnectSDKCastServiceId @"Chromecast"
+
 #import <ConnectSDK/ConnectSDK.h>
 #import <GoogleCast/GoogleCast.h>
 #import "CastServiceChannel.h"

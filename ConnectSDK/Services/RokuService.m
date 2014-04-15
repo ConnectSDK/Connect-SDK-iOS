@@ -47,7 +47,7 @@ static NSMutableArray *registeredApps = nil;
 + (NSDictionary *)discoveryParameters
 {
     return @{
-            @"serviceId" : @"Roku",
+            @"serviceId" : kConnectSDKRokuServiceId,
             @"ssdp" : @{
                     @"filter" : @"roku:ecp"
             }

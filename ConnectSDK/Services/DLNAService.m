@@ -60,7 +60,7 @@
 + (NSDictionary *) discoveryParameters
 {
     return @{
-             @"serviceId":@"DLNA",
+             @"serviceId": kConnectSDKDLNAServiceId,
              @"ssdp":@{
                      @"filter":@"urn:schemas-upnp-org:device:MediaRenderer:1",
                      @"requiredServices":@[

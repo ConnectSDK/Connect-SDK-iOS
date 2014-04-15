@@ -18,6 +18,8 @@
 //  limitations under the License.
 //
 
+#define kConnectSDKDLNAServiceId @"DLNA"
+
 #import <ConnectSDK/ConnectSDK.h>
 #import "Launcher.h"
 #import "MediaControl.h"

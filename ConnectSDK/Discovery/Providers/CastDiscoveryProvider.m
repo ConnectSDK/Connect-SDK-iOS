@@ -21,6 +21,7 @@
 #import "CastDiscoveryProvider.h"
 #import <GoogleCast/GoogleCast.h>
 #import "ServiceDescription.h"
+#import "CastService.h"
 
 @interface CastDiscoveryProvider () <GCKDeviceScannerListener>
 {
@@ -77,7 +78,7 @@
         return;
     
     ServiceDescription *serviceDescription = [ServiceDescription descriptionWithAddress:device.ipAddress UUID:device.deviceID];
-    serviceDescription.serviceId = @"Chromecast";
+    serviceDescription.serviceId = kConnectSDKCastServiceId;
     serviceDescription.friendlyName = device.friendlyName;
     serviceDescription.port = device.servicePort;
     serviceDescription.manufacturer = device.manufacturer;

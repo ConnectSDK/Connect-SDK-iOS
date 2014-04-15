@@ -18,6 +18,8 @@
 //  limitations under the License.
 //
 
+#define kConnectSDKRokuServiceId @"Roku"
+
 #import <ConnectSDK/ConnectSDK.h>
 #import "DIALService.h"
 

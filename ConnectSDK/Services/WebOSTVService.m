@@ -165,7 +165,7 @@
 + (NSDictionary *) discoveryParameters
 {
     return @{
-             @"serviceId":@"webOS TV",
+             @"serviceId": kConnectSDKWebOSTVServiceId,
              @"ssdp":@{
                      @"filter":@"urn:lge-com:service:webos-second-screen:1"
                   }
