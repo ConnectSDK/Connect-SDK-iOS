@@ -128,8 +128,13 @@
     if (!self.connected)
         return;
 
+    self.connected = NO;
+
     [_castDeviceManager leaveApplication];
     [_castDeviceManager disconnect];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
+        dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:nil]; });
 }
 
 #pragma mark - Subscriptions

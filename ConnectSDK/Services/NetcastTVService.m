@@ -23,6 +23,7 @@
 #import "XMLReader.h"
 #import "GCDWebServer.h"
 #import "ConnectUtil.h"
+#import "DeviceServiceReachability.h"
 
 #define kSmartShareName @"SmartShare™"
 
@@ -37,7 +38,7 @@ typedef enum {
     LGE_APPTOAPP_DATA_REQUEST
 } LGE_REQUEST_TYPE;
 
-@interface NetcastTVService() <ServiceCommandDelegate, UIAlertViewDelegate>
+@interface NetcastTVService() <ServiceCommandDelegate, UIAlertViewDelegate, DeviceServiceReachabilityDelegate>
 {
     NSOperationQueue *_commandQueue;
     BOOL _mouseVisible;
@@ -55,6 +56,8 @@ typedef enum {
 
     CGVector _mouseDistance;
     BOOL _mouseIsMoving;
+
+    DeviceServiceReachability *_serviceReachability;
 }
 
 @end
@@ -226,8 +229,28 @@ NSString *lgeUDAPRequestURI[8] = {
         if ([DiscoveryManager sharedManager].pairingLevel == ConnectableDevicePairingLevelOn)
             [self invokePairing];
         else
-            dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
+            [self hConnectSuccess];
     }
+}
+
+- (void) hConnectSuccess
+{
+    _serviceReachability = [DeviceServiceReachability reachabilityWithTargetURL:self.commandURL];
+    _serviceReachability.delegate = self;
+    [_serviceReachability start];
+
+    self.connected = YES;
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
+        dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
+}
+
+- (void) didLoseReachability:(DeviceServiceReachability *)reachability
+{
+    if (self.connected)
+        [self disconnect];
+    else
+        [_serviceReachability stop];
 }
 
 - (void) invokePairing
@@ -321,7 +344,10 @@ NSString *lgeUDAPRequestURI[8] = {
         [self.commandQueue cancelAllOperations];
     } failure:nil];
 
-    dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:nil]; });
+    [_serviceReachability stop];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
+        dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:nil]; });
 }
 
 - (void) startSubscriptionServer
@@ -441,7 +467,6 @@ NSString *lgeUDAPRequestURI[8] = {
 
     ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:targetURL payload:payload];
     command.callbackComplete = ^(NSDictionary *responseDic){
-        self.connected = YES;
         self.serviceConfig.pairingCode = pairingCode;
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -449,8 +474,10 @@ NSString *lgeUDAPRequestURI[8] = {
 
         [self startSubscriptionServer];
 
-        [self.delegate deviceServicePairingSuccess:self];
-        [self.delegate deviceServiceConnectionSuccess:self];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(deviceServicePairingSuccess:)])
+            dispatch_on_main(^{ [self.delegate deviceServicePairingSuccess:self]; });
+
+        [self hConnectSuccess];
     };
     command.callbackError = ^(NSError *error)
     {

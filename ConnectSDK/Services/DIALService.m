@@ -21,10 +21,18 @@
 #import "DIALService.h"
 #import "ConnectError.h"
 #import "XMLReader.h"
+#import "DeviceServiceReachability.h"
 
 static NSMutableArray *registeredApps = nil;
 
+@interface DIALService () <DeviceServiceReachabilityDelegate>
+
+@end
+
 @implementation DIALService
+{
+    DeviceServiceReachability *_serviceReachability;
+}
 
 + (void) initialize
 {
@@ -78,10 +86,42 @@ static NSMutableArray *registeredApps = nil;
     [self probeForAppSupport];
 }
 
+- (BOOL) isConnectable
+{
+    return YES;
+}
+
 - (void) connect
 {
+//    NSString *targetPath = [NSString stringWithFormat:@"http://%@:%@/", self.serviceDescription.address, @(self.serviceDescription.port)];
+//    NSURL *targetURL = [NSURL URLWithString:targetPath];
+
+    _serviceReachability = [DeviceServiceReachability reachabilityWithTargetURL:self.serviceDescription.commandURL];
+    _serviceReachability.delegate = self;
+    [_serviceReachability start];
+
+    self.connected = YES;
+
     if (self.delegate && [self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
         dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
+}
+
+- (void) disconnect
+{
+    self.connected = NO;
+
+    [_serviceReachability stop];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
+        dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:nil]; });
+}
+
+- (void) didLoseReachability:(DeviceServiceReachability *)reachability
+{
+    if (self.connected)
+        [self disconnect];
+    else
+        [_serviceReachability stop];
 }
 
 - (void) probeForAppSupport
