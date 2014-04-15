@@ -17,7 +17,7 @@
 
 @property (nonatomic, readonly) NSURL *targetURL;
 @property (nonatomic) BOOL running;
-@property (nonatomic, weak) id<DeviceServiceReachabilityDelegate> delegate;
+@property (nonatomic) id<DeviceServiceReachabilityDelegate> delegate;
 
 @end
 
