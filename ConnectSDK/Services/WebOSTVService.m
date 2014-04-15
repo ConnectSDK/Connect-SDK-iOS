@@ -1943,6 +1943,12 @@
     [_appToAppSubscriptions setObject:subscription forKey:webAppSession.launchSession.appId];
 }
 
+- (void)joinWebApp:(NSString *)webAppId success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    if (failure)
+        failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
+}
+
 - (void)disconnectFromWebApp:(WebOSWebAppSession *)webAppSession
 {
     __block NSString *appId = [webAppSession.launchSession.rawData objectForKey:@"webAppId"];

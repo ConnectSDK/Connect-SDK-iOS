@@ -18,7 +18,6 @@
 //  limitations under the License.
 //
 
-#import <GoogleCast/GoogleCast.h>
 #import "ServiceConfig.h"
 
 @implementation ServiceConfig
