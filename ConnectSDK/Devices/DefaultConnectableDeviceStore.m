@@ -234,10 +234,7 @@
     ConnectableDevice *storedDevice = [self storedDeviceForDevice:device];
 
     if (!storedDevice)
-    {
-        [self addDevice:device];
         return;
-    }
 
     storedDevice.lastKnownIPAddress = device.lastKnownIPAddress;
     storedDevice.lastSeenOnWifi = device.lastSeenOnWifi;
