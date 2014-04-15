@@ -20,6 +20,24 @@
     return serviceConfig;
 }
 
+- (instancetype) initWithServiceConfig:(ServiceConfig *)serviceConfig
+{
+    self = [super init];
+
+    if (self)
+    {
+        self.UUID = serviceConfig.UUID;
+        self.connected = serviceConfig.connected;
+        self.wasConnected = serviceConfig.wasConnected;
+        self.lastDetection = serviceConfig.lastDetection;
+
+        self.delegate = serviceConfig.delegate;
+        serviceConfig.delegate = nil;
+    }
+
+    return self;
+}
+
 - (instancetype) initWithServiceDescription:(ServiceDescription *)serviceDescription
 {
     self = [super init];
