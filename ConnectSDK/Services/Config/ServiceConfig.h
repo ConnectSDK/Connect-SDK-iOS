@@ -33,6 +33,7 @@
 @property (nonatomic, weak) id<ServiceConfigDelegate> delegate;
 
 + (instancetype) serviceConfigWithJSONObject:(NSDictionary *)dictionary;
+- (instancetype) initWithServiceConfig:(ServiceConfig *)serviceConfig;
 - (instancetype) initWithServiceDescription:(ServiceDescription *)serviceDescription;
 - (void) addObservers;
 - (void) removeObservers;

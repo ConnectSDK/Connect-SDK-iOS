@@ -71,8 +71,7 @@
             _serviceConfig = (WebOSTVServiceConfig *) serviceConfig;
         else
         {
-            _serviceConfig = [[WebOSTVServiceConfig alloc] initWithServiceDescription:self.serviceDescription];
-            _serviceConfig.delegate = serviceConfig.delegate;
+            _serviceConfig = [[WebOSTVServiceConfig alloc] initWithServiceConfig:serviceConfig];
         }
 
         _commandQueue = [[NSMutableArray alloc] init];

@@ -89,8 +89,7 @@ NSString *lgeUDAPRequestURI[8] = {
             _serviceConfig = (NetcastTVServiceConfig *) serviceConfig;
         else
         {
-            _serviceConfig = [[NetcastTVServiceConfig alloc] initWithServiceDescription:self.serviceDescription];
-            _serviceConfig.delegate = serviceConfig.delegate;
+            _serviceConfig = [[NetcastTVServiceConfig alloc] initWithServiceConfig:serviceConfig];
         }
 
         _dlnaService = [[DLNAService alloc] initWithServiceConfig:serviceConfig];
