@@ -319,6 +319,8 @@
 
     if (self.connected)
     {
+        [[[DiscoveryManager sharedManager] deviceStore] addDevice:self];
+
         dispatch_on_main(^{ [self.delegate connectableDeviceReady:self]; });
 
         self.lastConnected = [[NSDate date] timeIntervalSince1970];

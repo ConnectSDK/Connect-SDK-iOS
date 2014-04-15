@@ -354,8 +354,6 @@
 
 - (void) handleDeviceAdd:(ConnectableDevice *)device
 {
-    [self.deviceStore addDevice:device];
-
     if (![self deviceIsCompatible:device])
         return;
 
