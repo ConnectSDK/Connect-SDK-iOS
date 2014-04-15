@@ -29,9 +29,11 @@
     
     UINavigationController *_navigationController;
     UITableViewController *_tableViewController;
-    UIPopoverController *_popover;
-    UIActionSheet *_actionSheet;
     
+    UIActionSheet *_actionSheet;
+    UIView *_actionSheetTargetView;
+    
+    UIPopoverController *_popover;
     NSDictionary *_popoverParams;
 
     dispatch_queue_t _sortQueue;
@@ -135,22 +137,40 @@
 {
     NSString *pickerTitle = NSLocalizedStringFromTable(@"Connect_SDK_Search_Title", @"ConnectSDKStrings", nil);
     NSString *pickerCancel = NSLocalizedStringFromTable(@"Connect_SDK_Search_Cancel", @"ConnectSDKStrings", nil);
-
+    
     _actionSheet = [[UIActionSheet alloc] initWithTitle:pickerTitle
-                                                             delegate:self
-                                                    cancelButtonTitle:pickerCancel
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:nil];
+                                               delegate:self
+                                      cancelButtonTitle:nil
+                                 destructiveButtonTitle:nil
+                                      otherButtonTitles:nil];
 
-
+    
     _actionSheetDeviceList = [_generatedDeviceList copy];
 
     [_actionSheetDeviceList enumerateObjectsUsingBlock:^(ConnectableDevice *device, NSUInteger idx, BOOL *stop)
     {
         [_actionSheet addButtonWithTitle:device.friendlyName];
     }];
-
-    [_actionSheet showInView:sender];
+    
+    _actionSheet.cancelButtonIndex = [_actionSheet addButtonWithTitle:pickerCancel];
+    
+    if ([sender isKindOfClass:[UIBarButtonItem class]])
+        [_actionSheet showFromBarButtonItem:sender animated:_shouldAnimatePicker];
+    else if ([sender isKindOfClass:[UITabBar class]])
+        [_actionSheet showFromTabBar:sender];
+    else if ([sender isKindOfClass:[UIToolbar class]])
+        [_actionSheet showFromToolbar:sender];
+    else if ([sender isKindOfClass:[UIControl class]])
+    {
+        UIControl *senderView = (UIControl *)sender;
+        [_actionSheet showFromRect:senderView.frame inView:senderView.superview animated:_shouldAnimatePicker];
+    } else
+    {
+        [_actionSheet showInView:sender];
+        
+        _actionSheetTargetView = sender;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRotation) name:UIDeviceOrientationDidChangeNotification object:nil];
+    }
 }
 
 - (void) showNavigation
@@ -202,6 +222,7 @@
     if (_actionSheet)
         _actionSheet.delegate = nil;
 
+    _actionSheetTargetView = nil;
     _actionSheet = nil;
     _actionSheetDeviceList = nil;
     _navigationController = nil;
@@ -223,6 +244,8 @@
 
             return [device1Name compare:device2Name];
         }];
+
+        NSAssert(devices.count == _generatedDeviceList.count, @"Array counts don't match up");
     });
 }
 
@@ -242,22 +265,25 @@
 
 - (void) handleRotation
 {
-    if (!_popover || !_popoverParams)
-        return;
-
-    UIView *sourceView = [_popoverParams objectForKey:@"sourceView"];
-    UIView *targetView = [_popoverParams objectForKey:@"targetView"];
-
-    if (!sourceView || !targetView)
-        return;
-
-    CGRect sourceRect = sourceView.bounds;
+    if (_popover && _popoverParams)
+    {
+        UIView *sourceView = [_popoverParams objectForKey:@"sourceView"];
+        UIView *targetView = [_popoverParams objectForKey:@"targetView"];
+        
+        if (!sourceView || !targetView)
+            return;
+        
+        CGRect sourceRect = sourceView.bounds;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wint-conversion"
-    UIPopoverArrowDirection permittedArrowDirections = NULL;
+        UIPopoverArrowDirection permittedArrowDirections = NULL;
 #pragma clang diagnostic pop
-    
-    [_popover presentPopoverFromRect:sourceRect inView:targetView permittedArrowDirections:permittedArrowDirections animated:self.shouldAnimatePicker];
+        
+        [_popover presentPopoverFromRect:sourceRect inView:targetView permittedArrowDirections:permittedArrowDirections animated:self.shouldAnimatePicker];
+    } else if (_actionSheet && _actionSheetTargetView)
+    {
+        [_actionSheet showInView:_actionSheetTargetView];
+    }
 }
 
 #pragma mark UIActionSheet methods
@@ -266,16 +292,8 @@
 {
     if (buttonIndex == actionSheet.cancelButtonIndex)
         return;
-
-    // Need to account for cancel button taking up the 0 index position
-    NSUInteger realButtonIndex;
-
-    if (actionSheet.cancelButtonIndex < _actionSheetDeviceList.count)
-        realButtonIndex = (NSUInteger) (buttonIndex - 1);
-    else
-        realButtonIndex = (NSUInteger) buttonIndex;
-
-    ConnectableDevice *device = [_actionSheetDeviceList objectAtIndex:realButtonIndex];
+    
+    ConnectableDevice *device = [_actionSheetDeviceList objectAtIndex:buttonIndex];
 
     if (![_generatedDeviceList containsObject:device])
     {
