@@ -16,28 +16,21 @@ This project has the following dependencies.
 - Automatic Reference Counting (ARC)
 
 ##Including Connect SDK in your app
-There are two ways you can get started with Connect SDK in your iOS app.
-
-###Link to your project
 1. Clone repository (or download & unzip)
 2. Open your project in Xcode
 3. Locate the Connect SDK Xcode project in the Finder
 4. Drag the Connect SDK Xcode project into your project's Xcode library
 5. Navigate to your project's settings screen, then navigate to the build phases tab
-6. Add ConnectSDK.framework as a Target Dependency
-7. Add ConnectSDK.framework in the Link Binary with Libraries section
+6. Add ConnectSDK as a Target Dependency
+7. Add libConnectSDK.a in the Link Binary with Libraries section
 8. Download the [Google Cast SDK iOS sender library file](https://developers.google.com/cast/docs/downloads)
-9. Extract GoogleCast.framework and move it to PROJECT_DIR/Connect-SDK-iOS/ConnectSDK/Frameworks
-
-###Build framework file
-1. Close Xcode
-2. Install the [iOS Universal Framework](https://github.com/kstenerud/iOS-Universal-Framework) plugin in your Xcode app
-3. Open the Xcode project
-4. Download the [Google Cast SDK iOS sender library file](https://developers.google.com/cast/docs/downloads)
-5. Extract GoogleCast.framework and move it to PROJECT_DIR/Connect-SDK-iOS/ConnectSDK/Frameworks
-6. Build project (any target)
-7. The .framework package that is built can be used in any iOS project that satisfies the dependencies listed above
-8. Be sure to copy the ConnectSDKStrings.strings file into your project
+9. Extract GoogleCast.framework and copy it to $(Connect SDK project directory)/ConnectSDK/Frameworks
+10. Drag and drop GoogleCast.framework into your project's Frameworks folder
+ 
+###Include Strings File for Localization (optional)
+1. Locate the Connect SDK Xcode project in the Finder
+2. Drag the ConnectSDKStrings folder into your project's library
+3. You may make whatever changes you would like to the values and the SDK will use your strings file
 
 ##Contact
 * Twitter: [@ConnectSDK](https://www.twitter.com/ConnectSDK)
