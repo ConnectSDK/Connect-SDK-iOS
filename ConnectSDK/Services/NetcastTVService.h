@@ -3,8 +3,22 @@
 //  Connect SDK
 //
 //  Created by Jeremy White on 12/2/13.
-//  Copyright (c) 2014 LG Electronics. All rights reserved.
+//  Copyright (c) 2014 LG Electronics.
 //
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+
+#define kConnectSDKNetcastTVServiceId @"Netcast TV"
 
 #import <UIKit/UIKit.h>
 #import "DeviceService.h"
@@ -15,7 +29,7 @@
 #import "MediaControl.h"
 #import "ExternalInputControl.h"
 
-@interface NetcastTVService : DeviceService <NSCoding, Launcher, MediaPlayer, MediaControl, VolumeControl, TVControl, KeyControl, MouseControl, PowerControl, ExternalInputControl, TextInputControl>
+@interface NetcastTVService : DeviceService <Launcher, MediaPlayer, MediaControl, VolumeControl, TVControl, KeyControl, MouseControl, PowerControl, ExternalInputControl, TextInputControl>
 
 @property (nonatomic, strong) NetcastTVServiceConfig *serviceConfig;
 
@@ -93,7 +107,9 @@ enum {
     NetcastTVKeyCodeMyApps = 417
 };
 
+// @cond INTERNAL
 typedef NSUInteger NetcastTVKeyCode;
+// @endcond
 
 - (void) pairWithData:(NSString *)pairingData;
 

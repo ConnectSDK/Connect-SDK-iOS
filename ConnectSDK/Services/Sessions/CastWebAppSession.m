@@ -1,6 +1,21 @@
 //
-// Created by Jeremy White on 2/23/14.
-// Copyright (c) 2014 LG Electronics. All rights reserved.
+//  CastWebAppSession.m
+//  Connect SDK
+//
+//  Created by Jeremy White on 2/23/14.
+//  Copyright (c) 2014 LG Electronics.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 #import "CastWebAppSession.h"
@@ -35,6 +50,11 @@
     _castServiceChannel.connectionFailure = channelFailure;
 
     [self.service.castDeviceManager addChannel:_castServiceChannel];
+}
+
+- (void) joinWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self connectWithSuccess:success failure:failure];
 }
 
 - (void)disconnectFromWebApp
@@ -169,6 +189,52 @@
                 mediaPlayStateSuccess(playState);
         }];
     }
+}
+
+#pragma mark - Media Player
+
+- (id <MediaPlayer>) mediaPlayer
+{
+    return self;
+}
+
+- (CapabilityPriorityLevel) mediaPlayerPriority
+{
+    return CapabilityPriorityLevelHigh;
+}
+
+- (void) displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
+{
+    if (failure)
+        failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:nil]);
+}
+
+- (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
+{
+    GCKMediaMetadata *metaData = [[GCKMediaMetadata alloc] initWithMetadataType:GCKMediaMetadataTypeMovie];
+    [metaData setString:title forKey:kGCKMetadataKeyTitle];
+    [metaData setString:description forKey:kGCKMetadataKeySubtitle];
+
+    if (iconURL)
+    {
+        GCKImage *iconImage = [[GCKImage alloc] initWithURL:iconURL width:100 height:100];
+        [metaData addImage:iconImage];
+    }
+
+    GCKMediaInformation *mediaInformation = [[GCKMediaInformation alloc] initWithContentID:mediaURL.absoluteString streamType:GCKMediaStreamTypeBuffered contentType:mimeType metadata:metaData streamDuration:1000 customData:nil];
+
+    [self.service playMedia:mediaInformation webAppId:self.launchSession.appId success:^(LaunchSession *launchSession, id <MediaControl> mediaControl)
+    {
+        self.launchSession.sessionId = launchSession.sessionId;
+
+        if (success)
+            success(self.launchSession, self.mediaControl);
+    } failure:failure];
+}
+
+- (void) closeMedia:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self closeWithSuccess:success failure:failure];
 }
 
 #pragma mark - Media Control

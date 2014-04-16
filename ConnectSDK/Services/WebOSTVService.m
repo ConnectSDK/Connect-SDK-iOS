@@ -3,7 +3,19 @@
 //  Connect SDK
 //
 //  Created by Jeremy White on 12/2/13.
-//  Copyright (c) 2014 LG Electronics. All rights reserved.
+//  Copyright (c) 2014 LG Electronics.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 #import "WebOSTVService.h"
@@ -59,8 +71,7 @@
             _serviceConfig = (WebOSTVServiceConfig *) serviceConfig;
         else
         {
-            _serviceConfig = [[WebOSTVServiceConfig alloc] initWithServiceDescription:self.serviceDescription];
-            _serviceConfig.delegate = serviceConfig.delegate;
+            _serviceConfig = [[WebOSTVServiceConfig alloc] initWithServiceConfig:serviceConfig];
         }
 
         _commandQueue = [[NSMutableArray alloc] init];
@@ -78,6 +89,9 @@
 {
     _serviceDescription = serviceDescription;
 
+    if (!self.serviceConfig.UUID)
+        self.serviceConfig.UUID = serviceDescription.UUID;
+
     NSString *serverInfo = [_serviceDescription.locationResponseHeaders objectForKey:@"Server"];
     NSString *systemOS = [[serverInfo componentsSeparatedByString:@" "] firstObject];
     NSString *systemVersion = [[systemOS componentsSeparatedByString:@"/"] lastObject];
@@ -87,8 +101,6 @@
 
 - (NSArray *)capabilities
 {
-    // TODO: dynamically change capability on 4.0.0 to remove app 2 app support
-
     NSArray *caps = [NSArray array];
 
     if ([DiscoveryManager sharedManager].pairingLevel == ConnectableDevicePairingLevelOn)
@@ -111,21 +123,22 @@
         caps = [caps arrayByAddingObjectsFromArray:kTVControlCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kExternalInputControlCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kToastControlCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kMediaControlCapabilities];
     } else
     {
+        caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
+        caps = [caps arrayByAddingObjectsFromArray:kMediaControlCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:@[
                 kLauncherApp,
                 kLauncherAppParams,
+                kLauncherAppStore,
+                kLauncherAppStoreParams
                 kLauncherAppClose,
                 kLauncherBrowser,
                 kLauncherBrowserParams,
                 kLauncherHulu,
-                kLauncherHuluParams,
                 kLauncherNetflix,
                 kLauncherNetflixParams,
                 kLauncherYouTube,
@@ -133,12 +146,16 @@
                 kLauncherAppState,
                 kLauncherAppStateSubscribe
         ]];
+    }
+
+    if ([_serviceDescription.version rangeOfString:@"4.0.0"].location == NSNotFound)
+        caps = [caps arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
+    else
+    {
         caps = [caps arrayByAddingObjectsFromArray:@[
-                kMediaControlPlay,
-                kMediaControlPause,
-                kMediaControlStop,
-                kMediaControlRewind,
-                kMediaControlFastForward
+                kWebAppLauncherLaunch,
+                kWebAppLauncherLaunchParams,
+                kWebAppLauncherClose
         ]];
     }
 
@@ -148,7 +165,7 @@
 + (NSDictionary *) discoveryParameters
 {
     return @{
-             @"serviceId":@"WebOS TV",
+             @"serviceId": kConnectSDKWebOSTVServiceId,
              @"ssdp":@{
                      @"filter":@"urn:lge-com:service:webos-second-screen:1"
                   }
@@ -329,11 +346,11 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         
-        if ([self.delegate respondsToSelector:@selector(deviceServicePairingSuccess:)])
-            dispatch_on_main(^{ [self.delegate deviceServicePairingSuccess:self]; });
-
-        if ([self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
-            dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
+//        if ([self.delegate respondsToSelector:@selector(deviceServicePairingSuccess:)])
+//            dispatch_on_main(^{ [self.delegate deviceServicePairingSuccess:self]; });
+//
+//        if ([self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
+//            dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
 
         if([_commandQueue count] > 0)
         {
@@ -373,10 +390,10 @@
 
 -(void) showAlert
 {
-    NSString *title = NSLocalizedStringFromTable(@"Connect_SDK_Pair_Title", @"ConnectSDKStrings", nil);
-    NSString *message = NSLocalizedStringFromTable(@"Connect_SDK_Pair_Request", @"ConnectSDKStrings", nil);
-    NSString *ok = NSLocalizedStringFromTable(@"Connect_SDK_Pair_OK", @"ConnectSDKStrings", nil);
-    NSString *cancel = NSLocalizedStringFromTable(@"Connect_SDK_Pair_Cancel", @"ConnectSDKStrings", nil);
+    NSString *title = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Pair_Title" value:@"Pairing with device" table:@"ConnectSDK"];
+    NSString *message = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Pair_Request" value:@"Please confirm the connection on your device" table:@"ConnectSDK"];
+    NSString *ok = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Pair_OK" value:@"OK" table:@"ConnectSDK"];
+    NSString *cancel = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Pair_Cancel" value:@"Cancel" table:@"ConnectSDK"];
     
     _pairingAlert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:ok, nil];
     dispatch_on_main(^{ [_pairingAlert show]; });
@@ -876,6 +893,22 @@
     [self launchApplication:appInfo.id withParams:params success:success failure:failure];
 }
 
+- (void) launchAppStore:(NSString *)appId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    AppInfo *appInfo = [AppInfo appInfoForId:@"com.webos.app.discovery"];
+    appInfo.name = @"LG Store";
+
+    NSDictionary *params;
+
+    if (appId && appId.length > 0)
+    {
+        NSString *query = [NSString stringWithFormat:@"category/GAME_APPS/%@", appId];
+        params = @{ @"query" : query };
+    }
+
+    [self launchAppWithInfo:appInfo params:params success:success failure:failure];
+}
+
 - (void)launchBrowser:(NSURL *)target success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://system.launcher/open"];
@@ -901,7 +934,7 @@
 {
     NSDictionary *params = @{ @"hulu" : contentId };
     
-    [self launchApplication:@"youtube.leanback.v4" withParams:params success:success failure:failure];
+    [self launchApplication:@"hulu" withParams:params success:success failure:failure];
 }
 
 - (void)launchNetflix:(NSString *)contentId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
@@ -1656,11 +1689,11 @@
     _mouseInit = NO;
 }
 
-- (void)moveWithX:(double)xVal andY:(double)yVal success:(SuccessBlock)success failure:(FailureBlock)failure
+- (void) move:(CGVector)distance success:(SuccessBlock)success failure:(FailureBlock)failure
 {
     if (self.mouseSocket)
     {
-        [self.mouseSocket moveWithX:xVal andY:yVal];
+        [self.mouseSocket move:distance];
 
         if (success)
             success(nil);
@@ -1671,11 +1704,11 @@
     }
 }
 
-- (void)scrollWithX:(double)xVal andY:(double)yVal success:(SuccessBlock)success failure:(FailureBlock)failure
+- (void) scroll:(CGVector)distance success:(SuccessBlock)success failure:(FailureBlock)failure
 {
     if (self.mouseSocket)
     {
-        [self.mouseSocket scrollWithX:xVal andY:yVal];
+        [self.mouseSocket scroll:distance];
 
         if (success)
             success(nil);
@@ -1822,6 +1855,11 @@
         return;
     }
 
+    WebOSWebAppSession *webAppSession = [[WebOSWebAppSession alloc] init];
+    webAppSession.launchSession = launchSession;
+
+    [self disconnectFromWebApp:webAppSession];
+
     NSURL *URL = [NSURL URLWithString:@"ssap://webapp/closeWebApp"];
 
     NSMutableDictionary *payload = [NSMutableDictionary new];
@@ -1834,7 +1872,30 @@
     [command send];
 }
 
-- (void)connectToWebApp:(WebOSWebAppSession *)webAppSession messageCallback:(WebAppMessageBlock)messageCallback success:(SuccessBlock)success failure:(FailureBlock)failure
+- (void)connectToWebApp:(WebOSWebAppSession *)webAppSession success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self connectToWebApp:webAppSession joinOnly:NO success:success failure:failure];
+}
+
+- (void)joinWebApp:(LaunchSession *)webAppLaunchSession success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    WebOSWebAppSession *webAppSession = [[WebOSWebAppSession alloc] initWithLaunchSession:webAppLaunchSession service:self];
+    [webAppSession joinWithSuccess:^(id responseObject)
+    {
+        if (success)
+            success(webAppSession);
+    } failure:failure];
+
+//    SuccessBlock connectSuccess = ^(id responseObject)
+//    {
+//        if (success)
+//            success(webAppSession);
+//    };
+//
+//    [self connectToWebApp:webAppSession joinOnly:YES success:connectSuccess failure:failure];
+}
+
+- (void) connectToWebApp:(WebOSWebAppSession *)webAppSession joinOnly:(BOOL)joinOnly success:(SuccessBlock)success failure:(FailureBlock)failure
 {
     if (!_appToAppMessageCallbacks)
         _appToAppMessageCallbacks = [NSMutableDictionary new];
@@ -1842,14 +1903,14 @@
     if (!_appToAppSubscriptions)
         _appToAppSubscriptions = [NSMutableDictionary new];
 
-    if (!webAppSession || !webAppSession.launchSession || !webAppSession.launchSession.rawData)
+    if (!webAppSession || !webAppSession.launchSession)
     {
         if (failure)
             failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid LaunchSession object."]);
         return;
     }
 
-    if (!messageCallback)
+    if (!webAppSession.messageHandler)
     {
         if (failure)
             failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a message handler callback."]);
@@ -1860,27 +1921,6 @@
 
     NSMutableDictionary *payload = [NSMutableDictionary new];
     [payload setValue:ensureString(webAppSession.launchSession.appId) forKey:@"webAppId"];
-    
-    SuccessBlock connectSuccess = ^(id responseObject) {
-        NSString *state = [responseObject objectForKey:@"state"];
-        
-        if (![state isEqualToString:@"CONNECTED"])
-            return;
-        
-        NSString *appId = [responseObject objectForKey:@"appId"];
-
-        if (appId)
-        {
-            [_appToAppMessageCallbacks setObject:messageCallback forKey:appId];
-
-            NSMutableDictionary *newRawData = [NSMutableDictionary dictionaryWithDictionary:webAppSession.launchSession.rawData];
-            [newRawData setObject:appId forKey:@"webAppId"];
-            webAppSession.launchSession.rawData = [NSDictionary dictionaryWithDictionary:newRawData];
-        }
-
-        if (success)
-            success(responseObject);
-    };
 
     FailureBlock connectFailure = ^(NSError *error)
     {
@@ -1888,11 +1928,13 @@
 
         if (connectionSubscription)
         {
-            // TODO: test this
-            if ([self.serviceDescription.version rangeOfString:@"4.0"].location != NSNotFound)
+            if ([self.serviceDescription.version rangeOfString:@"4.0."].location == NSNotFound)
             {
                 [connectionSubscription unsubscribe];
                 [_appToAppSubscriptions removeObjectForKey:webAppSession.launchSession.appId];
+            } else
+            {
+                // TODO: do something here
             }
         }
 
@@ -1908,7 +1950,42 @@
                 failure(error);
         }
     };
-    
+
+    SuccessBlock connectSuccess = ^(id responseObject) {
+        NSString *state = [responseObject objectForKey:@"state"];
+
+        if (![state isEqualToString:@"CONNECTED"])
+        {
+            if (joinOnly && [state isEqualToString:@"WAITING_FOR_APP"])
+            {
+                if (connectFailure)
+                    connectFailure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Web app is not currently running"]);
+            }
+
+            return;
+        }
+
+        NSString *appId = [responseObject objectForKey:@"appId"];
+
+        if (appId)
+        {
+            [_appToAppMessageCallbacks setObject:webAppSession.messageHandler forKey:appId];
+
+            NSMutableDictionary *newRawData;
+
+            if (webAppSession.launchSession.rawData)
+                newRawData = [NSMutableDictionary dictionaryWithDictionary:webAppSession.launchSession.rawData];
+            else
+                newRawData = [NSMutableDictionary new];
+
+            [newRawData setObject:appId forKey:@"webAppId"];
+            webAppSession.launchSession.rawData = [NSDictionary dictionaryWithDictionary:newRawData];
+        }
+
+        if (success)
+            success(responseObject);
+    };
+
     ServiceSubscription *subscription = [self addSubscribe:URL payload:payload success:connectSuccess failure:connectFailure];
     [_appToAppSubscriptions setObject:subscription forKey:webAppSession.launchSession.appId];
 }
@@ -1936,11 +2013,13 @@
 
     if (connectionSubscription)
     {
-        // TODO: test this
-        if ([self.serviceDescription.version rangeOfString:@"4.0"].location != NSNotFound)
+        if ([self.serviceDescription.version rangeOfString:@"4.0."].location == NSNotFound)
         {
             [connectionSubscription unsubscribe];
             [_appToAppSubscriptions removeObjectForKey:webAppSession.launchSession.appId];
+        } else
+        {
+            // TODO: do something here
         }
     }
 }

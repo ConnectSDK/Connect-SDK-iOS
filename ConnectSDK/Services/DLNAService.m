@@ -3,21 +3,35 @@
 //  Connect SDK
 //
 //  Created by Jeremy White on 12/13/13.
-//  Copyright (c) 2014 LG Electronics. All rights reserved.
+//  Copyright (c) 2014 LG Electronics.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 #import "DLNAService.h"
 #import "ConnectError.h"
 #import "XMLReader.h"
 #import "ConnectUtil.h"
+#import "DeviceServiceReachability.h"
 
 #define kDataFieldName @"XMLData"
 #define kActionFieldName @"SOAPAction"
 
-@interface DLNAService() <ServiceCommandDelegate>
+@interface DLNAService() <ServiceCommandDelegate, DeviceServiceReachabilityDelegate>
 {
 //    NSOperationQueue *_commandQueue;
     NSURL *_commandURL;
+    DeviceServiceReachability *_serviceReachability;
 }
 
 @end
@@ -28,8 +42,8 @@
 {
     return @[
             kMediaPlayerDisplayImage,
-            kMediaPlayerDisplayVideo,
-            kMediaPlayerDisplayAudio,
+            kMediaPlayerPlayVideo,
+            kMediaPlayerPlayAudio,
             kMediaPlayerClose,
             kMediaPlayerMetaDataTitle,
             kMediaPlayerMetaDataMimeType,
@@ -46,7 +60,7 @@
 + (NSDictionary *) discoveryParameters
 {
     return @{
-             @"serviceId":@"DLNA",
+             @"serviceId": kConnectSDKDLNAServiceId,
              @"ssdp":@{
                      @"filter":@"urn:schemas-upnp-org:device:MediaRenderer:1",
                      @"requiredServices":@[
@@ -115,6 +129,44 @@
     }
 
     return nil;
+}
+
+- (BOOL) isConnectable
+{
+    return YES;
+}
+
+- (void) connect
+{
+//    NSString *targetPath = [NSString stringWithFormat:@"http://%@:%@/", self.serviceDescription.address, @(self.serviceDescription.port)];
+//    NSURL *targetURL = [NSURL URLWithString:targetPath];
+
+    _serviceReachability = [DeviceServiceReachability reachabilityWithTargetURL:self.commandURL];
+    _serviceReachability.delegate = self;
+    [_serviceReachability start];
+
+    self.connected = YES;
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
+        dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
+}
+
+- (void) disconnect
+{
+    self.connected = NO;
+
+    [_serviceReachability stop];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
+        dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:nil]; });
+}
+
+- (void) didLoseReachability:(DeviceServiceReachability *)reachability
+{
+    if (self.connected)
+        [self disconnect];
+    else
+        [_serviceReachability stop];
 }
 
 #pragma mark - ServiceCommandDelegate
@@ -296,13 +348,7 @@
     };
 
     ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self target:[self commandURL] payload:commandPayload];
-    command.callbackComplete = ^(id responseObject)
-    {
-        NSLog(@"SEEK");
-
-        if (success)
-            success(nil);
-    };
+    command.callbackComplete = success;
     command.callbackError = failure;
     [command send];
 }
@@ -494,15 +540,20 @@
 
 - (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    NSString *mediaType = [[mimeType componentsSeparatedByString:@"/"] firstObject];
+    NSArray *mediaElements = [mimeType componentsSeparatedByString:@"/"];
+    NSString *mediaType = mediaElements[0];
+    NSString *mediaFormat = mediaElements[1];
 
-    if (!mediaType || mediaType.length == 0)
+    if (!mediaType || mediaType.length == 0 || !mediaFormat || mediaFormat.length == 0)
     {
         if (failure)
             failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid mimeType (audio/*, video/*, etc"]);
 
         return;
     }
+
+    mediaFormat = [mediaFormat isEqualToString:@"mp3"] ? @"mpeg" : mediaFormat;
+    mimeType = [NSString stringWithFormat:@"%@/%@", mediaType, mediaFormat];
 
     NSString *shareXML = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>"
                                                             "<s:Envelope s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">"
@@ -511,12 +562,12 @@
                                                             "<InstanceID>0</InstanceID>"
                                                             "<CurrentURI>%@</CurrentURI>"
                                                             "<CurrentURIMetaData>"
-                                                            "&lt;DIDL-Lite xmlns=&quot;urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/&quot; xmlns:upnp=&quot;urn:schemas-upnp-org:metadata-1-0/upnp/&quot; xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;&gt;&lt;item id=&quot;1000&quot;parentID=&quot;0&quot; restricted=&quot;0&quot;&gt;&lt;dc:title&gt;%@&lt;/dc:title&gt;&lt;res protocolInfo=&quot;http-get:*:%@:DLNA.ORG_OP=01&quot;&gt;%@&lt;/res&gt;&lt;upnp:class&gt;object.item.%@Item&lt;/upnp:class&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;"
+                                                            "&lt;DIDL-Lite xmlns=&quot;urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/&quot; xmlns:upnp=&quot;urn:schemas-upnp-org:metadata-1-0/upnp/&quot; xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;&gt;&lt;item id=&quot;0&quot; parentID=&quot;0&quot; restricted=&quot;0&quot;&gt;&lt;dc:title&gt;%@&lt;/dc:title&gt;&lt;dc:description&gt;%@&lt;/dc:description&gt;&lt;res protocolInfo=&quot;http-get:*:%@:DLNA.ORG_PN=MP3;DLNA.ORG_OP=01;DLNA.ORG_FLAGS=01500000000000000000000000000000&quot;&gt;%@&lt;/res&gt;&lt;upnp:albumArtURI&gt;%@&lt;/upnp:albumArtURI&gt;&lt;upnp:class&gt;object.item.%@Item&lt;/upnp:class&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;"
                                                             "</CurrentURIMetaData>"
                                                             "</u:SetAVTransportURI>"
                                                             "</s:Body>"
                                                             "</s:Envelope>",
-                                                    mediaURL.absoluteString, title, mimeType, mediaURL.absoluteString, mediaType];
+                                                    mediaURL.absoluteString, title, description, mimeType, mediaURL.absoluteString, iconURL.absoluteString, mediaType];
     NSDictionary *sharePayload = @{
             kActionFieldName : @"\"urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI\"",
             kDataFieldName : shareXML

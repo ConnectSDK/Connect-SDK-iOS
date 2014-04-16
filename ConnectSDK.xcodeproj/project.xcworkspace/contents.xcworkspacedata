@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:ConnectSDK.xcodeproj">
+      location = "self:Connect SDK.xcodeproj">
    </FileRef>
 </Workspace>

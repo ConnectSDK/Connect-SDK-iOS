@@ -3,44 +3,70 @@
 //  ConnectSDK
 //
 //  Created by Jeremy White on 2/14/14.
-//  Copyright (c) 2014 LG Electronics. All rights reserved.
+//  Copyright (c) 2014 LG Electronics.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 #import "RokuService.h"
 #import "ConnectError.h"
 #import "XMLReader.h"
 #import "ConnectUtil.h"
+#import "DeviceServiceReachability.h"
 
-@interface RokuService () <ServiceCommandDelegate>
+@interface RokuService () <ServiceCommandDelegate, DeviceServiceReachabilityDelegate>
 {
     DIALService *_dialService;
+    DeviceServiceReachability *_serviceReachability;
 }
 @end
 
+static NSMutableArray *registeredApps = nil;
+
 @implementation RokuService
+
++ (void) initialize
+{
+    registeredApps = [NSMutableArray arrayWithArray:@[
+            @"YouTube",
+            @"Netflix",
+            @"Amazon"
+    ]];
+}
 
 + (NSDictionary *)discoveryParameters
 {
     return @{
-            @"serviceId" : @"Roku",
+            @"serviceId" : kConnectSDKRokuServiceId,
             @"ssdp" : @{
                     @"filter" : @"roku:ecp"
             }
     };
 }
 
-- (NSArray *)capabilities
+- (void) setupCapabilities
 {
-    NSArray *caps = [super capabilities];
-    caps = [caps arrayByAddingObjectsFromArray:@[
+    [self addCapabilities:@[
             kLauncherAppList,
             kLauncherApp,
             kLauncherAppParams,
+            kLauncherAppStore,
+            kLauncherAppStoreParams
             kLauncherAppClose,
 
             kMediaPlayerDisplayImage,
-            kMediaPlayerDisplayVideo,
-            kMediaPlayerDisplayAudio,
+            kMediaPlayerPlayVideo,
+            kMediaPlayerPlayAudio,
             kMediaPlayerClose,
             kMediaPlayerMetaDataTitle,
 
@@ -53,15 +79,87 @@
             kTextInputControlSendEnter,
             kTextInputControlSendDelete
     ]];
-    caps = [caps arrayByAddingObjectsFromArray:kKeyControlCapabilities];
+    [self addCapabilities:kKeyControlCapabilities];
+}
 
-    return caps;
+- (instancetype) initWithServiceConfig:(ServiceConfig *)serviceConfig
+{
+    self = [super initWithServiceConfig:serviceConfig];
+
+    if (self)
+    {
+        [self setupCapabilities];
+    }
+
+    return self;
+}
+
+- (instancetype) initWithJSONObject:(NSDictionary *)dict
+{
+    self = [super initWithJSONObject:dict];
+
+    if (self)
+    {
+        [self setupCapabilities];
+    }
+
+    return self;
+}
+
++ (void) registerApp:(NSString *)appId
+{
+    if (![registeredApps containsObject:appId])
+        [registeredApps addObject:appId];
+}
+
+- (void) probeForApps
+{
+    [registeredApps enumerateObjectsUsingBlock:^(NSString *appName, NSUInteger idx, BOOL *stop)
+    {
+        [self hasApp:appName success:^(AppInfo *appInfo)
+        {
+            NSString *capability = [NSString stringWithFormat:@"Launcher.%@", appName];
+            [self addCapability:capability];
+        } failure:nil];
+    }];
+}
+
+- (BOOL) isConnectable
+{
+    return YES;
 }
 
 - (void) connect
 {
+    NSString *targetPath = [NSString stringWithFormat:@"http://%@:%@/", self.serviceDescription.address, @(self.serviceDescription.port)];
+    NSURL *targetURL = [NSURL URLWithString:targetPath];
+
+    _serviceReachability = [DeviceServiceReachability reachabilityWithTargetURL:targetURL];
+    _serviceReachability.delegate = self;
+    [_serviceReachability start];
+
+    self.connected = YES;
+
     if (self.delegate && [self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
         dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
+}
+
+- (void) disconnect
+{
+    self.connected = NO;
+
+    [_serviceReachability stop];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
+        dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:nil]; });
+}
+
+- (void) didLoseReachability:(DeviceServiceReachability *)reachability
+{
+    if (self.connected)
+        [self disconnect];
+    else
+        [_serviceReachability stop];
 }
 
 - (void)setServiceDescription:(ServiceDescription *)serviceDescription
@@ -71,6 +169,8 @@
     self.serviceDescription.port = 8060;
     NSString *commandPath = [NSString stringWithFormat:@"http://%@:%@", self.serviceDescription.address, @(self.serviceDescription.port)];
     self.serviceDescription.commandURL = [NSURL URLWithString:commandPath];
+
+    [self probeForApps];
 }
 
 - (DIALService *) dialService
@@ -123,12 +223,24 @@
 
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
     {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        
         if (connectionError)
         {
             if (command.callbackError)
                 dispatch_on_main(^{ command.callbackError(connectionError); });
         } else
         {
+            if ([httpResponse statusCode] < 200 || [httpResponse statusCode] >= 300)
+            {
+                NSError *error = [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:nil];
+                
+                if (command.callbackError)
+                    command.callbackError(error);
+                
+                return;
+            }
+            
             NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 
             if (command.callbackComplete)
@@ -182,10 +294,27 @@
 
     NSURL *targetURL = [self.serviceDescription.commandURL URLByAppendingPathComponent:@"launch"];
     targetURL = [targetURL URLByAppendingPathComponent:appInfo.id];
-
-    // TODO: support URL parameters
+    
     if (params)
-        NSLog(@"RokuService does not yet support launching with parameters.");
+    {
+        __block NSString *queryParams = @"";
+        __block int count = 0;
+        
+        [params enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *value, BOOL *stop) {
+            NSString *prefix = (count == 0) ? @"?" : @"&";
+            
+            NSString *urlSafeKey = [ConnectUtil urlEncode:key];
+            NSString *urlSafeValue = [ConnectUtil urlEncode:value];
+            
+            NSString *appendString = [NSString stringWithFormat:@"%@%@=%@", prefix, urlSafeKey, urlSafeValue];
+            queryParams = [queryParams stringByAppendingString:appendString];
+            
+            count++;
+        }];
+        
+        NSString *targetPath = [NSString stringWithFormat:@"%@%@", targetURL.absoluteString, queryParams];
+        targetURL = [NSURL URLWithString:targetPath];
+    }
 
     ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:targetURL payload:nil];
     command.callbackComplete = ^(id responseObject)
@@ -213,6 +342,19 @@
     }
 }
 
+- (void) launchAppStore:(NSString *)appId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    AppInfo *appInfo = [AppInfo appInfoForId:@"11"];
+    appInfo.name = @"Channel Store";
+
+    NSDictionary *params;
+
+    if (appId && appId.length > 0)
+        params = @{ @"contentId" : appId };
+
+    [self launchAppWithInfo:appInfo params:params success:success failure:failure];
+}
+
 - (void)launchBrowser:(NSURL *)target success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
     if (failure)
@@ -227,8 +369,32 @@
 
 - (void)launchNetflix:(NSString *)contentId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
-    if (failure)
-        failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
+    [self getAppListWithSuccess:^(NSArray *appList)
+    {
+        __block AppInfo *foundAppInfo;
+
+        [appList enumerateObjectsUsingBlock:^(AppInfo *appInfo, NSUInteger idx, BOOL *stop)
+        {
+            if ([appInfo.name isEqualToString:@"Netflix"])
+            {
+                foundAppInfo = appInfo;
+                *stop = YES;
+            }
+        }];
+
+        if (foundAppInfo)
+        {
+            NSMutableDictionary *params = [NSMutableDictionary new];
+            params[@"mediaType"] = @"movie";
+            if (contentId && contentId.length > 0) params[@"contentId"] = contentId;
+
+            [self launchAppWithInfo:foundAppInfo params:params success:success failure:failure];
+        } else
+        {
+            if (failure)
+                failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Netflix app could not be found on TV"]);
+        }
+    } failure:failure];
 }
 
 - (void)closeApp:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
@@ -374,10 +540,11 @@
         ];
     } else
     {
-        applicationPath = [NSString stringWithFormat:@"15985?t=a&u=%@&k=(null)&h=%@&songname=%@&songformat=%@",
+        applicationPath = [NSString stringWithFormat:@"15985?t=a&u=%@&k=(null)&h=%@&songname=%@&artistname=%@&songformat=%@",
                                                      [ConnectUtil urlEncode:mediaURL.absoluteString], // content path
                                                      [ConnectUtil urlEncode:host], // host
-                                                     title ? [ConnectUtil urlEncode:title] : @"(null)", // video name
+                                                     title ? [ConnectUtil urlEncode:title] : @"(null)", // song name
+                                                     description ? [ConnectUtil urlEncode:description] : @"(null)", // artist name
                                                      ensureString(mediaType) // audio format
         ];
     }
@@ -609,6 +776,40 @@
     appInfo.rawData = [appDictionary copy];
 
     return appInfo;
+}
+
+- (void) hasApp:(NSString *)appName success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self.launcher getAppListWithSuccess:^(NSArray *appList)
+    {
+        if (appList)
+        {
+            __block AppInfo *foundAppInfo;
+
+            [appList enumerateObjectsUsingBlock:^(AppInfo *appInfo, NSUInteger idx, BOOL *stop)
+            {
+                if ([appInfo.name isEqualToString:appName])
+                {
+                    foundAppInfo = appInfo;
+                    *stop = YES;
+                }
+            }];
+
+            if (foundAppInfo)
+            {
+                if (success)
+                    success(foundAppInfo);
+            } else
+            {
+                if (failure)
+                    failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Could not find this app on the TV"]);
+            }
+        } else
+        {
+            if (failure)
+                failure([ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@"Could not find any apps on the TV."]);
+        }
+    } failure:failure];
 }
 
 @end

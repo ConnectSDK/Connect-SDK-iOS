@@ -3,7 +3,19 @@
 //  Connect SDK
 //
 //  Created by Andrew Longstaff on 9/6/13.
-//  Copyright (c) 2014 LG Electronics. All rights reserved.
+//  Copyright (c) 2014 LG Electronics.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 #import "ServiceDescription.h"
@@ -30,52 +42,51 @@
     return [[ServiceDescription alloc] initWithAddress:address UUID:UUID];
 }
 
-#pragma mark - NSCoding methods
+#pragma mark - JSONObjectCoding methods
 
-- (id) initWithCoder:(NSCoder *)aDecoder
+- (instancetype) initWithJSONObject:(NSDictionary *)dict
 {
-    NSString *address = [aDecoder decodeObjectForKey:@"address"];
-    NSString *UUID = [aDecoder decodeObjectForKey:@"UUID"];
-
-    self = [self initWithAddress:address UUID:UUID];
+    self = [super init];
 
     if (self)
     {
-        self.serviceId = [aDecoder decodeObjectForKey:@"serviceId"];
-        self.port = [aDecoder decodeIntegerForKey:@"port"];
-        self.type = [aDecoder decodeObjectForKey:@"type"];
-        self.version = [aDecoder decodeObjectForKey:@"version"];
-        self.friendlyName = [aDecoder decodeObjectForKey:@"friendlyName"];
-        self.manufacturer = [aDecoder decodeObjectForKey:@"manufacturer"];
-        self.modelName = [aDecoder decodeObjectForKey:@"modelName"];
-        self.modelDescription = [aDecoder decodeObjectForKey:@"modelDescription"];
-        self.modelNumber = [aDecoder decodeObjectForKey:@"modelNumber"];
-        self.commandURL = [aDecoder decodeObjectForKey:@"commandURL"];
-        self.locationXML = [aDecoder decodeObjectForKey:@"locationXML"];
-        self.locationResponseHeaders = [aDecoder decodeObjectForKey:@"locationResponseHeaders"];
-        self.lastDetection = [aDecoder decodeDoubleForKey:@"lastDetection"];
+        self.serviceId = dict[@"serviceId"];
+        self.port = [dict[@"port"] intValue];
+        self.UUID = dict[@"UUID"];
+        self.type = dict[@"serviceId"];
+        self.version = dict[@"version"];
+        self.friendlyName = dict[@"friendlyName"];
+        self.manufacturer = dict[@"manufacturer"];
+        self.modelName = dict[@"modelName"];
+        self.modelDescription = dict[@"modelDescription"];
+        self.modelNumber = dict[@"modelNumber"];
+
+        NSString *commandPath = dict[@"commandURL"];
+
+        if (commandPath)
+            self.commandURL = [NSURL URLWithString:commandPath];
     }
 
     return self;
 }
 
-- (void) encodeWithCoder:(NSCoder *)aCoder
+- (NSDictionary *) toJSONObject
 {
-    [aCoder encodeObject:self.address forKey:@"address"];
-    [aCoder encodeObject:self.serviceId forKey:@"serviceId"];
-    [aCoder encodeInteger:self.port forKey:@"port"];
-    [aCoder encodeObject:self.UUID forKey:@"UUID"];
-    [aCoder encodeObject:self.type forKey:@"type"];
-    [aCoder encodeObject:self.version forKey:@"version"];
-    [aCoder encodeObject:self.friendlyName forKey:@"friendlyName"];
-    [aCoder encodeObject:self.manufacturer forKey:@"manufacturer"];
-    [aCoder encodeObject:self.modelName forKey:@"modelName"];
-    [aCoder encodeObject:self.modelDescription forKey:@"modelDescription"];
-    [aCoder encodeObject:self.modelNumber forKey:@"modelNumber"];
-    [aCoder encodeObject:self.commandURL forKey:@"commandURL"];
-    [aCoder encodeObject:self.locationXML forKey:@"locationXML"];
-    [aCoder encodeObject:self.locationResponseHeaders forKey:@"locationResponseHeaders"];
-    [aCoder encodeDouble:self.lastDetection forKey:@"lastDetection"];
+    NSMutableDictionary *dictionary = [NSMutableDictionary new];
+
+    if (self.serviceId) dictionary[@"serviceId"] = self.serviceId;
+    if (self.port) dictionary[@"port"] = @(self.port);
+    if (self.UUID) dictionary[@"UUID"] = self.UUID;
+    if (self.type) dictionary[@"type"] = self.type;
+    if (self.version) dictionary[@"version"] = self.version;
+    if (self.friendlyName) dictionary[@"friendlyName"] = self.friendlyName;
+    if (self.manufacturer) dictionary[@"manufacturer"] = self.manufacturer;
+    if (self.modelName) dictionary[@"modelName"] = self.modelName;
+    if (self.modelDescription) dictionary[@"modelDescription"] = self.modelDescription;
+    if (self.modelNumber) dictionary[@"modelNumber"] = self.modelNumber;
+    if (self.commandURL) dictionary[@"commandURL"] = self.commandURL.absoluteString;
+
+    return [NSDictionary dictionaryWithDictionary:dictionary];
 }
 
 @end

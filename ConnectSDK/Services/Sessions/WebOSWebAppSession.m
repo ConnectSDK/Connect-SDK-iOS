@@ -1,6 +1,21 @@
 //
-// Created by Jeremy White on 2/23/14.
-// Copyright (c) 2014 LG Electronics. All rights reserved.
+//  WebOSWebAppSession.m
+//  Connect SDK
+//
+//  Created by Jeremy White on 2/23/14.
+//  Copyright (c) 2014 LG Electronics.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 #import "WebOSWebAppSession.h"
@@ -9,7 +24,6 @@
 
 @implementation WebOSWebAppSession
 {
-    WebAppMessageBlock _messageHandler;
     ServiceSubscription *_playStateSubscription;
     ServiceSubscription *_messageSubscription;
     NSMutableDictionary *_activeCommands;
@@ -18,7 +32,7 @@
     BOOL _connected;
 }
 
-- (id)initWithLaunchSession:(LaunchSession *)launchSession service:(DeviceService *)service
+- (instancetype)initWithLaunchSession:(LaunchSession *)launchSession service:(DeviceService *)service
 {
     self = [super initWithLaunchSession:launchSession service:service];
 
@@ -175,12 +189,23 @@
         return;
     }
 
-    [self.service connectToWebApp:self messageCallback:_messageHandler success:^(id responseObject)
+    [self.service connectToWebApp:self success:^(id responseObject)
     {
         _connected = YES;
 
         if (success)
             success(nil);
+    } failure:failure];
+}
+
+- (void) joinWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self.service connectToWebApp:self joinOnly:YES success:^(id responseObject)
+    {
+        _connected = YES;
+
+        if (success)
+            success(self);
     } failure:failure];
 }
 
@@ -226,6 +251,11 @@
     }
 }
 
+- (void) disconnectFromWebApp
+{
+    [self.service disconnectFromWebApp:self];
+}
+
 - (void)closeWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
     _connected = NO;
@@ -241,7 +271,71 @@
     [self.service.webAppLauncher closeWebApp:self.launchSession success:success failure:failure];
 }
 
+#pragma mark - Media Player
+
+- (id <MediaPlayer>) mediaPlayer
+{
+    return self;
+}
+
+- (CapabilityPriorityLevel) mediaPlayerPriority
+{
+    return CapabilityPriorityLevelHigh;
+}
+
+- (void) displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
+{
+    if (failure)
+        failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
+}
+
+- (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
+{
+    int requestIdNumber = [self getNextId];
+    NSString *requestId = [NSString stringWithFormat:@"req%d", requestIdNumber];
+
+    NSDictionary *message = @{
+            @"contentType" : @"connectsdk.mediaCommand",
+            @"mediaCommand" : @{
+                    @"type" : @"playMedia",
+                    @"mediaURL" : ensureString(mediaURL.absoluteString),
+                    @"iconURL" : ensureString(iconURL.absoluteString),
+                    @"title" : ensureString(title),
+                    @"description" : ensureString(description),
+                    @"mimeType" : ensureString(mimeType),
+                    @"shouldLoop" : @(shouldLoop),
+                    @"requestId" : requestId
+            }
+    };
+
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:nil target:nil payload:nil];
+    command.callbackComplete = ^(id responseObject)
+    {
+        if (success)
+            success(self.launchSession, self.mediaControl);
+    };
+    command.callbackError = failure;
+    [_activeCommands setObject:command forKey:requestId];
+
+    [self sendJSON:message success:nil failure:failure];
+}
+
+- (void) closeMedia:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self closeWithSuccess:success failure:failure];
+}
+
 #pragma mark - Media Control
+
+- (id <MediaControl>) mediaControl
+{
+    return self;
+}
+
+- (CapabilityPriorityLevel) mediaControlPriority
+{
+    return CapabilityPriorityLevelHigh;
+}
 
 - (void)seek:(NSTimeInterval)position success:(SuccessBlock)success failure:(FailureBlock)failure
 {
@@ -282,7 +376,10 @@
     command.callbackComplete = ^(NSDictionary *responseObject)
     {
         NSString *positionString = [responseObject objectForKey:@"position"];
-        NSTimeInterval position = [positionString intValue];
+        NSTimeInterval position = 0;
+
+        if (positionString && ![positionString isKindOfClass:[NSNull class]])
+            position = [positionString intValue];
 
         if (success)
             success(position);
@@ -310,7 +407,10 @@
     command.callbackComplete = ^(id responseObject)
     {
         NSString *durationString = [responseObject objectForKey:@"duration"];
-        NSTimeInterval duration = [durationString intValue];
+        NSTimeInterval duration = 0;
+
+        if (durationString && ![durationString isKindOfClass:[NSNull class]])
+            duration = [durationString intValue];
 
         if (success)
             success(duration);

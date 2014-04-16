@@ -3,8 +3,22 @@
 //  Connect SDK
 //
 //  Created by Jeremy White on 12/2/13.
-//  Copyright (c) 2014 LG Electronics. All rights reserved.
+//  Copyright (c) 2014 LG Electronics.
 //
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+
+#define kConnectSDKWebOSTVServiceId @"webOS TV"
 
 #import <UIKit/UIKit.h>
 #import "DeviceService.h"
@@ -25,7 +39,7 @@
 
 @class WebOSWebAppSession;
 
-@interface WebOSTVService : DeviceService <NSCoding, Launcher, MediaPlayer, MediaControl, VolumeControl, TVControl, KeyControl, MouseControl, PowerControl, WebAppLauncher, ExternalInputControl, ToastControl, TextInputControl>
+@interface WebOSTVService : DeviceService <Launcher, MediaPlayer, MediaControl, VolumeControl, TVControl, KeyControl, MouseControl, PowerControl, WebAppLauncher, ExternalInputControl, ToastControl, TextInputControl>
 
 typedef enum {
     LAUNCH = 0,
@@ -68,7 +82,8 @@ typedef enum {
 #pragma mark - Web app & app to app
 
 // @cond INTERNAL
-- (void)connectToWebApp:(WebOSWebAppSession *)webAppSession messageCallback:(WebAppMessageBlock)messageCallback success:(SuccessBlock)success failure:(FailureBlock)failure;
+- (void)connectToWebApp:(WebOSWebAppSession *)webAppSession success:(SuccessBlock)success failure:(FailureBlock)failure;
+- (void) connectToWebApp:(WebOSWebAppSession *)webAppSession joinOnly:(BOOL)joinOnly success:(SuccessBlock)success failure:(FailureBlock)failure;
 - (void)disconnectFromWebApp:(WebOSWebAppSession *)webAppSession;
 - (int) sendMessage:(id)message toApp:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure;
 // @endcond

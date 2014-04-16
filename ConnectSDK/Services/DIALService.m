@@ -3,29 +3,73 @@
 //  Connect SDK
 //
 //  Created by Jeremy White on 12/13/13.
-//  Copyright (c) 2014 LG Electronics. All rights reserved.
+//  Copyright (c) 2014 LG Electronics.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 #import "DIALService.h"
 #import "ConnectError.h"
 #import "XMLReader.h"
+#import "DeviceServiceReachability.h"
+
+static NSMutableArray *registeredApps = nil;
+
+@interface DIALService () <DeviceServiceReachabilityDelegate>
+
+@end
 
 @implementation DIALService
-
-- (NSArray *)capabilities
 {
-    return @[
-            kLauncherApp,
-            kLauncherAppParams,
-            kLauncherAppClose,
-            kLauncherAppState
-    ];
+    DeviceServiceReachability *_serviceReachability;
+}
+
++ (void) initialize
+{
+    registeredApps = [NSMutableArray arrayWithArray:@[
+            @"YouTube",
+            @"Netflix",
+            @"Amazon"
+    ]];
+}
+
+- (instancetype) initWithServiceConfig:(ServiceConfig *)serviceConfig
+{
+    self = [super initWithServiceConfig:serviceConfig];
+
+    if (self)
+    {
+        [self addCapabilities:@[
+                kLauncherApp,
+                kLauncherAppParams,
+                kLauncherAppClose,
+                kLauncherAppState
+        ]];
+    }
+
+    return self;
+}
+
++ (void) registerApp:(NSString *)appId
+{
+    if (![registeredApps containsObject:appId])
+        [registeredApps addObject:appId];
 }
 
 + (NSDictionary *) discoveryParameters
 {
     return @{
-             @"serviceId":@"DIAL",
+             @"serviceId":kConnectSDKDIALServiceId,
              @"ssdp":@{
                      @"filter":@"urn:dial-multiscreen-org:service:dial:1"
                      }
@@ -38,17 +82,69 @@
 
     NSString *commandPath = [self.serviceDescription.locationResponseHeaders objectForKey:@"Application-URL"];
     self.serviceDescription.commandURL = [NSURL URLWithString:commandPath];
+
+    [self probeForAppSupport];
+}
+
+- (BOOL) isConnectable
+{
+    return YES;
 }
 
 - (void) connect
 {
+//    NSString *targetPath = [NSString stringWithFormat:@"http://%@:%@/", self.serviceDescription.address, @(self.serviceDescription.port)];
+//    NSURL *targetURL = [NSURL URLWithString:targetPath];
+
+    _serviceReachability = [DeviceServiceReachability reachabilityWithTargetURL:self.serviceDescription.commandURL];
+    _serviceReachability.delegate = self;
+    [_serviceReachability start];
+
+    self.connected = YES;
+
     if (self.delegate && [self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
         dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
 }
 
+- (void) disconnect
+{
+    self.connected = NO;
+
+    [_serviceReachability stop];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
+        dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:nil]; });
+}
+
+- (void) didLoseReachability:(DeviceServiceReachability *)reachability
+{
+    if (self.connected)
+        [self disconnect];
+    else
+        [_serviceReachability stop];
+}
+
+- (void) probeForAppSupport
+{
+    [registeredApps enumerateObjectsUsingBlock:^(NSString *appName, NSUInteger idx, BOOL *stop)
+    {
+        [self hasApplication:appName success:^(id responseObject)
+        {
+            NSString *capability = [NSString stringWithFormat:@"Launcher.%@", appName];
+            NSString *capabilityParams = [NSString stringWithFormat:@"Launcher.%@.Params", appName];
+            
+            if (![self hasCapability:capability])
+                [self addCapability:capability];
+            
+            if (![self hasCapability:capabilityParams])
+                [self addCapability:capabilityParams];
+        } failure:nil];
+    }];
+}
+
 #pragma mark - ServiceCommandDelegate
 
-- (int) sendCommand:(ServiceCommand *)command withPayload:(NSDictionary *)payload toURL:(NSURL *)URL
+- (int) sendCommand:(ServiceCommand *)command withPayload:(id)payload toURL:(NSURL *)URL
 {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
@@ -60,10 +156,26 @@
 
         if (payload)
         {
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
-            [request addValue:[NSString stringWithFormat:@"%i", (unsigned int) [jsonData length]] forHTTPHeaderField:@"Content-Length"];
+            NSData *payloadData;
+
+            if ([payload isKindOfClass:[NSString class]])
+            {
+                NSString *payloadString = (NSString *)payload;
+                payloadData = [payloadString dataUsingEncoding:NSUTF8StringEncoding];
+            } else if ([payload isKindOfClass:[NSDictionary class]])
+                payloadData = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
+
+            if (payloadData == nil)
+            {
+                if (command.callbackError)
+                    command.callbackError([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Unknown error preparing message to send"]);
+
+                return -1;
+            }
+
+            [request addValue:[NSString stringWithFormat:@"%i", (unsigned int) [payloadData length]] forHTTPHeaderField:@"Content-Length"];
             [request addValue:@"text/plain;charset=\"utf-8\"" forHTTPHeaderField:@"Content-Type"];
-            [request setHTTPBody:jsonData];
+            [request setHTTPBody:payloadData];
         } else
         {
             [request addValue:@"0" forHTTPHeaderField:@"Content-Length"];
@@ -213,9 +325,6 @@
             {
                 NSString *resourceName = [[[responseObject objectForKey:@"service"] objectForKey:@"link"] objectForKey:@"text"];
 
-                if (!resourceName || [resourceName isEqualToString:@""])
-                    resourceName = @"run";
-
                 [self launchApplicationWithInfo:appInfo params:params resourceName:resourceName success:success failure:failure];
             } failure:failure];
         } else
@@ -224,6 +333,12 @@
         }
 
     } failure:failure];
+}
+
+- (void) launchAppStore:(NSString *)appId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    if (failure)
+        failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
 }
 
 - (void)launchBrowser:(NSURL *)target success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
@@ -253,15 +368,15 @@
 
 - (void)launchYouTube:(NSString *)contentId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
-    NSDictionary *params;
+    NSString *params;
 
-    if (contentId && ![contentId isEqualToString:@""])
-        params = @{ @"v" : contentId }; // TODO: verify this works
+    if (contentId && contentId.length > 0)
+        params = [NSString stringWithFormat:@"v=%@&t=0.0", contentId];
 
     AppInfo *appInfo = [AppInfo appInfoForId:@"YouTube"];
     appInfo.name = appInfo.id;
-
-    [self.launcher launchAppWithInfo:appInfo params:params success:success failure:failure];
+    
+    [self.launcher launchAppWithInfo:appInfo params:(id)params success:success failure:failure];
 }
 
 - (ServiceSubscription *)subscribeRunningAppWithSuccess:(AppInfoSuccessBlock)success failure:(FailureBlock)failure
@@ -379,7 +494,7 @@
 {
     NSString *commandPath;
 
-    if (resourceName && ![resourceName isEqualToString:@""])
+    if (resourceName && resourceName.length > 0)
         commandPath = [NSString pathWithComponents:@[self.serviceDescription.commandURL.absoluteString, appInfo.id, resourceName]];
     else
         commandPath = [NSString pathWithComponents:@[self.serviceDescription.commandURL.absoluteString, appInfo.id]];

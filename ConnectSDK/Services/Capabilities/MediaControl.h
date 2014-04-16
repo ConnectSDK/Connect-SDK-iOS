@@ -1,6 +1,21 @@
 //
-// Created by Jeremy White on 1/22/14.
-// Copyright (c) 2014 LG Electronics. All rights reserved.
+//  MediaControl.h
+//  Connect SDK
+//
+//  Created by Jeremy White on 1/22/14.
+//  Copyright (c) 2014 LG Electronics.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 #import <Foundation/Foundation.h>
@@ -44,8 +59,25 @@ typedef enum {
 
 @protocol MediaControl <NSObject>
 
+/*!
+ * Success block that is called upon any change in a media file's play state.
+ *
+ * @param playState Play state of the current media file
+ */
 typedef void (^ MediaPlayStateSuccessBlock)(MediaControlPlayState playState);
+
+/*!
+ * Success block that is called upon successfully getting the media file's current playhead position.
+ *
+ * @param position Current playhead position of the current media file, in seconds
+ */
 typedef void (^ MediaPositionSuccessBlock)(NSTimeInterval position);
+
+/*!
+ * Success block that is called upon successfully getting the media file's duration.
+ *
+ * @param duration Duration of the current media file, in seconds
+ */
 typedef void (^ MediaDurationSuccessBlock)(NSTimeInterval duration);
 
 - (id<MediaControl>) mediaControl;

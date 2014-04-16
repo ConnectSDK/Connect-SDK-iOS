@@ -3,9 +3,22 @@
 //  Connect SDK
 //
 //  Created by Jeremy White on 2/7/14.
-//  Copyright (c) 2014 LG Electronics. All rights reserved.
+//  Copyright (c) 2014 LG Electronics.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
+#import <GoogleCast/GoogleCast.h>
 #import "CastService.h"
 #import "ConnectError.h"
 #import "CastWebAppSession.h"
@@ -51,7 +64,7 @@
 + (NSDictionary *) discoveryParameters
 {
     return @{
-             @"serviceId":@"Chromecast"
+             @"serviceId":kConnectSDKCastServiceId
              };
 }
 
@@ -115,8 +128,13 @@
     if (!self.connected)
         return;
 
+    self.connected = NO;
+
     [_castDeviceManager leaveApplication];
     [_castDeviceManager disconnect];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
+        dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:nil]; });
 }
 
 #pragma mark - Subscriptions
@@ -141,7 +159,7 @@
 
 - (void)deviceManagerDidConnect:(GCKDeviceManager *)deviceManager
 {
-    NSLog(@"CastService::deviceManagerDidConnect");
+    DLog(@"connected");
 
     self.connected = YES;
 
@@ -154,7 +172,7 @@
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata sessionID:(NSString *)sessionID launchedApplication:(BOOL)launchedApplication
 {
-    NSLog(@"CastService::deviceManager:didConnectToCastApplication:sessionID:launchedApplication:");
+    DLog(@"%@ (%@)", applicationMetadata.applicationName, applicationMetadata.applicationID);
 
     WebAppLaunchSuccessBlock success = [_launchSuccessBlocks objectForKey:applicationMetadata.applicationID];
 
@@ -179,12 +197,12 @@
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didDisconnectFromApplicationWithError:(NSError *)error
 {
-    NSLog(@"CastService::deviceManager:didDisconnectFromApplicationWithError %@", error.localizedDescription);
+    DLog(@"%@", error.localizedDescription);
 }
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didFailToConnectToApplicationWithError:(NSError *)error
 {
-    NSLog(@"CastService::deviceManager:didFailToConnectToApplicationWithError %@", error.localizedDescription);
+    DLog(@"%@", error.localizedDescription);
 
     if (_launchingAppId)
     {
@@ -201,7 +219,7 @@
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didFailToConnectWithError:(NSError *)error
 {
-    NSLog(@"CastService::deviceManager:didFailToConnectWithError %@", error.localizedDescription);
+    DLog(@"%@", error.localizedDescription);
 
     if (self.connected)
         [self disconnect];
@@ -209,17 +227,17 @@
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didFailToStopApplicationWithError:(NSError *)error
 {
-    NSLog(@"CastService::deviceManager:didFailToStopApplicationWithError %@", error.localizedDescription);
+    DLog(@"%@", error.localizedDescription);
 }
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didReceiveStatusForApplication:(GCKApplicationMetadata *)applicationMetadata
 {
-    NSLog(@"CastService::deviceManager:didReceiveStatusForApplication");
+    DLog(@"%@", applicationMetadata);
 }
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager volumeDidChangeToLevel:(float)volumeLevel isMuted:(BOOL)isMuted
 {
-    NSLog(@"CastService::deviceManager:volumeDidChangeToLevel:%f:isMuted:%d", volumeLevel, isMuted);
+    DLog(@"volume: %f isMuted: %d", volumeLevel, isMuted);
 
     [_subscriptions enumerateObjectsUsingBlock:^(ServiceSubscription *subscription, NSUInteger idx, BOOL *stop)
     {
@@ -254,7 +272,7 @@
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didDisconnectWithError:(NSError *)error
 {
-    NSLog(@"CastService::deviceManager:didDisconnectWithError:%@", error.localizedDescription);
+    DLog(@"%@", error.localizedDescription);
 
     self.connected = NO;
     
@@ -298,7 +316,7 @@
 
     GCKMediaInformation *mediaInformation = [[GCKMediaInformation alloc] initWithContentID:imageURL.absoluteString streamType:GCKMediaStreamTypeNone contentType:mimeType metadata:metaData streamDuration:0 customData:nil];
 
-    [self displayMedia:mediaInformation success:success failure:failure];
+    [self playMedia:mediaInformation webAppId:kGCKMediaDefaultReceiverApplicationID success:success failure:failure];
 }
 
 - (void) playMedia:(NSURL *)videoURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
@@ -315,10 +333,10 @@
 
     GCKMediaInformation *mediaInformation = [[GCKMediaInformation alloc] initWithContentID:videoURL.absoluteString streamType:GCKMediaStreamTypeBuffered contentType:mimeType metadata:metaData streamDuration:1000 customData:nil];
 
-    [self displayMedia:mediaInformation success:success failure:failure];
+    [self playMedia:mediaInformation webAppId:kGCKMediaDefaultReceiverApplicationID success:success failure:failure];
 }
 
-- (void) displayMedia:(GCKMediaInformation *)mediaInformation success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
+- (void) playMedia:(GCKMediaInformation *)mediaInformation webAppId:(NSString *)mediaAppId success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
     WebAppLaunchSuccessBlock webAppLaunchBlock = ^(WebAppSession *webAppSession)
     {
@@ -339,7 +357,6 @@
         }
     };
 
-    NSString *mediaAppId = kGCKMediaDefaultReceiverApplicationID; // HOME 07EAAB14 // LG 6F8A4929 // IDEAN 4D8A5DB1 // ALL kGCKMediaDefaultReceiverApplicationID
     _launchingAppId = mediaAppId;
 
     [_launchSuccessBlocks setObject:webAppLaunchBlock forKey:mediaAppId];
@@ -347,7 +364,7 @@
     if (failure)
         [_launchFailureBlocks setObject:failure forKey:mediaAppId];
 
-    BOOL result = [_castDeviceManager launchApplication:mediaAppId relaunchIfRunning:YES];
+    BOOL result = [_castDeviceManager launchApplication:mediaAppId relaunchIfRunning:NO];
 
     if (!result)
     {
@@ -506,7 +523,7 @@
         _launchingAppId = nil;
 
         if (failure)
-            failure([ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:nil]);
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@"Could not detect if web app launched -- make sure you have the Google Cast Receiver JavaScript file in your web app"]);
     }
 }
 
@@ -520,6 +537,39 @@
 {
     if (failure)
         failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
+}
+
+- (void)joinWebApp:(LaunchSession *)webAppLaunchSession success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    WebAppLaunchSuccessBlock mySuccess = ^(WebAppSession *webAppSession)
+    {
+        SuccessBlock joinSuccess = ^(id responseObject)
+        {
+            if (success)
+                success(webAppSession);
+        };
+
+        [webAppSession connectWithSuccess:joinSuccess failure:failure];
+    };
+
+    [_launchSuccessBlocks setObject:mySuccess forKey:webAppLaunchSession.appId];
+
+    if (failure)
+        [_launchFailureBlocks setObject:failure forKey:webAppLaunchSession.appId];
+
+    _launchingAppId = webAppLaunchSession.appId;
+
+    BOOL result = [_castDeviceManager joinApplication:webAppLaunchSession.appId];
+
+    if (!result)
+    {
+        [_launchSuccessBlocks removeObjectForKey:webAppLaunchSession.appId];
+        [_launchFailureBlocks removeObjectForKey:webAppLaunchSession.appId];
+        _launchingAppId = nil;
+
+        if (failure)
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@"Could not detect if web app launched -- make sure you have the Google Cast Receiver JavaScript file in your web app"]);
+    }
 }
 
 - (void)closeWebApp:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
@@ -629,12 +679,23 @@
 
 - (void)setVolume:(float)volume success:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    NSInteger result = [self.castMediaControlChannel setStreamVolume:volume];
+    NSInteger result;
+    NSString *failureMessage;
+
+    @try
+    {
+        result = [self.castMediaControlChannel setStreamVolume:volume];
+    } @catch (NSException *ex)
+    {
+        // this is likely caused by having no active media session
+        result = kGCKInvalidRequestID;
+        failureMessage = @"There is no active media session to set volume on";
+    }
 
     if (result == kGCKInvalidRequestID)
     {
         if (failure)
-            [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:nil];
+            [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:failureMessage];
     } else
     {
         if (success)

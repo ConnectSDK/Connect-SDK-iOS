@@ -1,6 +1,21 @@
 //
-// Created by Jeremy White on 12/16/13.
-// Copyright (c) 2014 LG Electronics. All rights reserved.
+//  VolumeControl.h
+//  Connect SDK
+//
+//  Created by Jeremy White on 12/16/13.
+//  Copyright (c) 2014 LG Electronics.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 #import <Foundation/Foundation.h>
@@ -29,7 +44,18 @@
 
 @protocol VolumeControl <NSObject>
 
+/*!
+ * Success block that is called upon successfully getting the device's system volume.
+ *
+ * @param volume Current system volume, value is a float between 0.0 and 1.0
+ */
 typedef void (^ VolumeSuccessBlock)(float volume);
+
+/*!
+ * Success block that is called upon successfully getting the device's system mute status.
+ *
+ * @param mute Current system mute status
+ */
 typedef void (^ MuteSuccessBlock)(BOOL mute);
 
 - (id<VolumeControl>)volumeControl;

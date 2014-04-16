@@ -1,6 +1,21 @@
 //
-// Created by Jeremy White on 2/21/14.
-// Copyright (c) 2014 LG Electronics. All rights reserved.
+//  WebAppSession.m
+//  Connect SDK
+//
+//  Created by Jeremy White on 2/21/14.
+//  Copyright (c) 2014 LG Electronics.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 #import "WebAppSession.h"
@@ -29,7 +44,7 @@
     return dict;
 }
 
-- (id)initWithLaunchSession:(LaunchSession *)launchSession service:(DeviceService *)service
+- (instancetype)initWithLaunchSession:(LaunchSession *)launchSession service:(DeviceService *)service
 {
     self = [super init];
 
@@ -79,6 +94,11 @@
     [self sendNotSupportedFailure:failure];
 }
 
+- (void) joinWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self sendNotSupportedFailure:failure];
+}
+
 - (void)disconnectFromWebApp { }
 
 - (void)sendText:(NSString *)message success:(SuccessBlock)success failure:(FailureBlock)failure
@@ -91,17 +111,44 @@
     [self sendNotSupportedFailure:failure];
 }
 
+#pragma mark - Media Player
+
+- (id <MediaPlayer>) mediaPlayer
+{
+    return self;
+}
+
+- (CapabilityPriorityLevel) mediaPlayerPriority
+{
+    return CapabilityPriorityLevelLow;
+}
+
+- (void) displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
+{
+    [self sendNotSupportedFailure:failure];
+}
+
+- (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
+{
+    [self sendNotSupportedFailure:failure];
+}
+
+- (void) closeMedia:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self sendNotSupportedFailure:failure];
+}
+
 #pragma mark - MediaControl
 #pragma mark MediaControl required methods
 
 - (id <MediaControl>)mediaControl
 {
-    return nil;
+    return self;
 }
 
 - (CapabilityPriorityLevel)mediaControlPriority
 {
-    return CapabilityPriorityLevelVeryLow;
+    return CapabilityPriorityLevelLow;
 }
 
 - (void)playWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure

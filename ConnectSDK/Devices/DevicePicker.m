@@ -3,7 +3,19 @@
 //  Connect SDK
 //
 //  Created by Andrew Longstaff on 9/6/13.
-//  Copyright (c) 2014 LG Electronics. All rights reserved.
+//  Copyright (c) 2014 LG Electronics.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 #import "DevicePicker.h"
@@ -17,8 +29,12 @@
     
     UINavigationController *_navigationController;
     UITableViewController *_tableViewController;
-    UIPopoverController *_popover;
+    
     UIActionSheet *_actionSheet;
+    UIView *_actionSheetTargetView;
+    
+    UIPopoverController *_popover;
+    NSDictionary *_popoverParams;
 
     dispatch_queue_t _sortQueue;
 }
@@ -51,7 +67,7 @@
 {
     [self sortDevices];
 
-    NSString *pickerTitle = NSLocalizedStringFromTable(@"Connect_SDK_Search_Title", @"ConnectSDKStrings", nil);
+    NSString *pickerTitle = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Search_Title" value:@"Pick a device" table:@"ConnectSDK"];
 
     _tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
     _tableViewController.title = pickerTitle;
@@ -82,10 +98,36 @@
     } else if ([source isKindOfClass:[UIView class]])
     {
         UIView *sourceView = (UIView *)source;
-        [_popover presentPopoverFromRect:sourceView.frame inView:sourceView.superview permittedArrowDirections:UIPopoverArrowDirectionAny animated:self.shouldAnimatePicker];
+        CGRect sourceRect;
+        UIView *targetView;
+        UIPopoverArrowDirection permittedArrowDirections;
+        
+        if (sourceView.superview && ![sourceView.superview isKindOfClass:[UIWindow class]])
+        {
+            sourceRect = sourceView.bounds;
+            targetView = sourceView.superview;
+            permittedArrowDirections = UIPopoverArrowDirectionAny;
+        } else
+        {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRotation) name:UIDeviceOrientationDidChangeNotification object:nil];
+            
+            sourceRect = sourceView.bounds;
+            targetView = sourceView;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wint-conversion"
+            permittedArrowDirections = NULL;
+#pragma clang diagnostic pop
+            
+            _popoverParams = @{
+                               @"sourceView" : sourceView,
+                               @"targetView" : targetView
+                               };
+        }
+        
+        [_popover presentPopoverFromRect:sourceRect inView:targetView permittedArrowDirections:permittedArrowDirections animated:self.shouldAnimatePicker];
     } else
     {
-        NSLog(@"DevicePicker::showPicker sender should be a subclass of either UIBarButtonItem or UIView");
+        DLog(@"Sender should be a subclass of either UIBarButtonItem or UIView");
         
         [self cleanupViews];
     }
@@ -93,29 +135,47 @@
 
 - (void) showActionSheet:(id)sender
 {
-    NSString *pickerTitle = NSLocalizedStringFromTable(@"Connect_SDK_Search_Title", @"ConnectSDKStrings", nil);
-    NSString *pickerCancel = NSLocalizedStringFromTable(@"Connect_SDK_Search_Cancel", @"ConnectSDKStrings", nil);
-
+    NSString *pickerTitle = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Search_Title" value:@"Pick a device" table:@"ConnectSDK"];
+    NSString *pickerCancel = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Search_Cancel" value:@"Cancel" table:@"ConnectSDK"];
+    
     _actionSheet = [[UIActionSheet alloc] initWithTitle:pickerTitle
-                                                             delegate:self
-                                                    cancelButtonTitle:pickerCancel
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:nil];
+                                               delegate:self
+                                      cancelButtonTitle:nil
+                                 destructiveButtonTitle:nil
+                                      otherButtonTitles:nil];
 
-
+    
     _actionSheetDeviceList = [_generatedDeviceList copy];
 
     [_actionSheetDeviceList enumerateObjectsUsingBlock:^(ConnectableDevice *device, NSUInteger idx, BOOL *stop)
     {
         [_actionSheet addButtonWithTitle:device.friendlyName];
     }];
-
-    [_actionSheet showInView:sender];
+    
+    _actionSheet.cancelButtonIndex = [_actionSheet addButtonWithTitle:pickerCancel];
+    
+    if ([sender isKindOfClass:[UIBarButtonItem class]])
+        [_actionSheet showFromBarButtonItem:sender animated:_shouldAnimatePicker];
+    else if ([sender isKindOfClass:[UITabBar class]])
+        [_actionSheet showFromTabBar:sender];
+    else if ([sender isKindOfClass:[UIToolbar class]])
+        [_actionSheet showFromToolbar:sender];
+    else if ([sender isKindOfClass:[UIControl class]])
+    {
+        UIControl *senderView = (UIControl *)sender;
+        [_actionSheet showFromRect:senderView.frame inView:senderView.superview animated:_shouldAnimatePicker];
+    } else
+    {
+        [_actionSheet showInView:sender];
+        
+        _actionSheetTargetView = sender;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRotation) name:UIDeviceOrientationDidChangeNotification object:nil];
+    }
 }
 
 - (void) showNavigation
 {
-    NSString *pickerCancel = NSLocalizedStringFromTable(@"Connect_SDK_Search_Cancel", @"ConnectSDKStrings", nil);
+    NSString *pickerCancel = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Search_Cancel" value:@"Cancel" table:@"ConnectSDK"];
 
     _tableViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:pickerCancel style:UIBarButtonItemStylePlain target:self action:@selector(dismissPicker:)];
     
@@ -162,11 +222,15 @@
     if (_actionSheet)
         _actionSheet.delegate = nil;
 
+    _actionSheetTargetView = nil;
     _actionSheet = nil;
     _actionSheetDeviceList = nil;
     _navigationController = nil;
     _tableViewController = nil;
+    _popoverParams = nil;
     _popover = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 - (void) sortDevices
@@ -180,6 +244,8 @@
 
             return [device1Name compare:device2Name];
         }];
+
+        NSAssert(devices.count == _generatedDeviceList.count, @"Array counts don't match up");
     });
 }
 
@@ -192,9 +258,35 @@
     else if (device.serviceDescription.address && device.serviceDescription.address.length > 0)
         name = device.serviceDescription.address;
     else
-        name = NSLocalizedStringFromTable(@"Connect_SDK_Unnamed_Device", @"ConnectSDKStrings", nil);
+        name = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Unnamed_Device" value:@"Unnamed device" table:@"ConnectSDK"];
     
     return name;
+}
+
+- (void) handleRotation
+{
+    if (!self.shouldAutoRotate)
+        return;
+    
+    if (_popover && _popoverParams)
+    {
+        UIView *sourceView = [_popoverParams objectForKey:@"sourceView"];
+        UIView *targetView = [_popoverParams objectForKey:@"targetView"];
+        
+        if (!sourceView || !targetView)
+            return;
+        
+        CGRect sourceRect = sourceView.bounds;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wint-conversion"
+        UIPopoverArrowDirection permittedArrowDirections = NULL;
+#pragma clang diagnostic pop
+        
+        [_popover presentPopoverFromRect:sourceRect inView:targetView permittedArrowDirections:permittedArrowDirections animated:self.shouldAnimatePicker];
+    } else if (_actionSheet && _actionSheetTargetView)
+    {
+        [_actionSheet showInView:_actionSheetTargetView];
+    }
 }
 
 #pragma mark UIActionSheet methods
@@ -203,20 +295,12 @@
 {
     if (buttonIndex == actionSheet.cancelButtonIndex)
         return;
-
-    // Need to account for cancel button taking up the 0 index position
-    NSUInteger realButtonIndex;
-
-    if (actionSheet.cancelButtonIndex < _actionSheetDeviceList.count)
-        realButtonIndex = (NSUInteger) (buttonIndex - 1);
-    else
-        realButtonIndex = (NSUInteger) buttonIndex;
-
-    ConnectableDevice *device = [_actionSheetDeviceList objectAtIndex:realButtonIndex];
+    
+    ConnectableDevice *device = [_actionSheetDeviceList objectAtIndex:buttonIndex];
 
     if (![_generatedDeviceList containsObject:device])
     {
-        NSLog(@"DevicePicker::actionSheet:clickedButtonAtIndex User selected a device that no longer exists");
+        DLog(@"User selected a device that no longer exists");
         return;
     }
 
