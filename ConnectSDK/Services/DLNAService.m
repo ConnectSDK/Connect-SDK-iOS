@@ -348,13 +348,7 @@
     };
 
     ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self target:[self commandURL] payload:commandPayload];
-    command.callbackComplete = ^(id responseObject)
-    {
-        NSLog(@"SEEK");
-
-        if (success)
-            success(nil);
-    };
+    command.callbackComplete = success;
     command.callbackError = failure;
     [command send];
 }

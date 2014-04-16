@@ -72,7 +72,7 @@
 
 - (void)deviceDidComeOnline:(GCKDevice *)device
 {
-    NSLog(@"CastDiscoveryProvider::deviceDidComeOnline:%@", device.friendlyName);
+    DLog(@"%@", device.friendlyName);
 
     if ([_devices objectForKey:device.deviceID])
         return;
@@ -95,7 +95,7 @@
 
 - (void)deviceDidGoOffline:(GCKDevice *)device
 {
-    NSLog(@"CastDiscoveryProvider::deviceDidGoOffline:%@", device.friendlyName);
+    DLog(@"%@", device.friendlyName);
 
     if (![_devices objectForKey:device.deviceID])
         return;

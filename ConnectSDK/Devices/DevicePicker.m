@@ -127,7 +127,7 @@
         [_popover presentPopoverFromRect:sourceRect inView:targetView permittedArrowDirections:permittedArrowDirections animated:self.shouldAnimatePicker];
     } else
     {
-        NSLog(@"DevicePicker::showPicker sender should be a subclass of either UIBarButtonItem or UIView");
+        DLog(@"Sender should be a subclass of either UIBarButtonItem or UIView");
         
         [self cleanupViews];
     }
@@ -300,7 +300,7 @@
 
     if (![_generatedDeviceList containsObject:device])
     {
-        NSLog(@"DevicePicker::actionSheet:clickedButtonAtIndex User selected a device that no longer exists");
+        DLog(@"User selected a device that no longer exists");
         return;
     }
 

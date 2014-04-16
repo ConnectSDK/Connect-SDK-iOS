@@ -159,7 +159,7 @@
 
 - (void)deviceManagerDidConnect:(GCKDeviceManager *)deviceManager
 {
-    NSLog(@"CastService::deviceManagerDidConnect");
+    DLog(@"connected");
 
     self.connected = YES;
 
@@ -172,7 +172,7 @@
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata sessionID:(NSString *)sessionID launchedApplication:(BOOL)launchedApplication
 {
-    NSLog(@"CastService::deviceManager:didConnectToCastApplication:sessionID:launchedApplication:");
+    DLog(@"%@ (%@)", applicationMetadata.applicationName, applicationMetadata.applicationID);
 
     WebAppLaunchSuccessBlock success = [_launchSuccessBlocks objectForKey:applicationMetadata.applicationID];
 
@@ -197,12 +197,12 @@
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didDisconnectFromApplicationWithError:(NSError *)error
 {
-    NSLog(@"CastService::deviceManager:didDisconnectFromApplicationWithError %@", error.localizedDescription);
+    DLog(@"%@", error.localizedDescription);
 }
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didFailToConnectToApplicationWithError:(NSError *)error
 {
-    NSLog(@"CastService::deviceManager:didFailToConnectToApplicationWithError %@", error.localizedDescription);
+    DLog(@"%@", error.localizedDescription);
 
     if (_launchingAppId)
     {
@@ -219,7 +219,7 @@
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didFailToConnectWithError:(NSError *)error
 {
-    NSLog(@"CastService::deviceManager:didFailToConnectWithError %@", error.localizedDescription);
+    DLog(@"%@", error.localizedDescription);
 
     if (self.connected)
         [self disconnect];
@@ -227,17 +227,17 @@
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didFailToStopApplicationWithError:(NSError *)error
 {
-    NSLog(@"CastService::deviceManager:didFailToStopApplicationWithError %@", error.localizedDescription);
+    DLog(@"%@", error.localizedDescription);
 }
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didReceiveStatusForApplication:(GCKApplicationMetadata *)applicationMetadata
 {
-    NSLog(@"CastService::deviceManager:didReceiveStatusForApplication");
+    DLog(@"%@", applicationMetadata);
 }
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager volumeDidChangeToLevel:(float)volumeLevel isMuted:(BOOL)isMuted
 {
-    NSLog(@"CastService::deviceManager:volumeDidChangeToLevel:%f:isMuted:%d", volumeLevel, isMuted);
+    DLog(@"volume: %f isMuted: %d", volumeLevel, isMuted);
 
     [_subscriptions enumerateObjectsUsingBlock:^(ServiceSubscription *subscription, NSUInteger idx, BOOL *stop)
     {
@@ -272,7 +272,7 @@
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didDisconnectWithError:(NSError *)error
 {
-    NSLog(@"CastService::deviceManager:didDisconnectWithError:%@", error.localizedDescription);
+    DLog(@"%@", error.localizedDescription);
 
     self.connected = NO;
     
