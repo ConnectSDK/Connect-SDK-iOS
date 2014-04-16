@@ -130,9 +130,6 @@
 
 - (void) registerDefaultServices
 {
-    [NSKeyedUnarchiver setClass:[NetcastTVServiceConfig class] forClassName:@"NetcastTVServiceConfig"];
-    [NSKeyedUnarchiver setClass:[WebOSTVServiceConfig class] forClassName:@"WebOSTVServiceConfig"];
-    
     [self registerDeviceService:[CastService class] withDiscovery:[CastDiscoveryProvider class]];
     [self registerDeviceService:[DIALService class] withDiscovery:[SSDPDiscoveryProvider class]];
     [self registerDeviceService:[RokuService class] withDiscovery:[SSDPDiscoveryProvider  class]];
