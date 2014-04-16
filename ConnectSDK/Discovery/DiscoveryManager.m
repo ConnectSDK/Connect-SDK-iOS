@@ -463,7 +463,7 @@
 
 - (void)discoveryProvider:(DiscoveryProvider *)provider didFindService:(ServiceDescription *)description
 {
-    NSLog(@"DiscoveryManager::discoveryProvider::didFindService %@ (%@)", description.friendlyName, description.serviceId);
+    DLog(@"%@ (%@)", description.friendlyName, description.serviceId);
     
     BOOL deviceIsNew = NO;
     ConnectableDevice *device;
@@ -544,7 +544,7 @@
 
 - (void)discoveryProvider:(DiscoveryProvider *)provider didLoseService:(ServiceDescription *)description
 {
-    NSLog(@"DiscoveryManager::discoveryProvider::didLoseService %@ (%@)", description.friendlyName, description.serviceId);
+    DLog(@"%@ (%@)", description.friendlyName, description.serviceId);
     
     ConnectableDevice *device;
 
@@ -552,13 +552,13 @@
     
     if (device)
     {
-        NSLog(@"DiscoveryManager::discoveryProvider::didLoseService removed service from device at address %@", description.address);
+        DLog(@"Removed service from device at address %@", description.address);
         
         [device removeServiceWithId:description.serviceId];
 
         if (![device hasServices])
         {
-            NSLog(@"DiscoveryManager::discoveryProvider::didLoseService device at address %@ has been orphaned (has no services)", description.address);
+            DLog(@"Device at address %@ has been orphaned (has no services)", description.address);
 
             @synchronized (_allDevices) { [_allDevices removeObjectForKey:description.address]; }
 
@@ -572,7 +572,7 @@
 
 - (void)discoveryProvider:(DiscoveryProvider *)provider didFailWithError:(NSError *)error
 {
-    NSLog(@"DiscoveryManager::discoveryProvider::didFailWithError %@", error.localizedDescription);
+    DLog(@"%@", error.localizedDescription);
 }
 
 #pragma mark - ConnectableDeviceDelegate methods

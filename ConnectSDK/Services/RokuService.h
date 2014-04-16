@@ -20,7 +20,7 @@
 
 #define kConnectSDKRokuServiceId @"Roku"
 
-#import <ConnectSDK/ConnectSDK.h>
+#import "ConnectSDK.h"
 #import "DIALService.h"
 
 enum

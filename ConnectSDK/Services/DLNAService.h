@@ -20,7 +20,7 @@
 
 #define kConnectSDKDLNAServiceId @"DLNA"
 
-#import <ConnectSDK/ConnectSDK.h>
+#import "ConnectSDK.h"
 #import "Launcher.h"
 #import "MediaControl.h"
 

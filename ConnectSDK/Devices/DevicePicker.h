@@ -43,6 +43,11 @@
 @property (nonatomic) BOOL shouldAnimatePicker;
 
 /*!
+ * When the device is rotated, the DevicePicker can automatically adjust the view to compenstate. Default is NO.
+ */
+@property (nonatomic) BOOL shouldAutoRotate;
+
+/*!
  * If you wish to show a checkmark next to a device in the picker, you can set that device object to currentDevice. The setter for currentDevice will also reload the tableView in the picker.
  */
 @property (nonatomic, weak) ConnectableDevice *currentDevice;

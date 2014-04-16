@@ -76,7 +76,7 @@
 
         if (error)
         {
-            NSLog(@"DefaultConnectableDeviceStore::load experienced error loading file: %@", error.localizedDescription);
+            DLog(@"Experienced error loading file: %@", error.localizedDescription);
             return;
         }
 
@@ -85,7 +85,7 @@
 
         if (error)
         {
-            NSLog(@"DefaultConnectableDeviceStore::load experienced error parsing file: %@", error.localizedDescription);
+            DLog(@"Experienced error parsing file: %@", error.localizedDescription);
             return;
         }
 
@@ -351,7 +351,7 @@
 
         if (jsonError)
         {
-            NSLog(@"DefaultConnectableDeviceStore::writeStoreToDisk failed to parse with error: %@", jsonError.localizedDescription);
+            DLog(@"Failed to parse with error: %@", jsonError.localizedDescription);
             _waitToWrite = NO;
             return;
         }
@@ -361,7 +361,7 @@
 
         if (writeError)
         {
-            NSLog(@"DefaultConnectableDeviceStore::writeStoreToDisk failed to write with error: %@", writeError.localizedDescription);
+            DLog(@"Failed to write with error: %@", writeError.localizedDescription);
             _waitToWrite = NO;
             return;
         }
