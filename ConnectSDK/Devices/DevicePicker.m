@@ -67,7 +67,7 @@
 {
     [self sortDevices];
 
-    NSString *pickerTitle = NSLocalizedStringFromTable(@"Connect_SDK_Search_Title", @"ConnectSDKStrings", nil);
+    NSString *pickerTitle = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Search_Title" value:@"Pick a device" table:@"ConnectSDK"];
 
     _tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
     _tableViewController.title = pickerTitle;
@@ -135,8 +135,8 @@
 
 - (void) showActionSheet:(id)sender
 {
-    NSString *pickerTitle = NSLocalizedStringFromTable(@"Connect_SDK_Search_Title", @"ConnectSDKStrings", nil);
-    NSString *pickerCancel = NSLocalizedStringFromTable(@"Connect_SDK_Search_Cancel", @"ConnectSDKStrings", nil);
+    NSString *pickerTitle = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Search_Title" value:@"Pick a device" table:@"ConnectSDK"];
+    NSString *pickerCancel = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Search_Cancel" value:@"Cancel" table:@"ConnectSDK"];
     
     _actionSheet = [[UIActionSheet alloc] initWithTitle:pickerTitle
                                                delegate:self
@@ -175,7 +175,7 @@
 
 - (void) showNavigation
 {
-    NSString *pickerCancel = NSLocalizedStringFromTable(@"Connect_SDK_Search_Cancel", @"ConnectSDKStrings", nil);
+    NSString *pickerCancel = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Search_Cancel" value:@"Cancel" table:@"ConnectSDK"];
 
     _tableViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:pickerCancel style:UIBarButtonItemStylePlain target:self action:@selector(dismissPicker:)];
     
@@ -258,7 +258,7 @@
     else if (device.serviceDescription.address && device.serviceDescription.address.length > 0)
         name = device.serviceDescription.address;
     else
-        name = NSLocalizedStringFromTable(@"Connect_SDK_Unnamed_Device", @"ConnectSDKStrings", nil);
+        name = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Unnamed_Device" value:@"Unnamed device" table:@"ConnectSDK"];
     
     return name;
 }
