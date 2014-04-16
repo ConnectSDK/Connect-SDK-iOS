@@ -265,6 +265,9 @@
 
 - (void) handleRotation
 {
+    if (!self.shouldAutoRotate)
+        return;
+    
     if (_popover && _popoverParams)
     {
         UIView *sourceView = [_popoverParams objectForKey:@"sourceView"];
