@@ -273,12 +273,17 @@
     [self.compatibleDevices enumerateKeysAndObjectsUsingBlock:^(id key, ConnectableDevice *device, BOOL *stop)
     {
         [device disconnect];
-
+        
         if (self.delegate)
             [self.delegate discoveryManager:self didLoseDevice:device];
 
         if (self.devicePicker)
             [self.devicePicker discoveryManager:self didLoseDevice:device];
+    }];
+    
+    [_discoveryProviders enumerateObjectsUsingBlock:^(DiscoveryProvider *provider, NSUInteger idx, BOOL *stop) {
+        [provider stopDiscovery];
+        [provider startDiscovery];
     }];
 
     _allDevices = [NSMutableDictionary new];

@@ -59,7 +59,10 @@
 - (void)stopDiscovery
 {
     self.isRunning = NO;
+    
     [_deviceScanner stopScan];
+    _devices = [NSMutableDictionary new];
+    _deviceDescriptions = [NSMutableDictionary new];
 }
 
 - (BOOL) isEmpty
