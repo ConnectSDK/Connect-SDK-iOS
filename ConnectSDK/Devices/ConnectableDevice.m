@@ -28,11 +28,10 @@
 
 @implementation ConnectableDevice
 {
-    ServiceDescription *_consolidatedServiceDescription;
     NSMutableDictionary *_services;
 }
 
-@synthesize serviceDescription = _serviceDescription;
+@synthesize serviceDescription = _consolidatedServiceDescription;
 @synthesize delegate = _delegate;
 @synthesize id = _id;
 
@@ -55,7 +54,7 @@
 
     if (self)
     {
-        _serviceDescription = description;
+        _consolidatedServiceDescription = description;
     }
 
     return self;
@@ -85,10 +84,13 @@
         {
             [services enumerateKeysAndObjectsUsingBlock:^(id key, NSDictionary *serviceJSON, BOOL *stop)
             {
-                DeviceService *service = [[DeviceService alloc] initWithJSONObject:serviceJSON];
+                DeviceService *service = [DeviceService deviceServiceWithJSONObject:serviceJSON];
                 [self addService:service];
             }];
         }
+
+        if (!self.address)
+            _consolidatedServiceDescription.address = _lastKnownIPAddress;
     }
 
     return self;

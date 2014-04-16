@@ -410,7 +410,7 @@ static NSString *cellIdentifier = @"connectPickerCell";
 {
     if (_devices)
     {
-        [_devices setObject:device forKey:device.serviceDescription.UUID];
+        [_devices setObject:device forKey:device.address];
 
         [self sortDevices];
 
@@ -425,7 +425,7 @@ static NSString *cellIdentifier = @"connectPickerCell";
 {
     if (_devices)
     {
-        [_devices removeObjectForKey:device.serviceDescription.UUID];
+        [_devices removeObjectForKey:device.address];
 
         [self sortDevices];
 

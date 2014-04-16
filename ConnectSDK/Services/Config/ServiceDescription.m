@@ -51,6 +51,7 @@
     if (self)
     {
         self.serviceId = dict[@"serviceId"];
+        self.address = dict[@"address"];
         self.port = [dict[@"port"] intValue];
         self.UUID = dict[@"UUID"];
         self.type = dict[@"serviceId"];
@@ -75,6 +76,7 @@
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
 
     if (self.serviceId) dictionary[@"serviceId"] = self.serviceId;
+    if (self.address) dictionary[@"address"] = self.address;
     if (self.port) dictionary[@"port"] = @(self.port);
     if (self.UUID) dictionary[@"UUID"] = self.UUID;
     if (self.type) dictionary[@"type"] = self.type;

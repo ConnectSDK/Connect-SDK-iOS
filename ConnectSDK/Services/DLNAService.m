@@ -88,6 +88,12 @@
     if (_commandURL)
         return _commandURL;
 
+    if (!self.serviceDescription.locationXML)
+    {
+        _commandURL = self.serviceDescription.commandURL;
+        return _commandURL;
+    }
+
     NSError *parseError;
 
     NSString *cleanLocationXML = [self.serviceDescription.locationXML stringByReplacingOccurrencesOfString:@"\n" withString:@""];

@@ -80,8 +80,11 @@ static NSMutableArray *registeredApps = nil;
 {
     [super setServiceDescription:serviceDescription];
 
-    NSString *commandPath = [self.serviceDescription.locationResponseHeaders objectForKey:@"Application-URL"];
-    self.serviceDescription.commandURL = [NSURL URLWithString:commandPath];
+    if (self.serviceDescription.locationResponseHeaders)
+    {
+        NSString *commandPath = [self.serviceDescription.locationResponseHeaders objectForKey:@"Application-URL"];
+        self.serviceDescription.commandURL = [NSURL URLWithString:commandPath];
+    }
 
     [self probeForAppSupport];
 }
