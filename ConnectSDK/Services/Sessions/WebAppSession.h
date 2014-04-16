@@ -100,6 +100,8 @@ typedef void (^ WebAppStatusBlock)(WebAppStatus status);
  */
 - (ServiceSubscription *) subscribeWebAppStatus:(WebAppStatusBlock)success failure:(FailureBlock)failure;
 
+- (void) joinWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure;
+
 /*!
  * Closes the web app on the first screen device.
  *

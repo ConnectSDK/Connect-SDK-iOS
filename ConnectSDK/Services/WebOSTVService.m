@@ -1872,7 +1872,30 @@
     [command send];
 }
 
-- (void)connectToWebApp:(WebOSWebAppSession *)webAppSession messageCallback:(WebAppMessageBlock)messageCallback success:(SuccessBlock)success failure:(FailureBlock)failure
+- (void)connectToWebApp:(WebOSWebAppSession *)webAppSession success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self connectToWebApp:webAppSession joinOnly:NO success:success failure:failure];
+}
+
+- (void)joinWebApp:(LaunchSession *)webAppLaunchSession success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    WebOSWebAppSession *webAppSession = [[WebOSWebAppSession alloc] initWithLaunchSession:webAppLaunchSession service:self];
+    [webAppSession joinWithSuccess:^(id responseObject)
+    {
+        if (success)
+            success(webAppSession);
+    } failure:failure];
+
+//    SuccessBlock connectSuccess = ^(id responseObject)
+//    {
+//        if (success)
+//            success(webAppSession);
+//    };
+//
+//    [self connectToWebApp:webAppSession joinOnly:YES success:connectSuccess failure:failure];
+}
+
+- (void) connectToWebApp:(WebOSWebAppSession *)webAppSession joinOnly:(BOOL)joinOnly success:(SuccessBlock)success failure:(FailureBlock)failure
 {
     if (!_appToAppMessageCallbacks)
         _appToAppMessageCallbacks = [NSMutableDictionary new];
@@ -1880,14 +1903,14 @@
     if (!_appToAppSubscriptions)
         _appToAppSubscriptions = [NSMutableDictionary new];
 
-    if (!webAppSession || !webAppSession.launchSession || !webAppSession.launchSession.rawData)
+    if (!webAppSession || !webAppSession.launchSession)
     {
         if (failure)
             failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid LaunchSession object."]);
         return;
     }
 
-    if (!messageCallback)
+    if (!webAppSession.messageHandler)
     {
         if (failure)
             failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a message handler callback."]);
@@ -1898,27 +1921,6 @@
 
     NSMutableDictionary *payload = [NSMutableDictionary new];
     [payload setValue:ensureString(webAppSession.launchSession.appId) forKey:@"webAppId"];
-    
-    SuccessBlock connectSuccess = ^(id responseObject) {
-        NSString *state = [responseObject objectForKey:@"state"];
-        
-        if (![state isEqualToString:@"CONNECTED"])
-            return;
-        
-        NSString *appId = [responseObject objectForKey:@"appId"];
-
-        if (appId)
-        {
-            [_appToAppMessageCallbacks setObject:messageCallback forKey:appId];
-
-            NSMutableDictionary *newRawData = [NSMutableDictionary dictionaryWithDictionary:webAppSession.launchSession.rawData];
-            [newRawData setObject:appId forKey:@"webAppId"];
-            webAppSession.launchSession.rawData = [NSDictionary dictionaryWithDictionary:newRawData];
-        }
-
-        if (success)
-            success(responseObject);
-    };
 
     FailureBlock connectFailure = ^(NSError *error)
     {
@@ -1930,6 +1932,9 @@
             {
                 [connectionSubscription unsubscribe];
                 [_appToAppSubscriptions removeObjectForKey:webAppSession.launchSession.appId];
+            } else
+            {
+                // TODO: do something here
             }
         }
 
@@ -1945,15 +1950,44 @@
                 failure(error);
         }
     };
-    
+
+    SuccessBlock connectSuccess = ^(id responseObject) {
+        NSString *state = [responseObject objectForKey:@"state"];
+
+        if (![state isEqualToString:@"CONNECTED"])
+        {
+            if (joinOnly && [state isEqualToString:@"WAITING_FOR_APP"])
+            {
+                if (connectFailure)
+                    connectFailure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Web app is not currently running"]);
+            }
+
+            return;
+        }
+
+        NSString *appId = [responseObject objectForKey:@"appId"];
+
+        if (appId)
+        {
+            [_appToAppMessageCallbacks setObject:webAppSession.messageHandler forKey:appId];
+
+            NSMutableDictionary *newRawData;
+
+            if (webAppSession.launchSession.rawData)
+                newRawData = [NSMutableDictionary dictionaryWithDictionary:webAppSession.launchSession.rawData];
+            else
+                newRawData = [NSMutableDictionary new];
+
+            [newRawData setObject:appId forKey:@"webAppId"];
+            webAppSession.launchSession.rawData = [NSDictionary dictionaryWithDictionary:newRawData];
+        }
+
+        if (success)
+            success(responseObject);
+    };
+
     ServiceSubscription *subscription = [self addSubscribe:URL payload:payload success:connectSuccess failure:connectFailure];
     [_appToAppSubscriptions setObject:subscription forKey:webAppSession.launchSession.appId];
-}
-
-- (void)joinWebApp:(NSString *)webAppId success:(SuccessBlock)success failure:(FailureBlock)failure
-{
-    if (failure)
-        failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
 }
 
 - (void)disconnectFromWebApp:(WebOSWebAppSession *)webAppSession
@@ -1983,6 +2017,9 @@
         {
             [connectionSubscription unsubscribe];
             [_appToAppSubscriptions removeObjectForKey:webAppSession.launchSession.appId];
+        } else
+        {
+            // TODO: do something here
         }
     }
 }

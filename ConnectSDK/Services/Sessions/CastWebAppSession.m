@@ -52,6 +52,11 @@
     [self.service.castDeviceManager addChannel:_castServiceChannel];
 }
 
+- (void) joinWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self connectWithSuccess:success failure:failure];
+}
+
 - (void)disconnectFromWebApp
 {
     if (!_castServiceChannel)
