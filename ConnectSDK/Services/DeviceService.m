@@ -288,7 +288,17 @@ id ensureString(id value)
 
 - (instancetype) initWithJSONObject:(NSDictionary *)dict
 {
-    self = [self init];
+    NSString *className = dict[@"class"];
+
+    if (!className || className.length == 0 || [className isKindOfClass:[NSNull class]])
+        return nil;
+
+    Class DeviceServiceClass = NSClassFromString(className);
+
+    if (!DeviceServiceClass)
+        return nil;
+
+    self = [DeviceServiceClass init];
 
     if (self)
     {

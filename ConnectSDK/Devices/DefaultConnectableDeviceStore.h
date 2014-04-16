@@ -31,7 +31,7 @@
  * - On load & store, ConnectableDevices that have not been discovered within the maxStoreDuration will be removed from the ConnectableDeviceStore
  *
  * ###File Format
- * DefaultConnectableDeviceStore stores data in a JSON file on disk in the documents directory.
+ * DefaultConnectableDeviceStore stores data in a JSON file named `Connect_SDK_Device_Store.json` in the documents directory.
  *
 @code
 {
@@ -39,22 +39,20 @@
     version: 1,
     created: 1395892958.220422,
     updated: 1395892958.220422,
-    devices: [
-        {
+    devices: {
+        "12345678-5137-1358-1544-123456789012" : { // each ConnectableDevice is keyed against its id
+            "id": "12345678-5137-1358-1544-123456789012",
             "friendlyName": "My TV",
             "lastKnownIPAddress": "192.168.1.107",
             "lastSeenOnWifi": "My WiFi Network",
             "lastConnected": 1395892958.220422,
             "lastDetection": 1395892958.220422,
             "services": {
-                // each DeviceService discovered is keyed against its UUID
-                "66be8e5d-51be-b18f-f733-6c4dc8c97aca": {
+                "66be8e5d-51be-b18f-f733-6c4dc8c97aca": { // each DeviceService discovered is keyed against its UUID
                     {
-                        // DeviceService subclass name
-                        "class": "WebOSTVService",
+                        "class": "WebOSTVService", // DeviceService subclass name
                         "config": {
-                            // ServiceConfig subclass name
-                            "class": "WebOSTVServiceConfig",
+                            "class": "WebOSTVServiceConfig", // ServiceConfig subclass name
                             "UUID": "66be8e5d-51be-b18f-f733-6c4dc8c97aca",
                             "connected": false,
                             "wasConnected": false,
@@ -82,14 +80,14 @@
             }
         },
         ...
-    ]
+    }
 }
 @endcode
  */
 @interface DefaultConnectableDeviceStore : NSObject <ConnectableDeviceStore>
 
 /*!
- * Max length of time for a ConnectableDevice to remain in the ConnectableDeviceStore without being discovered. Default is 3 days, and modifications to this value will trigger a scan for old devices.
+ * Max length of time for a ConnectableDevice to remain in the ConnectableDeviceStore without being discovered. Default is 3 days, and modifications to this value will trigger a scan for old devices. ConnectableDevices that have been connected to will never be removed from the device store unless `remove:` or `removeAll` are called.
  */
 @property (nonatomic) double maxStoreDuration;
 
