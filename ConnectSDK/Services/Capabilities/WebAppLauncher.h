@@ -69,7 +69,7 @@ typedef void (^ WebAppLaunchSuccessBlock)(WebAppSession *webAppSession);
  */
 - (void) launchWebApp:(NSString *)webAppId params:(NSDictionary *)params relaunchIfRunning:(BOOL)relaunchIfRunning success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure;
 
-- (void) joinWebApp:(NSString *)webAppId success:(SuccessBlock)success failure:(FailureBlock)failure;
+- (void) joinWebApp:(LaunchSession *)webAppLaunchSession success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure;
 - (void) closeWebApp:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure;
 
 @end

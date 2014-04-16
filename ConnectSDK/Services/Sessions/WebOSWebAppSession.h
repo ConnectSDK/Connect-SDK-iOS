@@ -24,6 +24,7 @@
 
 @interface WebOSWebAppSession : WebAppSession
 
+@property (nonatomic, readonly) WebAppMessageBlock messageHandler;
 @property (nonatomic, readonly) WebOSTVService *service;
 
 @end

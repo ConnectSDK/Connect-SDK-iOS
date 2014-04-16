@@ -539,10 +539,37 @@
         failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
 }
 
-- (void)joinWebApp:(NSString *)webAppId success:(SuccessBlock)success failure:(FailureBlock)failure
+- (void)joinWebApp:(LaunchSession *)webAppLaunchSession success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
+    WebAppLaunchSuccessBlock mySuccess = ^(WebAppSession *webAppSession)
+    {
+        SuccessBlock joinSuccess = ^(id responseObject)
+        {
+            if (success)
+                success(webAppSession);
+        };
+
+        [webAppSession connectWithSuccess:joinSuccess failure:failure];
+    };
+
+    [_launchSuccessBlocks setObject:mySuccess forKey:webAppLaunchSession.appId];
+
     if (failure)
-        failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
+        [_launchFailureBlocks setObject:failure forKey:webAppLaunchSession.appId];
+
+    _launchingAppId = webAppLaunchSession.appId;
+
+    BOOL result = [_castDeviceManager joinApplication:webAppLaunchSession.appId];
+
+    if (!result)
+    {
+        [_launchSuccessBlocks removeObjectForKey:webAppLaunchSession.appId];
+        [_launchFailureBlocks removeObjectForKey:webAppLaunchSession.appId];
+        _launchingAppId = nil;
+
+        if (failure)
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@"Could not detect if web app launched -- make sure you have the Google Cast Receiver JavaScript file in your web app"]);
+    }
 }
 
 - (void)closeWebApp:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure

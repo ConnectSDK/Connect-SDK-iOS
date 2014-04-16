@@ -24,7 +24,6 @@
 
 @implementation WebOSWebAppSession
 {
-    WebAppMessageBlock _messageHandler;
     ServiceSubscription *_playStateSubscription;
     ServiceSubscription *_messageSubscription;
     NSMutableDictionary *_activeCommands;
@@ -190,12 +189,23 @@
         return;
     }
 
-    [self.service connectToWebApp:self messageCallback:_messageHandler success:^(id responseObject)
+    [self.service connectToWebApp:self success:^(id responseObject)
     {
         _connected = YES;
 
         if (success)
             success(nil);
+    } failure:failure];
+}
+
+- (void) joinWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self.service connectToWebApp:self joinOnly:YES success:^(id responseObject)
+    {
+        _connected = YES;
+
+        if (success)
+            success(self);
     } failure:failure];
 }
 

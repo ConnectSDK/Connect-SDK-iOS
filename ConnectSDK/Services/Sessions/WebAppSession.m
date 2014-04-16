@@ -94,6 +94,11 @@
     [self sendNotSupportedFailure:failure];
 }
 
+- (void) joinWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self sendNotSupportedFailure:failure];
+}
+
 - (void)disconnectFromWebApp { }
 
 - (void)sendText:(NSString *)message success:(SuccessBlock)success failure:(FailureBlock)failure
