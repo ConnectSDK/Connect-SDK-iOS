@@ -100,6 +100,8 @@
 		EA3976B11886127500972C12 /* DeviceServiceDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA3976AE1886127500972C12 /* DeviceServiceDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA3CBE2518AEC29700FA3C69 /* RokuService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA3CBE2318AEC29700FA3C69 /* RokuService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA3CBE2618AEC29700FA3C69 /* RokuService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3CBE2418AEC29700FA3C69 /* RokuService.m */; };
+		EA56011F18FCC91D00A00779 /* Guid.h in Headers */ = {isa = PBXBuildFile; fileRef = EA56011C18FCC91D00A00779 /* Guid.h */; };
+		EA56012018FCC91D00A00779 /* Guid.m in Sources */ = {isa = PBXBuildFile; fileRef = EA56011D18FCC91D00A00779 /* Guid.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		EA595FD1184FCF8D0043C023 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA595FCF184FCF8D0043C023 /* InfoPlist.strings */; };
 		EA59609D185112F10043C023 /* LGSRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = EA596088185112F10043C023 /* LGSRWebSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA59609E185112F10043C023 /* LGSRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = EA596089185112F10043C023 /* LGSRWebSocket.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -221,6 +223,8 @@
 		EA3976AE1886127500972C12 /* DeviceServiceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceServiceDelegate.h; sourceTree = "<group>"; };
 		EA3CBE2318AEC29700FA3C69 /* RokuService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RokuService.h; sourceTree = "<group>"; };
 		EA3CBE2418AEC29700FA3C69 /* RokuService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RokuService.m; sourceTree = "<group>"; };
+		EA56011C18FCC91D00A00779 /* Guid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Guid.h; sourceTree = "<group>"; };
+		EA56011D18FCC91D00A00779 /* Guid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Guid.m; sourceTree = "<group>"; };
 		EA595FD0184FCF8D0043C023 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EA596088185112F10043C023 /* LGSRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGSRWebSocket.h; sourceTree = "<group>"; };
 		EA596089185112F10043C023 /* LGSRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGSRWebSocket.m; sourceTree = "<group>"; };
@@ -433,10 +437,20 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		EA56011B18FCC91D00A00779 /* objc-guid */ = {
+			isa = PBXGroup;
+			children = (
+				EA56011C18FCC91D00A00779 /* Guid.h */,
+				EA56011D18FCC91D00A00779 /* Guid.m */,
+			);
+			path = "objc-guid";
+			sourceTree = "<group>";
+		};
 		EA596070185112F10043C023 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				EADD38211899C80900877C17 /* CGDWebServer */,
+				EA56011B18FCC91D00A00779 /* objc-guid */,
 				EA596085185112F10043C023 /* SocketRocket */,
 				EA1D52B618724B2F00F649CA /* XMLReader */,
 			);
@@ -558,6 +572,7 @@
 				EA397692188611A400972C12 /* ServiceAsyncCommand.h in Headers */,
 				EA39764B1886119C00972C12 /* DiscoveryProvider.h in Headers */,
 				EA39768B188611A400972C12 /* KeyControl.h in Headers */,
+				EA56011F18FCC91D00A00779 /* Guid.h in Headers */,
 				EA3976A4188611A400972C12 /* DLNAService.h in Headers */,
 				EA39763F1886119C00972C12 /* ConnectableDevice.h in Headers */,
 				EA39764D1886119C00972C12 /* DiscoveryProviderDelegate.h in Headers */,
@@ -720,6 +735,7 @@
 				EA397687188611A400972C12 /* ChannelInfo.m in Sources */,
 				EA397698188611A400972C12 /* ServiceSubscription.m in Sources */,
 				EADD382E1899C80900877C17 /* GCDWebServerConnection.m in Sources */,
+				EA56012018FCC91D00A00779 /* Guid.m in Sources */,
 				EADD38331899C80900877C17 /* GCDWebServerResponse.m in Sources */,
 				EADD38311899C80900877C17 /* GCDWebServerRequest.m in Sources */,
 				EA3976AB188611A500972C12 /* WebOSTVService.m in Sources */,

@@ -101,8 +101,6 @@
 
 - (NSArray *)capabilities
 {
-    // TODO: dynamically change capability on 4.0.0 to remove app 2 app support
-
     NSArray *caps = [NSArray array];
 
     if ([DiscoveryManager sharedManager].pairingLevel == ConnectableDevicePairingLevelOn)
@@ -125,7 +123,6 @@
         caps = [caps arrayByAddingObjectsFromArray:kTVControlCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kExternalInputControlCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kToastControlCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kMediaControlCapabilities];
     } else
@@ -133,7 +130,6 @@
         caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kMediaControlCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:@[
                 kLauncherApp,
                 kLauncherAppParams,
@@ -152,13 +148,24 @@
         ]];
     }
 
+    if ([_serviceDescription.version rangeOfString:@"4.0.0"].location == NSNotFound)
+        caps = [caps arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
+    else
+    {
+        caps = [caps arrayByAddingObjectsFromArray:@[
+                kWebAppLauncherLaunch,
+                kWebAppLauncherLaunchParams,
+                kWebAppLauncherClose
+        ]];
+    }
+
     return caps;
 }
 
 + (NSDictionary *) discoveryParameters
 {
     return @{
-             @"serviceId":@"webOS TV",
+             @"serviceId": kConnectSDKWebOSTVServiceId,
              @"ssdp":@{
                      @"filter":@"urn:lge-com:service:webos-second-screen:1"
                   }

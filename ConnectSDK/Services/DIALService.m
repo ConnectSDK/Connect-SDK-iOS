@@ -69,7 +69,7 @@ static NSMutableArray *registeredApps = nil;
 + (NSDictionary *) discoveryParameters
 {
     return @{
-             @"serviceId":@"DIAL",
+             @"serviceId":kConnectSDKDIALServiceId,
              @"ssdp":@{
                      @"filter":@"urn:dial-multiscreen-org:service:dial:1"
                      }

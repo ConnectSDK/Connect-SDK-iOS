@@ -196,7 +196,7 @@ NSString *lgeUDAPRequestURI[8] = {
 + (NSDictionary *) discoveryParameters
 {
     return @{
-             @"serviceId":@"Netcast TV",
+             @"serviceId": kConnectSDKNetcastTVServiceId,
              @"ssdp":@{
                     @"filter":@"urn:schemas-upnp-org:device:MediaRenderer:1",
                     @"userAgentToken":@"UDAP/2.0"

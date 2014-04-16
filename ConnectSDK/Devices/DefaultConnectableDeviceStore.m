@@ -23,7 +23,8 @@
 
 @implementation DefaultConnectableDeviceStore
 {
-    NSMutableArray *_storedDevices;
+    NSMutableDictionary *_activeDevices; // active ConnectableDevice objects
+    NSMutableDictionary *_storedDevices; // inactive NSDictionary objects containing ConnectableDevice information
     NSString *_deviceStoreFilename;
     NSFileManager *_fileManager;
 
@@ -43,7 +44,8 @@
         _maxStoreDuration = 3 * 24 * 60 * 60; // 3 days
         _deviceStoreQueue = dispatch_queue_create("Connect_SDK_Device_Store", DISPATCH_QUEUE_SERIAL);
 
-        _storedDevices = [NSMutableArray new];
+        _activeDevices = [NSMutableDictionary new];
+        _storedDevices = [NSMutableDictionary new];
 
         NSArray *base = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documents = [base lastObject];
@@ -87,38 +89,12 @@
             return;
         }
 
-        NSArray *devicesFromStore = [_deviceStore objectForKey:@"devices"];
+        NSDictionary *devicesFromStore = [_deviceStore objectForKey:@"devices"];
 
         if (!devicesFromStore || [devicesFromStore isKindOfClass:[NSNull class]])
-            return;
-
-        [devicesFromStore enumerateObjectsUsingBlock:^(NSDictionary *deviceDictionary, NSUInteger idx, BOOL *deviceStop)
-        {
-            ConnectableDevice *device = [[ConnectableDevice alloc] init];
-            device.lastKnownIPAddress = deviceDictionary[@"lastKnownIPAddress"];
-            device.lastSeenOnWifi = deviceDictionary[@"lastSeenOnWifi"];
-
-            id lastConnected = deviceDictionary[@"lastConnected"];
-            if (lastConnected && ![lastConnected isKindOfClass:[NSNull class]])
-                device.lastConnected = [lastConnected doubleValue];
-
-            id lastDetection = deviceDictionary[@"lastDetection"];
-            if (lastDetection && ![lastDetection isKindOfClass:[NSNull class]])
-                device.lastDetection = [lastDetection doubleValue];
-
-            NSDictionary *services = deviceDictionary[@"services"];
-
-            if (!services || [services isKindOfClass:[NSNull class]])
-                return;
-
-            [services enumerateKeysAndObjectsUsingBlock:^(NSString *UUID, NSDictionary *serviceDictionary, BOOL *serviceStop)
-            {
-                DeviceService *service = [[DeviceService alloc] initWithJSONObject:serviceDictionary];
-                [device addService:service];
-            }];
-
-            [_storedDevices addObject:device];
-        }];
+            _storedDevices = [NSMutableDictionary new];
+        else
+            _storedDevices = [NSMutableDictionary dictionaryWithDictionary:devicesFromStore];
 
         id version = _deviceStore[@"version"];
         if (version && ![version isKindOfClass:[NSNull class]])
@@ -153,20 +129,7 @@
         newDeviceStore[@"version"] = @(self.version);
         newDeviceStore[@"created"] = @(self.created);
         newDeviceStore[@"updated"] = @(self.updated);
-
-        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastDetection" ascending:NO];
-        NSArray *sortedDevices = [_storedDevices sortedArrayUsingDescriptors:@[sortDescriptor]];
-        NSMutableArray *devicesToStore = [NSMutableArray new];
-
-        [sortedDevices enumerateObjectsUsingBlock:^(ConnectableDevice *device, NSUInteger deviceIdx, BOOL *deviceStop)
-        {
-            NSDictionary *deviceDictionary = [self jsonRepresentationForDevice:device];
-
-            if (deviceDictionary)
-                [devicesToStore addObject:deviceDictionary];
-        }];
-
-        newDeviceStore[@"devices"] = [NSArray arrayWithArray:devicesToStore];
+        newDeviceStore[@"devices"] = [NSDictionary dictionaryWithDictionary:_storedDevices];
 
         _updated = [[NSDate date] timeIntervalSince1970];
 
@@ -182,26 +145,21 @@
     if (!device || device.services.count == 0)
         return;
 
-    ConnectableDevice *storedDevice = [self storedDeviceForDevice:device];
+    if (![_activeDevices objectForKey:device.id])
+        [_activeDevices setObject:device forKey:device.id];
 
-    if (!storedDevice)
+    NSDictionary *storedDevice = [_storedDevices objectForKey:device.id];
+
+    if (storedDevice)
     {
-        storedDevice = [[ConnectableDevice alloc] init];
-        [_storedDevices addObject:storedDevice];
+        [self updateDevice:device];
+    } else
+    {
+        storedDevice = [self jsonRepresentationForDevice:device];
+        [_storedDevices setObject:storedDevice forKey:device.id];
+
+        [self store];
     }
-
-    storedDevice.lastKnownIPAddress = device.lastKnownIPAddress;
-    storedDevice.lastSeenOnWifi = device.lastSeenOnWifi;
-    storedDevice.lastConnected = device.lastConnected;
-    storedDevice.lastDetection = device.lastDetection;
-
-    [device.services enumerateObjectsUsingBlock:^(DeviceService *service, NSUInteger idx, BOOL *stop)
-    {
-        [storedDevice removeServiceWithId:service.serviceDescription.serviceId];
-        [storedDevice addService:service];
-    }];
-
-    [self store];
 }
 
 - (void) removeDevice:(ConnectableDevice *)device
@@ -209,19 +167,14 @@
     if (!device || device.services.count == 0)
         return;
 
-    ConnectableDevice *storedDevice = [self storedDeviceForDevice:device];
-
-    if (!storedDevice)
-        return;
-
-    [_storedDevices removeObject:storedDevice];
+    [_storedDevices removeObjectForKey:device.id];
 
     [self store];
 }
 
 - (void) removeAll
 {
-    _storedDevices = [NSMutableArray new];
+    _storedDevices = [NSMutableDictionary new];
 
     [self store];
 }
@@ -231,67 +184,154 @@
     if (!device || device.services.count == 0)
         return;
 
-    ConnectableDevice *storedDevice = [self storedDeviceForDevice:device];
+    NSDictionary *storedDeviceInfo = [self storedDeviceForUUID:device.id];
 
-    if (!storedDevice)
-    {
-        [self addDevice:device];
+    if (!storedDeviceInfo || [storedDeviceInfo isKindOfClass:[NSNull class]])
         return;
-    }
 
-    storedDevice.lastKnownIPAddress = device.lastKnownIPAddress;
-    storedDevice.lastSeenOnWifi = device.lastSeenOnWifi;
-    storedDevice.lastConnected = device.lastConnected;
-    storedDevice.lastDetection = device.lastDetection;
+    NSMutableDictionary *storedDevice = [NSMutableDictionary dictionaryWithDictionary:storedDeviceInfo];
+
+    // since this is an update, we will serialize ConnectableDevice into JSON manually. This way we avoid
+    // removing reference to any services that weren't discovered for whatever reason during this session
+
+    storedDevice[@"lastKnownIPAddress"] = device.lastKnownIPAddress;
+    storedDevice[@"lastSeenOnWifi"] = device.lastSeenOnWifi;
+    storedDevice[@"lastConnected"] = @(device.lastConnected);
+    storedDevice[@"lastDetection"] = @(device.lastDetection);
+
+    NSDictionary *servicesInfo = storedDevice[@"services"];
+
+    if (!servicesInfo || [servicesInfo isKindOfClass:[NSNull class]])
+        servicesInfo = [NSDictionary new];
+
+    NSMutableDictionary *services = [NSMutableDictionary dictionaryWithDictionary:servicesInfo];
 
     [device.services enumerateObjectsUsingBlock:^(DeviceService *service, NSUInteger idx, BOOL *stop)
     {
-        DeviceService *storedService = [storedDevice serviceWithName:service.serviceDescription.serviceId];
+        NSDictionary *serviceInfo = [service toJSONObject];
 
-        if (storedService)
-        {
-            storedService.serviceConfig = service.serviceConfig;
-            storedService.serviceDescription = service.serviceDescription;
-        } else
-        {
-            [storedDevice addService:service];
-        }
+        if (serviceInfo)
+            [services setObject:serviceInfo forKey:service.serviceName];
     }];
+
+    storedDevice[@"services"] = [NSDictionary dictionaryWithDictionary:services];
+
+    NSDictionary *deviceToStore = [NSDictionary dictionaryWithDictionary:storedDevice];
+    [_storedDevices setObject:deviceToStore forKey:device.id];
+    [_activeDevices setObject:device forKey:device.id];
 
     [self store];
 }
 
-- (NSArray *) storedDevices
+- (NSDictionary *) storedDevices
 {
     if (_storedDevices)
-        return [NSArray arrayWithArray:_storedDevices];
+        return [NSDictionary dictionaryWithDictionary:_storedDevices];
     else
-        return [NSArray new];
+        return [NSDictionary new];
+}
+
+- (ConnectableDevice *) deviceForId:(NSString *)id
+{
+    if (!id || id.length == 0 || [id isKindOfClass:[NSNull class]])
+        return nil;
+
+    ConnectableDevice *foundDevice = [self activeDeviceForUUID:id];
+
+    if (!foundDevice)
+    {
+        NSDictionary *foundDeviceInfo = [self storedDeviceForUUID:id];
+
+        if (foundDeviceInfo)
+            foundDevice = [[ConnectableDevice alloc] initWithJSONObject:foundDeviceInfo];
+    }
+
+    return foundDevice;
+}
+
+- (ServiceConfig *) serviceConfigForUUID:(NSString *)UUID
+{
+    if (!UUID || UUID.length == 0 || [UUID isKindOfClass:[NSNull class]])
+        return nil;
+
+    ServiceConfig *foundConfig = nil;
+
+    NSDictionary *device = [self storedDeviceForUUID:UUID];
+
+    if (device && ![device isKindOfClass:[NSNull class]])
+    {
+        NSDictionary *services = [device objectForKey:@"services"];
+
+        if (services && ![services isKindOfClass:[NSNull class]])
+        {
+            NSDictionary *service = [services objectForKey:UUID];
+
+            if (service && ![service isKindOfClass:[NSNull class]])
+            {
+                NSDictionary *serviceConfigInfo = [service objectForKey:@"config"];
+
+                if (serviceConfigInfo && ![serviceConfigInfo isKindOfClass:[NSNull class]])
+                {
+                    foundConfig = [ServiceConfig serviceConfigWithJSONObject:serviceConfigInfo];
+                }
+            }
+        }
+    }
+
+    return foundConfig;
 }
 
 #pragma mark - Helper methods
 
-- (ConnectableDevice *) storedDeviceForDevice:(ConnectableDevice *)device
+- (ConnectableDevice *) activeDeviceForUUID:(NSString *)UUID
 {
-    __block ConnectableDevice *foundDevice;
+    __block ConnectableDevice *foundDevice = nil;
 
-    [_storedDevices enumerateObjectsUsingBlock:^(ConnectableDevice *storedDevice, NSUInteger deviceIdx, BOOL *deviceStop)
+    // Check active devices
+    foundDevice = [_activeDevices objectForKey:UUID];
+
+    // Check active device services
+    if (!foundDevice)
     {
-        [device.services enumerateObjectsUsingBlock:^(DeviceService *service, NSUInteger serviceIdx, BOOL *serviceStop)
+        [_activeDevices enumerateKeysAndObjectsUsingBlock:^(id key, ConnectableDevice *device, BOOL *deviceStop)
         {
-            [storedDevice.services enumerateObjectsUsingBlock:^(DeviceService *storedService, NSUInteger storedServiceIdx, BOOL *storedServiceStop)
+            [device.services enumerateObjectsUsingBlock:^(DeviceService *service, NSUInteger idx, BOOL *serviceStop)
             {
-                if ([service.serviceConfig.UUID isEqualToString:storedService.serviceConfig.UUID])
+                if ([UUID isEqualToString:service.serviceDescription.UUID])
                 {
-                    foundDevice = storedDevice;
+                    foundDevice = device;
 
-                    *storedServiceStop = YES;
-                    *serviceStop = YES;
                     *deviceStop = YES;
+                    *serviceStop = YES;
                 }
             }];
         }];
-    }];
+    }
+
+    return foundDevice;
+}
+
+- (NSDictionary *) storedDeviceForUUID:(NSString *)UUID
+{
+    __block NSDictionary *foundDevice = nil;
+
+    // Check stored devices
+    foundDevice = [_storedDevices objectForKey:UUID];
+
+    // Check stored device services
+    if (!foundDevice)
+    {
+        [_storedDevices enumerateKeysAndObjectsUsingBlock:^(NSString *deviceUUID, NSDictionary *device, BOOL *stop)
+        {
+            NSDictionary *services = device[@"services"];
+
+            if (services && [services objectForKey:UUID])
+            {
+                foundDevice = device;
+                *stop = YES;
+            }
+        }];
+    }
 
     return foundDevice;
 }
@@ -339,6 +379,7 @@
         return nil;
 
     NSMutableDictionary *deviceDictionary = [NSMutableDictionary new];
+    deviceDictionary[@"id"] = device.id;
     deviceDictionary[@"friendlyName"] = device.friendlyName;
     deviceDictionary[@"lastKnownIPAddress"] = device.lastKnownIPAddress;
     deviceDictionary[@"lastSeenOnWifi"] = device.lastSeenOnWifi;
@@ -362,22 +403,36 @@
 {
     __block NSMutableArray *devicesToRemove = [NSMutableArray new];
 
-    [_storedDevices enumerateObjectsUsingBlock:^(ConnectableDevice *device, NSUInteger idx, BOOL *stop)
+    [_storedDevices enumerateKeysAndObjectsUsingBlock:^(NSString *UUID, NSDictionary *deviceInfo, BOOL *stop)
     {
-        if (device.lastConnected > 0)
+        double lastConnected = 0;
+        double lastDetection = 0;
+
+        id lastConnectedObject = deviceInfo[@"lastConnected"];
+        if (lastConnectedObject && ![lastConnectedObject isKindOfClass:[NSNull class]])
+            lastConnected = [lastConnectedObject doubleValue];
+
+        id lastDetectionObject = deviceInfo[@"lastDetection"];
+        if (lastDetectionObject && ![lastDetectionObject isKindOfClass:[NSNull class]])
+            lastDetection = [lastDetectionObject doubleValue];
+
+        if (lastConnected > 0)
             return;
 
         double currentTime = [[NSDate date] timeIntervalSince1970];
-        double storeDuration = currentTime - device.lastDetection;
+        double storeDuration = currentTime - lastDetection;
 
         if (storeDuration > _maxStoreDuration)
-            [devicesToRemove addObject:device];
+            [devicesToRemove addObject:UUID];
     }];
 
-    [devicesToRemove enumerateObjectsUsingBlock:^(ConnectableDevice *device, NSUInteger idx, BOOL *stop)
+    if (devicesToRemove)
     {
-        [self removeDevice:device];
-    }];
+        [devicesToRemove enumerateObjectsUsingBlock:^(NSString *UUID, NSUInteger idx, BOOL *stop)
+        {
+            [_storedDevices removeObjectForKey:UUID];
+        }];
+    }
 }
 
 @end

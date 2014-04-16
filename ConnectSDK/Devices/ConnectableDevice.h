@@ -23,6 +23,7 @@
 #import "DeviceService.h"
 #import "ConnectableDeviceDelegate.h"
 #import "DeviceServiceDelegate.h"
+#import "JSONObjectCoding.h"
 
 #import "Launcher.h"
 #import "VolumeControl.h"
@@ -59,7 +60,7 @@ typedef enum {
  *
  * ConnectableDevice exposes capabilities that exist in the underlying DeviceServices such as TV Control, Media Player, Media Control, Volume Control, etc. These capabilities, when accessed through the ConnectableDevice, will be automatically chosen from the most suitable DeviceService by using that DeviceService's CapabilityPriorityLevel.
  */
-@interface ConnectableDevice : NSObject <DeviceServiceDelegate>
+@interface ConnectableDevice : NSObject <DeviceServiceDelegate, JSONObjectCoding>
 
 // @cond INTERNAL
 + (instancetype) connectableDeviceWithDescription:(ServiceDescription *)description;
@@ -72,6 +73,9 @@ typedef enum {
 @property (nonatomic, weak) id<ConnectableDeviceDelegate> delegate;
 
 #pragma mark - General info
+
+/*! Universally unique ID of this particular ConnectableDevice object, persists between sessions in ConnectableDeviceStore for connected devices  */
+@property (nonatomic, readonly) NSString *id;
 
 /*! Current IP address of the ConnectableDevice. */
 @property (nonatomic, readonly) NSString *address;

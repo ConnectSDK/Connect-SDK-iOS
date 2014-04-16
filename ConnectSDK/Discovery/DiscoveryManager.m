@@ -506,7 +506,7 @@
 
     if (self.useDeviceStore)
     {
-        serviceConfig = [self lookupMatchingServiceConfigFromDeviceStore:description.UUID];
+        serviceConfig = [self.deviceStore serviceConfigForUUID:description.UUID];
         serviceConfig.delegate = self;
         serviceConfig.lastDetection = [NSDate date].timeIntervalSince1970;
     }
@@ -587,27 +587,6 @@
 - (void)connectableDeviceDisconnected:(ConnectableDevice *)device withError:(NSError *)error { }
 
 #pragma mark - Device Store
-
-- (ServiceConfig *) lookupMatchingServiceConfigFromDeviceStore:(NSString *)UUID
-{
-    __block ServiceConfig *serviceConfig;
-
-    [[self.deviceStore storedDevices] enumerateObjectsUsingBlock:^(ConnectableDevice *device, NSUInteger deviceIdx, BOOL *deviceStop)
-    {
-        [device.services enumerateObjectsUsingBlock:^(DeviceService *service, NSUInteger serviceIdx, BOOL *serviceStop)
-        {
-            if ([service.serviceDescription.UUID isEqualToString:UUID])
-            {
-                serviceConfig = service.serviceConfig;
-
-                *serviceStop = YES;
-                *deviceStop = YES;
-            }
-        }];
-    }];
-
-    return serviceConfig;
-}
 
 - (ConnectableDevice *) lookupMatchingDeviceForDeviceStore:(ServiceConfig *)serviceConfig
 {

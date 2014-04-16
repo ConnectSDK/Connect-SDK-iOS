@@ -24,6 +24,7 @@
 #import "ExternalInputControl.h"
 #import "ToastControl.h"
 #import "TextInputControl.h"
+#import "Guid.h"
 
 @implementation ConnectableDevice
 {
@@ -33,6 +34,7 @@
 
 @synthesize serviceDescription = _serviceDescription;
 @synthesize delegate = _delegate;
+@synthesize id = _id;
 
 - (instancetype) init
 {
@@ -59,6 +61,64 @@
     return self;
 }
 
+- (instancetype) initWithJSONObject:(NSDictionary *)dict
+{
+    self = [self init];
+
+    if (self)
+    {
+        _id = dict[@"id"];
+        _lastKnownIPAddress = dict[@"lastKnownIPAddress"];
+        _lastSeenOnWifi = dict[@"lastSeenOnWifi"];
+
+        id lastConnected = dict[@"lastConnected"];
+        if (lastConnected && ![lastConnected isKindOfClass:[NSNull class]])
+            _lastConnected = [lastConnected doubleValue];
+
+        id lastDetection = dict[@"lastDetection"];
+        if (lastDetection && ![lastDetection isKindOfClass:[NSNull class]])
+            _lastDetection = [lastDetection doubleValue];
+
+        NSDictionary *services = dict[@"services"];
+
+        if (services)
+        {
+            [services enumerateKeysAndObjectsUsingBlock:^(id key, NSDictionary *serviceJSON, BOOL *stop)
+            {
+                DeviceService *service = [[DeviceService alloc] initWithJSONObject:serviceJSON];
+                [self addService:service];
+            }];
+        }
+    }
+
+    return self;
+}
+
+- (NSDictionary *) toJSONObject
+{
+    NSMutableDictionary *jsonObject = [NSMutableDictionary new];
+
+    if (self.id) jsonObject[@"id"] = self.id;
+    if (self.friendlyName) jsonObject[@"friendlyName"] = self.friendlyName;
+    if (self.lastKnownIPAddress) jsonObject[@"lastKnownIPAddress"] = self.lastKnownIPAddress;
+    if (self.lastSeenOnWifi) jsonObject[@"lastSeenOnWifi"] = self.lastSeenOnWifi;
+    if (self.lastConnected) jsonObject[@"lastConnected"] = @(self.lastConnected);
+    if (self.lastDetection) jsonObject[@"lastDetection"] = @(self.lastDetection);
+
+    NSMutableDictionary *services = [NSMutableDictionary new];
+
+    [self.services enumerateObjectsUsingBlock:^(DeviceService *service, NSUInteger idx, BOOL *stop)
+    {
+        NSDictionary *serviceJSON = [service toJSONObject];
+        [services setObject:serviceJSON forKey:service.serviceDescription.UUID];
+    }];
+
+    if (services.count > 0)
+        jsonObject[@"services"] = [NSDictionary dictionaryWithDictionary:services];
+
+    return jsonObject;
+}
+
 + (instancetype) connectableDeviceWithDescription:(ServiceDescription *)description
 {
     return [[ConnectableDevice alloc] initWithDescription:description];
@@ -78,6 +138,14 @@
 }
 
 #pragma mark - General info
+
+- (NSString *) id
+{
+    if (!_id)
+        _id = [[Guid randomGuid] stringValueWithFormat:GuidFormatDashed];
+
+    return _id;
+}
 
 - (NSString *) address
 {

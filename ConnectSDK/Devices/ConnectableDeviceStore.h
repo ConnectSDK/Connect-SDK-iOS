@@ -22,9 +22,7 @@
 #import "ConnectableDevice.h"
 
 /*!
- * ConnectableDeviceStore is a protocol which can be implemented to save key information about ConnectableDevices that have been discovered on the network. Any class which implements this protocol can be used as DiscoveryManager's deviceStore.
- *
- * The ConnectableDevice objects loaded from the ConnectableDeviceStore are for informational use only, and should not be interacted with. DiscoveryManager uses these ConnectableDevice objects to populate re-discovered ConnectableDevices with relevant data (last connected, pairing info, etc).
+ * ConnectableDeviceStore is a protocol which can be implemented to save key information about ConnectableDevices that have been connected to. Any class which implements this protocol can be used as DiscoveryManager's deviceStore.
  *
  * A default implementation, DefaultConnectableDeviceStore, will be used by DiscoveryManager if no other ConnectableDeviceStore is provided to DiscoveryManager when startDiscovery is called.
  *
@@ -34,8 +32,8 @@
  *   + completely disable ConnectableDeviceStore
  *   + purge all data from ConnectableDeviceStore (removeAll)
  * - Your ConnectableDeviceStore implementation should
- *   + avoid tracking too much data (all discovered devices)
-  *  + periodically remove ConnectableDevices from the ConnectableDeviceStore if they haven't been used/connected in X amount of time
+ *   + avoid tracking too much data (indefinitely storing all discovered devices)
+ *   + periodically remove ConnectableDevices from the ConnectableDeviceStore if they haven't been used/connected in X amount of time
  */
 @protocol ConnectableDeviceStore <NSObject>
 
@@ -47,7 +45,7 @@
 - (void) addDevice:(ConnectableDevice *)device;
 
 /*!
- * Updates a ConnectableDevice's record in the ConnectableDeviceStore.
+ * Updates a ConnectableDevice's record in the ConnectableDeviceStore. If the ConnectableDevice is not in the store, this call will be ignored.
  *
  * @param device ConnectableDevice to update in the ConnectableDeviceStore
  */
@@ -61,13 +59,31 @@
 - (void) removeDevice:(ConnectableDevice *)device;
 
 /*!
+ * Gets a ConnectableDevice object for a provided id. The id may be for the ConnectableDevice object or any of the device's DeviceServices.
+ *
+ * @param id Unique ID for a ConnectableDevice or any of its DeviceService objects
+ *
+ * @return ConnectableDevice object if a matching id was found, otherwise will return nil
+ */
+- (ConnectableDevice *) deviceForId:(NSString *)id;
+
+/*!
+ * Gets a ServiceConfig object for a provided UUID. This is used by DiscoveryManager to retain crucial service information between sessions (pairing code, etc).
+ *
+ * @param UUID Unique ID for the service
+ *
+ * @return ServiceConfig object if a matching UUID was found, otherwise will return nil
+ */
+- (ServiceConfig *) serviceConfigForUUID:(NSString *)UUID;
+
+/*!
  * Clears out the ConnectableDeviceStore, removing all records.
  */
 - (void) removeAll;
 
 /*!
- * An array of all ConnectableDevices in the ConnectableDeviceStore. These ConnectableDevice objects are for informational use only, and should not be interacted with. DiscoveryManager uses these ConnectableDevice objects to populate discovered ConnectableDevices with relevant data (last connected, pairing info, etc).
+ * A dictionary containing information about all ConnectableDevices in the ConnectableDeviceStore. To get a strongly-typed ConnectableDevice object, use the `getDeviceForUUID:` method.
  */
-@property (nonatomic, readonly) NSArray *storedDevices;
+@property (nonatomic, readonly) NSDictionary *storedDevices;
 
 @end

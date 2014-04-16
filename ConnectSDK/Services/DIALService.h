@@ -18,6 +18,8 @@
 //  limitations under the License.
 //
 
+#define kConnectSDKDIALServiceId @"DIAL"
+
 #import <ConnectSDK/ConnectSDK.h>
 #import "Launcher.h"
 

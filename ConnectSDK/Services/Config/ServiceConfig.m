@@ -21,6 +21,9 @@
 #import "ServiceConfig.h"
 
 @implementation ServiceConfig
+{
+    BOOL _hasObservers;
+}
 
 + (instancetype) serviceConfigWithJSONObject:(NSDictionary *)dictionary
 {
@@ -66,10 +69,15 @@
 
 - (void) addObservers
 {
+    if (_hasObservers)
+        return;
+
     [self addObserver:self forKeyPath:@"UUID" options:0 context:nil];
     [self addObserver:self forKeyPath:@"connected" options:0 context:nil];
     [self addObserver:self forKeyPath:@"wasConnected" options:0 context:nil];
     [self addObserver:self forKeyPath:@"lastDetection" options:0 context:nil];
+
+    _hasObservers = YES;
 }
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -91,6 +99,9 @@
 
 - (void) removeObservers
 {
+    if (!_hasObservers)
+        return;
+
     @try {
         [self removeObserver:self forKeyPath:@"UUID"];
         [self removeObserver:self forKeyPath:@"connected"];
@@ -100,6 +111,8 @@
     @catch (NSException *exception) {
         // don't need to handle this exception, because observers aren't added
     }
+
+    _hasObservers = NO;
 }
 
 - (void) dealloc

@@ -64,7 +64,7 @@
 + (NSDictionary *) discoveryParameters
 {
     return @{
-             @"serviceId":@"Chromecast"
+             @"serviceId":kConnectSDKCastServiceId
              };
 }
 
