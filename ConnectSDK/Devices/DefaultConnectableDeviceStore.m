@@ -246,6 +246,9 @@
             foundDevice = [[ConnectableDevice alloc] initWithJSONObject:foundDeviceInfo];
     }
 
+    if (foundDevice && ![_activeDevices objectForKey:foundDevice.id])
+        [_activeDevices setObject:foundDevice forKey:foundDevice.id];
+
     return foundDevice;
 }
 
@@ -346,7 +349,8 @@
         NSDictionary *deviceStore = [_deviceStore copy];
 
         NSError *jsonError;
-        NSData *deviceStoreJSONData = [NSJSONSerialization dataWithJSONObject:deviceStore options:NSJSONWritingPrettyPrinted error:&jsonError];
+        NSData *deviceStoreJSONData;
+        @synchronized (deviceStore) { deviceStoreJSONData = [NSJSONSerialization dataWithJSONObject:deviceStore options:NSJSONWritingPrettyPrinted error:&jsonError]; }
         NSString *deviceStoreJSON = [[NSString alloc] initWithData:deviceStoreJSONData encoding:NSUTF8StringEncoding];
 
         if (jsonError)

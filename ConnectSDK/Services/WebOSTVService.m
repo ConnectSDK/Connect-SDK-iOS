@@ -92,6 +92,9 @@
     if (!self.serviceConfig.UUID)
         self.serviceConfig.UUID = serviceDescription.UUID;
 
+    if (!_serviceDescription.locationResponseHeaders)
+        return;
+
     NSString *serverInfo = [_serviceDescription.locationResponseHeaders objectForKey:@"Server"];
     NSString *systemOS = [[serverInfo componentsSeparatedByString:@" "] firstObject];
     NSString *systemVersion = [[systemOS componentsSeparatedByString:@"/"] lastObject];
