@@ -18,6 +18,7 @@
 //  limitations under the License.
 //
 
+#import <GoogleCast/GoogleCast.h>
 #import "DeviceService.h"
 #import "Launcher.h"
 #import "MediaPlayer.h"
@@ -286,7 +287,7 @@ id ensureString(id value)
 
 #pragma mark - JSONObjectCoding methods
 
-- (instancetype) initWithJSONObject:(NSDictionary *)dict
++ (instancetype) deviceServiceWithJSONObject:(NSDictionary *)dict
 {
     NSString *className = dict[@"class"];
 
@@ -298,7 +299,12 @@ id ensureString(id value)
     if (!DeviceServiceClass)
         return nil;
 
-    self = [DeviceServiceClass init];
+    return [[DeviceServiceClass alloc] initWithJSONObject:dict];
+}
+
+- (instancetype) initWithJSONObject:(NSDictionary *)dict
+{
+    self = [self init];
 
     if (self)
     {

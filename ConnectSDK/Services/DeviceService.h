@@ -78,6 +78,10 @@
  */
 - (instancetype) initWithServiceConfig:(ServiceConfig *)serviceConfig;
 
+// @cond INTERNAL
++ (instancetype) deviceServiceWithJSONObject:(NSDictionary *)dict;
+// @endcond
+
 #pragma mark - Capabilities
 
 /*!

@@ -470,9 +470,18 @@
     BOOL deviceIsNew = NO;
     ConnectableDevice *device;
 
-    @synchronized (_allDevices) { device = [_allDevices objectForKey:description.address]; }
-    
-    if (device == nil)
+    if (self.useDeviceStore)
+    {
+        device = [self.deviceStore deviceForId:description.UUID];
+
+        if (device)
+            @synchronized (_allDevices) { [_allDevices setObject:device forKey:description.address]; }
+    }
+
+    if (!device)
+        @synchronized (_allDevices) { device = [_allDevices objectForKey:description.address]; }
+
+    if (!device)
     {
         device = [ConnectableDevice connectableDeviceWithDescription:description];
         @synchronized (_allDevices) { [_allDevices setObject:device forKey:description.address]; }
@@ -483,60 +492,10 @@
     device.lastKnownIPAddress = description.address;
     device.lastSeenOnWifi = _currentSSID;
 
-    Class deviceServiceClass;
+    [self addServiceDescription:description toDevice:device];
 
-    if ([self descriptionIsNetcastTV:description])
-    {
-        deviceServiceClass = [NetcastTVService class];
-        description.serviceId = [[NetcastTVService discoveryParameters] objectForKey:@"serviceId"];
-    } else
-    {
-        deviceServiceClass = [_deviceClasses objectForKey:description.serviceId];
-    }
-
-    // Prevent non-LG TV DLNA devices from being picked up
-    if (deviceServiceClass == [DLNAService class])
-    {
-        NSRange rangeOfNetcast = [description.locationXML.lowercaseString rangeOfString:@"netcast"];
-        NSRange rangeOfWebOS = [description.locationXML.lowercaseString rangeOfString:@"webos"];
-
-        if (rangeOfNetcast.location == NSNotFound && rangeOfWebOS.location == NSNotFound)
-            return;
-    }
-
-    ServiceConfig *serviceConfig;
-
-    if (self.useDeviceStore)
-    {
-        serviceConfig = [self.deviceStore serviceConfigForUUID:description.UUID];
-        serviceConfig.delegate = self;
-        serviceConfig.lastDetection = [NSDate date].timeIntervalSince1970;
-    }
-
-    BOOL newServiceConfig = serviceConfig == nil;
-
-    if (newServiceConfig)
-    {
-        serviceConfig = [[ServiceConfig alloc] initWithServiceDescription:description];
-        serviceConfig.delegate = self;
-    }
-    
-    __block BOOL deviceAlreadyHasService = NO;
-    
-    [device.services enumerateObjectsUsingBlock:^(DeviceService *obj, NSUInteger idx, BOOL *stop) {
-        if ([obj.serviceDescription.serviceId isEqualToString:description.serviceId])
-        {
-            deviceAlreadyHasService = YES;
-            *stop = YES;
-        }
-    }];
-    
-    if (deviceAlreadyHasService)
-        return;
-    
-    DeviceService *deviceService = [DeviceService deviceServiceWithClass:deviceServiceClass serviceConfig:serviceConfig];
-    deviceService.serviceDescription = description;
-    [device addService:deviceService];
+    if (device.services.count == 0)
+        return; // TODO: find out why this is happening
 
     if (deviceIsNew)
         [self handleDeviceAdd:device];
@@ -575,6 +534,62 @@
 - (void)discoveryProvider:(DiscoveryProvider *)provider didFailWithError:(NSError *)error
 {
     DLog(@"%@", error.localizedDescription);
+}
+
+#pragma mark - Helper methods
+
+- (void) addServiceDescription:(ServiceDescription *)description toDevice:(ConnectableDevice *)device
+{
+    Class deviceServiceClass;
+
+    if ([self descriptionIsNetcastTV:description])
+    {
+        deviceServiceClass = [NetcastTVService class];
+        description.serviceId = [[NetcastTVService discoveryParameters] objectForKey:@"serviceId"];
+    } else
+    {
+        deviceServiceClass = [_deviceClasses objectForKey:description.serviceId];
+    }
+
+    // Prevent non-LG TV DLNA devices from being picked up
+    if (deviceServiceClass == [DLNAService class])
+    {
+        NSRange rangeOfNetcast = [description.locationXML.lowercaseString rangeOfString:@"netcast"];
+        NSRange rangeOfWebOS = [description.locationXML.lowercaseString rangeOfString:@"webos"];
+
+        if (rangeOfNetcast.location == NSNotFound && rangeOfWebOS.location == NSNotFound)
+            return;
+    }
+
+    ServiceConfig *serviceConfig = [[ServiceConfig alloc] initWithServiceDescription:description];
+    serviceConfig.delegate = self;
+
+    __block BOOL deviceAlreadyHasServiceType = NO;
+    __block BOOL deviceAlreadyHasService = NO;
+
+    [device.services enumerateObjectsUsingBlock:^(DeviceService *obj, NSUInteger idx, BOOL *stop) {
+        if ([obj.serviceDescription.serviceId isEqualToString:description.serviceId])
+        {
+            deviceAlreadyHasServiceType = YES;
+
+            if ([obj.serviceDescription.UUID isEqualToString:description.UUID])
+                deviceAlreadyHasService = YES;
+
+            *stop = YES;
+        }
+    }];
+
+    if (deviceAlreadyHasServiceType)
+    {
+        if (deviceAlreadyHasService)
+            return;
+
+        [device removeServiceWithId:description.serviceId];
+    }
+
+    DeviceService *deviceService = [DeviceService deviceServiceWithClass:deviceServiceClass serviceConfig:serviceConfig];
+    deviceService.serviceDescription = description;
+    [device addService:deviceService];
 }
 
 #pragma mark - ConnectableDeviceDelegate methods
