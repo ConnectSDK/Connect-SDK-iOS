@@ -20,7 +20,7 @@
 
 #define kConnectSDKDIALServiceId @"DIAL"
 
-#import <ConnectSDK/ConnectSDK.h>
+#import "ConnectSDK.h"
 #import "Launcher.h"
 
 @interface DIALService : DeviceService <ServiceCommandDelegate, Launcher>
