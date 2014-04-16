@@ -279,10 +279,10 @@ NSString *lgeUDAPRequestURI[8] = {
 
 - (void) showPairingDialog
 {
-    NSString *title = NSLocalizedStringFromTable(@"Connect_SDK_Pair_Title", @"ConnectSDKStrings", nil);
-    NSString *message = NSLocalizedStringFromTable(@"Connect_SDK_Pair_Request_Pin", @"ConnectSDKStrings", nil);
-    NSString *ok = NSLocalizedStringFromTable(@"Connect_SDK_Pair_OK", @"ConnectSDKStrings", nil);
-    NSString *cancel = NSLocalizedStringFromTable(@"Connect_SDK_Pair_Cancel", @"ConnectSDKStrings", nil);
+    NSString *title = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Pair_Title" value:@"Pairing with device" table:@"ConnectSDK"];
+    NSString *message = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Pair_Request_Pin" value:@"Please enter the pin code" table:@"ConnectSDK"];
+    NSString *ok = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Pair_OK" value:@"OK" table:@"ConnectSDK"];
+    NSString *cancel = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Pair_Cancel" value:@"Cancel" table:@"ConnectSDK"];
 
     _pairingAlert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:ok, nil];
     _pairingAlert.alertViewStyle = UIAlertViewStylePlainTextInput;

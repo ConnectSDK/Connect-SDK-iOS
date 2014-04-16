@@ -390,10 +390,10 @@
 
 -(void) showAlert
 {
-    NSString *title = NSLocalizedStringFromTable(@"Connect_SDK_Pair_Title", @"ConnectSDKStrings", nil);
-    NSString *message = NSLocalizedStringFromTable(@"Connect_SDK_Pair_Request", @"ConnectSDKStrings", nil);
-    NSString *ok = NSLocalizedStringFromTable(@"Connect_SDK_Pair_OK", @"ConnectSDKStrings", nil);
-    NSString *cancel = NSLocalizedStringFromTable(@"Connect_SDK_Pair_Cancel", @"ConnectSDKStrings", nil);
+    NSString *title = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Pair_Title" value:@"Pairing with device" table:@"ConnectSDK"];
+    NSString *message = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Pair_Request" value:@"Please confirm the connection on your device" table:@"ConnectSDK"];
+    NSString *ok = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Pair_OK" value:@"OK" table:@"ConnectSDK"];
+    NSString *cancel = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Pair_Cancel" value:@"Cancel" table:@"ConnectSDK"];
     
     _pairingAlert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:ok, nil];
     dispatch_on_main(^{ [_pairingAlert show]; });
