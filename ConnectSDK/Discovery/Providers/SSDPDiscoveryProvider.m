@@ -107,6 +107,10 @@ static double searchAttemptsBeforeKill = 3.0;
     if (_refreshTimer)
         [_refreshTimer invalidate];
     
+    _foundServices = [NSMutableDictionary new];
+    _helloDevices = [NSMutableDictionary new];
+    [_locationLoadQueue cancelAllOperations];
+    
     self.isRunning = NO;
     
     _searchSocket = nil;
