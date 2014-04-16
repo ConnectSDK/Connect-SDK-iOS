@@ -20,12 +20,16 @@ This project has the following dependencies.
 2. Open your project in Xcode
 3. Locate the Connect SDK Xcode project in the Finder
 4. Drag the Connect SDK Xcode project into your project's Xcode library
-5. Navigate to your project's settings screen, then navigate to the build phases tab
+5. Navigate to your project's settings screen, then navigate to the Build Phases tab
 6. Add ConnectSDK as a Target Dependency
-7. Add libConnectSDK.a in the Link Binary with Libraries section
-8. Download the [Google Cast SDK iOS sender library file](https://developers.google.com/cast/docs/downloads)
-9. Extract GoogleCast.framework and copy it to $(Connect SDK project directory)/ConnectSDK/Frameworks
-10. Drag and drop GoogleCast.framework into your project's Frameworks folder
+7. Add the following in the `Link Binary With Libraries` section
+   - libConnectSDK.a
+   - libz.dylib
+   - libicucore.dylib
+8. Navigate to the `Build Settings` tab and add `-ObjC` to your target's `Other Linker Flags`
+9. Download the [Google Cast SDK iOS sender library file](https://developers.google.com/cast/docs/downloads)
+10. Extract GoogleCast.framework and copy it to $(Connect SDK project directory)/ConnectSDK/Frameworks
+11. Drag and drop GoogleCast.framework into your project's Frameworks folder
  
 ###Include Strings File for Localization (optional)
 1. Locate the Connect SDK Xcode project in the Finder
