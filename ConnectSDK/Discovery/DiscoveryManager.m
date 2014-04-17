@@ -582,7 +582,10 @@
     if (deviceAlreadyHasServiceType)
     {
         if (deviceAlreadyHasService)
+        {
+            device.serviceDescription = description;
             return;
+        }
 
         [device removeServiceWithId:description.serviceId];
     }
