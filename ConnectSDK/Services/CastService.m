@@ -329,7 +329,7 @@
 
     GCKMediaInformation *mediaInformation = [[GCKMediaInformation alloc] initWithContentID:imageURL.absoluteString streamType:GCKMediaStreamTypeNone contentType:mimeType metadata:metaData streamDuration:0 customData:nil];
 
-    [self playMedia:mediaInformation webAppId:@"6F8A4929" success:success failure:failure];
+    [self playMedia:mediaInformation webAppId:kGCKMediaDefaultReceiverApplicationID success:success failure:failure];
 }
 
 - (void) playMedia:(NSURL *)videoURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
@@ -346,7 +346,7 @@
 
     GCKMediaInformation *mediaInformation = [[GCKMediaInformation alloc] initWithContentID:videoURL.absoluteString streamType:GCKMediaStreamTypeBuffered contentType:mimeType metadata:metaData streamDuration:1000 customData:nil];
 
-    [self playMedia:mediaInformation webAppId:@"6F8A4929" success:success failure:failure];
+    [self playMedia:mediaInformation webAppId:kGCKMediaDefaultReceiverApplicationID success:success failure:failure];
 }
 
 - (void) playMedia:(GCKMediaInformation *)mediaInformation webAppId:(NSString *)mediaAppId success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
