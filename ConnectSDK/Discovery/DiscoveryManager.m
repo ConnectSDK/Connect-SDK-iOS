@@ -584,6 +584,12 @@
         if (deviceAlreadyHasService)
         {
             device.serviceDescription = description;
+            
+            DeviceService *alreadyAddedService = [device serviceWithName:description.serviceId];
+            
+            if (alreadyAddedService)
+                alreadyAddedService.serviceDescription = description;
+            
             return;
         }
 

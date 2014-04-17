@@ -38,6 +38,8 @@
 
 @implementation DLNAService
 
+@synthesize serviceDescription = _serviceDescription;
+
 - (NSArray *)capabilities
 {
     return @[
@@ -82,6 +84,14 @@
 //
 //    return _commandQueue;
 //}
+
+- (void)setServiceDescription:(ServiceDescription *)serviceDescription
+{
+    _serviceDescription = serviceDescription;
+    
+    if (!_serviceDescription.locationXML)
+        _commandURL = nil;
+}
 
 - (NSURL *)commandURL
 {
