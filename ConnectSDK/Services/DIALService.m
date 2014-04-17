@@ -43,19 +43,32 @@ static NSMutableArray *registeredApps = nil;
     ]];
 }
 
+- (void) commonInit
+{
+    [self addCapabilities:@[
+            kLauncherApp,
+            kLauncherAppParams,
+            kLauncherAppClose,
+            kLauncherAppState
+    ]];
+}
+
+- (instancetype) init
+{
+    self = [super init];
+
+    if (self)
+        [self commonInit];
+
+    return self;
+}
+
 - (instancetype) initWithServiceConfig:(ServiceConfig *)serviceConfig
 {
     self = [super initWithServiceConfig:serviceConfig];
 
     if (self)
-    {
-        [self addCapabilities:@[
-                kLauncherApp,
-                kLauncherAppParams,
-                kLauncherAppClose,
-                kLauncherAppState
-        ]];
-    }
+        [self commonInit];
 
     return self;
 }
@@ -328,6 +341,9 @@ static NSMutableArray *registeredApps = nil;
             {
                 NSString *resourceName = [[[responseObject objectForKey:@"service"] objectForKey:@"link"] objectForKey:@"text"];
 
+                if (!resourceName)
+                    resourceName = [[[responseObject objectForKey:@"service"] objectForKey:@"atom:link"] objectForKey:@"rel"];
+
                 [self launchApplicationWithInfo:appInfo params:params resourceName:resourceName success:success failure:failure];
             } failure:failure];
         } else
@@ -379,7 +395,15 @@ static NSMutableArray *registeredApps = nil;
     AppInfo *appInfo = [AppInfo appInfoForId:@"YouTube"];
     appInfo.name = appInfo.id;
     
-    [self.launcher launchAppWithInfo:appInfo params:(id)params success:success failure:failure];
+    [self.launcher launchAppWithInfo:appInfo params:(id)params success:^(LaunchSession *launchSession)
+    {
+        if (success)
+            success(launchSession);
+    } failure:^(NSError *error)
+    {
+        if (failure)
+            failure(error);
+    }];
 }
 
 - (ServiceSubscription *)subscribeRunningAppWithSuccess:(AppInfoSuccessBlock)success failure:(FailureBlock)failure
