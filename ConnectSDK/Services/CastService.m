@@ -43,20 +43,33 @@
     NSMutableArray *_subscriptions;
 }
 
+- (void) commonSetup
+{
+    _launchSuccessBlocks = [NSMutableDictionary new];
+    _launchFailureBlocks = [NSMutableDictionary new];
+
+    _sessions = [NSMutableDictionary new];
+    _subscriptions = [NSMutableArray new];
+
+    UID = 0;
+}
+
+- (instancetype) init
+{
+    self = [super init];
+
+    if (self)
+        [self commonSetup];
+
+    return self;
+}
+
 - (instancetype)initWithServiceConfig:(ServiceConfig *)serviceConfig
 {
     self = [super initWithServiceConfig:serviceConfig];
 
     if (self)
-    {
-        _launchSuccessBlocks = [NSMutableDictionary new];
-        _launchFailureBlocks = [NSMutableDictionary new];
-
-        _sessions = [NSMutableDictionary new];
-        _subscriptions = [NSMutableArray new];
-
-        UID = 0;
-    }
+        [self commonSetup];
 
     return self;
 }

@@ -285,8 +285,32 @@
 
 - (void) displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    if (failure)
-        failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
+    int requestIdNumber = [self getNextId];
+    NSString *requestId = [NSString stringWithFormat:@"req%d", requestIdNumber];
+
+    NSDictionary *message = @{
+            @"contentType" : @"connectsdk.mediaCommand",
+            @"mediaCommand" : @{
+                    @"type" : @"displayImage",
+                    @"mediaURL" : ensureString(imageURL.absoluteString),
+                    @"iconURL" : ensureString(iconURL.absoluteString),
+                    @"title" : ensureString(title),
+                    @"description" : ensureString(description),
+                    @"mimeType" : ensureString(mimeType),
+                    @"requestId" : requestId
+            }
+    };
+
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:nil target:nil payload:nil];
+    command.callbackComplete = ^(id responseObject)
+    {
+        if (success)
+            success(self.launchSession, self.mediaControl);
+    };
+    command.callbackError = failure;
+    [_activeCommands setObject:command forKey:requestId];
+
+    [self sendJSON:message success:nil failure:failure];
 }
 
 - (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure

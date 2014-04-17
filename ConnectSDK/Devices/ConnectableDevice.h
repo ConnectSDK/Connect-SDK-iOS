@@ -64,7 +64,7 @@ typedef enum {
 
 // @cond INTERNAL
 + (instancetype) connectableDeviceWithDescription:(ServiceDescription *)description;
-@property (nonatomic, strong, readonly) ServiceDescription *serviceDescription;
+@property (nonatomic, strong) ServiceDescription *serviceDescription;
 // @endcond
 
 /*!

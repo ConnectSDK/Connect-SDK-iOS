@@ -1121,33 +1121,42 @@
 
 - (void)displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    NSDictionary *params = @{
-            @"target" : imageURL.absoluteString,
-            @"title" : title,
-            @"description" : description,
-            @"mimeType" : mimeType,
-            @"iconSrc" : (iconURL == nil) ? @"" : iconURL.absoluteString
+    NSString *webAppId = @"MediaPlayer";
+
+    WebAppLaunchSuccessBlock connectSuccess = ^(WebAppSession *webAppSession)
+    {
+        WebOSWebAppSession *session = (WebOSWebAppSession *)webAppSession;
+        [session.mediaPlayer displayImage:imageURL iconURL:iconURL title:title description:description mimeType:mimeType success:success failure:failure];
     };
 
-    [self displayMediaWithParams:params success:success failure:failure];
+    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:webAppId];
+    launchSession.sessionType = LaunchSessionTypeWebApp;
+    launchSession.service = self;
+
+    [self joinWebApp:launchSession success:connectSuccess failure:^(NSError *error)
+    {
+        [self launchWebApp:webAppId success:connectSuccess failure:failure];
+    }];
 }
 
-- (void) playMedia:(NSURL *)videoURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
+- (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    NSDictionary *params = @{
-            @"target" : videoURL.absoluteString,
-            @"title" : ensureString(title),
-            @"description" : ensureString(description),
-            @"mimeType" : ensureString(mimeType),
-            @"loop" : shouldLoop ? @"true" : @"false",
-            @"iconSrc" : (iconURL == nil) ? @"" : iconURL.absoluteString
+    NSString *webAppId = @"MediaPlayer";
+
+    WebAppLaunchSuccessBlock connectSuccess = ^(WebAppSession *webAppSession)
+    {
+        WebOSWebAppSession *session = (WebOSWebAppSession *)webAppSession;
+        [session.mediaPlayer playMedia:mediaURL iconURL:iconURL title:title description:description mimeType:mimeType shouldLoop:shouldLoop success:success failure:failure];
     };
 
-    [self launchWebApp:@"MediaPlayer" params:params success:^(WebAppSession *webAppSession)
+    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:webAppId];
+    launchSession.sessionType = LaunchSessionTypeWebApp;
+    launchSession.service = self;
+
+    [self joinWebApp:launchSession success:connectSuccess failure:^(NSError *error)
     {
-        if (success)
-            success(webAppSession.launchSession, webAppSession);
-    } failure:failure];
+        [self launchWebApp:webAppId success:connectSuccess failure:failure];
+    }];
 }
 
 - (void)displayMediaWithParams:(NSDictionary *)params success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
@@ -1920,6 +1929,18 @@
         return;
     }
 
+    // TODO: don't hard code com.webos.app.webapphost
+    NSString *webAppHostId = [NSString stringWithFormat:@"com.webos.app.webapphost.%@", webAppSession.launchSession.appId];
+
+    if ([_appToAppSubscriptions objectForKey:webAppSession.launchSession.appId] && [_appToAppMessageCallbacks objectForKey:webAppHostId])
+    {
+        [_appToAppMessageCallbacks setObject:webAppSession.messageHandler forKey:webAppHostId];
+
+        if (success)
+            success(webAppSession);
+        return;
+    }
+
     NSURL *URL = [NSURL URLWithString:@"ssap://webapp/connectToApp"];
 
     NSMutableDictionary *payload = [NSMutableDictionary new];
@@ -1935,10 +1956,9 @@
             {
                 [connectionSubscription unsubscribe];
                 [_appToAppSubscriptions removeObjectForKey:webAppSession.launchSession.appId];
-            } else
-            {
-                // TODO: do something here
             }
+
+            [_appToAppMessageCallbacks removeObjectForKey:webAppSession.launchSession.appId];
         }
 
         BOOL appChannelDidClose = [error.localizedDescription rangeOfString:@"app channel closed"].location != NSNotFound;
@@ -2020,16 +2040,15 @@
         {
             [connectionSubscription unsubscribe];
             [_appToAppSubscriptions removeObjectForKey:webAppSession.launchSession.appId];
-        } else
-        {
-            // TODO: do something here
         }
+
+        [_appToAppMessageCallbacks removeObjectForKey:webAppSession.launchSession.appId];
     }
 }
 
 - (int) sendMessage:(id)message toApp:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    if (!launchSession || !launchSession.rawData)
+    if (!launchSession)
     {
         if (failure)
             failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid LaunchSession to send messages to"]);
@@ -2037,7 +2056,8 @@
         return -1;
     }
 
-    NSString *appId = [launchSession.rawData objectForKey:@"webAppId"];
+    // TODO: don't hard code com.webos.app.webapphost
+    NSString *appId = [NSString stringWithFormat:@"com.webos.app.webapphost.%@", launchSession.appId];
 
     if (!appId)
     {
