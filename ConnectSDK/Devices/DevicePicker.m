@@ -377,7 +377,10 @@ static NSString *cellIdentifier = @"connectPickerCell";
     ConnectableDevice *device = (ConnectableDevice *) [_generatedDeviceList objectAtIndex:indexPath.row];
     NSString *deviceName = [self nameForDevice:device];
     [cell.textLabel setText:deviceName];
+    
+#ifdef DEBUG
     [cell.detailTextLabel setText:[device connectedServiceNames]];
+#endif
     
     if (self.currentDevice)
     {
