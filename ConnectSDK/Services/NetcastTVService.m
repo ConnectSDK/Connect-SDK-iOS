@@ -79,6 +79,23 @@ NSString *lgeUDAPRequestURI[8] = {
         @"/udap/api/apptoapp/data"      //LGE_APPTOAPP_DATA_REQUEST
 };
 
+- (void) commonConfig
+{
+    _dlnaService = [[DLNAService alloc] initWithServiceConfig:self.serviceConfig];
+}
+
+- (instancetype) initWithJSONObject:(NSDictionary *)dict
+{
+    self = [super initWithJSONObject:dict];
+
+    if (self)
+    {
+        [self commonConfig];
+    }
+
+    return self;
+}
+
 - (instancetype) initWithServiceConfig:(ServiceConfig *)serviceConfig
 {
     self = [super initWithServiceConfig:serviceConfig];
@@ -92,7 +109,7 @@ NSString *lgeUDAPRequestURI[8] = {
             _serviceConfig = [[NetcastTVServiceConfig alloc] initWithServiceConfig:serviceConfig];
         }
 
-        _dlnaService = [[DLNAService alloc] initWithServiceConfig:serviceConfig];
+        [self commonConfig];
     }
 
     return self;
