@@ -1121,15 +1121,18 @@
 
 - (void)displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    NSDictionary *params = @{
-            @"target" : imageURL.absoluteString,
-            @"title" : title,
-            @"description" : description,
-            @"mimeType" : mimeType,
-            @"iconSrc" : (iconURL == nil) ? @"" : iconURL.absoluteString
+    NSString *webAppId = @"MediaPlayer";
+
+    WebAppLaunchSuccessBlock connectSuccess = ^(WebAppSession *webAppSession)
+    {
+        WebOSWebAppSession *session = (WebOSWebAppSession *)webAppSession;
+        [session.mediaPlayer displayImage:imageURL iconURL:iconURL title:title description:description mimeType:mimeType success:success failure:failure];
     };
 
-    [self displayMediaWithParams:params success:success failure:failure];
+    [self joinWebApp:[LaunchSession launchSessionForAppId:webAppId] success:connectSuccess failure:^(NSError *error)
+    {
+        [self launchWebApp:webAppId success:connectSuccess failure:failure];
+    }];
 }
 
 - (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
