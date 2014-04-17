@@ -1129,7 +1129,11 @@
         [session.mediaPlayer displayImage:imageURL iconURL:iconURL title:title description:description mimeType:mimeType success:success failure:failure];
     };
 
-    [self joinWebApp:[LaunchSession launchSessionForAppId:webAppId] success:connectSuccess failure:^(NSError *error)
+    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:webAppId];
+    launchSession.sessionType = LaunchSessionTypeWebApp;
+    launchSession.service = self;
+
+    [self joinWebApp:launchSession success:connectSuccess failure:^(NSError *error)
     {
         [self launchWebApp:webAppId success:connectSuccess failure:failure];
     }];
@@ -1145,7 +1149,11 @@
         [session.mediaPlayer playMedia:mediaURL iconURL:iconURL title:title description:description mimeType:mimeType shouldLoop:shouldLoop success:success failure:failure];
     };
 
-    [self joinWebApp:[LaunchSession launchSessionForAppId:webAppId] success:connectSuccess failure:^(NSError *error)
+    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:webAppId];
+    launchSession.sessionType = LaunchSessionTypeWebApp;
+    launchSession.service = self;
+
+    [self joinWebApp:launchSession success:connectSuccess failure:^(NSError *error)
     {
         [self launchWebApp:webAppId success:connectSuccess failure:failure];
     }];
