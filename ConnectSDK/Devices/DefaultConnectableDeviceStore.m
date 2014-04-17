@@ -346,11 +346,12 @@
 
     dispatch_async(_deviceStoreQueue, ^
     {
-        NSDictionary *deviceStore = [_deviceStore copy];
+        NSDictionary *deviceStore;
+
+        @synchronized (_deviceStore) { deviceStore = [_deviceStore copy]; }
 
         NSError *jsonError;
-        NSData *deviceStoreJSONData;
-        @synchronized (deviceStore) { deviceStoreJSONData = [NSJSONSerialization dataWithJSONObject:deviceStore options:NSJSONWritingPrettyPrinted error:&jsonError]; }
+        NSData *deviceStoreJSONData = [NSJSONSerialization dataWithJSONObject:deviceStore options:NSJSONWritingPrettyPrinted error:&jsonError];
         NSString *deviceStoreJSON = [[NSString alloc] initWithData:deviceStoreJSONData encoding:NSUTF8StringEncoding];
 
         if (jsonError)
