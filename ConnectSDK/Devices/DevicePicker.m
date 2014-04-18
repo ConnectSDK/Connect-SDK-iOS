@@ -236,7 +236,9 @@
 - (void) sortDevices
 {
     dispatch_async(_sortQueue, ^{
-        NSArray *devices = [_devices allValues];
+        NSArray *devices;
+
+        @synchronized (_devices) { devices = [_devices allValues]; }
     
         _generatedDeviceList = [devices sortedArrayUsingComparator:^NSComparisonResult(ConnectableDevice *device1, ConnectableDevice *device2) {
             NSString *device1Name = [[self nameForDevice:device1] lowercaseString];
@@ -244,8 +246,6 @@
 
             return [device1Name compare:device2Name];
         }];
-
-        NSAssert(devices.count == _generatedDeviceList.count, @"Array counts don't match up");
     });
 }
 
@@ -413,7 +413,7 @@ static NSString *cellIdentifier = @"connectPickerCell";
 {
     if (_devices)
     {
-        [_devices setObject:device forKey:device.address];
+        @synchronized (_devices) { [_devices setObject:device forKey:device.address]; }
 
         [self sortDevices];
 
@@ -428,7 +428,7 @@ static NSString *cellIdentifier = @"connectPickerCell";
 {
     if (_devices)
     {
-        [_devices removeObjectForKey:device.address];
+        @synchronized (_devices) { [_devices removeObjectForKey:device.address]; }
 
         [self sortDevices];
 
