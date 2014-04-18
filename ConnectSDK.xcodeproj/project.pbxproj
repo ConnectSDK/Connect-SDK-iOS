@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB9F714DEDE9A26A22544339 /* AirPlayService.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F77EFDE3374914D6B383B /* AirPlayService.m */; };
+		BB9F75C707C7D86EB1934BD5 /* ZeroConfDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F752184AD57C1730A2B40 /* ZeroConfDiscoveryProvider.m */; };
 		EA61EB1418FE485B00D75696 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1318FE485B00D75696 /* Foundation.framework */; };
 		EA61EBA918FE48C500D75696 /* ConnectableDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = EA61EB4018FE48C500D75696 /* ConnectableDevice.m */; };
 		EA61EBAA18FE48C500D75696 /* DefaultConnectableDeviceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = EA61EB4418FE48C500D75696 /* DefaultConnectableDeviceStore.m */; };
@@ -54,6 +56,8 @@
 		EA61EBEC18FE48D400D75696 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = EA61EBE518FE48D400D75696 /* XMLReader.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		EA61EBF018FE48E900D75696 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBEF18FE48E900D75696 /* SystemConfiguration.framework */; };
 		EA61EBF218FE48EF00D75696 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
+		EA649E181901EABB00DD9FC7 /* ZeroConfDiscoveryProvider.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F7C71326AB56D77F39095 /* ZeroConfDiscoveryProvider.h */; };
+		EA649E191901EAC100DD9FC7 /* AirPlayService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F7A5257BCF2C7CD5DF5BA /* AirPlayService.h */; };
 		EAFA986818FEE8DF001C4FA1 /* ConnectSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EB3D18FE48C500D75696 /* ConnectSDK.h */; };
 		EAFA986918FEE988001C4FA1 /* ConnectableDevice.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EB3F18FE48C500D75696 /* ConnectableDevice.h */; };
 		EAFA986A18FEE988001C4FA1 /* ConnectableDeviceDelegate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EB4118FE48C500D75696 /* ConnectableDeviceDelegate.h */; };
@@ -200,6 +204,8 @@
 				EAFA987318FEE988001C4FA1 /* DiscoveryProviderDelegate.h in CopyFiles */,
 				EAFA987418FEE988001C4FA1 /* CastDiscoveryProvider.h in CopyFiles */,
 				EAFA987518FEE988001C4FA1 /* SSDPDiscoveryProvider.h in CopyFiles */,
+				EA649E191901EAC100DD9FC7 /* AirPlayService.h in CopyFiles */,
+				EA649E181901EABB00DD9FC7 /* ZeroConfDiscoveryProvider.h in CopyFiles */,
 				EAFA986818FEE8DF001C4FA1 /* ConnectSDK.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -207,6 +213,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BB9F752184AD57C1730A2B40 /* ZeroConfDiscoveryProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroConfDiscoveryProvider.m; sourceTree = "<group>"; };
+		BB9F77EFDE3374914D6B383B /* AirPlayService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayService.m; sourceTree = "<group>"; };
+		BB9F7A5257BCF2C7CD5DF5BA /* AirPlayService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayService.h; sourceTree = "<group>"; };
+		BB9F7C71326AB56D77F39095 /* ZeroConfDiscoveryProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroConfDiscoveryProvider.h; sourceTree = "<group>"; };
 		EA41388A18FE51A9002CB005 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		EA61EB1018FE485B00D75696 /* libConnectSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libConnectSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA61EB1318FE485B00D75696 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -433,6 +443,8 @@
 				EA61EB5318FE48C500D75696 /* CastDiscoveryProvider.m */,
 				EA61EB5418FE48C500D75696 /* SSDPDiscoveryProvider.h */,
 				EA61EB5518FE48C500D75696 /* SSDPDiscoveryProvider.m */,
+				BB9F752184AD57C1730A2B40 /* ZeroConfDiscoveryProvider.m */,
+				BB9F7C71326AB56D77F39095 /* ZeroConfDiscoveryProvider.h */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -486,6 +498,8 @@
 				EA61EB9D18FE48C500D75696 /* Sessions */,
 				EA61EBA718FE48C500D75696 /* WebOSTVService.h */,
 				EA61EBA818FE48C500D75696 /* WebOSTVService.m */,
+				BB9F77EFDE3374914D6B383B /* AirPlayService.m */,
+				BB9F7A5257BCF2C7CD5DF5BA /* AirPlayService.h */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -716,6 +730,8 @@
 				EA61EBC518FE48C500D75696 /* CastServiceChannel.m in Sources */,
 				EA61EBBD18FE48C500D75696 /* ServiceSubscription.m in Sources */,
 				EA61EBBF18FE48C500D75696 /* ServiceConfig.m in Sources */,
+				BB9F75C707C7D86EB1934BD5 /* ZeroConfDiscoveryProvider.m in Sources */,
+				BB9F714DEDE9A26A22544339 /* AirPlayService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
