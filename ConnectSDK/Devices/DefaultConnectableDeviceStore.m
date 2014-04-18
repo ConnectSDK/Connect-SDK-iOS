@@ -81,7 +81,11 @@
         }
 
         NSData *deviceStoreData = [deviceStoreJSON dataUsingEncoding:NSUTF8StringEncoding];
-        _deviceStore = [NSJSONSerialization JSONObjectWithData:deviceStoreData options:0 error:&error];
+        
+        @synchronized (_deviceStore)
+        {
+            _deviceStore = [NSJSONSerialization JSONObjectWithData:deviceStoreData options:0 error:&error];
+        }
 
         if (error)
         {
@@ -132,8 +136,11 @@
         newDeviceStore[@"devices"] = [NSDictionary dictionaryWithDictionary:_storedDevices];
 
         _updated = [[NSDate date] timeIntervalSince1970];
-
-        _deviceStore = [NSDictionary dictionaryWithDictionary:newDeviceStore];
+        
+        @synchronized(_deviceStore)
+        {
+            _deviceStore = [NSDictionary dictionaryWithDictionary:newDeviceStore];
+        }
 
         if (!_waitToWrite)
             [self writeStoreToDisk];
@@ -346,14 +353,16 @@
 
     dispatch_async(_deviceStoreQueue, ^
     {
-        NSDictionary *deviceStore;
-
-        @synchronized (_deviceStore) { deviceStore = [_deviceStore copy]; }
-
         NSError *jsonError;
-        NSData *deviceStoreJSONData = [NSJSONSerialization dataWithJSONObject:deviceStore options:NSJSONWritingPrettyPrinted error:&jsonError];
+        NSData *deviceStoreJSONData;
+        
+        @synchronized (_deviceStore)
+        {
+            deviceStoreJSONData = [NSJSONSerialization dataWithJSONObject:_deviceStore options:NSJSONWritingPrettyPrinted error:&jsonError];
+        }
+        
         NSString *deviceStoreJSON = [[NSString alloc] initWithData:deviceStoreJSONData encoding:NSUTF8StringEncoding];
-
+        
         if (jsonError)
         {
             DLog(@"Failed to parse with error: %@", jsonError.localizedDescription);
