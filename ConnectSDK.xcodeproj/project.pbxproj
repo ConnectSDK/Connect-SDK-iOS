@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BB9F714DEDE9A26A22544339 /* AirPlayService.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F77EFDE3374914D6B383B /* AirPlayService.m */; };
 		BB9F75C707C7D86EB1934BD5 /* ZeroConfDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F752184AD57C1730A2B40 /* ZeroConfDiscoveryProvider.m */; };
+		BB9F7D62C85C342AF11C7257 /* AirPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7871160828219957E3A4 /* AirPlayViewController.m */; };
 		EA61EB1418FE485B00D75696 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1318FE485B00D75696 /* Foundation.framework */; };
 		EA61EBA918FE48C500D75696 /* ConnectableDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = EA61EB4018FE48C500D75696 /* ConnectableDevice.m */; };
 		EA61EBAA18FE48C500D75696 /* DefaultConnectableDeviceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = EA61EB4418FE48C500D75696 /* DefaultConnectableDeviceStore.m */; };
@@ -58,6 +59,8 @@
 		EA61EBF218FE48EF00D75696 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
 		EA649E181901EABB00DD9FC7 /* ZeroConfDiscoveryProvider.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F7C71326AB56D77F39095 /* ZeroConfDiscoveryProvider.h */; };
 		EA649E191901EAC100DD9FC7 /* AirPlayService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F7A5257BCF2C7CD5DF5BA /* AirPlayService.h */; };
+		EAD7F85E1906E98200B33AAB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7F85D1906E98200B33AAB /* AVFoundation.framework */; };
+		EAD7F8601906E99C00B33AAB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7F85F1906E99C00B33AAB /* UIKit.framework */; };
 		EAFA986818FEE8DF001C4FA1 /* ConnectSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EB3D18FE48C500D75696 /* ConnectSDK.h */; };
 		EAFA986918FEE988001C4FA1 /* ConnectableDevice.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EB3F18FE48C500D75696 /* ConnectableDevice.h */; };
 		EAFA986A18FEE988001C4FA1 /* ConnectableDeviceDelegate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EB4118FE48C500D75696 /* ConnectableDeviceDelegate.h */; };
@@ -215,6 +218,8 @@
 /* Begin PBXFileReference section */
 		BB9F752184AD57C1730A2B40 /* ZeroConfDiscoveryProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroConfDiscoveryProvider.m; sourceTree = "<group>"; };
 		BB9F77EFDE3374914D6B383B /* AirPlayService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayService.m; sourceTree = "<group>"; };
+		BB9F7858D2749447583C68EF /* AirPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayViewController.h; sourceTree = "<group>"; };
+		BB9F7871160828219957E3A4 /* AirPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayViewController.m; sourceTree = "<group>"; };
 		BB9F7A5257BCF2C7CD5DF5BA /* AirPlayService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayService.h; sourceTree = "<group>"; };
 		BB9F7C71326AB56D77F39095 /* ZeroConfDiscoveryProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroConfDiscoveryProvider.h; sourceTree = "<group>"; };
 		EA41388A18FE51A9002CB005 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -337,6 +342,8 @@
 		EA61EBED18FE48DC00D75696 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = "Connect SDK/Frameworks/GoogleCast.framework"; sourceTree = "<group>"; };
 		EA61EBEF18FE48E900D75696 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		EAD7F85D1906E98200B33AAB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		EAD7F85F1906E99C00B33AAB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,6 +351,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAD7F8601906E99C00B33AAB /* UIKit.framework in Frameworks */,
+				EAD7F85E1906E98200B33AAB /* AVFoundation.framework in Frameworks */,
 				EA61EBF218FE48EF00D75696 /* MobileCoreServices.framework in Frameworks */,
 				EA61EBF018FE48E900D75696 /* SystemConfiguration.framework in Frameworks */,
 				EA61EB1418FE485B00D75696 /* Foundation.framework in Frameworks */,
@@ -373,6 +382,8 @@
 		EA61EB1218FE485B00D75696 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EAD7F85F1906E99C00B33AAB /* UIKit.framework */,
+				EAD7F85D1906E98200B33AAB /* AVFoundation.framework */,
 				EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */,
 				EA61EBEF18FE48E900D75696 /* SystemConfiguration.framework */,
 				EA61EBED18FE48DC00D75696 /* GoogleCast.framework */,
@@ -561,6 +572,8 @@
 				EA61EB9618FE48C500D75696 /* CastServiceChannel.m */,
 				EA61EB9718FE48C500D75696 /* WebOSTVServiceMouse.h */,
 				EA61EB9818FE48C500D75696 /* WebOSTVServiceMouse.m */,
+				BB9F7871160828219957E3A4 /* AirPlayViewController.m */,
+				BB9F7858D2749447583C68EF /* AirPlayViewController.h */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -732,6 +745,7 @@
 				EA61EBBF18FE48C500D75696 /* ServiceConfig.m in Sources */,
 				BB9F75C707C7D86EB1934BD5 /* ZeroConfDiscoveryProvider.m in Sources */,
 				BB9F714DEDE9A26A22544339 /* AirPlayService.m in Sources */,
+				BB9F7D62C85C342AF11C7257 /* AirPlayViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

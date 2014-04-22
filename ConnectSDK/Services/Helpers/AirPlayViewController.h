@@ -1,8 +1,8 @@
 //
-//  AirPlayService.h
+//  AirPlayViewController.h
 //  Connect SDK
 //
-//  Created by Jeremy White on 4/18/14.
+//  Created by Jeremy White on 4/22/14.
 //  Copyright (c) 2014 LG Electronics.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,19 +18,19 @@
 //  limitations under the License.
 //
 
-#define kConnectSDKAirPlayServiceId @"AirPlay"
-
 #import <Foundation/Foundation.h>
-#import "DeviceService.h"
-#import <UIKit/UIKit.h>
-#import "AirPlayViewController.h"
-#import "MediaPlayer.h"
-#import "MediaControl.h"
+#import <UIKit/UIViewController.h>
+#import <UIKit/UIWebView.h>
+#import <AVFoundation/AVFoundation.h>
 
 
-@interface AirPlayService : DeviceService <MediaPlayer, MediaControl>
+@interface AirPlayViewController : UIViewController
 
-@property (nonatomic) UIWindow *secondWindow;
-@property (nonatomic) AirPlayViewController *viewController;
+- (id) initWithBounds:(CGRect)bounds;
+- (void) playVideo:(NSString *)videoPath;
+- (void) cleanup;
+
+@property (nonatomic, retain) AVPlayer *moviePlayer;
+@property (nonatomic, retain) UIWebView *webView;
 
 @end
