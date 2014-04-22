@@ -1932,7 +1932,7 @@
     // TODO: don't hard code com.webos.app.webapphost
     NSString *webAppHostId = [NSString stringWithFormat:@"com.webos.app.webapphost.%@", webAppSession.launchSession.appId];
 
-    if ([_appToAppSubscriptions objectForKey:webAppSession.launchSession.appId] && [_appToAppMessageCallbacks objectForKey:webAppHostId])
+    if ([_appToAppSubscriptions objectForKey:webAppSession.launchSession.appId])
     {
         [_appToAppMessageCallbacks setObject:webAppSession.messageHandler forKey:webAppHostId];
 
@@ -1953,11 +1953,9 @@
         if (connectionSubscription)
         {
             if ([self.serviceDescription.version rangeOfString:@"4.0."].location == NSNotFound)
-            {
                 [connectionSubscription unsubscribe];
-                [_appToAppSubscriptions removeObjectForKey:webAppSession.launchSession.appId];
-            }
 
+            [_appToAppSubscriptions removeObjectForKey:webAppSession.launchSession.appId];
             [_appToAppMessageCallbacks removeObjectForKey:webAppSession.launchSession.appId];
         }
 
@@ -1965,6 +1963,9 @@
 
         if (appChannelDidClose)
         {
+            if (connectionSubscription)
+                [connectionSubscription unsubscribe];
+
             if (webAppSession && webAppSession.delegate && [webAppSession.delegate respondsToSelector:@selector(webAppSessionDidDisconnect:)])
                 [webAppSession.delegate webAppSessionDidDisconnect:webAppSession];
         } else
