@@ -144,7 +144,6 @@ NSString *lgeUDAPRequestURI[8] = {
                 kLauncherApp,
                 kLauncherAppClose,
                 kLauncherAppStore,
-                kLauncherAppStoreParams,
                 kLauncherAppList,
                 kLauncherAppState,
                 kLauncherBrowser,
@@ -171,6 +170,13 @@ NSString *lgeUDAPRequestURI[8] = {
                 kVolumeControlMuteGet,
                 kVolumeControlMuteSet
         ]];
+
+        if ([self.modelNumber isEqualToString:@"4.0"])
+        {
+            caps = [caps arrayByAddingObjectsFromArray:@[
+                    kLauncherAppStoreParams
+            ]];
+        }
     } else
     {
         // TODO: need to handle some of these controls over DLNA if no pairing
@@ -188,7 +194,6 @@ NSString *lgeUDAPRequestURI[8] = {
                 kLauncherYouTubeParams
         ]];
     }
-
 
     return caps;
 }
