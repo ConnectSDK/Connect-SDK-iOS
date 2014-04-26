@@ -405,7 +405,9 @@
     [device.services enumerateObjectsUsingBlock:^(DeviceService *service, NSUInteger serviceIdx, BOOL *serviceStop)
     {
         NSDictionary *serviceDictionary = [service toJSONObject];
-        [servicesDictionary setObject:serviceDictionary forKey:service.serviceDescription.UUID];
+
+        if (serviceDictionary)
+            [servicesDictionary setObject:serviceDictionary forKey:service.serviceDescription.UUID];
     }];
 
     deviceDictionary[@"services"] = [NSDictionary dictionaryWithDictionary:servicesDictionary];
