@@ -85,7 +85,9 @@
             [services enumerateKeysAndObjectsUsingBlock:^(id key, NSDictionary *serviceJSON, BOOL *stop)
             {
                 DeviceService *service = [DeviceService deviceServiceWithJSONObject:serviceJSON];
-                [self addService:service];
+
+                if (service)
+                    [self addService:service];
             }];
         }
 

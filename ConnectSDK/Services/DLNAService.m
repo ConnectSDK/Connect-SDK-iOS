@@ -62,15 +62,29 @@
 + (NSDictionary *) discoveryParameters
 {
     return @{
-             @"serviceId": kConnectSDKDLNAServiceId,
-             @"ssdp":@{
-                     @"filter":@"urn:schemas-upnp-org:device:MediaRenderer:1",
-                     @"requiredServices":@[
-                             @"urn:schemas-upnp-org:service:AVTransport:1",
-                             @"urn:schemas-upnp-org:service:RenderingControl:1"
-                             ]
-                     }
-             };
+            @"serviceId": kConnectSDKDLNAServiceId,
+            @"ssdp":@{
+                    @"filter":@"urn:schemas-upnp-org:device:MediaRenderer:1",
+                    @"requiredServices":@[
+                            @"urn:schemas-upnp-org:service:AVTransport:1",
+                            @"urn:schemas-upnp-org:service:RenderingControl:1"
+                    ]
+            }
+    };
+}
+
+#pragma mark - JSONObjectCoding methods
+
+// The following two methods prevent DLNAService objects from being saved in the device store. We do this because the port in the command URL changes every time the device boots, so there is not much reason to store this service information.
+
+- (id) initWithJSONObject:(NSDictionary *)dict
+{
+    return nil;
+}
+
+- (NSDictionary *) toJSONObject
+{
+    return nil;
 }
 
 #pragma mark - Helper methods
