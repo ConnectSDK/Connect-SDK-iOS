@@ -636,6 +636,8 @@ NSString *lgeUDAPRequestURI[8] = {
     appInfo.id = [[info objectForKey:@"auid"] objectForKey:@"text"];
     appInfo.rawData = [info copy];
 
+    appInfo.rawData[@"cpid"][@"text"] = @"";
+
     return appInfo;
 }
 
@@ -741,8 +743,17 @@ NSString *lgeUDAPRequestURI[8] = {
         NSDictionary *rawResponse = [[[responseDic objectForKey:@"envelope"] objectForKey:@"dataList"] objectForKey:@"data"];
         NSNumber *numberOfApps = [[rawResponse objectForKey:@"number"] objectForKey:@"text"];
 
-        if (success)
-            success(numberOfApps.intValue);
+        int numberOfAppsInt = numberOfApps.intValue;
+
+        if (numberOfAppsInt == 0)
+        {
+            if (failure)
+                failure([ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@""]);
+        } else
+        {
+            if (success)
+                success(numberOfAppsInt);
+        }
     };
     command.callbackError = failure;
     [command send];
