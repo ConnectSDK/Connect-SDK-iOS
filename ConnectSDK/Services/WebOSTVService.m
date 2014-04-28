@@ -25,8 +25,8 @@
 #import "ServiceAsyncCommand.h"
 #import "WebOSWebAppSession.h"
 
-#define kKeyboardEnter @"ENTER"
-#define kKeyboardDelete @"DELETE"
+#define kKeyboardEnter @"\x1b ENTER \x1b"
+#define kKeyboardDelete @"\x1b DELETE \x1b"
 
 @interface WebOSTVService () <LGSRWebSocketDelegate, ServiceCommandDelegate, UIAlertViewDelegate>
 {
@@ -2158,34 +2158,41 @@
     {
         target = @"ssap://com.webos.service.ime/deleteCharacters";
 
-        NSUInteger i = 0;
-        for (i = 0; i < _keyboardQueue.count; i++)
+        int count = 0;
+
+        for (NSUInteger i = 0; i < _keyboardQueue.count; i++)
         {
-            if (![[_keyboardQueue firstObject] isEqualToString:kKeyboardDelete])
+            if ([[_keyboardQueue objectAtIndex:i] isEqualToString:kKeyboardDelete]) {
+                count++;
+            } else {
                 break;
+            }
         }
 
-        NSRange deleteRange = NSMakeRange(0, i);
+        NSRange deleteRange = NSMakeRange(0, count);
         [_keyboardQueue removeObjectsInRange:deleteRange];
 
-        [payload setObject:@(i) forKey:@"count"];
+        [payload setObject:@(count) forKey:@"count"];
     } else
     {
         target = @"ssap://com.webos.service.ime/insertText";
         NSMutableString *stringToSend = [[NSMutableString alloc] init];
 
-        NSUInteger i = 0;
-        for (i = 0; i < _keyboardQueue.count; i++)
+        int count = 0;
+
+        for (NSUInteger i = 0; i < _keyboardQueue.count; i++)
         {
             NSString *text = [_keyboardQueue objectAtIndex:i];
 
-            if (![text isEqualToString:kKeyboardEnter] && ![text isEqualToString:kKeyboardDelete])
+            if (![text isEqualToString:kKeyboardEnter] && ![text isEqualToString:kKeyboardDelete]) {
                 [stringToSend appendString:text];
-            else
+                count++;
+            } else {
                 break;
+            }
         }
 
-        NSRange textRange = NSMakeRange(0, i);
+        NSRange textRange = NSMakeRange(0, count);
         [_keyboardQueue removeObjectsInRange:textRange];
 
         [payload setObject:stringToSend forKey:@"text"];
