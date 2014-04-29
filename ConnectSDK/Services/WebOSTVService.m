@@ -1129,11 +1129,7 @@
         [session.mediaPlayer displayImage:imageURL iconURL:iconURL title:title description:description mimeType:mimeType success:success failure:failure];
     };
 
-    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:webAppId];
-    launchSession.sessionType = LaunchSessionTypeWebApp;
-    launchSession.service = self;
-
-    [self joinWebApp:launchSession success:connectSuccess failure:^(NSError *error)
+    [self joinWebAppWithId:webAppId success:connectSuccess failure:^(NSError *error)
     {
         [self launchWebApp:webAppId success:connectSuccess failure:failure];
     }];
@@ -1149,11 +1145,7 @@
         [session.mediaPlayer playMedia:mediaURL iconURL:iconURL title:title description:description mimeType:mimeType shouldLoop:shouldLoop success:success failure:failure];
     };
 
-    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:webAppId];
-    launchSession.sessionType = LaunchSessionTypeWebApp;
-    launchSession.service = self;
-
-    [self joinWebApp:launchSession success:connectSuccess failure:^(NSError *error)
+    [self joinWebAppWithId:webAppId success:connectSuccess failure:^(NSError *error)
     {
         [self launchWebApp:webAppId success:connectSuccess failure:failure];
     }];
@@ -1897,14 +1889,15 @@
         if (success)
             success(webAppSession);
     } failure:failure];
+}
 
-//    SuccessBlock connectSuccess = ^(id responseObject)
-//    {
-//        if (success)
-//            success(webAppSession);
-//    };
-//
-//    [self connectToWebApp:webAppSession joinOnly:YES success:connectSuccess failure:failure];
+- (void)joinWebAppWithId:(NSString *)webAppId success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:webAppId];
+    launchSession.sessionType = LaunchSessionTypeWebApp;
+    launchSession.service = self;
+
+    [self joinWebApp:launchSession success:success failure:failure];
 }
 
 - (void) connectToWebApp:(WebOSWebAppSession *)webAppSession joinOnly:(BOOL)joinOnly success:(SuccessBlock)success failure:(FailureBlock)failure
