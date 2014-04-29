@@ -100,6 +100,12 @@ typedef void (^ WebAppStatusBlock)(WebAppStatus status);
  */
 - (ServiceSubscription *) subscribeWebAppStatus:(WebAppStatusBlock)success failure:(FailureBlock)failure;
 
+/*!
+ * Join an active web app without launching/relaunching. If the app is not running/joinable, the failure block will be called immediately.
+ *
+ * @param success (optional) SuccessBlock to be called on join success
+ * @param failure (optional) FailureBlock to be called on failure
+ */
 - (void) joinWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure;
 
 /*!
