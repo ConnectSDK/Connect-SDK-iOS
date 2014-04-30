@@ -20,6 +20,7 @@
 
 #import "DevicePicker.h"
 #import "DiscoveryProvider.h"
+#import "DiscoveryManager.h"
 
 @implementation DevicePicker
 {
@@ -37,6 +38,8 @@
     NSDictionary *_popoverParams;
 
     dispatch_queue_t _sortQueue;
+
+    BOOL _showServiceLabel;
 }
 
 - (instancetype) init
@@ -66,6 +69,8 @@
 - (void) showPicker:(id)sender
 {
     [self sortDevices];
+
+    _showServiceLabel = [DiscoveryManager sharedManager].capabilityFilters.count == 0;
 
     NSString *pickerTitle = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Search_Title" value:@"Pick a device" table:@"ConnectSDK"];
 
@@ -377,10 +382,13 @@ static NSString *cellIdentifier = @"connectPickerCell";
     ConnectableDevice *device = (ConnectableDevice *) [_generatedDeviceList objectAtIndex:indexPath.row];
     NSString *deviceName = [self nameForDevice:device];
     [cell.textLabel setText:deviceName];
-    
+
 #ifdef DEBUG
     [cell.detailTextLabel setText:[device connectedServiceNames]];
 #endif
+
+    if (_showServiceLabel)
+        [cell.detailTextLabel setText:[device connectedServiceNames]];
     
     if (self.currentDevice)
     {
