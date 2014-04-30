@@ -379,6 +379,9 @@ static NSString *cellIdentifier = @"connectPickerCell";
     if ([_generatedDeviceList count] == 0)
         return cell;
 
+    if (indexPath.row >= _generatedDeviceList.count)
+        return nil;
+
     ConnectableDevice *device = (ConnectableDevice *) [_generatedDeviceList objectAtIndex:indexPath.row];
     NSString *deviceName = [self nameForDevice:device];
     [cell.textLabel setText:deviceName];

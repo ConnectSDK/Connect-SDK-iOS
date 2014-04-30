@@ -470,7 +470,7 @@
 {
     DLog(@"%@ (%@)", description.friendlyName, description.serviceId);
     
-    BOOL deviceIsNew = NO;
+    BOOL deviceIsNew = [_allDevices objectForKey:description.address] != nil;
     ConnectableDevice *device;
 
     if (self.useDeviceStore)
@@ -516,15 +516,16 @@
     
     if (device)
     {
-        DLog(@"Removed service from device at address %@", description.address);
-        
         [device removeServiceWithId:description.serviceId];
+
+        DLog(@"Removed service from device at address %@. Device has %d services left", description.address, device.services.count);
 
         if (![device hasServices])
         {
             DLog(@"Device at address %@ has been orphaned (has no services)", description.address);
 
             @synchronized (_allDevices) { [_allDevices removeObjectForKey:description.address]; }
+            @synchronized (_compatibleDevices) { [_compatibleDevices removeObjectForKey:description.address]; }
 
             [self handleDeviceLoss:device];
         } else
