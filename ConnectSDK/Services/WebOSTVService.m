@@ -275,7 +275,7 @@
     NSString *screenResolution = [NSString stringWithFormat:@"%dx%d", (int)screenSize.width, (int)screenSize.height];
 
     NSDictionary *payload = @{
-            @"sdkVersion" : @(CONNECT_SDK_VERSION),
+            @"sdkVersion" : CONNECT_SDK_VERSION,
             @"deviceModel" : ensureString([[UIDevice currentDevice] model]),
             @"OSVersion" : ensureString([infoDic objectForKey:@"DTPlatformVersion"]),
             @"resolution" : screenResolution,

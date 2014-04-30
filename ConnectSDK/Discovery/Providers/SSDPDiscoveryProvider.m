@@ -523,7 +523,7 @@ static double searchAttemptsBeforeKill = 3.0;
             [UIDevice currentDevice].systemName,
             [UIDevice currentDevice].systemVersion,
             token,
-            @(CONNECT_SDK_VERSION)];
+            CONNECT_SDK_VERSION];
 }
 
 @end
