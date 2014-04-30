@@ -163,9 +163,13 @@
     } else
     {
         storedDevice = [self jsonRepresentationForDevice:device];
-        [_storedDevices setObject:storedDevice forKey:device.id];
 
-        [self store];
+        if (storedDevice)
+        {
+            [_storedDevices setObject:storedDevice forKey:device.id];
+
+            [self store];
+        }
     }
 }
 
@@ -389,7 +393,7 @@
 
 - (NSDictionary *) jsonRepresentationForDevice:(ConnectableDevice *)device
 {
-    if (device.services.count == 0)
+    if (!device || device.services.count == 0)
         return nil;
 
     NSMutableDictionary *deviceDictionary = [NSMutableDictionary new];
