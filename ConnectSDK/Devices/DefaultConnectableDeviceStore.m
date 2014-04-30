@@ -222,7 +222,7 @@
         NSDictionary *serviceInfo = [service toJSONObject];
 
         if (serviceInfo)
-            [services setObject:serviceInfo forKey:service.serviceName];
+            [services setObject:serviceInfo forKey:service.serviceDescription.UUID];
     }];
 
     storedDevice[@"services"] = [NSDictionary dictionaryWithDictionary:services];
