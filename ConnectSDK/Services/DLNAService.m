@@ -73,20 +73,6 @@
     };
 }
 
-#pragma mark - JSONObjectCoding methods
-
-// The following two methods prevent DLNAService objects from being saved in the device store. We do this because the port in the command URL changes every time the device boots, so there is not much reason to store this service information.
-
-- (id) initWithJSONObject:(NSDictionary *)dict
-{
-    return nil;
-}
-
-- (NSDictionary *) toJSONObject
-{
-    return nil;
-}
-
 #pragma mark - Helper methods
 
 //- (NSOperationQueue *)commandQueue
