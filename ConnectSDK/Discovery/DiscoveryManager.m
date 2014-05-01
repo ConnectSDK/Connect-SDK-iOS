@@ -495,7 +495,7 @@
     [self addServiceDescription:description toDevice:device];
 
     if (device.services.count == 0)
-        return; // TODO: find out why this is happening
+        return; // we get here when a non-LG DLNA TV is found
 
     if (deviceIsNew)
         [self handleDeviceAdd:device];
