@@ -33,6 +33,10 @@
 
 @property (nonatomic, strong) NetcastTVServiceConfig *serviceConfig;
 
+// @cond INTERNAL
+- (void) setServiceConfig:(ServiceConfig *)serviceConfig;
+// @endcond
+
 // these objects are maintained to provide certain functionality without requiring pairing
 @property (nonatomic, strong, readonly) DIALService *dialService;
 @property (nonatomic, strong, readonly) DLNAService *dlnaService;

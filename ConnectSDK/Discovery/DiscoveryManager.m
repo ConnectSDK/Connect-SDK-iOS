@@ -469,20 +469,26 @@
 - (void)discoveryProvider:(DiscoveryProvider *)provider didFindService:(ServiceDescription *)description
 {
     DLog(@"%@ (%@)", description.friendlyName, description.serviceId);
+
+    if ([description.friendlyName isEqualToString:@"A SDK webOS TV"] && [description.serviceId isEqualToString:@"DLNA"])
+        NSLog(@"break");
     
-    BOOL deviceIsNew = [_allDevices objectForKey:description.address] != nil;
+    BOOL deviceIsNew = [_allDevices objectForKey:description.address] == nil;
     ConnectableDevice *device;
 
-    if (self.useDeviceStore)
+    if (deviceIsNew)
     {
-        device = [self.deviceStore deviceForId:description.UUID];
+        if (self.useDeviceStore)
+        {
+            device = [self.deviceStore deviceForId:description.UUID];
 
-        if (device)
-            @synchronized (_allDevices) { [_allDevices setObject:device forKey:description.address]; }
-    }
-
-    if (!device)
+            if (device)
+                @synchronized (_allDevices) { [_allDevices setObject:device forKey:description.address]; }
+        }
+    } else
+    {
         @synchronized (_allDevices) { device = [_allDevices objectForKey:description.address]; }
+    }
 
     if (!device)
     {

@@ -304,15 +304,19 @@ id ensureString(id value)
 
 - (instancetype) initWithJSONObject:(NSDictionary *)dict
 {
-    self = [self init];
+    NSDictionary *configDictionary = dict[@"config"];
+    ServiceConfig *config;
+
+    if (configDictionary)
+        config = [ServiceConfig serviceConfigWithJSONObject:configDictionary];
+
+    if (config)
+        self = [self initWithServiceConfig:config];
+    else
+        self = [self init];
 
     if (self)
     {
-        NSDictionary *configDictionary = dict[@"config"];
-
-        if (configDictionary)
-            self.serviceConfig = [ServiceConfig serviceConfigWithJSONObject:configDictionary];
-
         NSDictionary *descriptionDictionary = dict[@"description"];
 
         if (descriptionDictionary)

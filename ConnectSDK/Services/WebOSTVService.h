@@ -79,6 +79,10 @@ typedef enum {
 @property (nonatomic, strong) WebOSTVServiceConfig *serviceConfig;
 @property (nonatomic, strong) NSArray *permissions;
 
+// @cond INTERNAL
+- (void) setServiceConfig:(ServiceConfig *)serviceConfig;
+// @endcod
+
 #pragma mark - Web app & app to app
 
 // @cond INTERNAL
