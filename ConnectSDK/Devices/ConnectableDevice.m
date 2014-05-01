@@ -294,10 +294,23 @@
 {
     DeviceService *existingService = [_services objectForKey:service.serviceName];
 
-    if (existingService)
-        return;
-
     NSArray *oldCapabilities = self.capabilities;
+
+    if (existingService)
+    {
+        if (service.serviceDescription.lastDetection > existingService.serviceDescription.lastDetection)
+        {
+            if (existingService.connected)
+                [existingService disconnect];
+
+            DLog(@"Removing %@ (%@)", existingService.serviceDescription.friendlyName, existingService.serviceName);
+            [self removeServiceWithId:existingService.serviceName];
+        } else
+        {
+            DLog(@"Ignoring %@ (%@)", service.serviceDescription.friendlyName, service.serviceName);
+            return;
+        }
+    }
 
     [_services setObject:service forKey:service.serviceName];
     

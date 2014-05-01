@@ -85,17 +85,22 @@ NSString *lgeUDAPRequestURI[8] = {
 
     if (self)
     {
-        if ([serviceConfig isKindOfClass:[NetcastTVServiceConfig class]])
-            _serviceConfig = (NetcastTVServiceConfig *) serviceConfig;
-        else
-        {
-            _serviceConfig = [[NetcastTVServiceConfig alloc] initWithServiceConfig:serviceConfig];
-        }
+        [self setServiceConfig:serviceConfig];
 
         _dlnaService = [[DLNAService alloc] initWithServiceConfig:serviceConfig];
     }
 
     return self;
+}
+
+- (void) setServiceConfig:(ServiceConfig *)serviceConfig
+{
+    if ([serviceConfig isKindOfClass:[NetcastTVServiceConfig class]])
+        _serviceConfig = (NetcastTVServiceConfig *) serviceConfig;
+    else
+    {
+        _serviceConfig = [[NetcastTVServiceConfig alloc] initWithServiceConfig:serviceConfig];
+    }
 }
 
 - (void)setServiceDescription:(ServiceDescription *)serviceDescription

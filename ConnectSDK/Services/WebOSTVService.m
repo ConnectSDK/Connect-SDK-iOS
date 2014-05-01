@@ -67,12 +67,7 @@
 
     if (self)
     {
-        if ([serviceConfig isKindOfClass:[WebOSTVServiceConfig class]])
-            _serviceConfig = (WebOSTVServiceConfig *) serviceConfig;
-        else
-        {
-            _serviceConfig = [[WebOSTVServiceConfig alloc] initWithServiceConfig:serviceConfig];
-        }
+        [self setServiceConfig:serviceConfig];
 
         _commandQueue = [[NSMutableArray alloc] init];
         _activeConnections = [[NSMutableDictionary alloc] init];
@@ -84,6 +79,16 @@
 }
 
 #pragma mark - Inherited methods
+
+- (void) setServiceConfig:(ServiceConfig *)serviceConfig
+{
+    if ([serviceConfig isKindOfClass:[WebOSTVServiceConfig class]])
+        _serviceConfig = (WebOSTVServiceConfig *) serviceConfig;
+    else
+    {
+        _serviceConfig = [[WebOSTVServiceConfig alloc] initWithServiceConfig:serviceConfig];
+    }
+}
 
 - (void) setServiceDescription:(ServiceDescription *)serviceDescription
 {
