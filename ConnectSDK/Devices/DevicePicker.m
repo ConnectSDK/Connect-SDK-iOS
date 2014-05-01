@@ -149,8 +149,10 @@
                                  destructiveButtonTitle:nil
                                       otherButtonTitles:nil];
 
-    
-    _actionSheetDeviceList = [_generatedDeviceList copy];
+    @synchronized (_generatedDeviceList)
+    {
+        _actionSheetDeviceList = [_generatedDeviceList copy];
+    }
 
     [_actionSheetDeviceList enumerateObjectsUsingBlock:^(ConnectableDevice *device, NSUInteger idx, BOOL *stop)
     {
@@ -244,13 +246,16 @@
         NSArray *devices;
 
         @synchronized (_devices) { devices = [_devices allValues]; }
-    
-        _generatedDeviceList = [devices sortedArrayUsingComparator:^NSComparisonResult(ConnectableDevice *device1, ConnectableDevice *device2) {
-            NSString *device1Name = [[self nameForDevice:device1] lowercaseString];
-            NSString *device2Name = [[self nameForDevice:device2] lowercaseString];
 
-            return [device1Name compare:device2Name];
-        }];
+        @synchronized (_generatedDeviceList)
+        {
+            _generatedDeviceList = [devices sortedArrayUsingComparator:^NSComparisonResult(ConnectableDevice *device1, ConnectableDevice *device2) {
+                NSString *device1Name = [[self nameForDevice:device1] lowercaseString];
+                NSString *device2Name = [[self nameForDevice:device2] lowercaseString];
+
+                return [device1Name compare:device2Name];
+            }];
+        }
     });
 }
 
@@ -302,8 +307,14 @@
         return;
     
     ConnectableDevice *device = [_actionSheetDeviceList objectAtIndex:buttonIndex];
+    BOOL deviceExists = YES;
 
-    if (![_generatedDeviceList containsObject:device])
+    @synchronized (_generatedDeviceList)
+    {
+        deviceExists = [_generatedDeviceList containsObject:device];
+    }
+
+    if (!deviceExists)
     {
         DLog(@"User selected a device that no longer exists");
         return;
@@ -334,7 +345,12 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    ConnectableDevice *device = (ConnectableDevice *) [_generatedDeviceList objectAtIndex:indexPath.row];
+    ConnectableDevice *device;
+
+    @synchronized (_generatedDeviceList)
+    {
+        device = (ConnectableDevice *) [_generatedDeviceList objectAtIndex:indexPath.row];
+    }
     
     if (self.currentDevice)
     {
@@ -361,46 +377,56 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_generatedDeviceList)
-        return _generatedDeviceList.count;
-    else
-        return 0;
+    int numberOfRows = 0;
+
+    @synchronized (_generatedDeviceList)
+    {
+        if (_generatedDeviceList)
+            numberOfRows = _generatedDeviceList.count;
+    }
+
+    return numberOfRows;
 }
 
 static NSString *cellIdentifier = @"connectPickerCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
+
     if (cell == nil)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
 
-    if ([_generatedDeviceList count] == 0)
+    ConnectableDevice *device;
+
+    @synchronized (_generatedDeviceList)
+    {
+        if (_generatedDeviceList.count > 0 && indexPath.row < _generatedDeviceList.count)
+            device = (ConnectableDevice *) [_generatedDeviceList objectAtIndex:indexPath.row];
+    }
+
+    if (!device)
         return cell;
 
-    if (indexPath.row >= _generatedDeviceList.count)
-        return nil;
-
-    ConnectableDevice *device = (ConnectableDevice *) [_generatedDeviceList objectAtIndex:indexPath.row];
     NSString *deviceName = [self nameForDevice:device];
     [cell.textLabel setText:deviceName];
 
-#ifdef DEBUG
-    [cell.detailTextLabel setText:[device connectedServiceNames]];
-#endif
-
-    if (_showServiceLabel)
+    #ifdef DEBUG
         [cell.detailTextLabel setText:[device connectedServiceNames]];
-    
-    if (self.currentDevice)
-    {
-        if ([self.currentDevice.serviceDescription.address isEqualToString:device.serviceDescription.address])
-            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-        else
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
-    }
-    
+    #endif
+
+        if (_showServiceLabel)
+            [cell.detailTextLabel setText:[device connectedServiceNames]];
+
+        if (self.currentDevice)
+        {
+            if ([self.currentDevice.serviceDescription.address isEqualToString:device.serviceDescription.address])
+                [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+            else
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
+        }
+
     return cell;
 }
 
