@@ -425,6 +425,11 @@
 {
     _connected = NO;
 
+    // TODO: we may want to notify the subscribers that they are going away
+    _subscribed = [NSMutableDictionary new];
+    _appToAppSubscriptions = [NSMutableDictionary new];
+    _activeConnections = [NSMutableDictionary new];
+
     _socket.delegate = nil;
     _socket = nil;
 
