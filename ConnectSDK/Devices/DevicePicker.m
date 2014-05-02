@@ -377,7 +377,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    int numberOfRows = 0;
+    NSInteger numberOfRows = 0;
 
     @synchronized (_generatedDeviceList)
     {
