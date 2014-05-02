@@ -54,7 +54,7 @@
 
 @implementation WebOSTVService
 
-@synthesize serviceConfig = _serviceConfig;
+//@synthesize serviceConfig = _serviceConfig;
 @synthesize connected = _connected;
 @synthesize permissions = _permissions;
 @synthesize serviceDescription = _serviceDescription;
@@ -83,11 +83,9 @@
 - (void) setServiceConfig:(ServiceConfig *)serviceConfig
 {
     if ([serviceConfig isKindOfClass:[WebOSTVServiceConfig class]])
-        _serviceConfig = (WebOSTVServiceConfig *) serviceConfig;
+        [super setServiceConfig:(WebOSTVServiceConfig *) serviceConfig];
     else
-    {
-        _serviceConfig = [[WebOSTVServiceConfig alloc] initWithServiceConfig:serviceConfig];
-    }
+        [super setServiceConfig:[[WebOSTVServiceConfig alloc] initWithServiceConfig:serviceConfig]];
 }
 
 - (void) setServiceDescription:(ServiceDescription *)serviceDescription
