@@ -965,6 +965,41 @@
     [self launchApplication:@"youtube.leanback.v4" withParams:params success:success failure:failure];
 }
 
+- (void) connectToApp:(NSString *)appId success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:appId];
+    launchSession.service = self;
+    launchSession.sessionType = LaunchSessionTypeApp;
+
+    WebOSWebAppSession *webAppSession = [[WebOSWebAppSession alloc] initWithLaunchSession:launchSession service:self];
+
+    [self connectToApp:webAppSession joinOnly:NO success:^(id responseObject)
+    {
+        if (success)
+            success(webAppSession);
+    } failure:failure];
+}
+
+- (void) joinApp:(NSString *)appId success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:appId];
+    launchSession.service = self;
+    launchSession.sessionType = LaunchSessionTypeApp;
+
+    WebOSWebAppSession *webAppSession = [[WebOSWebAppSession alloc] initWithLaunchSession:launchSession service:self];
+
+    [self connectToApp:webAppSession joinOnly:YES success:^(id responseObject)
+    {
+        if (success)
+            success(webAppSession);
+    } failure:failure];
+}
+
+- (void) connectToApp:(WebOSWebAppSession *)webAppSession joinOnly:(BOOL)joinOnly success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self connectToWebApp:webAppSession joinOnly:joinOnly success:success failure:failure];
+}
+
 - (ServiceSubscription *)subscribeRunningAppWithSuccess:(AppInfoSuccessBlock)success failure:(FailureBlock)failure
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.applicationManager/getForegroundAppInfo"];
@@ -1930,12 +1965,33 @@
         return;
     }
 
-    // TODO: don't hard code com.webos.app.webapphost
-    NSString *webAppHostId = [NSString stringWithFormat:@"com.webos.app.webapphost.%@", webAppSession.launchSession.appId];
+    NSString *fullAppId;
+    NSString *subscriptionKey;
+    NSString *idKey;
 
-    if ([_appToAppSubscriptions objectForKey:webAppSession.launchSession.appId])
+    if (webAppSession.launchSession.sessionType == LaunchSessionTypeWebApp)
     {
-        [_appToAppMessageCallbacks setObject:webAppSession.messageHandler forKey:webAppHostId];
+        // TODO: don't hard code com.webos.app.webapphost
+        fullAppId = [NSString stringWithFormat:@"com.webos.app.webapphost.%@", webAppSession.launchSession.appId];
+        subscriptionKey = webAppSession.launchSession.appId;
+        idKey = @"webAppId";
+    } else if (webAppSession.launchSession.sessionType == LaunchSessionTypeApp)
+    {
+        fullAppId = subscriptionKey = webAppSession.launchSession.appId;
+        idKey = @"appId";
+    }
+
+    if (!fullAppId || fullAppId.length == 0)
+    {
+        if (failure)
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid web app session"]);
+
+        return;
+    }
+
+    if ([_appToAppSubscriptions objectForKey:subscriptionKey])
+    {
+        [_appToAppMessageCallbacks setObject:webAppSession.messageHandler forKey:fullAppId];
 
         if (success)
             success(webAppSession);
@@ -1945,19 +2001,19 @@
     NSURL *URL = [NSURL URLWithString:@"ssap://webapp/connectToApp"];
 
     NSMutableDictionary *payload = [NSMutableDictionary new];
-    [payload setValue:ensureString(webAppSession.launchSession.appId) forKey:@"webAppId"];
+    [payload setValue:subscriptionKey forKey:idKey];
 
     FailureBlock connectFailure = ^(NSError *error)
     {
-        ServiceSubscription *connectionSubscription = [_appToAppSubscriptions objectForKey:webAppSession.launchSession.appId];
+        ServiceSubscription *connectionSubscription = [_appToAppSubscriptions objectForKey:subscriptionKey];
 
         if (connectionSubscription)
         {
             if ([self.serviceDescription.version rangeOfString:@"4.0."].location == NSNotFound)
                 [connectionSubscription unsubscribe];
 
-            [_appToAppSubscriptions removeObjectForKey:webAppSession.launchSession.appId];
-            [_appToAppMessageCallbacks removeObjectForKey:webAppSession.launchSession.appId];
+            [_appToAppSubscriptions removeObjectForKey:subscriptionKey];
+            [_appToAppMessageCallbacks removeObjectForKey:fullAppId];
         }
 
         BOOL appChannelDidClose = [error.localizedDescription rangeOfString:@"app channel closed"].location != NSNotFound;
@@ -2003,7 +2059,7 @@
             else
                 newRawData = [NSMutableDictionary new];
 
-            [newRawData setObject:appId forKey:@"webAppId"];
+            [newRawData setObject:appId forKey:idKey];
             webAppSession.launchSession.rawData = [NSDictionary dictionaryWithDictionary:newRawData];
         }
 
@@ -2012,7 +2068,7 @@
     };
 
     ServiceSubscription *subscription = [self addSubscribe:URL payload:payload success:connectSuccess failure:connectFailure];
-    [_appToAppSubscriptions setObject:subscription forKey:webAppSession.launchSession.appId];
+    [_appToAppSubscriptions setObject:subscription forKey:subscriptionKey];
 }
 
 - (void)disconnectFromWebApp:(WebOSWebAppSession *)webAppSession
@@ -2050,7 +2106,7 @@
 
 - (int) sendMessage:(id)message toApp:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    if (!launchSession)
+    if (!launchSession || !launchSession.appId || launchSession.appId.length == 0)
     {
         if (failure)
             failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid LaunchSession to send messages to"]);
@@ -2059,7 +2115,12 @@
     }
 
     // TODO: don't hard code com.webos.app.webapphost
-    NSString *appId = [NSString stringWithFormat:@"com.webos.app.webapphost.%@", launchSession.appId];
+    NSString *appId;
+
+    if (launchSession.sessionType == LaunchSessionTypeWebApp)
+        appId = [NSString stringWithFormat:@"com.webos.app.webapphost.%@", launchSession.appId];
+    else if (launchSession.sessionType == LaunchSessionTypeApp)
+        appId = launchSession.appId;
 
     if (!appId)
     {
