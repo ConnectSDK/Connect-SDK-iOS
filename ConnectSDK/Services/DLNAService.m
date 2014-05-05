@@ -79,11 +79,11 @@
     return nil;
 }
 
-- (NSDictionary *) toJSONObject
-{
-    // not supported
-    return nil;
-}
+//- (NSDictionary *) toJSONObject
+//{
+//    // not supported
+//    return nil;
+//}
 
 #pragma mark - Helper methods
 
