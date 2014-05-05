@@ -1902,15 +1902,34 @@
         return;
     }
 
+    WebOSWebAppSession *webAppSession = [[WebOSWebAppSession alloc] initWithLaunchSession:launchSession service:self];
+
     if (!launchSession.sessionId)
     {
-        if (failure)
-            failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"Cannot close webapp without a launch session id"]);
+        // This is a hack to enable closing of bridged web apps that we didn't open
+        NSDictionary *closeCommand = @{
+                @"contentType" : @"connectsdk.serviceCommand",
+                @"serviceCommand" : @{
+                        @"type" : @"close"
+                }
+        };
+
+        [webAppSession sendJSON:closeCommand success:^(id responseObject)
+        {
+            [self disconnectFromWebApp:webAppSession];
+
+            if (success)
+                success(responseObject);
+        } failure:^(NSError *error)
+        {
+            [self disconnectFromWebApp:webAppSession];
+
+            if (failure)
+                failure(error);
+        }];
+
         return;
     }
-
-    WebOSWebAppSession *webAppSession = [[WebOSWebAppSession alloc] init];
-    webAppSession.launchSession = launchSession;
 
     [self disconnectFromWebApp:webAppSession];
 
@@ -2148,12 +2167,6 @@
             @"payload" : message
     };
 
-    ServiceCommand *comm = [ServiceCommand commandWithDelegate:nil target:nil payload:payload];
-    comm.callbackComplete = success;
-    comm.callbackError = failure;
-
-    [_activeConnections setObject:comm forKey:[NSString stringWithFormat:@"req%d",callId]];
-
     NSString *sendString = [self writeToJSON:payload];
 
     if (_socket.readyState == LGSR_OPEN)
@@ -2171,6 +2184,9 @@
         [_commandQueue addObject:sendString];
         [self openSocket];
     }
+
+    if (success)
+        success(nil);
 
     return callId;
 }
