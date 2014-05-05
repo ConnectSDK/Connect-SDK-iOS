@@ -96,9 +96,15 @@ NSString *lgeUDAPRequestURI[8] = {
 - (void) setServiceConfig:(ServiceConfig *)serviceConfig
 {
     if ([serviceConfig isKindOfClass:[NetcastTVServiceConfig class]])
-        _serviceConfig = (NetcastTVServiceConfig *) serviceConfig;
-    else
     {
+        if (self.serviceConfig.pairingCode && !((NetcastTVServiceConfig *)serviceConfig).pairingCode)
+            NSAssert(!self.serviceConfig.pairingCode, @"Replacing important data!");
+
+        _serviceConfig = (NetcastTVServiceConfig *) serviceConfig;
+    } else
+    {
+        NSAssert(!self.serviceConfig.pairingCode, @"Replacing important data!");
+
         _serviceConfig = [[NetcastTVServiceConfig alloc] initWithServiceConfig:serviceConfig];
     }
 }
@@ -490,8 +496,6 @@ NSString *lgeUDAPRequestURI[8] = {
     };
     command.callbackError = ^(NSError *error)
     {
-        self.serviceConfig.pairingCode = nil;
-
         [self.delegate deviceService:self pairingFailedWithError:error];
     };
     [command send];
@@ -508,7 +512,7 @@ NSString *lgeUDAPRequestURI[8] = {
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
-    [request setTimeoutInterval:10];
+    [request setTimeoutInterval:30];
     [request setValue:@"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"Close" forHTTPHeaderField:@"Connection"];
     [request setValue:@"Apple iOS UDAP/2.0 Connect SDK" forHTTPHeaderField:@"User-Agent"];

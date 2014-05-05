@@ -82,9 +82,17 @@
 - (void) setServiceConfig:(ServiceConfig *)serviceConfig
 {
     if ([serviceConfig isKindOfClass:[WebOSTVServiceConfig class]])
+    {
+        if (self.serviceConfig.clientKey && !((WebOSTVServiceConfig *) serviceConfig).clientKey)
+            NSAssert(!self.serviceConfig.clientKey, @"Losing important data!");
+
         [super setServiceConfig:(WebOSTVServiceConfig *) serviceConfig];
-    else
+    } else
+    {
+        NSAssert(!self.serviceConfig.clientKey, @"Losing important data!");
+
         [super setServiceConfig:[[WebOSTVServiceConfig alloc] initWithServiceConfig:serviceConfig]];
+    }
 }
 
 - (void) setServiceDescription:(ServiceDescription *)serviceDescription
