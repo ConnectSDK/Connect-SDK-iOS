@@ -154,7 +154,7 @@
         ]];
     }
 
-    if ([_serviceDescription.version rangeOfString:@"4.0.0"].location == NSNotFound)
+    if ([_serviceDescription.version rangeOfString:@"4.0.0"].location == NSNotFound && [_serviceDescription.version rangeOfString:@"4.0.1"].location == NSNotFound)
         caps = [caps arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
     else
     {
@@ -2009,7 +2009,7 @@
 
         if (connectionSubscription)
         {
-            if ([self.serviceDescription.version rangeOfString:@"4.0."].location == NSNotFound)
+            if ([self.serviceDescription.version rangeOfString:@"4.0.2"].location == NSNotFound)
                 [connectionSubscription unsubscribe];
 
             [_appToAppSubscriptions removeObjectForKey:subscriptionKey];
@@ -2094,7 +2094,7 @@
 
     if (connectionSubscription)
     {
-        if ([self.serviceDescription.version rangeOfString:@"4.0."].location == NSNotFound)
+        if ([self.serviceDescription.version rangeOfString:@"4.0.2"].location == NSNotFound)
         {
             [connectionSubscription unsubscribe];
             [_appToAppSubscriptions removeObjectForKey:webAppSession.launchSession.appId];
