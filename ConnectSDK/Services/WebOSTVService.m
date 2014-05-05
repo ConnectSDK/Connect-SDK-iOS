@@ -30,7 +30,7 @@
 
 @interface WebOSTVService () <LGSRWebSocketDelegate, ServiceCommandDelegate, UIAlertViewDelegate>
 {
-    int UID;
+    int _UID;
 
     LGSRWebSocket *_socket;
     NSMutableArray *_commandQueue;
@@ -54,7 +54,6 @@
 
 @implementation WebOSTVService
 
-//@synthesize serviceConfig = _serviceConfig;
 @synthesize connected = _connected;
 @synthesize permissions = _permissions;
 @synthesize serviceDescription = _serviceDescription;
@@ -72,7 +71,7 @@
         _commandQueue = [[NSMutableArray alloc] init];
         _activeConnections = [[NSMutableDictionary alloc] init];
 
-        UID = 0;
+        _UID = 0;
     }
 
     return self;
@@ -761,8 +760,8 @@
 
 - (int) getNextId
 {
-    UID = UID + 1;
-    return UID;
+    _UID = _UID + 1;
+    return _UID;
 }
 
 + (ChannelInfo *)channelInfoFromDictionary:(NSDictionary *)info
