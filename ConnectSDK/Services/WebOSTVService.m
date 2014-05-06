@@ -130,7 +130,7 @@
         ]];
         caps = [caps arrayByAddingObjectsFromArray:kMouseControlCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kTextInputControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kPowerControlCapabilities];
+        caps = [caps arrayByAddingObject:kPowerControlOff];
         caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kLauncherCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kTVControlCapabilities];
@@ -1808,6 +1808,12 @@
 
     command.callbackError = failure;
     [command send];
+}
+
+- (void) powerOnWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    if (failure)
+        failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
 }
 
 #pragma mark - Web App Launcher
