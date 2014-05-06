@@ -24,9 +24,11 @@
 #define kPowerControlAny @"PowerControl.Any"
 
 #define kPowerControlOff @"PowerControl.Off"
+#define kPowerControlOn @"PowerControl.On"
 
 #define kPowerControlCapabilities @[\
-    kPowerControlOff\
+    kPowerControlOff,\
+    kPowerControlOn
 ]
 
 @protocol PowerControl <NSObject>
@@ -35,5 +37,6 @@
 - (CapabilityPriorityLevel)powerControlPriority;
 
 - (void) powerOffWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure;
+- (void) powerOnWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure;
 
 @end

@@ -139,7 +139,7 @@ NSString *lgeUDAPRequestURI[8] = {
         caps = [caps arrayByAddingObjectsFromArray:kTextInputControlCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kMouseControlCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kKeyControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kPowerControlCapabilities];
+        caps = [caps arrayByAddingObject:kPowerControlOff];
         caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:@[
                 kMediaControlPlay,
@@ -1854,6 +1854,12 @@ NSString *lgeUDAPRequestURI[8] = {
 - (void)powerOffWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
     [self sendKeyCode:NetcastTVKeyCodePower success:success failure:failure];
+}
+
+- (void) powerOnWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    if (failure)
+        failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
 }
 
 #pragma mark - External Input Control
