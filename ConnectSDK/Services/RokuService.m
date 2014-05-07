@@ -61,7 +61,7 @@ static NSMutableArray *registeredApps = nil;
             kLauncherApp,
             kLauncherAppParams,
             kLauncherAppStore,
-            kLauncherAppStoreParams
+            kLauncherAppStoreParams,
             kLauncherAppClose,
 
             kMediaPlayerDisplayImage,
