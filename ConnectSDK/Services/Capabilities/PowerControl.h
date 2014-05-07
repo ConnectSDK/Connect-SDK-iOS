@@ -28,7 +28,7 @@
 
 #define kPowerControlCapabilities @[\
     kPowerControlOff,\
-    kPowerControlOn
+    kPowerControlOn\
 ]
 
 @protocol PowerControl <NSObject>
