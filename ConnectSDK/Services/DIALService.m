@@ -427,7 +427,8 @@ static NSMutableArray *registeredApps = nil;
         return;
     }
     
-    NSString *commandPath = [NSString stringWithFormat:@"http://%@:%@%@", self.serviceDescription.commandURL.host, self.serviceDescription.commandURL.port, launchSession.sessionId];
+    NSString *commandPath = [NSString stringWithFormat:@"http://%@:%@", self.serviceDescription.commandURL.host, self.serviceDescription.commandURL.port];
+    commandPath = [commandPath stringByAppendingPathComponent:launchSession.sessionId];
     NSURL *commandURL = [NSURL URLWithString:commandPath];
 
     ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self target:commandURL payload:nil];
