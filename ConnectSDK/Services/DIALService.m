@@ -462,10 +462,8 @@ static NSMutableArray *registeredApps = nil;
         return;
     }
 
-    NSString *commandPath = [NSString pathWithComponents:@[
-            self.serviceDescription.commandURL.absoluteString,
-            appId
-    ]];
+    NSString *commandPath = self.serviceDescription.commandURL.absoluteString;
+    commandPath = [commandPath stringByAppendingPathComponent:appId];
 
     NSURL *commandURL = [NSURL URLWithString:commandPath];
 
