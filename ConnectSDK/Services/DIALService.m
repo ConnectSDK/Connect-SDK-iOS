@@ -86,7 +86,7 @@ static NSMutableArray *registeredApps = nil;
         NSString *commandPath = [self.serviceDescription.locationResponseHeaders objectForKey:@"Application-URL"];
         self.serviceDescription.commandURL = [NSURL URLWithString:commandPath];
     }
-
+    
     [self probeForAppSupport];
 }
 
@@ -426,8 +426,9 @@ static NSMutableArray *registeredApps = nil;
 
         return;
     }
-
-    NSURL *commandURL = [NSURL URLWithString:launchSession.sessionId];
+    
+    NSString *commandPath = [NSString stringWithFormat:@"http://%@:%@%@", self.serviceDescription.commandURL.host, self.serviceDescription.commandURL.port, launchSession.sessionId];
+    NSURL *commandURL = [NSURL URLWithString:commandPath];
 
     ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self target:commandURL payload:nil];
     command.HTTPMethod = @"DELETE";
