@@ -883,8 +883,17 @@
     NSURL *URL = [NSURL URLWithString:@"ssap://system.launcher/launch"];
     
     NSMutableDictionary *payload = [NSMutableDictionary new];
+
     [payload setValue:appId forKey:@"id"];
-    if (params) [payload setValue:params forKey:@"params"];
+
+    if (params) {
+        [payload setValue:params forKey:@"params"];
+
+        NSString *contentId = [params objectForKey:@"contentId"];
+
+        if (contentId)
+            [payload setValue:contentId forKey:@"contentId"];
+    }
 
     ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self target:URL payload:payload];
     command.callbackComplete = ^(NSDictionary *responseObject)
