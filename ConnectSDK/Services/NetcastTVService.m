@@ -2002,7 +2002,7 @@ NSString *lgeUDAPRequestURI[8] = {
                                                                    "<state>%@</state>"
                                                                    "<value>%@</value>"
                                                                "</api>"
-                                                           "</envelope>", state, [ConnectUtil escapedUnicodeForString:text]];
+                                                           "</envelope>", state, [ConnectUtil entityEncode:text]];
 
     ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:targetURL payload:payload];
     command.callbackComplete = success;
