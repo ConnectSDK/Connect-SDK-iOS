@@ -1968,6 +1968,9 @@
 
 - (void)joinWebApp:(LaunchSession *)webAppLaunchSession success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
+    if (!webAppLaunchSession.service)
+        webAppLaunchSession.service = self;
+
     WebOSWebAppSession *webAppSession = [[WebOSWebAppSession alloc] initWithLaunchSession:webAppLaunchSession service:self];
     [webAppSession joinWithSuccess:^(id responseObject)
     {
