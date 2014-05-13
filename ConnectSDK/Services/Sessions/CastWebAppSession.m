@@ -143,8 +143,6 @@
 
 - (void)mediaControlChannelDidUpdateStatus:(GCKMediaControlChannel *)mediaControlChannel
 {
-    [self.service mediaControlChannelDidUpdateStatus:mediaControlChannel];
-
     MediaControlPlayState playState;
 
     switch (mediaControlChannel.mediaStatus.playerState)

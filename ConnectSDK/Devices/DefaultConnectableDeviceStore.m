@@ -82,7 +82,7 @@
 
         NSData *deviceStoreData = [deviceStoreJSON dataUsingEncoding:NSUTF8StringEncoding];
         
-        @synchronized (_deviceStore)
+        @synchronized (self)
         {
             _deviceStore = [NSJSONSerialization JSONObjectWithData:deviceStoreData options:0 error:&error];
         }
@@ -137,7 +137,7 @@
 
         _updated = [[NSDate date] timeIntervalSince1970];
         
-        @synchronized(_deviceStore)
+        @synchronized(self)
         {
             _deviceStore = [NSDictionary dictionaryWithDictionary:newDeviceStore];
         }
@@ -360,7 +360,7 @@
         NSError *jsonError;
         NSData *deviceStoreJSONData;
         
-        @synchronized (_deviceStore)
+        @synchronized (self)
         {
             deviceStoreJSONData = [NSJSONSerialization dataWithJSONObject:_deviceStore options:NSJSONWritingPrettyPrinted error:&jsonError];
         }

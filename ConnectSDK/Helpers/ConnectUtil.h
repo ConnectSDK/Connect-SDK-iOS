@@ -25,5 +25,6 @@
 
 + (NSString *) urlEncode:(NSString *)input;
 + (NSString *) escapedUnicodeForString:(NSString *)input;
++ (NSString *) entityEncode:(NSString *)input;
 
 @end
