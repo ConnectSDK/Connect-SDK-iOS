@@ -524,8 +524,12 @@ NSString *lgeUDAPRequestURI[8] = {
         [request setHTTPBody:xmlData];
     }
 
+    DLog(@"[OUT] : %@ \n %@", [request allHTTPHeaderFields], xml);
+
     [NSURLConnection sendAsynchronousRequest:request queue:self.commandQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
     {
+        DLog(@"[IN] : %@", [response allHTTPHeaderFields]);
+
         if (connectionError || !data)
         {
             if (command.callbackError)
@@ -539,6 +543,8 @@ NSString *lgeUDAPRequestURI[8] = {
             } else
             {
                 NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+                DLog(@"[IN] : %@", dataString);
                 
                 if (dataString)
                 {
