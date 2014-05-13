@@ -180,7 +180,6 @@
     self.connected = YES;
 
     _castMediaControlChannel = [[GCKMediaControlChannel alloc] init];
-    _castMediaControlChannel.delegate = self;
     [_castDeviceManager addChannel:_castMediaControlChannel];
 
     dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
@@ -299,14 +298,6 @@
     _castMediaControlChannel = nil;
 
     dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:error]; });
-}
-
-#pragma mark - GCKMediaControlChannelDelegate methods
-
-- (void)mediaControlChannelDidUpdateStatus:(GCKMediaControlChannel *)mediaControlChannel
-{
-    if (mediaControlChannel.mediaStatus)
-        [self deviceManager:self.castDeviceManager volumeDidChangeToLevel:mediaControlChannel.mediaStatus.volume isMuted:mediaControlChannel.mediaStatus.isMuted];
 }
 
 #pragma mark - Media Player

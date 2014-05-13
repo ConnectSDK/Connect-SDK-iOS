@@ -24,7 +24,7 @@
 #import <GoogleCast/GoogleCast.h>
 #import "CastServiceChannel.h"
 
-@interface CastService : DeviceService <GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate, MediaPlayer, MediaControl, VolumeControl, WebAppLauncher>
+@interface CastService : DeviceService <GCKDeviceManagerDelegate, MediaPlayer, MediaControl, VolumeControl, WebAppLauncher>
 
 @property (nonatomic, retain, readonly) GCKDeviceManager *castDeviceManager;
 @property (nonatomic, retain, readonly) GCKDevice *castDevice;
