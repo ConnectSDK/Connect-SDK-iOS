@@ -215,10 +215,14 @@
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:xmlData];
 
+    DLog(@"[OUT] : %@ \n %@", [request allHTTPHeaderFields], xml);
+
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
     {
         NSError *xmlError;
         NSDictionary *dataXML = [XMLReader dictionaryForXMLData:data error:&xmlError];
+
+        DLog(@"[IN] : %@ \n %@", [response allHTTPHeaderFields], dataXML);
 
         if (connectionError)
         {

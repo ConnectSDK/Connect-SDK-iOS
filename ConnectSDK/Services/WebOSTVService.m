@@ -341,6 +341,9 @@
     };
 
     NSString *sendString = [self writeToJSON:sendData];
+
+    DLog(@"[OUT] : %@", sendString);
+
     [_socket send:sendString];
 
     if ([_commandQueue containsObject:sendString])
@@ -369,6 +372,8 @@
         {
             [_commandQueue enumerateObjectsUsingBlock:^(NSString *sendString, NSUInteger idx, BOOL *stop)
             {
+                DLog(@"[OUT] : %@", sendString);
+
                 [_socket send:sendString];
             }];
 
@@ -393,6 +398,9 @@
     };
 
     NSString *sendString = [self encodeData:registerInfo andAddress:nil withId:dataId];
+
+    DLog(@"[OUT] : %@", sendString);
+
     [_socket send:sendString];
 
     if ([_commandQueue containsObject:sendString])
@@ -506,6 +514,9 @@
 - (void)webSocket:(LGSRWebSocket *)webSocket didReceiveMessage:(id)message
 {
     NSDictionary *decodeData = [self decodeData:message];
+
+    DLog(@"[IN] : %@", decodeData);
+
     NSNumber *comId = [decodeData objectForKey:@"id"];
     NSString *type = [decodeData objectForKey:@"type"];
 
@@ -661,6 +672,8 @@
 
     if ([_socket readyState] == LGSR_OPEN)
     {
+        DLog(@"[OUT] : %@", sendString);
+
         [_socket send:sendString];
 
         if ([_commandQueue containsObject:sendString])
@@ -822,6 +835,8 @@
 
     if (_socket.readyState == LGSR_OPEN)
     {
+        DLog(@"[OUT] : %@", sendString);
+
         [_socket send:sendString];
 
         if ([_commandQueue containsObject:sendString])
@@ -2190,6 +2205,8 @@
 
     if (_socket.readyState == LGSR_OPEN)
     {
+        DLog(@"[OUT] : %@", sendString);
+
         [_socket send:sendString];
 
         if ([_commandQueue containsObject:sendString])
