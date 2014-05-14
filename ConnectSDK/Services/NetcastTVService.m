@@ -528,7 +528,7 @@ NSString *lgeUDAPRequestURI[8] = {
 
     [NSURLConnection sendAsynchronousRequest:request queue:self.commandQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
     {
-        DLog(@"[IN] : %@", [response allHTTPHeaderFields]);
+        DLog(@"[IN] : %@", [((NSHTTPURLResponse *)response) allHTTPHeaderFields]);
 
         if (connectionError || !data)
         {
