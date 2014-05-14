@@ -207,11 +207,17 @@
 
 - (void) connect
 {
-    [_services enumerateKeysAndObjectsUsingBlock:^(id key, DeviceService *service, BOOL *stop)
+    if (self.connected)
     {
-        if (!service.connected)
-            [service connect];
-    }];
+        dispatch_on_main(^{ [self.delegate connectableDeviceReady:self]; });
+    } else
+    {
+        [_services enumerateKeysAndObjectsUsingBlock:^(id key, DeviceService *service, BOOL *stop)
+        {
+            if (!service.connected)
+                [service connect];
+        }];
+    }
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disconnect) name:kConnectSDKWirelessSSIDChanged object:nil];
 }
