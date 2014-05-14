@@ -222,7 +222,7 @@
         NSError *xmlError;
         NSDictionary *dataXML = [XMLReader dictionaryForXMLData:data error:&xmlError];
 
-        DLog(@"[IN] : %@ \n %@", [response allHTTPHeaderFields], dataXML);
+        DLog(@"[IN] : %@ \n %@", [((NSHTTPURLResponse *)response) allHTTPHeaderFields], dataXML);
 
         if (connectionError)
         {

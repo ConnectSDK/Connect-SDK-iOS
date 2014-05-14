@@ -198,6 +198,8 @@ static NSMutableArray *registeredApps = nil;
     {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
 
+        DLog(@"[IN] : %@", [httpResponse allHeaderFields]);
+
         if (connectionError)
         {
             if (command.callbackError)
@@ -248,6 +250,8 @@ static NSMutableArray *registeredApps = nil;
             {
                 NSError *xmlError;
                 NSDictionary *responseXML = [XMLReader dictionaryForXMLData:data error:&xmlError];
+
+                DLog(@"[IN] : %@", responseXML);
 
                 if (xmlError)
                 {
