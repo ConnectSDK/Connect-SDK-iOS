@@ -538,6 +538,21 @@ NSString *lgeUDAPRequestURI[8] = {
         {
             if ([data length] == 0)
             {
+                id contentLengthValue = [[((NSHTTPURLResponse *) response) allHeaderFields] objectForKey:@"Content-Length"];
+
+                if (contentLengthValue)
+                {
+                    int contentLength = [contentLengthValue intValue];
+
+                    if (contentLength > 0)
+                    {
+                        if (command.callbackError)
+                            dispatch_on_main(^{ command.callbackError([ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@"Expected data from server, but did not receive any."]); });
+
+                        return;
+                    }
+                }
+
                 if (command.callbackComplete)
                     dispatch_on_main(^{ command.callbackComplete(nil); });
             } else
