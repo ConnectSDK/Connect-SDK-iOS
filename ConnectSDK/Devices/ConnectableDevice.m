@@ -85,7 +85,9 @@
             [services enumerateKeysAndObjectsUsingBlock:^(id key, NSDictionary *serviceJSON, BOOL *stop)
             {
                 DeviceService *service = [DeviceService deviceServiceWithJSONObject:serviceJSON];
-                [self addService:service];
+
+                if (service)
+                    [self addService:service];
             }];
         }
 
@@ -205,11 +207,17 @@
 
 - (void) connect
 {
-    [_services enumerateKeysAndObjectsUsingBlock:^(id key, DeviceService *service, BOOL *stop)
+    if (self.connected)
     {
-        if (!service.connected)
-            [service connect];
-    }];
+        dispatch_on_main(^{ [self.delegate connectableDeviceReady:self]; });
+    } else
+    {
+        [_services enumerateKeysAndObjectsUsingBlock:^(id key, DeviceService *service, BOOL *stop)
+        {
+            if (!service.connected)
+                [service connect];
+        }];
+    }
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disconnect) name:kConnectSDKWirelessSSIDChanged object:nil];
 }
@@ -292,10 +300,23 @@
 {
     DeviceService *existingService = [_services objectForKey:service.serviceName];
 
-    if (existingService)
-        return;
-
     NSArray *oldCapabilities = self.capabilities;
+
+    if (existingService)
+    {
+        if (service.serviceDescription.lastDetection > existingService.serviceDescription.lastDetection)
+        {
+            if (existingService.connected)
+                [existingService disconnect];
+
+            DLog(@"Removing %@ (%@)", existingService.serviceDescription.friendlyName, existingService.serviceName);
+            [self removeServiceWithId:existingService.serviceName];
+        } else
+        {
+            DLog(@"Ignoring %@ (%@)", service.serviceDescription.friendlyName, service.serviceName);
+            return;
+        }
+    }
 
     [_services setObject:service forKey:service.serviceName];
     

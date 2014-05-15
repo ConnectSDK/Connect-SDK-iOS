@@ -22,6 +22,7 @@
 #import "ConnectError.h"
 #import "XMLReader.h"
 #import "DeviceServiceReachability.h"
+#import "Guid.h"
 
 static NSMutableArray *registeredApps = nil;
 
@@ -98,7 +99,7 @@ static NSMutableArray *registeredApps = nil;
         NSString *commandPath = [self.serviceDescription.locationResponseHeaders objectForKey:@"Application-URL"];
         self.serviceDescription.commandURL = [NSURL URLWithString:commandPath];
     }
-
+    
     [self probeForAppSupport];
 }
 
@@ -192,6 +193,8 @@ static NSMutableArray *registeredApps = nil;
             [request addValue:[NSString stringWithFormat:@"%i", (unsigned int) [payloadData length]] forHTTPHeaderField:@"Content-Length"];
             [request addValue:@"text/plain;charset=\"utf-8\"" forHTTPHeaderField:@"Content-Type"];
             [request setHTTPBody:payloadData];
+
+            DLog(@"[OUT] : %@ \n %@", [request allHTTPHeaderFields], payload);
         } else
         {
             [request addValue:@"0" forHTTPHeaderField:@"Content-Length"];
@@ -200,11 +203,15 @@ static NSMutableArray *registeredApps = nil;
     {
         [request setHTTPMethod:command.HTTPMethod];
         [request addValue:@"0" forHTTPHeaderField:@"Content-Length"];
+
+        DLog(@"[OUT] : %@", [request allHTTPHeaderFields]);
     }
 
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
     {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+
+        DLog(@"[IN] : %@", [httpResponse allHeaderFields]);
 
         if (connectionError)
         {
@@ -256,6 +263,8 @@ static NSMutableArray *registeredApps = nil;
             {
                 NSError *xmlError;
                 NSDictionary *responseXML = [XMLReader dictionaryForXMLData:data error:&xmlError];
+
+                DLog(@"[IN] : %@", responseXML);
 
                 if (xmlError)
                 {
@@ -389,8 +398,12 @@ static NSMutableArray *registeredApps = nil;
 {
     NSString *params;
 
-    if (contentId && contentId.length > 0)
-        params = [NSString stringWithFormat:@"v=%@&t=0.0", contentId];
+    if (contentId && contentId.length > 0) {
+        // YouTube on some platforms requires a pairing code, which may be a random string
+        NSString *pairingCode = [[Guid randomGuid] stringValue];
+
+        params = [NSString stringWithFormat:@"pairingCode=%@&v=%@&t=0.0", pairingCode, contentId];
+    }
 
     AppInfo *appInfo = [AppInfo appInfoForId:@"YouTube"];
     appInfo.name = appInfo.id;
@@ -445,8 +458,10 @@ static NSMutableArray *registeredApps = nil;
 
         return;
     }
-
-    NSURL *commandURL = [NSURL URLWithString:launchSession.sessionId];
+    
+    NSString *commandPath = [NSString stringWithFormat:@"http://%@:%@", self.serviceDescription.commandURL.host, self.serviceDescription.commandURL.port];
+    commandPath = [commandPath stringByAppendingPathComponent:launchSession.sessionId];
+    NSURL *commandURL = [NSURL URLWithString:commandPath];
 
     ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self target:commandURL payload:nil];
     command.HTTPMethod = @"DELETE";
@@ -479,10 +494,8 @@ static NSMutableArray *registeredApps = nil;
         return;
     }
 
-    NSString *commandPath = [NSString pathWithComponents:@[
-            self.serviceDescription.commandURL.absoluteString,
-            appId
-    ]];
+    NSString *commandPath = self.serviceDescription.commandURL.absoluteString;
+    commandPath = [commandPath stringByAppendingPathComponent:appId];
 
     NSURL *commandURL = [NSURL URLWithString:commandPath];
 

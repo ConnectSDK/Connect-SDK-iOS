@@ -61,7 +61,7 @@ static NSMutableArray *registeredApps = nil;
             kLauncherApp,
             kLauncherAppParams,
             kLauncherAppStore,
-            kLauncherAppStoreParams
+            kLauncherAppStoreParams,
             kLauncherAppClose,
 
             kMediaPlayerDisplayImage,
@@ -119,7 +119,10 @@ static NSMutableArray *registeredApps = nil;
         [self hasApp:appName success:^(AppInfo *appInfo)
         {
             NSString *capability = [NSString stringWithFormat:@"Launcher.%@", appName];
+            NSString *capabilityParams = [NSString stringWithFormat:@"Launcher.%@.Params", appName];
+
             [self addCapability:capability];
+            [self addCapability:capabilityParams];
         } failure:nil];
     }];
 }

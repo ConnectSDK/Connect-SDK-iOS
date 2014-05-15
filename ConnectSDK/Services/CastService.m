@@ -41,6 +41,9 @@
 
     NSMutableDictionary *_sessions; // TODO: are we using this? get rid of it if not
     NSMutableArray *_subscriptions;
+
+    float _currentVolumeLevel;
+    BOOL _currentMuteStatus;
 }
 
 - (void) commonSetup
@@ -177,7 +180,6 @@
     self.connected = YES;
 
     _castMediaControlChannel = [[GCKMediaControlChannel alloc] init];
-    _castMediaControlChannel.delegate = self;
     [_castDeviceManager addChannel:_castMediaControlChannel];
 
     dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
@@ -252,6 +254,9 @@
 {
     DLog(@"volume: %f isMuted: %d", volumeLevel, isMuted);
 
+    _currentVolumeLevel = volumeLevel;
+    _currentMuteStatus = isMuted;
+
     [_subscriptions enumerateObjectsUsingBlock:^(ServiceSubscription *subscription, NSUInteger idx, BOOL *stop)
     {
         NSString *eventName = (NSString *) subscription.payload;
@@ -293,14 +298,6 @@
     _castMediaControlChannel = nil;
 
     dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:error]; });
-}
-
-#pragma mark - GCKMediaControlChannelDelegate methods
-
-- (void)mediaControlChannelDidUpdateStatus:(GCKMediaControlChannel *)mediaControlChannel
-{
-    if (mediaControlChannel.mediaStatus)
-        [self deviceManager:self.castDeviceManager volumeDidChangeToLevel:mediaControlChannel.mediaStatus.volume isMuted:mediaControlChannel.mediaStatus.isMuted];
 }
 
 #pragma mark - Media Player
@@ -585,6 +582,15 @@
     }
 }
 
+- (void) joinWebAppWithId:(NSString *)webAppId success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:webAppId];
+    launchSession.sessionType = LaunchSessionTypeWebApp;
+    launchSession.service = self;
+
+    [self joinWebApp:launchSession success:success failure:failure];
+}
+
 - (void)closeWebApp:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
 {
     BOOL result = [self.castDeviceManager stopApplicationWithSessionID:launchSession.sessionId];
@@ -662,6 +668,8 @@
             [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:nil];
     } else
     {
+        [self.castDeviceManager requestDeviceStatus];
+
         if (success)
             success(nil);
     }
@@ -669,10 +677,10 @@
 
 - (void)getMuteWithSuccess:(MuteSuccessBlock)success failure:(FailureBlock)failure
 {
-    if (self.castMediaControlChannel.mediaStatus)
+    if (_currentMuteStatus)
     {
         if (success)
-            success(self.castMediaControlChannel.mediaStatus.isMuted);
+            success(_currentMuteStatus);
     } else
     {
         if (failure)
@@ -682,6 +690,12 @@
 
 - (ServiceSubscription *)subscribeMuteWithSuccess:(MuteSuccessBlock)success failure:(FailureBlock)failure
 {
+    if (_currentMuteStatus)
+    {
+        if (success)
+            success(_currentMuteStatus);
+    }
+
     ServiceSubscription *subscription = [ServiceSubscription subscriptionWithDelegate:self target:nil payload:kCastServiceMuteSubscriptionName callId:[self getNextId]];
     [subscription addSuccess:success];
     [subscription addFailure:failure];
@@ -697,7 +711,7 @@
 
     @try
     {
-        result = [self.castMediaControlChannel setStreamVolume:volume];
+        result = [self.castDeviceManager setVolume:volume];
     } @catch (NSException *ex)
     {
         // this is likely caused by having no active media session
@@ -711,6 +725,8 @@
             [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:failureMessage];
     } else
     {
+        [self.castDeviceManager requestDeviceStatus];
+
         if (success)
             success(nil);
     }
@@ -718,10 +734,10 @@
 
 - (void)getVolumeWithSuccess:(VolumeSuccessBlock)success failure:(FailureBlock)failure
 {
-    if (self.castMediaControlChannel.mediaStatus)
+    if (_currentVolumeLevel)
     {
         if (success)
-            success(self.castMediaControlChannel.mediaStatus.volume);
+            success(_currentVolumeLevel);
     } else
     {
         if (failure)
@@ -731,10 +747,10 @@
 
 - (ServiceSubscription *)subscribeVolumeWithSuccess:(VolumeSuccessBlock)success failure:(FailureBlock)failure
 {
-    if (self.castMediaControlChannel.mediaStatus)
+    if (_currentVolumeLevel)
     {
         if (success)
-            success(self.castMediaControlChannel.mediaStatus.volume);
+            success(_currentVolumeLevel);
     }
 
     ServiceSubscription *subscription = [ServiceSubscription subscriptionWithDelegate:self target:nil payload:kCastServiceVolumeSubscriptionName callId:[self getNextId]];
@@ -742,7 +758,7 @@
     [subscription addFailure:failure];
     [subscription subscribe];
 
-    [self.castMediaControlChannel requestStatus];
+    [self.castDeviceManager requestDeviceStatus];
 
     return subscription;
 }

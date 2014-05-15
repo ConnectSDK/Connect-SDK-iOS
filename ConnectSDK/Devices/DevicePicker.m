@@ -20,6 +20,7 @@
 
 #import "DevicePicker.h"
 #import "DiscoveryProvider.h"
+#import "DiscoveryManager.h"
 
 @implementation DevicePicker
 {
@@ -37,6 +38,8 @@
     NSDictionary *_popoverParams;
 
     dispatch_queue_t _sortQueue;
+
+    BOOL _showServiceLabel;
 }
 
 - (instancetype) init
@@ -66,6 +69,8 @@
 - (void) showPicker:(id)sender
 {
     [self sortDevices];
+
+    _showServiceLabel = [DiscoveryManager sharedManager].capabilityFilters.count == 0;
 
     NSString *pickerTitle = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Search_Title" value:@"Pick a device" table:@"ConnectSDK"];
 
@@ -144,8 +149,10 @@
                                  destructiveButtonTitle:nil
                                       otherButtonTitles:nil];
 
-    
-    _actionSheetDeviceList = [_generatedDeviceList copy];
+    @synchronized (_generatedDeviceList)
+    {
+        _actionSheetDeviceList = [_generatedDeviceList copy];
+    }
 
     [_actionSheetDeviceList enumerateObjectsUsingBlock:^(ConnectableDevice *device, NSUInteger idx, BOOL *stop)
     {
@@ -236,16 +243,19 @@
 - (void) sortDevices
 {
     dispatch_async(_sortQueue, ^{
-        NSArray *devices = [_devices allValues];
-    
-        _generatedDeviceList = [devices sortedArrayUsingComparator:^NSComparisonResult(ConnectableDevice *device1, ConnectableDevice *device2) {
-            NSString *device1Name = [[self nameForDevice:device1] lowercaseString];
-            NSString *device2Name = [[self nameForDevice:device2] lowercaseString];
+        NSArray *devices;
 
-            return [device1Name compare:device2Name];
-        }];
+        @synchronized (_devices) { devices = [_devices allValues]; }
 
-        NSAssert(devices.count == _generatedDeviceList.count, @"Array counts don't match up");
+        @synchronized (_generatedDeviceList)
+        {
+            _generatedDeviceList = [devices sortedArrayUsingComparator:^NSComparisonResult(ConnectableDevice *device1, ConnectableDevice *device2) {
+                NSString *device1Name = [[self nameForDevice:device1] lowercaseString];
+                NSString *device2Name = [[self nameForDevice:device2] lowercaseString];
+
+                return [device1Name compare:device2Name];
+            }];
+        }
     });
 }
 
@@ -297,8 +307,14 @@
         return;
     
     ConnectableDevice *device = [_actionSheetDeviceList objectAtIndex:buttonIndex];
+    BOOL deviceExists = YES;
 
-    if (![_generatedDeviceList containsObject:device])
+    @synchronized (_generatedDeviceList)
+    {
+        deviceExists = [_generatedDeviceList containsObject:device];
+    }
+
+    if (!deviceExists)
     {
         DLog(@"User selected a device that no longer exists");
         return;
@@ -329,7 +345,12 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    ConnectableDevice *device = (ConnectableDevice *) [_generatedDeviceList objectAtIndex:indexPath.row];
+    ConnectableDevice *device;
+
+    @synchronized (_generatedDeviceList)
+    {
+        device = (ConnectableDevice *) [_generatedDeviceList objectAtIndex:indexPath.row];
+    }
     
     if (self.currentDevice)
     {
@@ -356,40 +377,56 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_generatedDeviceList)
-        return _generatedDeviceList.count;
-    else
-        return 0;
+    NSInteger numberOfRows = 0;
+
+    @synchronized (_generatedDeviceList)
+    {
+        if (_generatedDeviceList)
+            numberOfRows = _generatedDeviceList.count;
+    }
+
+    return numberOfRows;
 }
 
 static NSString *cellIdentifier = @"connectPickerCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
+
     if (cell == nil)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
 
-    if ([_generatedDeviceList count] == 0)
+    ConnectableDevice *device;
+
+    @synchronized (_generatedDeviceList)
+    {
+        if (_generatedDeviceList.count > 0 && indexPath.row < _generatedDeviceList.count)
+            device = (ConnectableDevice *) [_generatedDeviceList objectAtIndex:indexPath.row];
+    }
+
+    if (!device)
         return cell;
 
-    ConnectableDevice *device = (ConnectableDevice *) [_generatedDeviceList objectAtIndex:indexPath.row];
     NSString *deviceName = [self nameForDevice:device];
     [cell.textLabel setText:deviceName];
-    
-#ifdef DEBUG
-    [cell.detailTextLabel setText:[device connectedServiceNames]];
-#endif
-    
-    if (self.currentDevice)
-    {
-        if ([self.currentDevice.serviceDescription.address isEqualToString:device.serviceDescription.address])
-            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-        else
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
-    }
-    
+
+    #ifdef DEBUG
+        [cell.detailTextLabel setText:[device connectedServiceNames]];
+    #endif
+
+        if (_showServiceLabel)
+            [cell.detailTextLabel setText:[device connectedServiceNames]];
+
+        if (self.currentDevice)
+        {
+            if ([self.currentDevice.serviceDescription.address isEqualToString:device.serviceDescription.address])
+                [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+            else
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
+        }
+
     return cell;
 }
 
@@ -413,7 +450,7 @@ static NSString *cellIdentifier = @"connectPickerCell";
 {
     if (_devices)
     {
-        [_devices setObject:device forKey:device.address];
+        @synchronized (_devices) { [_devices setObject:device forKey:device.address]; }
 
         [self sortDevices];
 
@@ -428,7 +465,7 @@ static NSString *cellIdentifier = @"connectPickerCell";
 {
     if (_devices)
     {
-        [_devices removeObjectForKey:device.address];
+        @synchronized (_devices) { [_devices removeObjectForKey:device.address]; }
 
         [self sortDevices];
 

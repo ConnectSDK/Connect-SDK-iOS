@@ -62,16 +62,28 @@
 + (NSDictionary *) discoveryParameters
 {
     return @{
-             @"serviceId": kConnectSDKDLNAServiceId,
-             @"ssdp":@{
-                     @"filter":@"urn:schemas-upnp-org:device:MediaRenderer:1",
-                     @"requiredServices":@[
-                             @"urn:schemas-upnp-org:service:AVTransport:1",
-                             @"urn:schemas-upnp-org:service:RenderingControl:1"
-                             ]
-                     }
-             };
+            @"serviceId": kConnectSDKDLNAServiceId,
+            @"ssdp":@{
+                    @"filter":@"urn:schemas-upnp-org:device:MediaRenderer:1",
+                    @"requiredServices":@[
+                            @"urn:schemas-upnp-org:service:AVTransport:1",
+                            @"urn:schemas-upnp-org:service:RenderingControl:1"
+                    ]
+            }
+    };
 }
+
+- (id) initWithJSONObject:(NSDictionary *)dict
+{
+    // not supported
+    return nil;
+}
+
+//- (NSDictionary *) toJSONObject
+//{
+//    // not supported
+//    return nil;
+//}
 
 #pragma mark - Helper methods
 
@@ -196,17 +208,21 @@
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
-    [request setTimeoutInterval:6];
+    [request setTimeoutInterval:30];
     [request addValue:@"text/xml;charset=\"utf-8\"" forHTTPHeaderField:@"Content-Type"];
     [request addValue:[NSString stringWithFormat:@"%i", (unsigned int) [xmlData length]] forHTTPHeaderField:@"Content-Length"];
     [request addValue:actionField forHTTPHeaderField:kActionFieldName];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:xmlData];
 
+    DLog(@"[OUT] : %@ \n %@", [request allHTTPHeaderFields], xml);
+
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
     {
         NSError *xmlError;
         NSDictionary *dataXML = [XMLReader dictionaryForXMLData:data error:&xmlError];
+
+        DLog(@"[IN] : %@ \n %@", [((NSHTTPURLResponse *)response) allHeaderFields], dataXML);
 
         if (connectionError)
         {

@@ -102,17 +102,28 @@ NSString *lgeUDAPRequestURI[8] = {
 
     if (self)
     {
-        if ([serviceConfig isKindOfClass:[NetcastTVServiceConfig class]])
-            _serviceConfig = (NetcastTVServiceConfig *) serviceConfig;
-        else
-        {
-            _serviceConfig = [[NetcastTVServiceConfig alloc] initWithServiceConfig:serviceConfig];
-        }
+        [self setServiceConfig:serviceConfig];
 
         [self commonConfig];
     }
 
     return self;
+}
+
+- (void) setServiceConfig:(ServiceConfig *)serviceConfig
+{
+    if ([serviceConfig isKindOfClass:[NetcastTVServiceConfig class]])
+    {
+        if (self.serviceConfig.pairingCode && !((NetcastTVServiceConfig *)serviceConfig).pairingCode)
+            NSAssert(!self.serviceConfig.pairingCode, @"Replacing important data!");
+
+        _serviceConfig = (NetcastTVServiceConfig *) serviceConfig;
+    } else
+    {
+        NSAssert(!self.serviceConfig.pairingCode, @"Replacing important data!");
+
+        _serviceConfig = [[NetcastTVServiceConfig alloc] initWithServiceConfig:serviceConfig];
+    }
 }
 
 - (void)setServiceDescription:(ServiceDescription *)serviceDescription
@@ -145,7 +156,7 @@ NSString *lgeUDAPRequestURI[8] = {
         caps = [caps arrayByAddingObjectsFromArray:kTextInputControlCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kMouseControlCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kKeyControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kPowerControlCapabilities];
+        caps = [caps arrayByAddingObject:kPowerControlOff];
         caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:@[
                 kMediaControlPlay,
@@ -161,7 +172,6 @@ NSString *lgeUDAPRequestURI[8] = {
                 kLauncherApp,
                 kLauncherAppClose,
                 kLauncherAppStore,
-                kLauncherAppStoreParams,
                 kLauncherAppList,
                 kLauncherAppState,
                 kLauncherBrowser,
@@ -188,6 +198,13 @@ NSString *lgeUDAPRequestURI[8] = {
                 kVolumeControlMuteGet,
                 kVolumeControlMuteSet
         ]];
+
+        if ([self.modelNumber isEqualToString:@"4.0"])
+        {
+            caps = [caps arrayByAddingObjectsFromArray:@[
+                    kLauncherAppStoreParams
+            ]];
+        }
     } else
     {
         // TODO: need to handle some of these controls over DLNA if no pairing
@@ -205,7 +222,6 @@ NSString *lgeUDAPRequestURI[8] = {
                 kLauncherYouTubeParams
         ]];
     }
-
 
     return caps;
 }
@@ -497,8 +513,6 @@ NSString *lgeUDAPRequestURI[8] = {
     };
     command.callbackError = ^(NSError *error)
     {
-        self.serviceConfig.pairingCode = nil;
-
         [self.delegate deviceService:self pairingFailedWithError:error];
     };
     [command send];
@@ -515,7 +529,7 @@ NSString *lgeUDAPRequestURI[8] = {
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
-    [request setTimeoutInterval:10];
+    [request setTimeoutInterval:30];
     [request setValue:@"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"Close" forHTTPHeaderField:@"Connection"];
     [request setValue:@"Apple iOS UDAP/2.0 Connect SDK" forHTTPHeaderField:@"User-Agent"];
@@ -527,8 +541,12 @@ NSString *lgeUDAPRequestURI[8] = {
         [request setHTTPBody:xmlData];
     }
 
+    DLog(@"[OUT] : %@ \n %@", [request allHTTPHeaderFields], xml);
+
     [NSURLConnection sendAsynchronousRequest:request queue:self.commandQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
     {
+        DLog(@"[IN] : %@", [((NSHTTPURLResponse *)response) allHeaderFields]);
+
         if (connectionError || !data)
         {
             if (command.callbackError)
@@ -537,11 +555,28 @@ NSString *lgeUDAPRequestURI[8] = {
         {
             if ([data length] == 0)
             {
+                id contentLengthValue = [[((NSHTTPURLResponse *) response) allHeaderFields] objectForKey:@"Content-Length"];
+
+                if (contentLengthValue)
+                {
+                    int contentLength = [contentLengthValue intValue];
+
+                    if (contentLength > 0)
+                    {
+                        if (command.callbackError)
+                            dispatch_on_main(^{ command.callbackError([ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@"Expected data from server, but did not receive any."]); });
+
+                        return;
+                    }
+                }
+
                 if (command.callbackComplete)
                     dispatch_on_main(^{ command.callbackComplete(nil); });
             } else
             {
                 NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+                DLog(@"[IN] : %@", dataString);
                 
                 if (dataString)
                 {
@@ -648,6 +683,8 @@ NSString *lgeUDAPRequestURI[8] = {
     appInfo.id = [[info objectForKey:@"auid"] objectForKey:@"text"];
     appInfo.rawData = [info copy];
 
+    appInfo.rawData[@"cpid"][@"text"] = @"";
+
     return appInfo;
 }
 
@@ -753,8 +790,17 @@ NSString *lgeUDAPRequestURI[8] = {
         NSDictionary *rawResponse = [[[responseDic objectForKey:@"envelope"] objectForKey:@"dataList"] objectForKey:@"data"];
         NSNumber *numberOfApps = [[rawResponse objectForKey:@"number"] objectForKey:@"text"];
 
-        if (success)
-            success(numberOfApps.intValue);
+        int numberOfAppsInt = numberOfApps.intValue;
+
+        if (numberOfAppsInt == 0)
+        {
+            if (failure)
+                failure([ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@""]);
+        } else
+        {
+            if (success)
+                success(numberOfAppsInt);
+        }
     };
     command.callbackError = failure;
     [command send];
@@ -1848,6 +1894,12 @@ NSString *lgeUDAPRequestURI[8] = {
     [self sendKeyCode:NetcastTVKeyCodePower success:success failure:failure];
 }
 
+- (void) powerOnWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    if (failure)
+        failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
+}
+
 #pragma mark - External Input Control
 
 - (id <ExternalInputControl>)externalInputControl
@@ -1988,7 +2040,7 @@ NSString *lgeUDAPRequestURI[8] = {
                                                                    "<state>%@</state>"
                                                                    "<value>%@</value>"
                                                                "</api>"
-                                                           "</envelope>", state, [ConnectUtil escapedUnicodeForString:text]];
+                                                           "</envelope>", state, [ConnectUtil entityEncode:text]];
 
     ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:targetURL payload:payload];
     command.callbackComplete = success;

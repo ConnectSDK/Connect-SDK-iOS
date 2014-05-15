@@ -266,7 +266,8 @@
 
     _messageSubscription = nil;
 
-    [self.service disconnectFromWebApp:self];
+    if (self.launchSession.sessionId)
+        [self.service disconnectFromWebApp:self];
 
     [self.service.webAppLauncher closeWebApp:self.launchSession success:success failure:failure];
 }

@@ -93,4 +93,14 @@
     return retString;
 }
 
++ (NSString *) entityEncode:(NSString *)input
+{
+    NSString *output = [[[[input stringByReplacingOccurrencesOfString: @"&" withString: @"&amp;"]
+            stringByReplacingOccurrencesOfString: @"\"" withString: @"&quot;"]
+            stringByReplacingOccurrencesOfString: @">" withString: @"&gt;"]
+            stringByReplacingOccurrencesOfString: @"<" withString: @"&lt;"];
+
+    return output;
+}
+
 @end

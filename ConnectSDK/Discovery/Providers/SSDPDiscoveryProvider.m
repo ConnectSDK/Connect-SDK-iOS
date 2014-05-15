@@ -390,22 +390,25 @@ static double searchAttemptsBeforeKill = 3.0;
                     ServiceDescription *service;
                     @synchronized(_helloDevices) { service = [_helloDevices objectForKey:UUID]; }
 
-                    service.serviceId = [self serviceIdForFilter:theType];
-                    service.type = theType;
-                    service.friendlyName = friendlyName;
-                    service.modelName = [[device objectForKey:@"modelName"] objectForKey:@"text"];
-                    service.modelNumber = [[device objectForKey:@"modelNumber"] objectForKey:@"text"];
-                    service.modelDescription = [[device objectForKey:@"modelDescription"] objectForKey:@"text"];
-                    service.manufacturer = [[device objectForKey:@"manufacturer"] objectForKey:@"text"];
-                    service.locationXML = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                    service.commandURL = response.URL;
-                    service.locationResponseHeaders = [((NSHTTPURLResponse *)response) allHeaderFields];
-                    
-                    @synchronized(_foundServices) { [_foundServices setObject:service forKey:UUID]; }
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.delegate discoveryProvider:self didFindService:service];
-                    });
+                    if (service)
+                    {
+                        service.serviceId = [self serviceIdForFilter:theType];
+                        service.type = theType;
+                        service.friendlyName = friendlyName;
+                        service.modelName = [[device objectForKey:@"modelName"] objectForKey:@"text"];
+                        service.modelNumber = [[device objectForKey:@"modelNumber"] objectForKey:@"text"];
+                        service.modelDescription = [[device objectForKey:@"modelDescription"] objectForKey:@"text"];
+                        service.manufacturer = [[device objectForKey:@"manufacturer"] objectForKey:@"text"];
+                        service.locationXML = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                        service.commandURL = response.URL;
+                        service.locationResponseHeaders = [((NSHTTPURLResponse *)response) allHeaderFields];
+
+                        @synchronized(_foundServices) { [_foundServices setObject:service forKey:UUID]; }
+
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self.delegate discoveryProvider:self didFindService:service];
+                        });
+                    }
                 }
             }
         }
@@ -523,7 +526,7 @@ static double searchAttemptsBeforeKill = 3.0;
             [UIDevice currentDevice].systemName,
             [UIDevice currentDevice].systemVersion,
             token,
-            @(CONNECT_SDK_VERSION)];
+            CONNECT_SDK_VERSION];
 }
 
 @end

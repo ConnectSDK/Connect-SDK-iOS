@@ -79,6 +79,10 @@ typedef enum {
 @property (nonatomic, strong) WebOSTVServiceConfig *serviceConfig;
 @property (nonatomic, strong) NSArray *permissions;
 
+// @cond INTERNAL
+- (void) setServiceConfig:(ServiceConfig *)serviceConfig;
+// @endcod
+
 #pragma mark - Web app & app to app
 
 // @cond INTERNAL
@@ -86,6 +90,14 @@ typedef enum {
 - (void) connectToWebApp:(WebOSWebAppSession *)webAppSession joinOnly:(BOOL)joinOnly success:(SuccessBlock)success failure:(FailureBlock)failure;
 - (void)disconnectFromWebApp:(WebOSWebAppSession *)webAppSession;
 - (int) sendMessage:(id)message toApp:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure;
+// @endcond
+
+#pragma mark - Native app to app
+
+// @cond INTERNAL
+- (void) connectToApp:(NSString *)appId success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure;
+- (void) joinApp:(NSString *)appId success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure;
+- (void) connectToApp:(WebOSWebAppSession *)webAppSession joinOnly:(BOOL)joinOnly success:(SuccessBlock)success failure:(FailureBlock)failure;
 // @endcond
 
 #pragma mark - System Info

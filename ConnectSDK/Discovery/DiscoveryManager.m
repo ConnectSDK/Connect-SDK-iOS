@@ -466,20 +466,26 @@
 - (void)discoveryProvider:(DiscoveryProvider *)provider didFindService:(ServiceDescription *)description
 {
     DLog(@"%@ (%@)", description.friendlyName, description.serviceId);
+
+    if ([description.friendlyName isEqualToString:@"A SDK webOS TV"] && [description.serviceId isEqualToString:@"DLNA"])
+        NSLog(@"break");
     
-    BOOL deviceIsNew = NO;
+    BOOL deviceIsNew = [_allDevices objectForKey:description.address] == nil;
     ConnectableDevice *device;
 
-    if (self.useDeviceStore)
+    if (deviceIsNew)
     {
-        device = [self.deviceStore deviceForId:description.UUID];
+        if (self.useDeviceStore)
+        {
+            device = [self.deviceStore deviceForId:description.UUID];
 
-        if (device)
-            @synchronized (_allDevices) { [_allDevices setObject:device forKey:description.address]; }
-    }
-
-    if (!device)
+            if (device)
+                @synchronized (_allDevices) { [_allDevices setObject:device forKey:description.address]; }
+        }
+    } else
+    {
         @synchronized (_allDevices) { device = [_allDevices objectForKey:description.address]; }
+    }
 
     if (!device)
     {
@@ -495,7 +501,7 @@
     [self addServiceDescription:description toDevice:device];
 
     if (device.services.count == 0)
-        return; // TODO: find out why this is happening
+        return; // we get here when a non-LG DLNA TV is found
 
     if (deviceIsNew)
         [self handleDeviceAdd:device];
@@ -513,15 +519,16 @@
     
     if (device)
     {
-        DLog(@"Removed service from device at address %@", description.address);
-        
         [device removeServiceWithId:description.serviceId];
+
+        DLog(@"Removed service from device at address %@. Device has %d services left", description.address, device.services.count);
 
         if (![device hasServices])
         {
             DLog(@"Device at address %@ has been orphaned (has no services)", description.address);
 
             @synchronized (_allDevices) { [_allDevices removeObjectForKey:description.address]; }
+            @synchronized (_compatibleDevices) { [_compatibleDevices removeObjectForKey:description.address]; }
 
             [self handleDeviceLoss:device];
         } else

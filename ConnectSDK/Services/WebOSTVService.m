@@ -25,12 +25,12 @@
 #import "ServiceAsyncCommand.h"
 #import "WebOSWebAppSession.h"
 
-#define kKeyboardEnter @"ENTER"
-#define kKeyboardDelete @"DELETE"
+#define kKeyboardEnter @"\x1b ENTER \x1b"
+#define kKeyboardDelete @"\x1b DELETE \x1b"
 
 @interface WebOSTVService () <LGSRWebSocketDelegate, ServiceCommandDelegate, UIAlertViewDelegate>
 {
-    int UID;
+    int _UID;
 
     LGSRWebSocket *_socket;
     NSMutableArray *_commandQueue;
@@ -54,7 +54,6 @@
 
 @implementation WebOSTVService
 
-@synthesize serviceConfig = _serviceConfig;
 @synthesize connected = _connected;
 @synthesize permissions = _permissions;
 @synthesize serviceDescription = _serviceDescription;
@@ -67,23 +66,34 @@
 
     if (self)
     {
-        if ([serviceConfig isKindOfClass:[WebOSTVServiceConfig class]])
-            _serviceConfig = (WebOSTVServiceConfig *) serviceConfig;
-        else
-        {
-            _serviceConfig = [[WebOSTVServiceConfig alloc] initWithServiceConfig:serviceConfig];
-        }
+        [self setServiceConfig:serviceConfig];
 
         _commandQueue = [[NSMutableArray alloc] init];
         _activeConnections = [[NSMutableDictionary alloc] init];
 
-        UID = 0;
+        _UID = 0;
     }
 
     return self;
 }
 
 #pragma mark - Inherited methods
+
+- (void) setServiceConfig:(ServiceConfig *)serviceConfig
+{
+    if ([serviceConfig isKindOfClass:[WebOSTVServiceConfig class]])
+    {
+        if (self.serviceConfig.clientKey && !((WebOSTVServiceConfig *) serviceConfig).clientKey)
+            NSAssert(!self.serviceConfig.clientKey, @"Losing important data!");
+
+        [super setServiceConfig:(WebOSTVServiceConfig *) serviceConfig];
+    } else
+    {
+        NSAssert(!self.serviceConfig.clientKey, @"Losing important data!");
+
+        [super setServiceConfig:[[WebOSTVServiceConfig alloc] initWithServiceConfig:serviceConfig]];
+    }
+}
 
 - (void) setServiceDescription:(ServiceDescription *)serviceDescription
 {
@@ -120,7 +130,7 @@
         ]];
         caps = [caps arrayByAddingObjectsFromArray:kMouseControlCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kTextInputControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kPowerControlCapabilities];
+        caps = [caps arrayByAddingObject:kPowerControlOff];
         caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kLauncherCapabilities];
         caps = [caps arrayByAddingObjectsFromArray:kTVControlCapabilities];
@@ -151,7 +161,7 @@
         ]];
     }
 
-    if ([_serviceDescription.version rangeOfString:@"4.0.0"].location == NSNotFound)
+    if ([_serviceDescription.version rangeOfString:@"4.0.0"].location == NSNotFound && [_serviceDescription.version rangeOfString:@"4.0.1"].location == NSNotFound)
         caps = [caps arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
     else
     {
@@ -275,7 +285,7 @@
     NSString *screenResolution = [NSString stringWithFormat:@"%dx%d", (int)screenSize.width, (int)screenSize.height];
 
     NSDictionary *payload = @{
-            @"sdkVersion" : @(CONNECT_SDK_VERSION),
+            @"sdkVersion" : CONNECT_SDK_VERSION,
             @"deviceModel" : ensureString([[UIDevice currentDevice] model]),
             @"OSVersion" : ensureString([infoDic objectForKey:@"DTPlatformVersion"]),
             @"resolution" : screenResolution,
@@ -331,6 +341,9 @@
     };
 
     NSString *sendString = [self writeToJSON:sendData];
+
+    DLog(@"[OUT] : %@", sendString);
+
     [_socket send:sendString];
 
     if ([_commandQueue containsObject:sendString])
@@ -359,6 +372,8 @@
         {
             [_commandQueue enumerateObjectsUsingBlock:^(NSString *sendString, NSUInteger idx, BOOL *stop)
             {
+                DLog(@"[OUT] : %@", sendString);
+
                 [_socket send:sendString];
             }];
 
@@ -383,6 +398,9 @@
     };
 
     NSString *sendString = [self encodeData:registerInfo andAddress:nil withId:dataId];
+
+    DLog(@"[OUT] : %@", sendString);
+
     [_socket send:sendString];
 
     if ([_commandQueue containsObject:sendString])
@@ -419,6 +437,11 @@
 - (void)webSocket:(LGSRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean
 {
     _connected = NO;
+
+    // TODO: we may want to notify the subscribers that they are going away
+    _subscribed = [NSMutableDictionary new];
+    _appToAppSubscriptions = [NSMutableDictionary new];
+    _activeConnections = [NSMutableDictionary new];
 
     _socket.delegate = nil;
     _socket = nil;
@@ -491,6 +514,9 @@
 - (void)webSocket:(LGSRWebSocket *)webSocket didReceiveMessage:(id)message
 {
     NSDictionary *decodeData = [self decodeData:message];
+
+    DLog(@"[IN] : %@", decodeData);
+
     NSNumber *comId = [decodeData objectForKey:@"id"];
     NSString *type = [decodeData objectForKey:@"type"];
 
@@ -646,6 +672,8 @@
 
     if ([_socket readyState] == LGSR_OPEN)
     {
+        DLog(@"[OUT] : %@", sendString);
+
         [_socket send:sendString];
 
         if ([_commandQueue containsObject:sendString])
@@ -753,8 +781,8 @@
 
 - (int) getNextId
 {
-    UID = UID + 1;
-    return UID;
+    _UID = _UID + 1;
+    return _UID;
 }
 
 + (ChannelInfo *)channelInfoFromDictionary:(NSDictionary *)info
@@ -807,6 +835,8 @@
 
     if (_socket.readyState == LGSR_OPEN)
     {
+        DLog(@"[OUT] : %@", sendString);
+
         [_socket send:sendString];
 
         if ([_commandQueue containsObject:sendString])
@@ -867,8 +897,18 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://system.launcher/launch"];
     
-    NSMutableDictionary *payload = [NSMutableDictionary dictionaryWithDictionary:params];
+    NSMutableDictionary *payload = [NSMutableDictionary new];
+
     [payload setValue:appId forKey:@"id"];
+
+    if (params) {
+        [payload setValue:params forKey:@"params"];
+
+        NSString *contentId = [params objectForKey:@"contentId"];
+
+        if (contentId)
+            [payload setValue:contentId forKey:@"contentId"];
+    }
 
     ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self target:URL payload:payload];
     command.callbackComplete = ^(NSDictionary *responseObject)
@@ -955,6 +995,41 @@
     NSDictionary *params = @{ @"contentId" : contentId };
     
     [self launchApplication:@"youtube.leanback.v4" withParams:params success:success failure:failure];
+}
+
+- (void) connectToApp:(NSString *)appId success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:appId];
+    launchSession.service = self;
+    launchSession.sessionType = LaunchSessionTypeApp;
+
+    WebOSWebAppSession *webAppSession = [[WebOSWebAppSession alloc] initWithLaunchSession:launchSession service:self];
+
+    [self connectToApp:webAppSession joinOnly:NO success:^(id responseObject)
+    {
+        if (success)
+            success(webAppSession);
+    } failure:failure];
+}
+
+- (void) joinApp:(NSString *)appId success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:appId];
+    launchSession.service = self;
+    launchSession.sessionType = LaunchSessionTypeApp;
+
+    WebOSWebAppSession *webAppSession = [[WebOSWebAppSession alloc] initWithLaunchSession:launchSession service:self];
+
+    [self connectToApp:webAppSession joinOnly:YES success:^(id responseObject)
+    {
+        if (success)
+            success(webAppSession);
+    } failure:failure];
+}
+
+- (void) connectToApp:(WebOSWebAppSession *)webAppSession joinOnly:(BOOL)joinOnly success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self connectToWebApp:webAppSession joinOnly:joinOnly success:success failure:failure];
 }
 
 - (ServiceSubscription *)subscribeRunningAppWithSuccess:(AppInfoSuccessBlock)success failure:(FailureBlock)failure
@@ -1129,11 +1204,7 @@
         [session.mediaPlayer displayImage:imageURL iconURL:iconURL title:title description:description mimeType:mimeType success:success failure:failure];
     };
 
-    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:webAppId];
-    launchSession.sessionType = LaunchSessionTypeWebApp;
-    launchSession.service = self;
-
-    [self joinWebApp:launchSession success:connectSuccess failure:^(NSError *error)
+    [self joinWebAppWithId:webAppId success:connectSuccess failure:^(NSError *error)
     {
         [self launchWebApp:webAppId success:connectSuccess failure:failure];
     }];
@@ -1149,11 +1220,7 @@
         [session.mediaPlayer playMedia:mediaURL iconURL:iconURL title:title description:description mimeType:mimeType shouldLoop:shouldLoop success:success failure:failure];
     };
 
-    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:webAppId];
-    launchSession.sessionType = LaunchSessionTypeWebApp;
-    launchSession.service = self;
-
-    [self joinWebApp:launchSession success:connectSuccess failure:^(NSError *error)
+    [self joinWebAppWithId:webAppId success:connectSuccess failure:^(NSError *error)
     {
         [self launchWebApp:webAppId success:connectSuccess failure:failure];
     }];
@@ -1768,6 +1835,12 @@
     [command send];
 }
 
+- (void) powerOnWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    if (failure)
+        failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
+}
+
 #pragma mark - Web App Launcher
 
 - (id <WebAppLauncher>)webAppLauncher
@@ -1860,15 +1933,34 @@
         return;
     }
 
+    WebOSWebAppSession *webAppSession = [[WebOSWebAppSession alloc] initWithLaunchSession:launchSession service:self];
+
     if (!launchSession.sessionId)
     {
-        if (failure)
-            failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"Cannot close webapp without a launch session id"]);
+        // This is a hack to enable closing of bridged web apps that we didn't open
+        NSDictionary *closeCommand = @{
+                @"contentType" : @"connectsdk.serviceCommand",
+                @"serviceCommand" : @{
+                        @"type" : @"close"
+                }
+        };
+
+        [webAppSession sendJSON:closeCommand success:^(id responseObject)
+        {
+            [self disconnectFromWebApp:webAppSession];
+
+            if (success)
+                success(responseObject);
+        } failure:^(NSError *error)
+        {
+            [self disconnectFromWebApp:webAppSession];
+
+            if (failure)
+                failure(error);
+        }];
+
         return;
     }
-
-    WebOSWebAppSession *webAppSession = [[WebOSWebAppSession alloc] init];
-    webAppSession.launchSession = launchSession;
 
     [self disconnectFromWebApp:webAppSession];
 
@@ -1891,20 +1983,24 @@
 
 - (void)joinWebApp:(LaunchSession *)webAppLaunchSession success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
+    if (!webAppLaunchSession.service)
+        webAppLaunchSession.service = self;
+
     WebOSWebAppSession *webAppSession = [[WebOSWebAppSession alloc] initWithLaunchSession:webAppLaunchSession service:self];
     [webAppSession joinWithSuccess:^(id responseObject)
     {
         if (success)
             success(webAppSession);
     } failure:failure];
+}
 
-//    SuccessBlock connectSuccess = ^(id responseObject)
-//    {
-//        if (success)
-//            success(webAppSession);
-//    };
-//
-//    [self connectToWebApp:webAppSession joinOnly:YES success:connectSuccess failure:failure];
+- (void)joinWebAppWithId:(NSString *)webAppId success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:webAppId];
+    launchSession.sessionType = LaunchSessionTypeWebApp;
+    launchSession.service = self;
+
+    [self joinWebApp:launchSession success:success failure:failure];
 }
 
 - (void) connectToWebApp:(WebOSWebAppSession *)webAppSession joinOnly:(BOOL)joinOnly success:(SuccessBlock)success failure:(FailureBlock)failure
@@ -1929,12 +2025,33 @@
         return;
     }
 
-    // TODO: don't hard code com.webos.app.webapphost
-    NSString *webAppHostId = [NSString stringWithFormat:@"com.webos.app.webapphost.%@", webAppSession.launchSession.appId];
+    NSString *fullAppId;
+    NSString *subscriptionKey;
+    NSString *idKey;
 
-    if ([_appToAppSubscriptions objectForKey:webAppSession.launchSession.appId] && [_appToAppMessageCallbacks objectForKey:webAppHostId])
+    if (webAppSession.launchSession.sessionType == LaunchSessionTypeWebApp)
     {
-        [_appToAppMessageCallbacks setObject:webAppSession.messageHandler forKey:webAppHostId];
+        // TODO: don't hard code com.webos.app.webapphost
+        fullAppId = [NSString stringWithFormat:@"com.webos.app.webapphost.%@", webAppSession.launchSession.appId];
+        subscriptionKey = webAppSession.launchSession.appId;
+        idKey = @"webAppId";
+    } else if (webAppSession.launchSession.sessionType == LaunchSessionTypeApp)
+    {
+        fullAppId = subscriptionKey = webAppSession.launchSession.appId;
+        idKey = @"appId";
+    }
+
+    if (!fullAppId || fullAppId.length == 0)
+    {
+        if (failure)
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid web app session"]);
+
+        return;
+    }
+
+    if ([_appToAppSubscriptions objectForKey:subscriptionKey])
+    {
+        [_appToAppMessageCallbacks setObject:webAppSession.messageHandler forKey:fullAppId];
 
         if (success)
             success(webAppSession);
@@ -1944,27 +2061,28 @@
     NSURL *URL = [NSURL URLWithString:@"ssap://webapp/connectToApp"];
 
     NSMutableDictionary *payload = [NSMutableDictionary new];
-    [payload setValue:ensureString(webAppSession.launchSession.appId) forKey:@"webAppId"];
+    [payload setValue:subscriptionKey forKey:idKey];
 
     FailureBlock connectFailure = ^(NSError *error)
     {
-        ServiceSubscription *connectionSubscription = [_appToAppSubscriptions objectForKey:webAppSession.launchSession.appId];
+        ServiceSubscription *connectionSubscription = [_appToAppSubscriptions objectForKey:subscriptionKey];
 
         if (connectionSubscription)
         {
-            if ([self.serviceDescription.version rangeOfString:@"4.0."].location == NSNotFound)
-            {
+            if ([self.serviceDescription.version rangeOfString:@"4.0.2"].location == NSNotFound)
                 [connectionSubscription unsubscribe];
-                [_appToAppSubscriptions removeObjectForKey:webAppSession.launchSession.appId];
-            }
 
-            [_appToAppMessageCallbacks removeObjectForKey:webAppSession.launchSession.appId];
+            [_appToAppSubscriptions removeObjectForKey:subscriptionKey];
+            [_appToAppMessageCallbacks removeObjectForKey:fullAppId];
         }
 
         BOOL appChannelDidClose = [error.localizedDescription rangeOfString:@"app channel closed"].location != NSNotFound;
 
         if (appChannelDidClose)
         {
+            if (connectionSubscription)
+                [connectionSubscription unsubscribe];
+
             if (webAppSession && webAppSession.delegate && [webAppSession.delegate respondsToSelector:@selector(webAppSessionDidDisconnect:)])
                 [webAppSession.delegate webAppSessionDidDisconnect:webAppSession];
         } else
@@ -2001,7 +2119,7 @@
             else
                 newRawData = [NSMutableDictionary new];
 
-            [newRawData setObject:appId forKey:@"webAppId"];
+            [newRawData setObject:appId forKey:idKey];
             webAppSession.launchSession.rawData = [NSDictionary dictionaryWithDictionary:newRawData];
         }
 
@@ -2010,7 +2128,7 @@
     };
 
     ServiceSubscription *subscription = [self addSubscribe:URL payload:payload success:connectSuccess failure:connectFailure];
-    [_appToAppSubscriptions setObject:subscription forKey:webAppSession.launchSession.appId];
+    [_appToAppSubscriptions setObject:subscription forKey:subscriptionKey];
 }
 
 - (void)disconnectFromWebApp:(WebOSWebAppSession *)webAppSession
@@ -2036,7 +2154,7 @@
 
     if (connectionSubscription)
     {
-        if ([self.serviceDescription.version rangeOfString:@"4.0."].location == NSNotFound)
+        if ([self.serviceDescription.version rangeOfString:@"4.0.2"].location == NSNotFound)
         {
             [connectionSubscription unsubscribe];
             [_appToAppSubscriptions removeObjectForKey:webAppSession.launchSession.appId];
@@ -2048,7 +2166,7 @@
 
 - (int) sendMessage:(id)message toApp:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    if (!launchSession)
+    if (!launchSession || !launchSession.appId || launchSession.appId.length == 0)
     {
         if (failure)
             failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid LaunchSession to send messages to"]);
@@ -2057,7 +2175,12 @@
     }
 
     // TODO: don't hard code com.webos.app.webapphost
-    NSString *appId = [NSString stringWithFormat:@"com.webos.app.webapphost.%@", launchSession.appId];
+    NSString *appId;
+
+    if (launchSession.sessionType == LaunchSessionTypeWebApp)
+        appId = [NSString stringWithFormat:@"com.webos.app.webapphost.%@", launchSession.appId];
+    else if (launchSession.sessionType == LaunchSessionTypeApp)
+        appId = launchSession.appId;
 
     if (!appId)
     {
@@ -2078,16 +2201,12 @@
             @"payload" : message
     };
 
-    ServiceCommand *comm = [ServiceCommand commandWithDelegate:nil target:nil payload:payload];
-    comm.callbackComplete = success;
-    comm.callbackError = failure;
-
-    [_activeConnections setObject:comm forKey:[NSString stringWithFormat:@"req%d",callId]];
-
     NSString *sendString = [self writeToJSON:payload];
 
     if (_socket.readyState == LGSR_OPEN)
     {
+        DLog(@"[OUT] : %@", sendString);
+
         [_socket send:sendString];
 
         if ([_commandQueue containsObject:sendString])
@@ -2101,6 +2220,9 @@
         [_commandQueue addObject:sendString];
         [self openSocket];
     }
+
+    if (success)
+        success(nil);
 
     return callId;
 }
@@ -2157,34 +2279,41 @@
     {
         target = @"ssap://com.webos.service.ime/deleteCharacters";
 
-        NSUInteger i = 0;
-        for (i = 0; i < _keyboardQueue.count; i++)
+        int count = 0;
+
+        for (NSUInteger i = 0; i < _keyboardQueue.count; i++)
         {
-            if (![[_keyboardQueue firstObject] isEqualToString:kKeyboardDelete])
+            if ([[_keyboardQueue objectAtIndex:i] isEqualToString:kKeyboardDelete]) {
+                count++;
+            } else {
                 break;
+            }
         }
 
-        NSRange deleteRange = NSMakeRange(0, i);
+        NSRange deleteRange = NSMakeRange(0, count);
         [_keyboardQueue removeObjectsInRange:deleteRange];
 
-        [payload setObject:@(i) forKey:@"count"];
+        [payload setObject:@(count) forKey:@"count"];
     } else
     {
         target = @"ssap://com.webos.service.ime/insertText";
         NSMutableString *stringToSend = [[NSMutableString alloc] init];
 
-        NSUInteger i = 0;
-        for (i = 0; i < _keyboardQueue.count; i++)
+        int count = 0;
+
+        for (NSUInteger i = 0; i < _keyboardQueue.count; i++)
         {
             NSString *text = [_keyboardQueue objectAtIndex:i];
 
-            if (![text isEqualToString:kKeyboardEnter] && ![text isEqualToString:kKeyboardDelete])
+            if (![text isEqualToString:kKeyboardEnter] && ![text isEqualToString:kKeyboardDelete]) {
                 [stringToSend appendString:text];
-            else
+                count++;
+            } else {
                 break;
+            }
         }
 
-        NSRange textRange = NSMakeRange(0, i);
+        NSRange textRange = NSMakeRange(0, count);
         [_keyboardQueue removeObjectsInRange:textRange];
 
         [payload setObject:stringToSend forKey:@"text"];

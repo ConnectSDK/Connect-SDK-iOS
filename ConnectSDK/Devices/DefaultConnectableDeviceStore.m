@@ -81,7 +81,11 @@
         }
 
         NSData *deviceStoreData = [deviceStoreJSON dataUsingEncoding:NSUTF8StringEncoding];
-        _deviceStore = [NSJSONSerialization JSONObjectWithData:deviceStoreData options:0 error:&error];
+        
+        @synchronized (self)
+        {
+            _deviceStore = [NSJSONSerialization JSONObjectWithData:deviceStoreData options:0 error:&error];
+        }
 
         if (error)
         {
@@ -132,8 +136,11 @@
         newDeviceStore[@"devices"] = [NSDictionary dictionaryWithDictionary:_storedDevices];
 
         _updated = [[NSDate date] timeIntervalSince1970];
-
-        _deviceStore = [NSDictionary dictionaryWithDictionary:newDeviceStore];
+        
+        @synchronized(self)
+        {
+            _deviceStore = [NSDictionary dictionaryWithDictionary:newDeviceStore];
+        }
 
         if (!_waitToWrite)
             [self writeStoreToDisk];
@@ -156,9 +163,13 @@
     } else
     {
         storedDevice = [self jsonRepresentationForDevice:device];
-        [_storedDevices setObject:storedDevice forKey:device.id];
 
-        [self store];
+        if (storedDevice)
+        {
+            [_storedDevices setObject:storedDevice forKey:device.id];
+
+            [self store];
+        }
     }
 }
 
@@ -211,7 +222,7 @@
         NSDictionary *serviceInfo = [service toJSONObject];
 
         if (serviceInfo)
-            [services setObject:serviceInfo forKey:service.serviceName];
+            [services setObject:serviceInfo forKey:service.serviceDescription.UUID];
     }];
 
     storedDevice[@"services"] = [NSDictionary dictionaryWithDictionary:services];
@@ -346,14 +357,16 @@
 
     dispatch_async(_deviceStoreQueue, ^
     {
-        NSDictionary *deviceStore;
-
-        @synchronized (_deviceStore) { deviceStore = [_deviceStore copy]; }
-
         NSError *jsonError;
-        NSData *deviceStoreJSONData = [NSJSONSerialization dataWithJSONObject:deviceStore options:NSJSONWritingPrettyPrinted error:&jsonError];
+        NSData *deviceStoreJSONData;
+        
+        @synchronized (self)
+        {
+            deviceStoreJSONData = [NSJSONSerialization dataWithJSONObject:_deviceStore options:NSJSONWritingPrettyPrinted error:&jsonError];
+        }
+        
         NSString *deviceStoreJSON = [[NSString alloc] initWithData:deviceStoreJSONData encoding:NSUTF8StringEncoding];
-
+        
         if (jsonError)
         {
             DLog(@"Failed to parse with error: %@", jsonError.localizedDescription);
@@ -380,7 +393,7 @@
 
 - (NSDictionary *) jsonRepresentationForDevice:(ConnectableDevice *)device
 {
-    if (device.services.count == 0)
+    if (!device || device.services.count == 0)
         return nil;
 
     NSMutableDictionary *deviceDictionary = [NSMutableDictionary new];
@@ -396,7 +409,9 @@
     [device.services enumerateObjectsUsingBlock:^(DeviceService *service, NSUInteger serviceIdx, BOOL *serviceStop)
     {
         NSDictionary *serviceDictionary = [service toJSONObject];
-        [servicesDictionary setObject:serviceDictionary forKey:service.serviceDescription.UUID];
+
+        if (serviceDictionary)
+            [servicesDictionary setObject:serviceDictionary forKey:service.serviceDescription.UUID];
     }];
 
     deviceDictionary[@"services"] = [NSDictionary dictionaryWithDictionary:servicesDictionary];
