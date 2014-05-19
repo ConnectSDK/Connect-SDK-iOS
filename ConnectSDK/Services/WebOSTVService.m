@@ -112,6 +112,21 @@
     _serviceDescription.version = systemVersion;
 }
 
+- (DeviceService *)dlnaService
+{
+    NSDictionary *allDevices = [[DiscoveryManager sharedManager] allDevices];
+    ConnectableDevice *device;
+    DeviceService *service;
+
+    if (allDevices && allDevices.count > 0)
+        device = [allDevices objectForKey:self.serviceDescription.address];
+
+    if (device)
+        service = [device serviceWithName:@"DLNA"];
+
+    return service;
+}
+
 - (NSArray *)capabilities
 {
     NSArray *caps = [NSArray array];
@@ -1196,34 +1211,91 @@
 
 - (void)displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    NSString *webAppId = @"MediaPlayer";
-
-    WebAppLaunchSuccessBlock connectSuccess = ^(WebAppSession *webAppSession)
+    if ([self.serviceDescription.version isEqualToString:@"4.0.0"])
     {
-        WebOSWebAppSession *session = (WebOSWebAppSession *)webAppSession;
-        [session.mediaPlayer displayImage:imageURL iconURL:iconURL title:title description:description mimeType:mimeType success:success failure:failure];
-    };
+        if (self.dlnaService)
+        {
+            id<MediaPlayer> mediaPlayer;
 
-    [self joinWebAppWithId:webAppId success:connectSuccess failure:^(NSError *error)
+            if ([self.dlnaService respondsToSelector:@selector(mediaPlayer)])
+                mediaPlayer = [self.dlnaService performSelector:@selector(mediaPlayer)];
+
+            if (mediaPlayer && [mediaPlayer respondsToSelector:@selector(playMedia:iconURL:title:description:mimeType:shouldLoop:success:failure:)])
+            {
+                [mediaPlayer displayImage:imageURL iconURL:iconURL title:title description:description mimeType:mimeType success:success failure:failure];
+                return;
+            }
+        }
+
+        NSDictionary *params = @{
+                @"target" : ensureString(imageURL.absoluteString),
+                @"iconSrc" : ensureString(iconURL.absoluteString),
+                @"title" : ensureString(title),
+                @"description" : ensureString(description),
+                @"mimeType" : ensureString(mimeType)
+        };
+
+        [self displayMediaWithParams:params success:success failure:failure];
+    } else
     {
-        [self launchWebApp:webAppId success:connectSuccess failure:failure];
-    }];
+        NSString *webAppId = @"MediaPlayer";
+
+        WebAppLaunchSuccessBlock connectSuccess = ^(WebAppSession *webAppSession)
+        {
+            WebOSWebAppSession *session = (WebOSWebAppSession *)webAppSession;
+            [session.mediaPlayer displayImage:imageURL iconURL:iconURL title:title description:description mimeType:mimeType success:success failure:failure];
+        };
+
+        [self joinWebAppWithId:webAppId success:connectSuccess failure:^(NSError *error)
+        {
+            [self launchWebApp:webAppId success:connectSuccess failure:failure];
+        }];
+    }
 }
 
 - (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    NSString *webAppId = @"MediaPlayer";
-
-    WebAppLaunchSuccessBlock connectSuccess = ^(WebAppSession *webAppSession)
+    if ([self.serviceDescription.version isEqualToString:@"4.0.0"])
     {
-        WebOSWebAppSession *session = (WebOSWebAppSession *)webAppSession;
-        [session.mediaPlayer playMedia:mediaURL iconURL:iconURL title:title description:description mimeType:mimeType shouldLoop:shouldLoop success:success failure:failure];
-    };
+        if (self.dlnaService)
+        {
+            id<MediaPlayer> mediaPlayer;
 
-    [self joinWebAppWithId:webAppId success:connectSuccess failure:^(NSError *error)
+            if ([self.dlnaService respondsToSelector:@selector(mediaPlayer)])
+                mediaPlayer = [self.dlnaService performSelector:@selector(mediaPlayer)];
+
+            if (mediaPlayer && [mediaPlayer respondsToSelector:@selector(playMedia:iconURL:title:description:mimeType:shouldLoop:success:failure:)])
+            {
+                [mediaPlayer playMedia:mediaURL iconURL:iconURL title:title description:description mimeType:mimeType shouldLoop:shouldLoop success:success failure:failure];
+                return;
+            }
+        }
+
+        NSDictionary *params = @{
+                @"target" : ensureString(mediaURL.absoluteString),
+                @"iconSrc" : ensureString(iconURL.absoluteString),
+                @"title" : ensureString(title),
+                @"description" : ensureString(description),
+                @"mimeType" : ensureString(mimeType),
+                @"loop" : shouldLoop ? @"true" : @"false"
+        };
+
+        [self displayMediaWithParams:params success:success failure:failure];
+    } else
     {
-        [self launchWebApp:webAppId success:connectSuccess failure:failure];
-    }];
+        NSString *webAppId = @"MediaPlayer";
+
+        WebAppLaunchSuccessBlock connectSuccess = ^(WebAppSession *webAppSession)
+        {
+            WebOSWebAppSession *session = (WebOSWebAppSession *)webAppSession;
+            [session.mediaPlayer playMedia:mediaURL iconURL:iconURL title:title description:description mimeType:mimeType shouldLoop:shouldLoop success:success failure:failure];
+        };
+
+        [self joinWebAppWithId:webAppId success:connectSuccess failure:^(NSError *error)
+        {
+            [self launchWebApp:webAppId success:connectSuccess failure:failure];
+        }];
+    }
 }
 
 - (void)displayMediaWithParams:(NSDictionary *)params success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
