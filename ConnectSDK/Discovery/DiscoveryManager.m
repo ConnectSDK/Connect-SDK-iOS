@@ -469,7 +469,7 @@
 
     if ([description.friendlyName isEqualToString:@"A SDK webOS TV"] && [description.serviceId isEqualToString:@"DLNA"])
         NSLog(@"break");
-    
+
     BOOL deviceIsNew = [_allDevices objectForKey:description.address] == nil;
     ConnectableDevice *device;
 
@@ -501,7 +501,14 @@
     [self addServiceDescription:description toDevice:device];
 
     if (device.services.count == 0)
-        return; // we get here when a non-LG DLNA TV is found
+    {
+        // we get here when a non-LG DLNA TV is found
+
+        [_allDevices removeObjectForKey:description.address];
+        device = nil;
+
+        return;
+    }
 
     if (deviceIsNew)
         [self handleDeviceAdd:device];
@@ -568,7 +575,14 @@
             return;
     }
 
-    ServiceConfig *serviceConfig = [[ServiceConfig alloc] initWithServiceDescription:description];
+    ServiceConfig *serviceConfig;
+
+    if (self.useDeviceStore)
+        serviceConfig = [self.deviceStore serviceConfigForUUID:description.UUID];
+
+    if (!serviceConfig)
+        serviceConfig = [[ServiceConfig alloc] initWithServiceDescription:description];
+
     serviceConfig.delegate = self;
 
     __block BOOL deviceAlreadyHasServiceType = NO;
