@@ -78,19 +78,6 @@
         if (lastDetection && ![lastDetection isKindOfClass:[NSNull class]])
             _lastDetection = [lastDetection doubleValue];
 
-        NSDictionary *services = dict[@"services"];
-
-        if (services)
-        {
-            [services enumerateKeysAndObjectsUsingBlock:^(id key, NSDictionary *serviceJSON, BOOL *stop)
-            {
-                DeviceService *service = [DeviceService deviceServiceWithJSONObject:serviceJSON];
-
-                if (service)
-                    [self addService:service];
-            }];
-        }
-
         if (!self.address)
             _consolidatedServiceDescription.address = _lastKnownIPAddress;
     }

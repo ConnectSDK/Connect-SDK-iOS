@@ -97,7 +97,7 @@
 
 - (void) setServiceDescription:(ServiceDescription *)serviceDescription
 {
-    [super setServiceDescription:serviceDescription];
+    _serviceDescription = serviceDescription;
 
     if (!self.serviceConfig.UUID)
         self.serviceConfig.UUID = serviceDescription.UUID;
