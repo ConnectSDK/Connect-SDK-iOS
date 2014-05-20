@@ -80,6 +80,8 @@ static NSMutableArray *registeredApps = nil;
         kTextInputControlSendDelete
     ];
 
+    capabilities = [capabilities arrayByAddingObjectsFromArray:kKeyControlCapabilities];
+
     [self setCapabilities:capabilities];
 }
 
