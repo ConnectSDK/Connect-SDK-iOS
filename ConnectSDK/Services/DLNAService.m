@@ -40,23 +40,25 @@
 
 @synthesize serviceDescription = _serviceDescription;
 
-- (NSArray *)capabilities
+- (void) updateCapabilities
 {
-    return @[
-            kMediaPlayerDisplayImage,
-            kMediaPlayerPlayVideo,
-            kMediaPlayerPlayAudio,
-            kMediaPlayerClose,
-            kMediaPlayerMetaDataTitle,
-            kMediaPlayerMetaDataMimeType,
-            kMediaControlPlay,
-            kMediaControlPause,
-            kMediaControlStop,
-            kMediaControlSeek,
-            kMediaControlPosition,
-            kMediaControlDuration,
-            kMediaControlPlayState
+    NSArray *capabilities = @[
+        kMediaPlayerDisplayImage,
+        kMediaPlayerPlayVideo,
+        kMediaPlayerPlayAudio,
+        kMediaPlayerClose,
+        kMediaPlayerMetaDataTitle,
+        kMediaPlayerMetaDataMimeType,
+        kMediaControlPlay,
+        kMediaControlPause,
+        kMediaControlStop,
+        kMediaControlSeek,
+        kMediaControlPosition,
+        kMediaControlDuration,
+        kMediaControlPlayState
     ];
+
+    [self setCapabilities:capabilities];
 }
 
 + (NSDictionary *) discoveryParameters

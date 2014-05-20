@@ -90,6 +90,18 @@ static NSMutableArray *registeredApps = nil;
     [self probeForAppSupport];
 }
 
+- (void) updateCapabilities
+{
+    NSArray *capabilities = @[
+            kLauncherApp,
+            kLauncherAppParams,
+            kLauncherAppClose,
+            kLauncherAppState
+    ];
+
+    [self setCapabilities:capabilities];
+}
+
 - (BOOL) isConnectable
 {
     return YES;
@@ -137,11 +149,7 @@ static NSMutableArray *registeredApps = nil;
             NSString *capability = [NSString stringWithFormat:@"Launcher.%@", appName];
             NSString *capabilityParams = [NSString stringWithFormat:@"Launcher.%@.Params", appName];
             
-            if (![self hasCapability:capability])
-                [self addCapability:capability];
-            
-            if (![self hasCapability:capabilityParams])
-                [self addCapability:capabilityParams];
+            [self addCapabilities:@[capability, capabilityParams]];
         } failure:nil];
     }];
 }

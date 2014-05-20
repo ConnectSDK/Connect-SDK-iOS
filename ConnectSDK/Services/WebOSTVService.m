@@ -110,15 +110,32 @@
     NSString *systemVersion = [[systemOS componentsSeparatedByString:@"/"] lastObject];
 
     _serviceDescription.version = systemVersion;
+
+    [self updateCapabilities];
 }
 
-- (NSArray *)capabilities
+- (DeviceService *)dlnaService
 {
-    NSArray *caps = [NSArray array];
+    NSDictionary *allDevices = [[DiscoveryManager sharedManager] allDevices];
+    ConnectableDevice *device;
+    DeviceService *service;
+
+    if (allDevices && allDevices.count > 0)
+        device = [allDevices objectForKey:self.serviceDescription.address];
+
+    if (device)
+        service = [device serviceWithName:@"DLNA"];
+
+    return service;
+}
+
+- (void) updateCapabilities
+{
+    NSArray *capabilities = [NSArray array];
 
     if ([DiscoveryManager sharedManager].pairingLevel == ConnectableDevicePairingLevelOn)
     {
-        caps = [caps arrayByAddingObjectsFromArray:@[
+        capabilities = [capabilities arrayByAddingObjectsFromArray:@[
                 kKeyControlSendKeyCode,
                 kKeyControlUp,
                 kKeyControlDown,
@@ -128,22 +145,23 @@
                 kKeyControlBack,
                 kKeyControlOK
         ]];
-        caps = [caps arrayByAddingObjectsFromArray:kMouseControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kTextInputControlCapabilities];
-        caps = [caps arrayByAddingObject:kPowerControlOff];
-        caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kLauncherCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kTVControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kExternalInputControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kToastControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kMediaControlCapabilities];
+
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kMouseControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kTextInputControlCapabilities];
+        capabilities = [capabilities arrayByAddingObject:kPowerControlOff];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kLauncherCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kTVControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kExternalInputControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kToastControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaControlCapabilities];
     } else
     {
-        caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kMediaControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:@[
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:@[
                 kLauncherApp,
                 kLauncherAppParams,
                 kLauncherAppStore,
@@ -161,18 +179,32 @@
         ]];
     }
 
-    if ([_serviceDescription.version rangeOfString:@"4.0.0"].location == NSNotFound && [_serviceDescription.version rangeOfString:@"4.0.1"].location == NSNotFound)
-        caps = [caps arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
-    else
+    if (_serviceDescription && _serviceDescription.version)
     {
-        caps = [caps arrayByAddingObjectsFromArray:@[
-                kWebAppLauncherLaunch,
-                kWebAppLauncherLaunchParams,
-                kWebAppLauncherClose
-        ]];
+        if ([_serviceDescription.version rangeOfString:@"4.0.0"].location == NSNotFound && [_serviceDescription.version rangeOfString:@"4.0.1"].location == NSNotFound)
+        {
+            capabilities = [capabilities arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
+            capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaControlCapabilities];
+        } else
+        {
+            capabilities = [capabilities arrayByAddingObjectsFromArray:@[
+                    kWebAppLauncherLaunch,
+                    kWebAppLauncherLaunchParams,
+
+                    kMediaControlPlay,
+                    kMediaControlPause,
+                    kMediaControlStop,
+                    kMediaControlSeek,
+                    kMediaControlPosition,
+                    kMediaControlDuration,
+                    kMediaControlPlayState,
+
+                    kWebAppLauncherClose
+            ]];
+        }
     }
 
-    return caps;
+    [self setCapabilities:capabilities];
 }
 
 + (NSDictionary *) discoveryParameters
@@ -1196,34 +1228,91 @@
 
 - (void)displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    NSString *webAppId = @"MediaPlayer";
-
-    WebAppLaunchSuccessBlock connectSuccess = ^(WebAppSession *webAppSession)
+    if ([self.serviceDescription.version isEqualToString:@"4.0.0"])
     {
-        WebOSWebAppSession *session = (WebOSWebAppSession *)webAppSession;
-        [session.mediaPlayer displayImage:imageURL iconURL:iconURL title:title description:description mimeType:mimeType success:success failure:failure];
-    };
+        if (self.dlnaService)
+        {
+            id<MediaPlayer> mediaPlayer;
 
-    [self joinWebAppWithId:webAppId success:connectSuccess failure:^(NSError *error)
+            if ([self.dlnaService respondsToSelector:@selector(mediaPlayer)])
+                mediaPlayer = [self.dlnaService performSelector:@selector(mediaPlayer)];
+
+            if (mediaPlayer && [mediaPlayer respondsToSelector:@selector(playMedia:iconURL:title:description:mimeType:shouldLoop:success:failure:)])
+            {
+                [mediaPlayer displayImage:imageURL iconURL:iconURL title:title description:description mimeType:mimeType success:success failure:failure];
+                return;
+            }
+        }
+
+        NSDictionary *params = @{
+                @"target" : ensureString(imageURL.absoluteString),
+                @"iconSrc" : ensureString(iconURL.absoluteString),
+                @"title" : ensureString(title),
+                @"description" : ensureString(description),
+                @"mimeType" : ensureString(mimeType)
+        };
+
+        [self displayMediaWithParams:params success:success failure:failure];
+    } else
     {
-        [self launchWebApp:webAppId success:connectSuccess failure:failure];
-    }];
+        NSString *webAppId = @"MediaPlayer";
+
+        WebAppLaunchSuccessBlock connectSuccess = ^(WebAppSession *webAppSession)
+        {
+            WebOSWebAppSession *session = (WebOSWebAppSession *)webAppSession;
+            [session.mediaPlayer displayImage:imageURL iconURL:iconURL title:title description:description mimeType:mimeType success:success failure:failure];
+        };
+
+        [self joinWebAppWithId:webAppId success:connectSuccess failure:^(NSError *error)
+        {
+            [self launchWebApp:webAppId success:connectSuccess failure:failure];
+        }];
+    }
 }
 
 - (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    NSString *webAppId = @"MediaPlayer";
-
-    WebAppLaunchSuccessBlock connectSuccess = ^(WebAppSession *webAppSession)
+    if ([self.serviceDescription.version isEqualToString:@"4.0.0"])
     {
-        WebOSWebAppSession *session = (WebOSWebAppSession *)webAppSession;
-        [session.mediaPlayer playMedia:mediaURL iconURL:iconURL title:title description:description mimeType:mimeType shouldLoop:shouldLoop success:success failure:failure];
-    };
+        if (self.dlnaService)
+        {
+            id<MediaPlayer> mediaPlayer;
 
-    [self joinWebAppWithId:webAppId success:connectSuccess failure:^(NSError *error)
+            if ([self.dlnaService respondsToSelector:@selector(mediaPlayer)])
+                mediaPlayer = [self.dlnaService performSelector:@selector(mediaPlayer)];
+
+            if (mediaPlayer && [mediaPlayer respondsToSelector:@selector(playMedia:iconURL:title:description:mimeType:shouldLoop:success:failure:)])
+            {
+                [mediaPlayer playMedia:mediaURL iconURL:iconURL title:title description:description mimeType:mimeType shouldLoop:shouldLoop success:success failure:failure];
+                return;
+            }
+        }
+
+        NSDictionary *params = @{
+                @"target" : ensureString(mediaURL.absoluteString),
+                @"iconSrc" : ensureString(iconURL.absoluteString),
+                @"title" : ensureString(title),
+                @"description" : ensureString(description),
+                @"mimeType" : ensureString(mimeType),
+                @"loop" : shouldLoop ? @"true" : @"false"
+        };
+
+        [self displayMediaWithParams:params success:success failure:failure];
+    } else
     {
-        [self launchWebApp:webAppId success:connectSuccess failure:failure];
-    }];
+        NSString *webAppId = @"MediaPlayer";
+
+        WebAppLaunchSuccessBlock connectSuccess = ^(WebAppSession *webAppSession)
+        {
+            WebOSWebAppSession *session = (WebOSWebAppSession *)webAppSession;
+            [session.mediaPlayer playMedia:mediaURL iconURL:iconURL title:title description:description mimeType:mimeType shouldLoop:shouldLoop success:success failure:failure];
+        };
+
+        [self joinWebAppWithId:webAppId success:connectSuccess failure:^(NSError *error)
+        {
+            [self launchWebApp:webAppId success:connectSuccess failure:failure];
+        }];
+    }
 }
 
 - (void)displayMediaWithParams:(NSDictionary *)params success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
