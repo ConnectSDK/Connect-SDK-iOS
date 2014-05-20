@@ -89,29 +89,31 @@
     return YES;
 }
 
-- (NSArray *)capabilities
+- (void) updateCapabilities
 {
-    NSArray *caps = [NSArray new];
-    caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
-    caps = [caps arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
-    caps = [caps arrayByAddingObjectsFromArray:@[
-                                                 kMediaControlPlay,
-                                                 kMediaControlPause,
-                                                 kMediaControlStop,
-                                                 kMediaControlDuration,
-                                                 kMediaControlSeek,
-                                                 kMediaControlPosition,
-                                                 kMediaControlPlayState,
-                                                 kMediaControlPlayStateSubscribe,
-                                                 
-                                                 kWebAppLauncherLaunch,
-                                                 kWebAppLauncherMessageSend,
-                                                 kWebAppLauncherMessageReceive,
-                                                 kWebAppLauncherMessageSendJSON,
-                                                 kWebAppLauncherMessageReceiveJSON,
-                                                 kWebAppLauncherClose
-                                                 ]];
-    return caps;
+    NSArray *capabilities = [NSArray new];
+
+    capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
+    capabilities = [capabilities arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
+    capabilities = [capabilities arrayByAddingObjectsFromArray:@[
+            kMediaControlPlay,
+            kMediaControlPause,
+            kMediaControlStop,
+            kMediaControlDuration,
+            kMediaControlSeek,
+            kMediaControlPosition,
+            kMediaControlPlayState,
+            kMediaControlPlayStateSubscribe,
+
+            kWebAppLauncherLaunch,
+            kWebAppLauncherMessageSend,
+            kWebAppLauncherMessageReceive,
+            kWebAppLauncherMessageSendJSON,
+            kWebAppLauncherMessageReceiveJSON,
+            kWebAppLauncherClose
+    ]];
+
+    [self setCapabilities:capabilities];
 }
 
 #pragma mark - Connection

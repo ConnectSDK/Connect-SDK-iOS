@@ -97,7 +97,7 @@
 
 - (void) setServiceDescription:(ServiceDescription *)serviceDescription
 {
-    _serviceDescription = serviceDescription;
+    [super setServiceDescription:serviceDescription];
 
     if (!self.serviceConfig.UUID)
         self.serviceConfig.UUID = serviceDescription.UUID;
@@ -110,6 +110,8 @@
     NSString *systemVersion = [[systemOS componentsSeparatedByString:@"/"] lastObject];
 
     _serviceDescription.version = systemVersion;
+
+    [self updateCapabilities];
 }
 
 - (DeviceService *)dlnaService
@@ -127,13 +129,13 @@
     return service;
 }
 
-- (NSArray *)capabilities
+- (void) updateCapabilities
 {
-    NSArray *caps = [NSArray array];
+    NSArray *capabilities = [NSArray array];
 
     if ([DiscoveryManager sharedManager].pairingLevel == ConnectableDevicePairingLevelOn)
     {
-        caps = [caps arrayByAddingObjectsFromArray:@[
+        capabilities = [capabilities arrayByAddingObjectsFromArray:@[
                 kKeyControlSendKeyCode,
                 kKeyControlUp,
                 kKeyControlDown,
@@ -143,22 +145,23 @@
                 kKeyControlBack,
                 kKeyControlOK
         ]];
-        caps = [caps arrayByAddingObjectsFromArray:kMouseControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kTextInputControlCapabilities];
-        caps = [caps arrayByAddingObject:kPowerControlOff];
-        caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kLauncherCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kTVControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kExternalInputControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kToastControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kMediaControlCapabilities];
+
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kMouseControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kTextInputControlCapabilities];
+        capabilities = [capabilities arrayByAddingObject:kPowerControlOff];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kLauncherCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kTVControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kExternalInputControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kToastControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaControlCapabilities];
     } else
     {
-        caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kMediaControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:@[
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:@[
                 kLauncherApp,
                 kLauncherAppParams,
                 kLauncherAppStore,
@@ -176,18 +179,32 @@
         ]];
     }
 
-    if ([_serviceDescription.version rangeOfString:@"4.0.0"].location == NSNotFound && [_serviceDescription.version rangeOfString:@"4.0.1"].location == NSNotFound)
-        caps = [caps arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
-    else
+    if (_serviceDescription && _serviceDescription.version)
     {
-        caps = [caps arrayByAddingObjectsFromArray:@[
-                kWebAppLauncherLaunch,
-                kWebAppLauncherLaunchParams,
-                kWebAppLauncherClose
-        ]];
+        if ([_serviceDescription.version rangeOfString:@"4.0.0"].location == NSNotFound && [_serviceDescription.version rangeOfString:@"4.0.1"].location == NSNotFound)
+        {
+            capabilities = [capabilities arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
+            capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaControlCapabilities];
+        } else
+        {
+            capabilities = [capabilities arrayByAddingObjectsFromArray:@[
+                    kWebAppLauncherLaunch,
+                    kWebAppLauncherLaunchParams,
+
+                    kMediaControlPlay,
+                    kMediaControlPause,
+                    kMediaControlStop,
+                    kMediaControlSeek,
+                    kMediaControlPosition,
+                    kMediaControlDuration,
+                    kMediaControlPlayState,
+
+                    kWebAppLauncherClose
+            ]];
+        }
     }
 
-    return caps;
+    [self setCapabilities:capabilities];
 }
 
 + (NSDictionary *) discoveryParameters

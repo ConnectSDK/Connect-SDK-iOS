@@ -51,6 +51,8 @@
     {
         _connected = NO;
         _capabilities = [NSMutableArray new];
+
+        [self updateCapabilities];
     }
 
     return self;
@@ -127,6 +129,34 @@
     }];
 
     return hasAnyCap;
+}
+
+- (void) updateCapabilities { }
+
+- (void) setCapabilities:(NSArray *)newCapabilities
+{
+    NSArray *oldCapabilities = _capabilities;
+
+    _capabilities = [NSMutableArray arrayWithArray:newCapabilities];
+
+    NSMutableArray *lostCapabilities = [NSMutableArray new];
+
+    [oldCapabilities enumerateObjectsUsingBlock:^(NSString *capability, NSUInteger idx, BOOL *stop)
+    {
+        if (![newCapabilities containsObject:capability])
+            [lostCapabilities addObject:capability];
+    }];
+
+    NSMutableArray *addedCapabilities = [NSMutableArray new];
+
+    [newCapabilities enumerateObjectsUsingBlock:^(NSString *capability, NSUInteger idx, BOOL *stop)
+    {
+        if (![oldCapabilities containsObject:capability])
+            [addedCapabilities addObject:capability];
+    }];
+
+    if (_delegate && [_delegate respondsToSelector:@selector(deviceService:capabilitiesAdded:removed:)])
+        dispatch_on_main(^{ [_delegate deviceService:self capabilitiesAdded:addedCapabilities removed:lostCapabilities]; });
 }
 
 - (void) addCapability:(NSString *)capability

@@ -92,9 +92,10 @@
  * - First screen device configuration (apps installed, settings, etc)
  * - Physical region
  */
-@property (nonatomic, readonly) NSArray *capabilities;
+@property (nonatomic) NSArray *capabilities;
 
 // @cond INTERNAL
+- (void) updateCapabilities;
 - (void) addCapability:(NSString *)capability;
 - (void) addCapabilities:(NSArray *)capabilities;
 - (void) removeCapability:(NSString *)capability;
