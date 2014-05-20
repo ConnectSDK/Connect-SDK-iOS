@@ -130,18 +130,18 @@ NSString *lgeUDAPRequestURI[8] = {
     return _commandURL;
 }
 
-- (NSArray *)capabilities
+- (void) updateCapabilities
 {
-    NSArray *caps = [NSArray array];
+    NSArray *capabilities = [NSArray array];
 
     if ([DiscoveryManager sharedManager].pairingLevel == ConnectableDevicePairingLevelOn)
     {
-        caps = [caps arrayByAddingObjectsFromArray:kTextInputControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kMouseControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kKeyControlCapabilities];
-        caps = [caps arrayByAddingObject:kPowerControlOff];
-        caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:@[
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kTextInputControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kMouseControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kKeyControlCapabilities];
+        capabilities = [capabilities arrayByAddingObject:kPowerControlOff];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:@[
                 kMediaControlPlay,
                 kMediaControlPause,
                 kMediaControlStop,
@@ -184,15 +184,15 @@ NSString *lgeUDAPRequestURI[8] = {
 
         if ([self.modelNumber isEqualToString:@"4.0"])
         {
-            caps = [caps arrayByAddingObjectsFromArray:@[
+            capabilities = [capabilities arrayByAddingObjectsFromArray:@[
                     kLauncherAppStoreParams
             ]];
         }
     } else
     {
         // TODO: need to handle some of these controls over DLNA if no pairing
-        caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:@[
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:@[
                 kMediaControlPlay,
                 kMediaControlPause,
                 kMediaControlStop,
@@ -206,7 +206,7 @@ NSString *lgeUDAPRequestURI[8] = {
         ]];
     }
 
-    return caps;
+    [self setCapabilities:capabilities];
 }
 
 + (NSDictionary *) discoveryParameters
