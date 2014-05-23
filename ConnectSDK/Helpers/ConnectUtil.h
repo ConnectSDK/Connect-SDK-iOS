@@ -24,6 +24,7 @@
 @interface ConnectUtil : NSObject
 
 + (NSString *) urlEncode:(NSString *)input;
++ (NSString *) urlDecode:(NSString *)input;
 + (NSString *) escapedUnicodeForString:(NSString *)input;
 + (NSString *) entityEncode:(NSString *)input;
 
