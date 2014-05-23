@@ -20,6 +20,7 @@
 
 #import "ZeroConfDiscoveryProvider.h"
 #import "ServiceDescription.h"
+#include <arpa/inet.h>
 
 
 @interface ZeroConfDiscoveryProvider () <NSNetServiceBrowserDelegate, NSNetServiceDelegate>
@@ -27,6 +28,8 @@
     NSNetServiceBrowser *_netServiceBrowser;
     NSArray *_serviceFilters;
     NSTimer *_refreshTimer;
+    NSMutableDictionary *_resolvingDevices;
+    NSMutableDictionary *_discoveredDevices;
 }
 
 @end
@@ -44,6 +47,9 @@
     if (_refreshTimer)
         [_refreshTimer invalidate];
 
+    _resolvingDevices = [NSMutableDictionary new];
+    _discoveredDevices = [NSMutableDictionary new];
+
     _refreshTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(searchForServices) userInfo:nil repeats:YES];
     [_refreshTimer fire];
 }
@@ -58,6 +64,9 @@
         [_refreshTimer invalidate];
         _refreshTimer = nil;
     }
+
+    _resolvingDevices = [NSMutableDictionary new];
+    _discoveredDevices = [NSMutableDictionary new];
 }
 
 - (void) searchForServices
@@ -67,7 +76,7 @@
         NSString *filterType = serviceFilter[@"zeroconf"][@"filter"];
 
         if (filterType)
-            [_netServiceBrowser searchForServicesOfType:filterType inDomain:nil];
+            [_netServiceBrowser searchForServicesOfType:filterType inDomain:@"local."];
     }];
 }
 
@@ -114,30 +123,126 @@
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing
 {
-    NSLog(@"netServiceBrowser didFindService %@ : %@", aNetService.name, aNetService.domain);
+    if ([_resolvingDevices objectForKey:aNetService.name] || [_discoveredDevices objectForKey:aNetService.name])
+        return;
+
+    DLog(@"%@ : %@", aNetService.name, aNetService.domain);
+
+    [aNetService setDelegate:self];
+    [aNetService resolveWithTimeout:5.0];
+    [_resolvingDevices setObject:aNetService forKey:aNetService.name];
+
+    if (!moreComing)
+        [aNetServiceBrowser stop];
+}
+
+- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didRemoveService:(NSNetService *)aNetService moreComing:(BOOL)moreComing
+{
+    if (![_discoveredDevices objectForKey:aNetService.name])
+        return;
+
+    DLog(@"%@", aNetService.name);
 
     NSString *serviceId = [self serviceIdFromFilter:aNetService.type];
 
     ServiceDescription *serviceDescription = [ServiceDescription descriptionWithAddress:@"0.0.0.0" UUID:aNetService.name];
     serviceDescription.friendlyName = aNetService.name;
     serviceDescription.serviceId = serviceId;
+
+    [_discoveredDevices removeObjectForKey:aNetService.name];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(discoveryProvider:didLoseService:)])
+        [self.delegate discoveryProvider:self didLoseService:serviceDescription];
+
+    if (!moreComing)
+        [aNetServiceBrowser stop];
+}
+
+#pragma mark - NSNetServiceDelegate
+
+- (void) netServiceDidResolveAddress:(NSNetService *)sender
+{
+    DLog(@"%@", sender.name);
+
+    sender.delegate = nil;
+
+    //// credit: http://stackoverflow.com/a/18428117/2715 ////
+    NSData *myData = nil;
+    myData = [sender.addresses objectAtIndex:0];
+
+    NSString *address;
+    int port=0;
+    struct sockaddr *addressGeneric;
+
+    addressGeneric = (struct sockaddr *) [myData bytes];
+
+    switch( addressGeneric->sa_family ) {
+        case AF_INET: {
+            struct sockaddr_in *ip4;
+            char dest[INET_ADDRSTRLEN];
+            ip4 = (struct sockaddr_in *) [myData bytes];
+            port = ntohs(ip4->sin_port);
+            address = [NSString stringWithFormat: @"%s", inet_ntop(AF_INET, &ip4->sin_addr, dest, sizeof dest)];
+        }
+            break;
+
+        case AF_INET6: {
+            struct sockaddr_in6 *ip6;
+            char dest[INET6_ADDRSTRLEN];
+            ip6 = (struct sockaddr_in6 *) [myData bytes];
+            port = ntohs(ip6->sin6_port);
+            address = [NSString stringWithFormat: @"%s",  inet_ntop(AF_INET6, &ip6->sin6_addr, dest, sizeof dest)];
+        }
+            break;
+        default:
+            address = @"0.0.0.0";
+            port = 7000;
+            break;
+    }
+    //// end credit ////
+
+    NSData *TXTRecordData = sender.TXTRecordData;
+    NSString *TXTRecord = [[NSString alloc] initWithData:TXTRecordData encoding:NSUTF8StringEncoding];
+    NSString *uuidIdentifier = @"deviceid=";
+    NSRange UUIDRange = [TXTRecord rangeOfString:uuidIdentifier];
+
+    NSString *UUID;
+
+    if (UUIDRange.location == NSNotFound)
+        UUID = sender.name;
+    else
+    {
+        NSUInteger uuidStartLocation = UUIDRange.location + uuidIdentifier.length;
+        NSUInteger macAddressLength = 14;
+
+        UUID = [TXTRecord substringWithRange:NSMakeRange(uuidStartLocation, macAddressLength)];
+    }
+
+    NSString *serviceId = [self serviceIdFromFilter:sender.type];
+
+    ServiceDescription *serviceDescription = [ServiceDescription descriptionWithAddress:address UUID:sender.name];
+    serviceDescription.friendlyName = sender.name;
+    serviceDescription.serviceId = serviceId;
+    serviceDescription.port = (NSUInteger) port;
+    serviceDescription.UUID = UUID;
+
+    [_resolvingDevices removeObjectForKey:sender.name];
+    [_discoveredDevices setObject:serviceDescription forKey:sender.name];
 
     if (self.delegate && [self.delegate respondsToSelector:@selector(discoveryProvider:didFindService:)])
         [self.delegate discoveryProvider:self didFindService:serviceDescription];
 }
 
-- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didRemoveService:(NSNetService *)aNetService moreComing:(BOOL)moreComing
+- (void) netService:(NSNetService *)sender didUpdateTXTRecordData:(NSData *)data
 {
-    NSLog(@"netServiceBrowser didRemoveService %@", aNetService.name);
+    DLog(@"%@", sender.name);
+}
 
-    NSString *serviceId = [self serviceIdFromFilter:aNetService.type];
+- (void) netService:(NSNetService *)sender didNotResolve:(NSDictionary *)errorDict
+{
+    DLog(@"%@ : %@", sender.name, errorDict);
 
-    ServiceDescription *serviceDescription = [ServiceDescription descriptionWithAddress:@"0.0.0.0" UUID:aNetService.name];
-    serviceDescription.friendlyName = aNetService.name;
-    serviceDescription.serviceId = serviceId;
-
-    if (self.delegate && [self.delegate respondsToSelector:@selector(discoveryProvider:didLoseService:)])
-        [self.delegate discoveryProvider:self didLoseService:serviceDescription];
+    [_resolvingDevices removeObjectForKey:sender.name];
 }
 
 #pragma mark - Helper methods
