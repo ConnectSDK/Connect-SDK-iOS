@@ -23,14 +23,18 @@
 #import <Foundation/Foundation.h>
 #import "DeviceService.h"
 #import <UIKit/UIKit.h>
-#import "AirPlayViewController.h"
 #import "MediaPlayer.h"
 #import "MediaControl.h"
+#import "WebAppLauncher.h"
+#import <AVFoundation/AVPlayer.h>
 
 
-@interface AirPlayService : DeviceService <MediaPlayer, MediaControl>
+@interface AirPlayService : DeviceService <MediaPlayer, MediaControl, WebAppLauncher>
 
-@property (nonatomic) UIWindow *secondWindow;
-@property (nonatomic) AirPlayViewController *viewController;
+@property (nonatomic, readonly) UIWindow *secondWindow;
+@property (nonatomic, readonly) AVPlayer *avPlayer;
+@property (nonatomic, readonly) UIWebView *webAppWebView;
+
+- (void) disconnectFromWebApp;
 
 @end

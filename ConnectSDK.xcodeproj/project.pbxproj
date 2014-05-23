@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB9F710601FE8B999634A5BF /* AirPlayWebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F76C6A6C862002C9FB89D /* AirPlayWebAppSession.m */; };
 		BB9F714DEDE9A26A22544339 /* AirPlayService.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F77EFDE3374914D6B383B /* AirPlayService.m */; };
 		BB9F75C707C7D86EB1934BD5 /* ZeroConfDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F752184AD57C1730A2B40 /* ZeroConfDiscoveryProvider.m */; };
-		BB9F7D62C85C342AF11C7257 /* AirPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7871160828219957E3A4 /* AirPlayViewController.m */; };
+		EA3F17F81909AC3400EFAA6F /* AirPlayWebAppSession.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F725D0F278CD7B78F1FC6 /* AirPlayWebAppSession.h */; };
 		EA61EB1418FE485B00D75696 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1318FE485B00D75696 /* Foundation.framework */; };
 		EA61EBA918FE48C500D75696 /* ConnectableDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = EA61EB4018FE48C500D75696 /* ConnectableDevice.m */; };
 		EA61EBAA18FE48C500D75696 /* DefaultConnectableDeviceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = EA61EB4418FE48C500D75696 /* DefaultConnectableDeviceStore.m */; };
@@ -139,6 +140,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				EA3F17F81909AC3400EFAA6F /* AirPlayWebAppSession.h in CopyFiles */,
 				EAFA988E18FEE9B5001C4FA1 /* ServiceAsyncCommand.h in CopyFiles */,
 				EAFA988F18FEE9B5001C4FA1 /* ServiceCommand.h in CopyFiles */,
 				EAFA989018FEE9B5001C4FA1 /* ServiceCommandDelegate.h in CopyFiles */,
@@ -216,10 +218,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BB9F725D0F278CD7B78F1FC6 /* AirPlayWebAppSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayWebAppSession.h; sourceTree = "<group>"; };
 		BB9F752184AD57C1730A2B40 /* ZeroConfDiscoveryProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroConfDiscoveryProvider.m; sourceTree = "<group>"; };
+		BB9F76C6A6C862002C9FB89D /* AirPlayWebAppSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayWebAppSession.m; sourceTree = "<group>"; };
 		BB9F77EFDE3374914D6B383B /* AirPlayService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayService.m; sourceTree = "<group>"; };
-		BB9F7858D2749447583C68EF /* AirPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayViewController.h; sourceTree = "<group>"; };
-		BB9F7871160828219957E3A4 /* AirPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayViewController.m; sourceTree = "<group>"; };
 		BB9F7A5257BCF2C7CD5DF5BA /* AirPlayService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayService.h; sourceTree = "<group>"; };
 		BB9F7C71326AB56D77F39095 /* ZeroConfDiscoveryProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroConfDiscoveryProvider.h; sourceTree = "<group>"; };
 		EA41388A18FE51A9002CB005 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -572,8 +574,6 @@
 				EA61EB9618FE48C500D75696 /* CastServiceChannel.m */,
 				EA61EB9718FE48C500D75696 /* WebOSTVServiceMouse.h */,
 				EA61EB9818FE48C500D75696 /* WebOSTVServiceMouse.m */,
-				BB9F7871160828219957E3A4 /* AirPlayViewController.m */,
-				BB9F7858D2749447583C68EF /* AirPlayViewController.h */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -590,6 +590,8 @@
 				EA61EBA418FE48C500D75696 /* WebAppSessionDelegate.h */,
 				EA61EBA518FE48C500D75696 /* WebOSWebAppSession.h */,
 				EA61EBA618FE48C500D75696 /* WebOSWebAppSession.m */,
+				BB9F76C6A6C862002C9FB89D /* AirPlayWebAppSession.m */,
+				BB9F725D0F278CD7B78F1FC6 /* AirPlayWebAppSession.h */,
 			);
 			path = Sessions;
 			sourceTree = "<group>";
@@ -745,7 +747,7 @@
 				EA61EBBF18FE48C500D75696 /* ServiceConfig.m in Sources */,
 				BB9F75C707C7D86EB1934BD5 /* ZeroConfDiscoveryProvider.m in Sources */,
 				BB9F714DEDE9A26A22544339 /* AirPlayService.m in Sources */,
-				BB9F7D62C85C342AF11C7257 /* AirPlayViewController.m in Sources */,
+				BB9F710601FE8B999634A5BF /* AirPlayWebAppSession.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

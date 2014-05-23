@@ -20,12 +20,20 @@
 
 #import "AirPlayService.h"
 #import "ConnectError.h"
+#import "ConnectUtil.h"
+#import "AirPlayWebAppSession.h"
+#import <AVFoundation/AVPlayerItem.h>
+#import <AVFoundation/AVAsset.h>
 
 
 @interface AirPlayService () <UIWebViewDelegate>
 {
     BOOL _isConnecting;
     NSTimer *_connectTimer;
+
+    SuccessBlock _launchSuccessBlock;
+    FailureBlock _launchFailureBlock;
+    AirPlayWebAppSession *_activeWebAppSession;
 }
 
 @end
@@ -58,6 +66,7 @@
             kMediaControlRewind,
             kMediaControlFastForward
     ]];
+    caps = [caps arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
 
     return caps;
 }
@@ -69,23 +78,25 @@
 
 - (void) connect
 {
-    _isConnecting = YES;
+    self.connected = YES;
 
-    [self checkScreenCount];
-
-    if (self.secondWindow == nil)
-    {
-        [[[UIAlertView alloc] initWithTitle:@"Enable mirroring" message:@"You will need to manually enable AirPlay and mirroring" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil] show];
-    }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
+        dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
 }
 
 - (void) disconnect
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    [self.viewController cleanup];
+
+    [self closeMedia:nil success:nil failure:nil];
+
     [self hScreenDisconnected:nil];
+
     self.connected = NO;
     _isConnecting = NO;
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
+        dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:nil]; });
 }
 
 #pragma mark - MediaPlayer
@@ -102,18 +113,63 @@
 
 - (void) displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    [self.viewController cleanup];
+    [self closeMedia:nil success:nil failure:nil];
 
-    NSString *javascriptString = [NSString stringWithFormat:@"window.app.handleLaunchParams({target:'%@',title:'%@',description:'%@',mimeType:'%@',iconSrc:'%@'})", imageURL.absoluteString, title, description, mimeType, iconURL.absoluteString];
+    [self checkForExistingScreenAndInitializeIfPresent];
 
-    [self.viewController.webView stringByEvaluatingJavaScriptFromString:javascriptString];
+    if (self.secondWindow && self.secondWindow.screen)
+    {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.secondWindow.screen.bounds];
+        [imageView setContentMode:UIViewContentModeScaleAspectFit];
+
+        UIViewController *viewController = [[UIViewController alloc] init];
+        viewController.view = imageView;
+
+        self.secondWindow.rootViewController = viewController;
+        self.secondWindow.hidden = NO;
+
+        LaunchSession *launchSession = [LaunchSession launchSessionForAppId:@"image"];
+        launchSession.service = self;
+        launchSession.sessionType = LaunchSessionTypeMedia;
+
+        __weak id<MediaControl> weakMediaControl = self.mediaControl;
+
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSError *error;
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL options:0 error:&error];
+
+            dispatch_on_main(^{
+                if (imageData)
+                {
+                    [imageView setImage:[UIImage imageWithData:imageData]];
+
+                    if (success)
+                        success(launchSession, weakMediaControl);
+                } else
+                {
+                    if (error)
+                        failure(error);
+                    else
+                        failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Could not download image from specified URL"]);
+                }
+            });
+        });
+    } else
+    {
+        if (failure)
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Not currently mirrored with an AirPlay device"]);
+    }
 }
 
 - (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    [self.viewController cleanup];
+    [self closeMedia:nil success:nil failure:nil];
 
-    [self.viewController playVideo:mediaURL.absoluteString];
+    _avPlayer = [[AVPlayer alloc] initWithURL:mediaURL];
+    _avPlayer.allowsExternalPlayback = YES;
+    _avPlayer.usesExternalPlaybackWhileExternalScreenIsActive = YES;
+
+    [self.avPlayer play];
 
     if (success)
     {
@@ -127,7 +183,27 @@
 
 - (void) closeMedia:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    [self.viewController cleanup];
+    if (self.avPlayer)
+    {
+        [self.avPlayer pause];
+
+        _avPlayer.allowsExternalPlayback = NO;
+        _avPlayer.usesExternalPlaybackWhileExternalScreenIsActive = NO;
+        _avPlayer = nil;
+
+        if (success)
+            dispatch_on_main(^{ success(nil); });
+    } else if (self.secondWindow && self.secondWindow.screen)
+    {
+        [self hScreenDisconnected:nil];
+
+        if (success)
+            dispatch_on_main(^{ success(nil); });
+    } else
+    {
+        if (failure)
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"AirPlay media views are not set up yet"]);
+    }
 }
 
 #pragma mark - Media Control
@@ -144,12 +220,12 @@
 
 - (void) playWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    if (self.viewController && self.viewController.moviePlayer)
+    if (self.avPlayer)
     {
-        [self.viewController.moviePlayer play];
+        [self.avPlayer play];
 
-        if (self.viewController.moviePlayer.rate != 1.0)
-            self.viewController.moviePlayer.rate = 1.0;
+        if (self.avPlayer.rate != 1.0)
+            self.avPlayer.rate = 1.0;
 
         if (success)
             success(nil);
@@ -162,9 +238,9 @@
 
 - (void) pauseWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    if (self.viewController && self.viewController.moviePlayer)
+    if (self.avPlayer)
     {
-        [self.viewController.moviePlayer pause];
+        [self.avPlayer pause];
 
         if (success)
             success(nil);
@@ -177,30 +253,20 @@
 
 - (void) stopWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    if (self.viewController && self.viewController.moviePlayer)
-    {
-        [self.viewController cleanup];
-
-        if (success)
-            success(nil);
-    } else
-    {
-        if (failure)
-            failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"AirPlay media views are not set up yet"]);
-    }
+    [self closeMedia:nil success:success failure:failure];
 }
 
 - (void) rewindWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    if (self.viewController && self.viewController.moviePlayer)
+    if (self.avPlayer)
     {
         // TODO: implement different playback rates
 
-        if (self.viewController.moviePlayer.rate == -1.0 || self.viewController.moviePlayer.rate == 1.5)
-            self.viewController.moviePlayer.rate = 1.0;
-        else if (self.viewController.moviePlayer.currentItem.canPlayReverse)
+        if (self.avPlayer.rate == -1.0 || self.avPlayer.rate == 1.5)
+            self.avPlayer.rate = 1.0;
+        else if (self.avPlayer.currentItem.canPlayReverse)
         {
-            self.viewController.moviePlayer.rate = -1.0;
+            self.avPlayer.rate = -1.0;
 
             if (success)
                 success(nil);
@@ -218,15 +284,15 @@
 
 - (void) fastForwardWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    if (self.viewController && self.viewController.moviePlayer)
+    if (self.avPlayer)
     {
         // TODO: implement different playback rates
 
-        if (self.viewController.moviePlayer.rate == -1.0 || self.viewController.moviePlayer.rate == 1.5)
-            self.viewController.moviePlayer.rate = 1.0;
-        else if (self.viewController.moviePlayer.currentItem.canPlayFastForward)
+        if (self.avPlayer.rate == -1.0 || self.avPlayer.rate == 1.5)
+            self.avPlayer.rate = 1.0;
+        else if (self.avPlayer.currentItem.canPlayFastForward)
         {
-            self.viewController.moviePlayer.rate = 1.5;
+            self.avPlayer.rate = 1.5;
 
             if (success)
                 success(nil);
@@ -244,13 +310,11 @@
 
 - (void) seek:(NSTimeInterval)position success:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    if (self.viewController && self.viewController.moviePlayer)
+    if (self.avPlayer)
     {
-//        Float64 duration = CMTimeGetSeconds(self.viewController.moviePlayer.currentItem.asset.duration);
-//        Float64 seekTime = duration * ((Float64) position);
         CMTime seekToTime = CMTimeMakeWithSeconds(position, 1);
 
-        [self.viewController.moviePlayer seekToTime:seekToTime completionHandler:^(BOOL finished)
+        [self.avPlayer seekToTime:seekToTime completionHandler:^(BOOL finished)
         {
             if (success && finished)
                 success(nil);
@@ -266,13 +330,13 @@
 
 - (void) getPlayStateWithSuccess:(MediaPlayStateSuccessBlock)success failure:(FailureBlock)failure
 {
-    if (self.viewController && self.viewController.moviePlayer)
+    if (self.avPlayer)
     {
         MediaControlPlayState playState = MediaControlPlayStateUnknown;
 
-        if (self.viewController.moviePlayer.rate > 0.0)
+        if (self.avPlayer.rate > 0.0)
             playState = MediaControlPlayStatePlaying;
-        else if (self.viewController.moviePlayer.rate == 0.0)
+        else if (self.avPlayer.rate == 0.0)
             playState = MediaControlPlayStateIdle;
 
         if (success)
@@ -291,9 +355,9 @@
 
 - (void) getDurationWithSuccess:(MediaDurationSuccessBlock)success failure:(FailureBlock)failure
 {
-    if (self.viewController && self.viewController.moviePlayer)
+    if (self.avPlayer)
     {
-        CMTime currentDurationTime = self.viewController.moviePlayer.currentItem.asset.duration;
+        CMTime currentDurationTime = self.avPlayer.currentItem.asset.duration;
         NSTimeInterval currentDuration = CMTimeGetSeconds(currentDurationTime);
 
         if (success)
@@ -307,9 +371,9 @@
 
 - (void) getPositionWithSuccess:(MediaPositionSuccessBlock)success failure:(FailureBlock)failure
 {
-    if (self.viewController && self.viewController.moviePlayer)
+    if (self.avPlayer)
     {
-        CMTime currentPositionTime = self.viewController.moviePlayer.currentTime;
+        CMTime currentPositionTime = self.avPlayer.currentTime;
         NSTimeInterval currentPosition = CMTimeGetSeconds(currentPositionTime);
 
         if (success)
@@ -325,10 +389,16 @@
 
 - (void) closeLaunchSession:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    [self.viewController cleanup];
-
-    if (success)
-        success(nil);
+    if (launchSession.sessionType == LaunchSessionTypeWebApp)
+    {
+        [self closeWebApp:launchSession success:success failure:failure];
+    } else if (launchSession.sessionType == LaunchSessionTypeMedia)
+    {
+        [self closeMedia:launchSession success:success failure:failure];
+    } else {
+        if (failure)
+            dispatch_on_main(^{ failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@""]); });
+    }
 }
 
 #pragma mark - External display detection, setup
@@ -359,27 +429,14 @@
 
         CGRect screenBounds = secondScreen.bounds;
 
-        self.secondWindow = [[UIWindow alloc] initWithFrame:screenBounds];
-        self.secondWindow.screen = secondScreen;
-
-        if (self.viewController)
-        {
-            if (!self.viewController.webView.isLoading)
-                [self webViewDidFinishLoad:self.viewController.webView];
-        } else
-        {
-            self.viewController = [[AirPlayViewController alloc] initWithBounds:screenBounds];
-            self.viewController.webView.delegate = self;
-        }
-
-        self.secondWindow.rootViewController = self.viewController;
-        self.secondWindow.hidden = NO;
+        _secondWindow = [[UIWindow alloc] initWithFrame:screenBounds];
+        _secondWindow.screen = secondScreen;
     }
 }
 
 - (void) hScreenConnected:(NSNotification *)notification
 {
-    NSLog(@"Connected screen");
+    DLog(@"%@", notification);
 
     if (!self.secondWindow)
         [self checkForExistingScreenAndInitializeIfPresent];
@@ -387,44 +444,202 @@
 
 - (void) hScreenDisconnected:(NSNotification *)notification
 {
-    NSLog(@"Disconnected screen");
+    DLog(@"%@", notification);
 
     if (self.secondWindow)
     {
-        self.secondWindow.hidden = YES;
-        self.secondWindow = nil;
-
-        if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
-            dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:nil]; });
+        _secondWindow.hidden = YES;
+        _secondWindow = nil;
     }
+}
+
+#pragma mark - WebAppLauncher
+
+- (id <WebAppLauncher>) webAppLauncher
+{
+    return self;
+}
+
+- (CapabilityPriorityLevel) webAppLauncherPriority
+{
+    return CapabilityPriorityLevelHigh;
+}
+
+- (void) launchWebApp:(NSString *)webAppId success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    if (!webAppId || webAppId.length == 0)
+    {
+        if (failure)
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid web app URL"]);
+
+        return;
+    }
+
+    [self checkForExistingScreenAndInitializeIfPresent];
+
+    if (!self.secondWindow)
+    {
+        if (failure)
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Could not detect a second screen -- make sure you have mirroring enabled"]);
+
+        return;
+    }
+
+    if (_webAppWebView)
+    {
+        [self closeWebApp:nil success:^(id responseObject)
+        {
+            [self launchWebApp:webAppId success:success failure:failure];
+        } failure:failure];
+
+        return;
+    }
+
+    _webAppWebView = [[UIWebView alloc] initWithFrame:self.secondWindow.bounds];
+    _webAppWebView.allowsInlineMediaPlayback = YES;
+    _webAppWebView.mediaPlaybackAllowsAirPlay = NO;
+    _webAppWebView.mediaPlaybackRequiresUserAction = NO;
+
+    UIViewController *secondScreenViewController = [[UIViewController alloc] init];
+    secondScreenViewController.view = _webAppWebView;
+    _webAppWebView.delegate = self;
+    self.secondWindow.rootViewController = secondScreenViewController;
+    self.secondWindow.hidden = NO;
+
+    NSURL *URL = [NSURL URLWithString:webAppId];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+
+    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:webAppId];
+    launchSession.sessionType = LaunchSessionTypeWebApp;
+    launchSession.service = self;
+
+    AirPlayWebAppSession *webAppSession = [[AirPlayWebAppSession alloc] initWithLaunchSession:launchSession service:self];
+    _activeWebAppSession = webAppSession;
+
+    __weak AirPlayWebAppSession *weakSession = _activeWebAppSession;
+
+    _launchSuccessBlock = ^(id responseObject)
+    {
+        if (success)
+            success(weakSession);
+    };
+
+    _launchFailureBlock = failure;
+
+    [self.webAppWebView loadRequest:request];
+}
+
+- (void) launchWebApp:(NSString *)webAppId params:(NSDictionary *)params success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+
+}
+
+- (void) launchWebApp:(NSString *)webAppId params:(NSDictionary *)params relaunchIfRunning:(BOOL)relaunchIfRunning success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+
+}
+
+- (void) launchWebApp:(NSString *)webAppId relaunchIfRunning:(BOOL)relaunchIfRunning success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+
+}
+
+- (void) joinWebApp:(LaunchSession *)webAppLaunchSession success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+
+}
+
+- (void) joinWebAppWithId:(NSString *)webAppId success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+
+}
+
+- (void) disconnectFromWebApp
+{
+    if (_activeWebAppSession)
+    {
+        if (_activeWebAppSession.delegate)
+            dispatch_on_main(^{ [_activeWebAppSession.delegate webAppSessionDidDisconnect:_activeWebAppSession]; });
+
+        _activeWebAppSession = nil;
+    }
+
+    _launchSuccessBlock = nil;
+    _launchFailureBlock = nil;
+}
+
+- (void) closeWebApp:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self disconnectFromWebApp];
+
+    if (_secondWindow)
+    {
+        _secondWindow.rootViewController = nil;
+        _secondWindow.hidden = YES;
+        _secondWindow.screen = nil;
+        _secondWindow = nil;
+        _webAppWebView.delegate = nil;
+        _webAppWebView = nil;
+    }
+
+    if (success)
+        success(nil);
 }
 
 #pragma mark - UIWebViewDelegate
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    NSLog(@"LGAppleTVViewController::didFailLoadWithError %@", error.localizedDescription);
+    DLog(@"%@", error.localizedDescription);
+
+    if (_launchFailureBlock)
+        _launchFailureBlock(error);
+
+    _launchSuccessBlock = nil;
+    _launchFailureBlock = nil;
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    return YES;
+    if ([request.URL.absoluteString hasPrefix:@"connectsdk://"])
+    {
+        NSString *jsonString = [[request.URL.absoluteString componentsSeparatedByString:@"connectsdk://"] lastObject];
+        jsonString = [ConnectUtil urlDecode:jsonString];
+
+        NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+
+        NSError *jsonError;
+        id messageObject = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&jsonError];
+
+        if (jsonError || !messageObject)
+            messageObject = jsonString;
+
+        DLog(@"Got p2p message from web app:\n%@", messageObject);
+
+        if (_activeWebAppSession && _activeWebAppSession.delegate)
+            dispatch_on_main(^{ [_activeWebAppSession.delegate webAppSession:_activeWebAppSession didReceiveMessage:messageObject]; });
+
+        return NO;
+    } else
+    {
+        return YES;
+    }
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSLog(@"LGAppleTVViewController::webViewDidFinishLoad");
+    DLog(@"%@", webView.request.URL.absoluteString);
 
-    self.connected = YES;
-    _isConnecting = NO;
+    if (_launchSuccessBlock)
+        _launchSuccessBlock(nil);
 
-    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
-        dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
+    _launchSuccessBlock = nil;
+    _launchFailureBlock = nil;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    NSLog(@"LGAppleTVViewController::webViewDidStartLoad");
+    DLog(@"%@", webView.request.URL.absoluteString);
 }
 
 @end
