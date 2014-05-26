@@ -68,15 +68,21 @@
 
 - (void) sendText:(NSString *)message success:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    [self sendMessage:message success:success failure:failure];
+    if (!message)
+    {
+        if (failure)
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid argument"]);
+    }
+
+    NSString *commandString = [NSString stringWithFormat:@"window.connectManager.handleMessage({from: -1, message: \"%@\" })", message];
+
+    [self.service.webAppWebView stringByEvaluatingJavaScriptFromString:commandString];
+
+    if (success)
+        success(nil);
 }
 
 - (void) sendJSON:(NSDictionary *)message success:(SuccessBlock)success failure:(FailureBlock)failure
-{
-    [self sendMessage:message success:success failure:failure];
-}
-
-- (void) sendMessage:(id)message success:(SuccessBlock)success failure:(FailureBlock)failure
 {
     if (!message)
     {
@@ -84,12 +90,8 @@
             failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid argument"]);
     }
 
-    NSDictionary *messageDictionary = @{
-            @"data" : message
-    };
-
     NSError *error;
-    NSData *messageData = [NSJSONSerialization dataWithJSONObject:messageDictionary options:0 error:&error];
+    NSData *messageData = [NSJSONSerialization dataWithJSONObject:message options:0 error:&error];
 
     if (error || !messageData)
     {
@@ -98,7 +100,7 @@
     } else
     {
         NSString *messageString = [[NSString alloc] initWithData:messageData encoding:NSUTF8StringEncoding];
-        NSString *commandString = [NSString stringWithFormat:@"window.connectManager.handleMessage(%@)", messageString];
+        NSString *commandString = [NSString stringWithFormat:@"window.connectManager.handleMessage({from: -1, message: %@ })", messageString];
 
         [self.service.webAppWebView stringByEvaluatingJavaScriptFromString:commandString];
 
