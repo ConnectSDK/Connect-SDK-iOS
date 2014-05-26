@@ -8,16 +8,46 @@
 #import "ConnectUtil.h"
 
 
+@interface AirPlayWebAppSession () <ServiceCommandDelegate>
+
+@end
+
 @implementation AirPlayWebAppSession
+{
+    ServiceSubscription *_webAppStatusSubscription;
+}
+
+- (int) sendSubscription:(ServiceSubscription *)subscription type:(ServiceSubscriptionType)type payload:(id)payload toURL:(NSURL *)URL withId:(int)callId
+{
+    if (type == ServiceSubscriptionTypeUnsubscribe)
+    {
+        if (subscription == _webAppStatusSubscription)
+        {
+            [[_webAppStatusSubscription successCalls] removeAllObjects];
+            [[_webAppStatusSubscription failureCalls] removeAllObjects];
+            [_webAppStatusSubscription setIsSubscribed:NO];
+            _webAppStatusSubscription = nil;
+        }
+    }
+
+    return -1;
+}
 
 - (ServiceSubscription *) subscribeWebAppStatus:(WebAppStatusBlock)success failure:(FailureBlock)failure
 {
-    return nil;
+    if (!_webAppStatusSubscription)
+        _webAppStatusSubscription = [ServiceSubscription subscriptionWithDelegate:self target:nil payload:nil callId:-1];
+
+    [_webAppStatusSubscription addSuccess:success];
+    [_webAppStatusSubscription addFailure:failure];
+    [_webAppStatusSubscription setIsSubscribed:YES];
+
+    return _webAppStatusSubscription;
 }
 
 - (void) joinWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
-
+    [self.service.webAppLauncher joinWebApp:self.launchSession success:success failure:failure];
 }
 
 - (void) closeWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure

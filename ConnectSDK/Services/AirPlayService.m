@@ -26,7 +26,7 @@
 #import <AVFoundation/AVAsset.h>
 
 
-@interface AirPlayService () <UIWebViewDelegate>
+@interface AirPlayService () <UIWebViewDelegate, ServiceCommandDelegate>
 {
     BOOL _isConnecting;
 
@@ -89,6 +89,22 @@
 
     if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
         dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:nil]; });
+}
+
+- (int) sendSubscription:(ServiceSubscription *)subscription type:(ServiceSubscriptionType)type payload:(id)payload toURL:(NSURL *)URL withId:(int)callId
+{
+    if (type == ServiceSubscriptionTypeUnsubscribe)
+    {
+        if (subscription == _playStateSubscription)
+        {
+            [[_playStateSubscription successCalls] removeAllObjects];
+            [[_playStateSubscription failureCalls] removeAllObjects];
+            [_playStateSubscription setIsSubscribed:NO];
+            _playStateSubscription = nil;
+        }
+    }
+
+    return -1;
 }
 
 #pragma mark - MediaPlayer
@@ -365,7 +381,7 @@
 - (ServiceSubscription *) subscribePlayStateWithSuccess:(MediaPlayStateSuccessBlock)success failure:(FailureBlock)failure
 {
     if (!_playStateSubscription)
-        _playStateSubscription = [ServiceSubscription subscriptionWithDelegate:nil target:nil payload:nil callId:-1];
+        _playStateSubscription = [ServiceSubscription subscriptionWithDelegate:self target:nil payload:nil callId:-1];
 
     [_playStateSubscription addSuccess:success];
     [_playStateSubscription addFailure:failure];
@@ -470,23 +486,6 @@
 
 #pragma mark - External display detection, setup
 
-- (void) checkScreenCount
-{
-    if (self.connected)
-    {
-        if ([[UIScreen screens] count] <= 1)
-            [self disconnect];
-    } else if (!self.connected && _isConnecting)
-    {
-        if ([[UIScreen screens] count] > 1 && self.secondWindow == nil)
-        {
-            [self checkForExistingScreenAndInitializeIfPresent];
-        }
-    }
-
-    [self performSelector:@selector(checkScreenCount) withObject:nil afterDelay:1];
-}
-
 - (void)checkForExistingScreenAndInitializeIfPresent
 {
     if ([[UIScreen screens] count] > 1)
@@ -534,6 +533,16 @@
 
 - (void) launchWebApp:(NSString *)webAppId success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
+    [self launchWebApp:webAppId params:nil relaunchIfRunning:YES success:success failure:failure];
+}
+
+- (void) launchWebApp:(NSString *)webAppId params:(NSDictionary *)params success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    [self launchWebApp:webAppId params:params relaunchIfRunning:YES success:success failure:failure];
+}
+
+- (void) launchWebApp:(NSString *)webAppId params:(NSDictionary *)params relaunchIfRunning:(BOOL)relaunchIfRunning success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
     if (!webAppId || webAppId.length == 0)
     {
         if (failure)
@@ -554,12 +563,39 @@
 
     if (_webAppWebView)
     {
-        [self closeWebApp:nil success:^(id responseObject)
+        if (relaunchIfRunning)
         {
-            [self launchWebApp:webAppId success:success failure:failure];
-        } failure:failure];
+            [self closeWebApp:nil success:^(id responseObject)
+            {
+                [self launchWebApp:webAppId params:params relaunchIfRunning:relaunchIfRunning success:success failure:failure];
+            } failure:failure];
 
-        return;
+            return;
+        } else
+        {
+            NSString *webAppHost = _webAppWebView.request.URL.host;
+
+            if ([webAppId rangeOfString:webAppHost].location != NSNotFound)
+            {
+                if (params && params.count > 0)
+                {
+                    [_activeWebAppSession connectWithSuccess:^(id connectResponseObject)
+                    {
+                        [_activeWebAppSession sendJSON:params success:^(id sendResponseObject)
+                        {
+                            if (success)
+                                success(_activeWebAppSession);
+                        } failure:failure];
+                    } failure:failure];
+                } else
+                {
+                    if (success)
+                        dispatch_on_main(^{ success(_activeWebAppSession); });
+                }
+
+                return;
+            }
+        }
     }
 
     _webAppWebView = [[UIWebView alloc] initWithFrame:self.secondWindow.bounds];
@@ -585,40 +621,65 @@
 
     __weak AirPlayWebAppSession *weakSession = _activeWebAppSession;
 
-    _launchSuccessBlock = ^(id responseObject)
+    if (params && params.count > 0)
     {
-        if (success)
-            success(weakSession);
-    };
+        _launchSuccessBlock = ^(id launchResponseObject)
+        {
+            [weakSession connectWithSuccess:^(id connectResponseObject)
+            {
+                [weakSession sendJSON:params success:^(id sendResponseObject)
+                {
+                    if (success)
+                        success(weakSession);
+                } failure:failure];
+            } failure:failure];
+        };
+    } else
+    {
+        _launchSuccessBlock = ^(id responseObject)
+        {
+            if (success)
+                success(weakSession);
+        };
+    }
 
     _launchFailureBlock = failure;
 
     [self.webAppWebView loadRequest:request];
 }
 
-- (void) launchWebApp:(NSString *)webAppId params:(NSDictionary *)params success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
-{
-
-}
-
-- (void) launchWebApp:(NSString *)webAppId params:(NSDictionary *)params relaunchIfRunning:(BOOL)relaunchIfRunning success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
-{
-
-}
-
 - (void) launchWebApp:(NSString *)webAppId relaunchIfRunning:(BOOL)relaunchIfRunning success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
-
+    [self launchWebApp:webAppId params:nil relaunchIfRunning:YES success:success failure:failure];
 }
 
 - (void) joinWebApp:(LaunchSession *)webAppLaunchSession success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
+    if (self.webAppWebView)
+    {
+        NSString *webAppHost = self.webAppWebView.request.URL.host;
 
+        if ([webAppLaunchSession.appId rangeOfString:webAppHost].location != NSNotFound)
+        {
+            AirPlayWebAppSession *webAppSession = [[AirPlayWebAppSession alloc] initWithLaunchSession:webAppLaunchSession service:self];
+            _activeWebAppSession = webAppSession;
+
+            [webAppSession connectWithSuccess:success failure:failure];
+        } else
+        {
+            if (failure)
+                dispatch_on_main(^{ failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Web is not currently running"]); });
+        }
+    }
 }
 
 - (void) joinWebAppWithId:(NSString *)webAppId success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
+    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:webAppId];
+    launchSession.service = self;
+    launchSession.sessionType = LaunchSessionTypeWebApp;
 
+    [self joinWebApp:launchSession success:success failure:failure];
 }
 
 - (void) disconnectFromWebApp
