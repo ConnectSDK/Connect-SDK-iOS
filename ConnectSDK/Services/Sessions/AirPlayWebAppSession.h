@@ -12,4 +12,6 @@
 
 @property (nonatomic, readonly) AirPlayService *service;
 
+@property (nonatomic, readonly) WebAppMessageBlock messageHandler;
+
 @end

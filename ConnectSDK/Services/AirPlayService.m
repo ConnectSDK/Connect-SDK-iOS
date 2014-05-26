@@ -600,7 +600,7 @@
 
     _webAppWebView = [[UIWebView alloc] initWithFrame:self.secondWindow.bounds];
     _webAppWebView.allowsInlineMediaPlayback = YES;
-    _webAppWebView.mediaPlaybackAllowsAirPlay = NO;
+    _webAppWebView.mediaPlaybackAllowsAirPlay = YES;
     _webAppWebView.mediaPlaybackRequiresUserAction = NO;
 
     UIViewController *secondScreenViewController = [[UIViewController alloc] init];
@@ -745,8 +745,16 @@
 
         DLog(@"Got p2p message from web app:\n%@", messageObject);
 
-        if (_activeWebAppSession && _activeWebAppSession.delegate)
-            dispatch_on_main(^{ [_activeWebAppSession.delegate webAppSession:_activeWebAppSession didReceiveMessage:messageObject]; });
+        if (_activeWebAppSession)
+        {
+            NSString *webAppHost = self.webAppWebView.request.URL.host;
+
+            // check if current running web app matches the current web app session
+            if ([_activeWebAppSession.launchSession.appId rangeOfString:webAppHost].location != NSNotFound)
+                dispatch_on_main(^{ _activeWebAppSession.messageHandler(messageObject); });
+            else
+                [_activeWebAppSession disconnectFromWebApp];
+        }
 
         return NO;
     } else
