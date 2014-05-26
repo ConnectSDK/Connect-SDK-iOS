@@ -29,11 +29,13 @@
 @interface AirPlayService () <UIWebViewDelegate>
 {
     BOOL _isConnecting;
-    NSTimer *_connectTimer;
 
     SuccessBlock _launchSuccessBlock;
     FailureBlock _launchFailureBlock;
+
     AirPlayWebAppSession *_activeWebAppSession;
+
+    ServiceSubscription *_playStateSubscription;
 }
 
 @end
@@ -55,17 +57,7 @@
     NSArray *caps = [NSArray array];
 
     caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
-    caps = [caps arrayByAddingObjectsFromArray:@[
-            kMediaControlPlay,
-            kMediaControlPause,
-            kMediaControlSeek,
-            kMediaControlPosition,
-            kMediaControlDuration,
-            kMediaControlPlayState,
-            kMediaControlStop,
-            kMediaControlRewind,
-            kMediaControlFastForward
-    ]];
+    caps = [caps arrayByAddingObjectsFromArray:kMediaControlCapabilities];
     caps = [caps arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
 
     return caps;
@@ -172,6 +164,7 @@
         _avPlayer = [[AVPlayer alloc] initWithURL:mediaURL];
         _avPlayer.allowsExternalPlayback = YES;
         _avPlayer.usesExternalPlaybackWhileExternalScreenIsActive = YES;
+        _avPlayer.actionAtItemEnd = AVPlayerActionAtItemEndNone;
 
         [self.avPlayer play];
 
@@ -194,6 +187,15 @@
 {
     if (self.avPlayer)
     {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+        [self.avPlayer removeObserver:self forKeyPath:@"rate"];
+
+        if (_playStateSubscription)
+        {
+            [_playStateSubscription setIsSubscribed:NO];
+            _playStateSubscription = nil;
+        }
+
         [self.avPlayer pause];
 
         _avPlayer.allowsExternalPlayback = NO;
@@ -325,6 +327,9 @@
 
         [self.avPlayer seekToTime:seekToTime completionHandler:^(BOOL finished)
         {
+            if (self.avPlayer.rate > 0.0f)
+                [self observeValueForKeyPath:@"rate" ofObject:self.avPlayer change:nil context:nil];
+
             if (success && finished)
                 success(nil);
             else if (failure && !finished)
@@ -359,8 +364,17 @@
 
 - (ServiceSubscription *) subscribePlayStateWithSuccess:(MediaPlayStateSuccessBlock)success failure:(FailureBlock)failure
 {
-    // TODO: implement this
-    return nil;
+    if (!_playStateSubscription)
+        _playStateSubscription = [ServiceSubscription subscriptionWithDelegate:nil target:nil payload:nil callId:-1];
+
+    [_playStateSubscription addSuccess:success];
+    [_playStateSubscription addFailure:failure];
+    [_playStateSubscription setIsSubscribed:YES];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hPlaybackDidFinish:) name:AVPlayerItemDidPlayToEndTimeNotification object:self.avPlayer.currentItem];
+    [self.avPlayer addObserver:self forKeyPath:@"rate" options:NSKeyValueObservingOptionNew context:nil];
+
+    return _playStateSubscription;
 }
 
 - (void) getDurationWithSuccess:(MediaDurationSuccessBlock)success failure:(FailureBlock)failure
@@ -395,6 +409,48 @@
     }
 }
 
+- (void) hPlaybackDidFinish:(NSNotification *)notification
+{
+    if (_playStateSubscription)
+    {
+        dispatch_on_main(^{
+            [_playStateSubscription.successCalls enumerateObjectsUsingBlock:^(MediaPlayStateSuccessBlock success, NSUInteger idx, BOOL *stop) {
+                success(MediaControlPlayStateFinished);
+            }];
+        });
+    }
+}
+
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (!_playStateSubscription)
+        return;
+
+    if (![@"rate" isEqualToString:keyPath])
+        return;
+
+    MediaControlPlayState playState = MediaControlPlayStateUnknown;
+
+    if (self.avPlayer.rate > 0.0f)
+    {
+        playState = MediaControlPlayStatePlaying;
+    } else if (self.avPlayer.rate == 0.0f)
+    {
+        int comparison = CMTimeCompare(self.avPlayer.currentTime, self.avPlayer.currentItem.duration);
+
+        if (comparison >= 0)
+            playState = MediaControlPlayStateFinished;
+        else
+            playState = MediaControlPlayStatePaused;
+    }
+
+    dispatch_on_main(^{
+        [_playStateSubscription.successCalls enumerateObjectsUsingBlock:^(MediaPlayStateSuccessBlock success, NSUInteger idx, BOOL *stop) {
+            success(playState);
+        }];
+    });
+}
+
 #pragma mark - Helpers
 
 - (void) closeLaunchSession:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
@@ -405,9 +461,10 @@
     } else if (launchSession.sessionType == LaunchSessionTypeMedia)
     {
         [self closeMedia:launchSession success:success failure:failure];
-    } else {
+    } else
+    {
         if (failure)
-            dispatch_on_main(^{ failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@""]); });
+            dispatch_on_main(^{ failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Could not find DeviceService responsible for closing this LaunchSession"]); });
     }
 }
 
