@@ -119,7 +119,7 @@
 
     if (self.secondWindow && self.secondWindow.screen)
     {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.secondWindow.screen.bounds];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.secondWindow.frame];
         [imageView setContentMode:UIViewContentModeScaleAspectFit];
 
         UIViewController *viewController = [[UIViewController alloc] init];
@@ -165,19 +165,28 @@
 {
     [self closeMedia:nil success:nil failure:nil];
 
-    _avPlayer = [[AVPlayer alloc] initWithURL:mediaURL];
-    _avPlayer.allowsExternalPlayback = YES;
-    _avPlayer.usesExternalPlaybackWhileExternalScreenIsActive = YES;
+    [self checkForExistingScreenAndInitializeIfPresent];
 
-    [self.avPlayer play];
-
-    if (success)
+    if (self.secondWindow && self.secondWindow.screen)
     {
-        LaunchSession *launchSession = [LaunchSession new];
-        launchSession.sessionType = LaunchSessionTypeMedia;
-        launchSession.service = self;
+        _avPlayer = [[AVPlayer alloc] initWithURL:mediaURL];
+        _avPlayer.allowsExternalPlayback = YES;
+        _avPlayer.usesExternalPlaybackWhileExternalScreenIsActive = YES;
 
-        success(launchSession, self.mediaControl);
+        [self.avPlayer play];
+
+        if (success)
+        {
+            LaunchSession *launchSession = [LaunchSession new];
+            launchSession.sessionType = LaunchSessionTypeMedia;
+            launchSession.service = self;
+
+            success(launchSession, self.mediaControl);
+        }
+    } else
+    {
+        if (failure)
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Not currently mirrored with an AirPlay device"]);
     }
 }
 
@@ -266,7 +275,7 @@
             self.avPlayer.rate = 1.0;
         else if (self.avPlayer.currentItem.canPlayReverse)
         {
-            self.avPlayer.rate = -1.0;
+            self.avPlayer.rate = (float) -1.0;
 
             if (success)
                 success(nil);
@@ -350,6 +359,7 @@
 
 - (ServiceSubscription *) subscribePlayStateWithSuccess:(MediaPlayStateSuccessBlock)success failure:(FailureBlock)failure
 {
+    // TODO: implement this
     return nil;
 }
 
@@ -578,6 +588,7 @@
         _secondWindow.hidden = YES;
         _secondWindow.screen = nil;
         _secondWindow = nil;
+
         _webAppWebView.delegate = nil;
         _webAppWebView = nil;
     }
