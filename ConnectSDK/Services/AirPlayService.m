@@ -26,9 +26,11 @@
 #import <AVFoundation/AVAsset.h>
 
 
-@interface AirPlayService () <UIWebViewDelegate, ServiceCommandDelegate>
+@interface AirPlayService () <UIWebViewDelegate, ServiceCommandDelegate, UIAlertViewDelegate>
 {
     BOOL _isConnecting;
+    NSTimer *_connectTimer;
+    UIAlertView *_connectingAlertView;
 
     SuccessBlock _launchSuccessBlock;
     FailureBlock _launchFailureBlock;
@@ -70,10 +72,21 @@
 
 - (void) connect
 {
-    self.connected = YES;
+    _isConnecting = YES;
 
-    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
-        dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
+    [self checkScreenCount];
+
+    if (!self.connected)
+    {
+        NSString *title = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_Title" value:@"Mirroring Required" table:@"ConnectSDK"];
+        NSString *message = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_Description" value:@"Enable AirPlay mirroring to connect to this device" table:@"ConnectSDK"];
+        NSString *ok = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_OK" value:@"OK" table:@"ConnectSDK"];
+        NSString *cancel = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_Cancel" value:@"Cancel" table:@"ConnectSDK"];
+
+        _connectingAlertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:ok, nil];
+
+        dispatch_on_main(^{ [_connectingAlertView show]; });
+    }
 }
 
 - (void) disconnect
@@ -84,11 +97,29 @@
 
     [self hScreenDisconnected:nil];
 
+    if (_connectTimer)
+    {
+        [_connectTimer invalidate];
+        _connectTimer = nil;
+    }
+
     self.connected = NO;
     _isConnecting = NO;
 
+    if (_connectingAlertView)
+        dispatch_on_main(^{ [_connectingAlertView dismissWithClickedButtonIndex:0 animated:NO]; });
+
     if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
         dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:nil]; });
+}
+
+- (void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    _connectingAlertView.delegate = nil;
+    _connectingAlertView = nil;
+
+    if (buttonIndex == 0 && _isConnecting)
+        [self disconnect];
 }
 
 - (int) sendSubscription:(ServiceSubscription *)subscription type:(ServiceSubscriptionType)type payload:(id)payload toURL:(NSURL *)URL withId:(int)callId
@@ -485,6 +516,33 @@
 }
 
 #pragma mark - External display detection, setup
+
+- (void) checkScreenCount
+{
+    if (_connectTimer)
+    {
+        [_connectTimer invalidate];
+        _connectTimer = nil;
+    }
+
+    if (!_isConnecting)
+        return;
+
+    if ([UIScreen screens].count > 1)
+    {
+        _isConnecting = NO;
+        self.connected = YES;
+
+        if (_connectingAlertView)
+            dispatch_on_main(^{ [_connectingAlertView dismissWithClickedButtonIndex:1 animated:NO]; });
+
+        if (self.delegate && [self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
+            dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
+    } else
+    {
+        _connectTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(checkScreenCount) userInfo:nil repeats:NO];
+    }
+}
 
 - (void)checkForExistingScreenAndInitializeIfPresent
 {
