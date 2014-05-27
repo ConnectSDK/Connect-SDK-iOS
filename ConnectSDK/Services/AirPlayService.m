@@ -658,7 +658,7 @@
 
     _webAppWebView = [[UIWebView alloc] initWithFrame:self.secondWindow.bounds];
     _webAppWebView.allowsInlineMediaPlayback = YES;
-    _webAppWebView.mediaPlaybackAllowsAirPlay = YES;
+    _webAppWebView.mediaPlaybackAllowsAirPlay = NO;
     _webAppWebView.mediaPlaybackRequiresUserAction = NO;
 
     UIViewController *secondScreenViewController = [[UIViewController alloc] init];
