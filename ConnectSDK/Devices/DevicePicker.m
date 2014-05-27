@@ -104,14 +104,14 @@
         
         if (sourceView.superview && ![sourceView.superview isKindOfClass:[UIWindow class]])
         {
-            sourceRect = sourceView.bounds;
+            sourceRect = sourceView.frame;
             targetView = sourceView.superview;
             permittedArrowDirections = UIPopoverArrowDirectionAny;
         } else
         {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRotation) name:UIDeviceOrientationDidChangeNotification object:nil];
             
-            sourceRect = sourceView.bounds;
+            sourceRect = sourceView.frame;
             targetView = sourceView;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wint-conversion"
