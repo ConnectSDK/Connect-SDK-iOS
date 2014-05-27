@@ -85,7 +85,8 @@
 
         _connectingAlertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:ok, nil];
 
-        dispatch_on_main(^{ [_connectingAlertView show]; });
+        if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:pairingRequiredOfType:withData:)])
+            dispatch_on_main(^{ [self.delegate deviceService:self pairingRequiredOfType:DeviceServicePairingTypeAirPlayMirroring withData:_connectingAlertView]; });
     }
 }
 
