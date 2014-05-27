@@ -1941,7 +1941,7 @@ NSString *lgeUDAPRequestURI[8] = {
 
 - (void)closeInputPicker:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    [self closeApp:launchSession success:success failure:failure];
+    [self.keyControl sendKeyCode:NetcastTVKeyCodeExit success:success failure:failure];
 }
 
 - (void)getExternalInputListWithSuccess:(ExternalInputListSuccessBlock)success failure:(FailureBlock)failure
