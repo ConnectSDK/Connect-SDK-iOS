@@ -153,7 +153,8 @@
 
 - (void) displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    [self closeMedia:nil success:nil failure:nil];
+    if (self.avPlayer)
+        [self closeMedia:nil success:nil failure:nil];
 
     [self checkForExistingScreenAndInitializeIfPresent];
 
@@ -609,6 +610,9 @@
 
         return;
     }
+
+    if (self.avPlayer)
+        [self closeMedia:nil success:nil failure:nil];
 
     [self checkForExistingScreenAndInitializeIfPresent];
 
