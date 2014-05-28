@@ -210,7 +210,10 @@
 
     if (self.secondWindow && self.secondWindow.screen)
     {
-        _avPlayer = [[AVPlayer alloc] initWithURL:mediaURL];
+        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:mediaURL options:@{AVURLAssetPreferPreciseDurationAndTimingKey: @YES}];
+        AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
+
+        _avPlayer = [AVPlayer playerWithPlayerItem:item];
         _avPlayer.allowsExternalPlayback = YES;
         _avPlayer.usesExternalPlaybackWhileExternalScreenIsActive = YES;
         _avPlayer.actionAtItemEnd = AVPlayerActionAtItemEndNone;
