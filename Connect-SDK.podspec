@@ -46,8 +46,8 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
   s.xcconfig = {
-      "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.2.1-Release",
-      "OTHER_LDFLAGS" => "-ObjC"
+      "FRAMEWORK_SEARCH_PATHS" => "$(inherited) $(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.2.1-Release",
+      "OTHER_LDFLAGS" => "$(inherited) -ObjC"
   }
   s.dependency "google-cast-sdk", "2.2.1"
 end
