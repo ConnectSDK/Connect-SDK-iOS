@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "Connect-SDK"
+  s.name         = "ConnectSDK"
   s.version      = "1.2.1"
   s.summary      = "Connect SDK is an open source framework that connects your mobile apps with multiple TV platforms."
 
