@@ -25,6 +25,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/ConnectSDK/Connect-SDK-iOS.git", :tag => "1.2.1" }
   s.source_files  = "ConnectSDK", "ConnectSDK/**/*.{h,m}"
   s.exclude_files = "Classes/Exclude"
+  s.framework = "GoogleCast"
   s.libraries = "z", "icucore"
   s.prefix_header_contents = <<-PREFIX
                                   #define CONNECT_SDK_VERSION @"1.2.1"
@@ -46,7 +47,7 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
   s.xcconfig = {
-      "FRAMEWORK_SEARCH_PATHS" => "$(inherited) $(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.2.1-Release",
+      "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.2.1-Release",
       "OTHER_LDFLAGS" => "$(inherited) -ObjC"
   }
   s.dependency "google-cast-sdk", "2.2.1"
