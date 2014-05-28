@@ -16,6 +16,20 @@ This project has the following dependencies.
 - Automatic Reference Counting (ARC)
 
 ##Including Connect SDK in your app
+###Using CocoaPods
+1. Add `pod "ConnectSDK"` to your Podspec file
+2. Run `pod install`
+3. Open the workspace file and run your project
+4. If you get any errors about the Google Cast framework, download the [latest framework](https://developers.google.com/cast/docs/downloads) and include it in your project's `Link Binary With Libraries` build phase
+
+####Important note about google-cast-sdk CocoaPod
+As of this writing, Google does not maintain the links for old versions of the Google Cast iOS sender framework files. This means that the google-cast-sdk CocoaPod will break upon each release of the Google Cast SDK. When this occurs, you will need to do either of the following.
+
+- Check to see if the [google-cast-sdk](https://github.com/CocoaPods/Specs/tree/master/Specs/google-cast-sdk) CocoaPod has been updated
+- Manually download and add/update the GoogleCast.framework file from [Google's site](https://developers.google.com/cast/docs/downloads)
+
+###Without CocoaPods
+
 1. Clone repository (or download & unzip)
 2. Open your project in Xcode
 3. Locate the Connect SDK Xcode project in the Finder
@@ -30,7 +44,7 @@ This project has the following dependencies.
 9. Download the [Google Cast SDK iOS sender library file](https://developers.google.com/cast/docs/downloads)
 10. Extract GoogleCast.framework and copy it to $(Connect SDK project directory)/ConnectSDK/Frameworks
 11. Drag and drop GoogleCast.framework into your project's Frameworks folder
- 
+
 ###Include Strings File for Localization (optional)
 1. Locate the Connect SDK Xcode project in the Finder
 2. Drag the ConnectSDKStrings folder into your project's library
