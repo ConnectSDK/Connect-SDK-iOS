@@ -31,6 +31,10 @@ We use [semantic versioning](http://semver.org/) in our tagged releases.
 
 We use GitHub's issues system for managing bug reports and some upcoming features. Just open an issue and a member of the team will set the appropriate assignee, label, & milestone.
 
+###Crash Reports
+
+If you experience a crash, please attach your symbolicated crash log or stack trace to an issue in GitHub.
+
 ##Pull Requests
 
 If you would like to submit code, please fork the repository on GitHub and develop on the latest sdk-X.Y-dev branch. We do not accept pull requests on the master branch, as we only merge QA'd & tagged code into the master branch. See the description of our branching strategy above.
@@ -42,10 +46,6 @@ Connect SDK does include some third party libraries, but we try to avoid using t
 ###Licensing
 
 If you submit a pull request, you acknowledge that your code will be released to the public under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html). Make sure that you have the rights to the code you are submitting in the pull request.
-
-##Crash Reports
-
-If you experience a crash, please attach your symbolicated crash log or stack trace to an issue in GitHub.
 
 ##Testing Lab
 
