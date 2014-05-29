@@ -61,6 +61,9 @@
 		EA61EBF018FE48E900D75696 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBEF18FE48E900D75696 /* SystemConfiguration.framework */; };
 		EA61EBF218FE48EF00D75696 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
 		EA649E181901EABB00DD9FC7 /* ZeroConfDiscoveryProvider.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F7C71326AB56D77F39095 /* ZeroConfDiscoveryProvider.h */; };
+		EAAA426C1937AD690072ABBF /* AirPlayMirroredService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F74D76D7D96D4136929C8 /* AirPlayMirroredService.h */; };
+		EAAA426D1937AD690072ABBF /* AirPlayHTTPService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F7C3C796FA0C8CD18C649 /* AirPlayHTTPService.h */; };
+		EAAA426E1937AD690072ABBF /* AirPlayService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F765C7443AC13CB37632E /* AirPlayService.h */; };
 		EAD7F85E1906E98200B33AAB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7F85D1906E98200B33AAB /* AVFoundation.framework */; };
 		EAD7F8601906E99C00B33AAB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7F85F1906E99C00B33AAB /* UIKit.framework */; };
 		EAFA986818FEE8DF001C4FA1 /* ConnectSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EB3D18FE48C500D75696 /* ConnectSDK.h */; };
@@ -141,6 +144,9 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				EAAA426C1937AD690072ABBF /* AirPlayMirroredService.h in CopyFiles */,
+				EAAA426D1937AD690072ABBF /* AirPlayHTTPService.h in CopyFiles */,
+				EAAA426E1937AD690072ABBF /* AirPlayService.h in CopyFiles */,
 				EA3F17F81909AC3400EFAA6F /* AirPlayWebAppSession.h in CopyFiles */,
 				EAFA988E18FEE9B5001C4FA1 /* ServiceAsyncCommand.h in CopyFiles */,
 				EAFA988F18FEE9B5001C4FA1 /* ServiceCommand.h in CopyFiles */,
