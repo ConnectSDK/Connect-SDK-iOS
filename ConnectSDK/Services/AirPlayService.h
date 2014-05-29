@@ -22,19 +22,34 @@
 
 #import <Foundation/Foundation.h>
 #import "DeviceService.h"
-#import <UIKit/UIKit.h>
+#import "AirPlayHTTPService.h"
+#import "AirPlayMirroredService.h"
 #import "MediaPlayer.h"
 #import "MediaControl.h"
 #import "WebAppLauncher.h"
-#import <AVFoundation/AVPlayer.h>
 
+/*!
+ * This enum defines how the AirPlayService should behave, in terms of sending commands to the AirPlay device.
+ */
+typedef enum {
+    AirPlayServiceModeMirrored = 0, /*! Requires AirPlay mirroring to be enabled on the iOS device */
+    AirPlayServiceModeHTTP, /*! Sends commands to the AirPlay device via HTTP request */
+    AirPlayServiceModeMixed /*! Mixes the mirrored & HTTP modes (HTTP for photo/media, mirrored for web app launcher) */
+} AirPlayServiceMode;
 
 @interface AirPlayService : DeviceService <MediaPlayer, MediaControl, WebAppLauncher>
 
-@property (nonatomic, readonly) UIWindow *secondWindow;
-@property (nonatomic, readonly) AVPlayer *avPlayer;
-@property (nonatomic, readonly) UIWebView *webAppWebView;
+@property (nonatomic, readonly) AirPlayHTTPService *httpService;
+@property (nonatomic, readonly) AirPlayMirroredService *mirroredService;
 
-- (void) disconnectFromWebApp;
+/*!
+ * Returns the AirPlayServiceMode
+ */
++ (AirPlayServiceMode) serviceMode;
+
+/*!
+ * Sets the AirPlayService mode. For consistency's sake, this property should be set before DiscoveryManager is set for the first time.
+ */
++ (void) setAirPlayServiceMode:(AirPlayServiceMode)serviceMode;
 
 @end

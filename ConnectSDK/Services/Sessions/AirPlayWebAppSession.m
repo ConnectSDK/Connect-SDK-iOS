@@ -185,7 +185,7 @@
 
 - (void) disconnectFromWebApp
 {
-    [self.service disconnectFromWebApp];
+    [self.service.mirroredService disconnectFromWebApp];
 }
 
 - (void) sendText:(NSString *)message success:(SuccessBlock)success failure:(FailureBlock)failure
@@ -198,7 +198,7 @@
 
     NSString *commandString = [NSString stringWithFormat:@"window.connectManager.handleMessage({from: -1, message: \"%@\" })", message];
 
-    [self.service.webAppWebView stringByEvaluatingJavaScriptFromString:commandString];
+    [self.service.mirroredService.webAppWebView stringByEvaluatingJavaScriptFromString:commandString];
 
     if (success)
         success(nil);
@@ -224,7 +224,7 @@
         NSString *messageString = [[NSString alloc] initWithData:messageData encoding:NSUTF8StringEncoding];
         NSString *commandString = [NSString stringWithFormat:@"window.connectManager.handleMessage({from: -1, message: %@ })", messageString];
 
-        [self.service.webAppWebView stringByEvaluatingJavaScriptFromString:commandString];
+        [self.service.mirroredService.webAppWebView stringByEvaluatingJavaScriptFromString:commandString];
 
         if (success)
             success(nil);
