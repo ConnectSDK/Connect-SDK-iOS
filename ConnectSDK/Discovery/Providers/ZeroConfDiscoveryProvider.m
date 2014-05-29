@@ -226,6 +226,9 @@
     serviceDescription.port = (NSUInteger) port;
     serviceDescription.UUID = UUID;
 
+    NSString *commandPath = [NSString stringWithFormat:@"http://%@:%@/", address, @(port)];
+    serviceDescription.commandURL = [NSURL URLWithString:commandPath];
+
     [_resolvingDevices removeObjectForKey:sender.name];
     [_discoveredDevices setObject:serviceDescription forKey:sender.name];
 
