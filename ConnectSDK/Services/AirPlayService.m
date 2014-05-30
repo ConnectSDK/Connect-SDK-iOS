@@ -31,8 +31,8 @@ static AirPlayServiceMode airPlayServiceMode;
 
 @implementation AirPlayService
 {
-    AirPlayHTTPService *_httpService;
-    AirPlayMirroredService *_mirroredService;
+    AirPlayServiceHTTP *_httpService;
+    AirPlayServiceMirrored *_mirroredService;
 }
 
 + (void) setAirPlayServiceMode:(AirPlayServiceMode)serviceMode
@@ -119,24 +119,24 @@ static AirPlayServiceMode airPlayServiceMode;
     }
 }
 
-- (AirPlayHTTPService *) httpService
+- (AirPlayServiceHTTP *) httpService
 {
     if ([AirPlayService serviceMode] == AirPlayServiceModeMirrored)
         return nil;
 
     if (!_httpService)
-        _httpService = [[AirPlayHTTPService alloc] initWithAirPlayService:self];
+        _httpService = [[AirPlayServiceHTTP alloc] initWithAirPlayService:self];
 
     return _httpService;
 }
 
-- (AirPlayMirroredService *) mirroredService
+- (AirPlayServiceMirrored *) mirroredService
 {
     if ([AirPlayService serviceMode] == AirPlayServiceModeHTTP)
         return nil;
 
     if (!_mirroredService)
-        _mirroredService = [[AirPlayMirroredService alloc] initWithAirPlayService:self];
+        _mirroredService = [[AirPlayServiceMirrored alloc] initWithAirPlayService:self];
 
     return _mirroredService;
 }

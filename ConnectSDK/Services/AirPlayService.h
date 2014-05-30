@@ -22,8 +22,8 @@
 
 #import <Foundation/Foundation.h>
 #import "DeviceService.h"
-#import "AirPlayHTTPService.h"
-#import "AirPlayMirroredService.h"
+#import "AirPlayServiceHTTP.h"
+#import "AirPlayServiceMirrored.h"
 #import "MediaPlayer.h"
 #import "MediaControl.h"
 #import "WebAppLauncher.h"
@@ -39,8 +39,8 @@ typedef enum {
 
 @interface AirPlayService : DeviceService <MediaPlayer, MediaControl, WebAppLauncher>
 
-@property (nonatomic, readonly) AirPlayHTTPService *httpService;
-@property (nonatomic, readonly) AirPlayMirroredService *mirroredService;
+@property (nonatomic, readonly) AirPlayServiceHTTP *httpService;
+@property (nonatomic, readonly) AirPlayServiceMirrored *mirroredService;
 
 /*!
  * Returns the AirPlayServiceMode

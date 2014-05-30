@@ -10,8 +10,8 @@
 		BB9F70B6CD7601E5E08902A1 /* AirPlayService.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F786205D0DD1F8718CF96 /* AirPlayService.m */; };
 		BB9F710601FE8B999634A5BF /* AirPlayWebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F76C6A6C862002C9FB89D /* AirPlayWebAppSession.m */; };
 		BB9F75C707C7D86EB1934BD5 /* ZeroConfDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F752184AD57C1730A2B40 /* ZeroConfDiscoveryProvider.m */; };
-		BB9F7C2660FBFFFDA89D5683 /* AirPlayMirroredService.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7C85F1073867229D87EA /* AirPlayMirroredService.m */; };
-		BB9F7ED4584DEA55E1EB958B /* AirPlayHTTPService.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7960CFCF1CEA2AF317F0 /* AirPlayHTTPService.m */; };
+		BB9F7C2660FBFFFDA89D5683 /* AirPlayServiceMirrored.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7C85F1073867229D87EA /* AirPlayServiceMirrored.m */; };
+		BB9F7ED4584DEA55E1EB958B /* AirPlayServiceHTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7960CFCF1CEA2AF317F0 /* AirPlayServiceHTTP.m */; };
 		EA3F17F81909AC3400EFAA6F /* AirPlayWebAppSession.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F725D0F278CD7B78F1FC6 /* AirPlayWebAppSession.h */; };
 		EA61EB1418FE485B00D75696 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1318FE485B00D75696 /* Foundation.framework */; };
 		EA61EBA918FE48C500D75696 /* ConnectableDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = EA61EB4018FE48C500D75696 /* ConnectableDevice.m */; };
@@ -61,8 +61,8 @@
 		EA61EBF018FE48E900D75696 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBEF18FE48E900D75696 /* SystemConfiguration.framework */; };
 		EA61EBF218FE48EF00D75696 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
 		EA649E181901EABB00DD9FC7 /* ZeroConfDiscoveryProvider.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F7C71326AB56D77F39095 /* ZeroConfDiscoveryProvider.h */; };
-		EAAA426C1937AD690072ABBF /* AirPlayMirroredService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F74D76D7D96D4136929C8 /* AirPlayMirroredService.h */; };
-		EAAA426D1937AD690072ABBF /* AirPlayHTTPService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F7C3C796FA0C8CD18C649 /* AirPlayHTTPService.h */; };
+		EAAA426C1937AD690072ABBF /* AirPlayServiceMirrored.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F74D76D7D96D4136929C8 /* AirPlayServiceMirrored.h */; };
+		EAAA426D1937AD690072ABBF /* AirPlayServiceHTTP.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F7C3C796FA0C8CD18C649 /* AirPlayServiceHTTP.h */; };
 		EAAA426E1937AD690072ABBF /* AirPlayService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F765C7443AC13CB37632E /* AirPlayService.h */; };
 		EAD7F85E1906E98200B33AAB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7F85D1906E98200B33AAB /* AVFoundation.framework */; };
 		EAD7F8601906E99C00B33AAB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7F85F1906E99C00B33AAB /* UIKit.framework */; };
@@ -144,8 +144,8 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				EAAA426C1937AD690072ABBF /* AirPlayMirroredService.h in CopyFiles */,
-				EAAA426D1937AD690072ABBF /* AirPlayHTTPService.h in CopyFiles */,
+				EAAA426C1937AD690072ABBF /* AirPlayServiceMirrored.h in CopyFiles */,
+				EAAA426D1937AD690072ABBF /* AirPlayServiceHTTP.h in CopyFiles */,
 				EAAA426E1937AD690072ABBF /* AirPlayService.h in CopyFiles */,
 				EA3F17F81909AC3400EFAA6F /* AirPlayWebAppSession.h in CopyFiles */,
 				EAFA988E18FEE9B5001C4FA1 /* ServiceAsyncCommand.h in CopyFiles */,
@@ -225,15 +225,15 @@
 
 /* Begin PBXFileReference section */
 		BB9F725D0F278CD7B78F1FC6 /* AirPlayWebAppSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayWebAppSession.h; sourceTree = "<group>"; };
-		BB9F74D76D7D96D4136929C8 /* AirPlayMirroredService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayMirroredService.h; sourceTree = "<group>"; };
+		BB9F74D76D7D96D4136929C8 /* AirPlayServiceMirrored.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayServiceMirrored.h; sourceTree = "<group>"; };
 		BB9F752184AD57C1730A2B40 /* ZeroConfDiscoveryProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroConfDiscoveryProvider.m; sourceTree = "<group>"; };
 		BB9F765C7443AC13CB37632E /* AirPlayService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayService.h; sourceTree = "<group>"; };
 		BB9F76C6A6C862002C9FB89D /* AirPlayWebAppSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayWebAppSession.m; sourceTree = "<group>"; };
 		BB9F786205D0DD1F8718CF96 /* AirPlayService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayService.m; sourceTree = "<group>"; };
-		BB9F7960CFCF1CEA2AF317F0 /* AirPlayHTTPService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayHTTPService.m; sourceTree = "<group>"; };
-		BB9F7C3C796FA0C8CD18C649 /* AirPlayHTTPService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayHTTPService.h; sourceTree = "<group>"; };
+		BB9F7960CFCF1CEA2AF317F0 /* AirPlayServiceHTTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayServiceHTTP.m; sourceTree = "<group>"; };
+		BB9F7C3C796FA0C8CD18C649 /* AirPlayServiceHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayServiceHTTP.h; sourceTree = "<group>"; };
 		BB9F7C71326AB56D77F39095 /* ZeroConfDiscoveryProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroConfDiscoveryProvider.h; sourceTree = "<group>"; };
-		BB9F7C85F1073867229D87EA /* AirPlayMirroredService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayMirroredService.m; sourceTree = "<group>"; };
+		BB9F7C85F1073867229D87EA /* AirPlayServiceMirrored.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayServiceMirrored.m; sourceTree = "<group>"; };
 		EA41388A18FE51A9002CB005 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		EA61EB1018FE485B00D75696 /* libConnectSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libConnectSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA61EB1318FE485B00D75696 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -584,10 +584,10 @@
 				EA61EB9618FE48C500D75696 /* CastServiceChannel.m */,
 				EA61EB9718FE48C500D75696 /* WebOSTVServiceMouse.h */,
 				EA61EB9818FE48C500D75696 /* WebOSTVServiceMouse.m */,
-				BB9F7C85F1073867229D87EA /* AirPlayMirroredService.m */,
-				BB9F74D76D7D96D4136929C8 /* AirPlayMirroredService.h */,
-				BB9F7960CFCF1CEA2AF317F0 /* AirPlayHTTPService.m */,
-				BB9F7C3C796FA0C8CD18C649 /* AirPlayHTTPService.h */,
+				BB9F7C85F1073867229D87EA /* AirPlayServiceMirrored.m */,
+				BB9F74D76D7D96D4136929C8 /* AirPlayServiceMirrored.h */,
+				BB9F7960CFCF1CEA2AF317F0 /* AirPlayServiceHTTP.m */,
+				BB9F7C3C796FA0C8CD18C649 /* AirPlayServiceHTTP.h */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -762,8 +762,8 @@
 				BB9F75C707C7D86EB1934BD5 /* ZeroConfDiscoveryProvider.m in Sources */,
 				BB9F710601FE8B999634A5BF /* AirPlayWebAppSession.m in Sources */,
 				BB9F70B6CD7601E5E08902A1 /* AirPlayService.m in Sources */,
-				BB9F7C2660FBFFFDA89D5683 /* AirPlayMirroredService.m in Sources */,
-				BB9F7ED4584DEA55E1EB958B /* AirPlayHTTPService.m in Sources */,
+				BB9F7C2660FBFFFDA89D5683 /* AirPlayServiceMirrored.m in Sources */,
+				BB9F7ED4584DEA55E1EB958B /* AirPlayServiceHTTP.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

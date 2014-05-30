@@ -1,9 +1,24 @@
 //
-// Created by Jeremy White on 5/28/14.
-// Copyright (c) 2014 LG Electronics. All rights reserved.
+//  AirPlayServiceHTTP.m
+//  Connect SDK
+//
+//  Created by Jeremy White on 5/28/14.
+//  Copyright (c) 2014 LG Electronics.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
-#import "AirPlayHTTPService.h"
+#import "AirPlayServiceHTTP.h"
 #import "DeviceService.h"
 #import "AirPlayService.h"
 #import "ConnectError.h"
@@ -12,7 +27,7 @@
 #import "Guid.h"
 #import "GCDWebServer.h"
 
-@interface AirPlayHTTPService () <ServiceCommandDelegate, DeviceServiceReachabilityDelegate>
+@interface AirPlayServiceHTTP () <ServiceCommandDelegate, DeviceServiceReachabilityDelegate>
 
 @property (nonatomic) DeviceServiceReachability *serviceReachability;
 @property (nonatomic) NSString *sessionId;
@@ -22,7 +37,7 @@
 
 @end
 
-@implementation AirPlayHTTPService
+@implementation AirPlayServiceHTTP
 
 - (instancetype) initWithAirPlayService:(AirPlayService *)service
 {
@@ -32,7 +47,7 @@
     {
         _service = service;
         _commandQueue = [[NSOperationQueue alloc] init];
-        _imageProcessingQueue = dispatch_queue_create("com.connectsdk.AirPlayHTTPService.ImageProcessing", DISPATCH_QUEUE_SERIAL);
+        _imageProcessingQueue = dispatch_queue_create("com.connectsdk.AirPlayServiceHTTP.ImageProcessing", DISPATCH_QUEUE_SERIAL);
     }
 
     return self;
