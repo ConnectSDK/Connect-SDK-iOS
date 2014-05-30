@@ -29,18 +29,25 @@
 #import "WebAppLauncher.h"
 
 /*!
- * This enum defines how the AirPlayService should behave, in terms of sending commands to the AirPlay device.
+ * The values in this enum type define how the AirPlayService should behave, in terms of sending commands to the AirPlay device.
  */
 typedef enum {
-    AirPlayServiceModeMirrored = 0, /*! Requires AirPlay mirroring to be enabled on the iOS device */
-    AirPlayServiceModeHTTP, /*! Sends commands to the AirPlay device via HTTP request */
-    AirPlayServiceModeMixed /*! Mixes the mirrored & HTTP modes (HTTP for photo/media, mirrored for web app launcher) */
+    /*! Requires AirPlay mirroring to be enabled on the iOS device */
+    AirPlayServiceModeMirrored = 0,
+
+    /*! Sends commands to the AirPlay device via HTTP request */
+    AirPlayServiceModeHTTP,
+
+    /*! Mixes the mirrored & HTTP modes (HTTP for photo/media, mirrored for web app launcher) */
+    AirPlayServiceModeMixed
 } AirPlayServiceMode;
 
 @interface AirPlayService : DeviceService <MediaPlayer, MediaControl, WebAppLauncher>
 
+// @cond INTERNAL
 @property (nonatomic, readonly) AirPlayServiceHTTP *httpService;
 @property (nonatomic, readonly) AirPlayServiceMirrored *mirroredService;
+// @endcond
 
 /*!
  * Returns the AirPlayServiceMode

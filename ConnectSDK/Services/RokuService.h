@@ -44,7 +44,6 @@ enum
 };
 
 // @cond INTERNAL
-
 typedef NSUInteger RokuKeyCode;
 
 #define kRokuKeyCodes @[ @"Home", @"Rev", @"Fwd", @"Play", @"Select", @"Left", @"Right", @"Down", @"Up", @"Back", @"InstantReplay", @"Info", @"Backspace", @"Search", @"Enter", @"Lit_" ]
@@ -52,8 +51,9 @@ typedef NSUInteger RokuKeyCode;
 
 @interface RokuService : DeviceService <Launcher, MediaPlayer, MediaControl, KeyControl, TextInputControl>
 
+// @cond INTERNAL
 - (void)sendKeyCode:(RokuKeyCode)keyCode success:(SuccessBlock)success failure:(FailureBlock)failure;
-
+// @endcond
 
 /*!
  * Registers an app ID to be checked upon discovery of this device. If the app is found on the target device, the DIALService will gain the "Launcher.<appID>" capability, where <appID> is the value of the appId parameter.
