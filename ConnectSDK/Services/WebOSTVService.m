@@ -155,11 +155,9 @@
         capabilities = [capabilities arrayByAddingObjectsFromArray:kExternalInputControlCapabilities];
         capabilities = [capabilities arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
         capabilities = [capabilities arrayByAddingObjectsFromArray:kToastControlCapabilities];
-        capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaControlCapabilities];
     } else
     {
         capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
-        capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaControlCapabilities];
         capabilities = [capabilities arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
         capabilities = [capabilities arrayByAddingObjectsFromArray:@[
                 kLauncherApp,
