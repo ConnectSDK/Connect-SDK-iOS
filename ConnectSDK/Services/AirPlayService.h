@@ -42,6 +42,10 @@ typedef enum {
     AirPlayServiceModeMixed
 } AirPlayServiceMode;
 
+/*!
+ * ###Mirroring
+ * Out of the box, all functionality provided by the AirPlayService will require the user to have mirroring enabled on their device. You may avoid this requirement by changing the serviceMode property.
+ */
 @interface AirPlayService : DeviceService <MediaPlayer, MediaControl, WebAppLauncher>
 
 // @cond INTERNAL
