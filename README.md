@@ -5,7 +5,8 @@ Generate framework after build:
 https://github.com/jverkoey/iOS-Framework#walkthrough 
 in build_framework.sh, make this change:
 SF_TARGET_NAME=ConnectSDK
-3. add i386 and x86_64 to VALID_ARCHS.
+3. For bot targets (ConnectSDK and Framework), add i386 and x86_64 to VALID_ARCHS.
+change ONLY_ACTIVE_ARCH to No
 
 To build: Select Product->Scheme->Framework, then Product->Build.
 
