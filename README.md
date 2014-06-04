@@ -1,3 +1,19 @@
+##OrangeeJS enhancement
+Generate framework after build:
+1. Download [GoogleCast.framework](https://developers.google.com/cast/docs/downloads) and drop it to ConnectSDK/Frameworks  
+2. Follow instructions here:
+https://github.com/jverkoey/iOS-Framework#walkthrough 
+in build_framework.sh, make this change:
+SF_TARGET_NAME=ConnectSDK
+3. add i386 and x86_64 to VALID_ARCHS.
+
+To build: Select Product->Scheme->Framework, then Product->Build.
+
+Right click 'libConnectSDK.a' from 'Project navigator', select 'Show in finder'
+
+
+#################original README#########################
+
 #Connect SDK iOS
 Connect SDK is an open source framework that connects your mobile apps with multiple TV platforms. Because most TV platforms support a variety of protocols, Connect SDK integrates and abstracts the discovery and connectivity between all supported protocols.
 
