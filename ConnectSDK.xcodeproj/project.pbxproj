@@ -192,6 +192,21 @@
 		EECAED4E193F605200D31F61 /* WebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBA218FE48C500D75696 /* WebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EECAED4F193F605700D31F61 /* WebAppSessionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBA418FE48C500D75696 /* WebAppSessionDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EECAED50193F605900D31F61 /* WebOSWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBA518FE48C500D75696 /* WebOSWebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED97193F9E2100D31F61 /* GCDWebServer.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBD018FE48D400D75696 /* GCDWebServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED98193F9E2B00D31F61 /* GCDWebServerConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBD218FE48D400D75696 /* GCDWebServerConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED9A193F9E3100D31F61 /* GCDWebServerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBD418FE48D400D75696 /* GCDWebServerPrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED9B193F9E3400D31F61 /* GCDWebServerRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBD518FE48D400D75696 /* GCDWebServerRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED9C193F9E3800D31F61 /* GCDWebServerResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBD718FE48D400D75696 /* GCDWebServerResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED9D193F9E3E00D31F61 /* XMLReader.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBE418FE48D400D75696 /* XMLReader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED9E193F9E5D00D31F61 /* CastServiceChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB9518FE48C500D75696 /* CastServiceChannel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED9F193F9E6200D31F61 /* WebOSTVServiceMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB9718FE48C500D75696 /* WebOSTVServiceMouse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAEDA0193F9E8C00D31F61 /* Guid.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBDB18FE48D400D75696 /* Guid.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAEDA1193F9E9300D31F61 /* LGSRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBDF18FE48D400D75696 /* LGSRWebSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAEDA2193F9EDC00D31F61 /* NetcastTVServiceConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB8418FE48C500D75696 /* NetcastTVServiceConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAEDA3193FA02E00D31F61 /* ServiceConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB8618FE48C500D75696 /* ServiceConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAEDA4193FA03200D31F61 /* ServiceConfigDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB8818FE48C500D75696 /* ServiceConfigDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAEDA5193FA03600D31F61 /* ServiceDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB8918FE48C500D75696 /* ServiceDescription.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAEDA6193FA04000D31F61 /* WebOSTVServiceConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB8B18FE48C500D75696 /* WebOSTVServiceConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -761,6 +776,21 @@
 				EECAED4F193F605700D31F61 /* WebAppSessionDelegate.h in Headers */,
 				EECAED50193F605900D31F61 /* WebOSWebAppSession.h in Headers */,
 				EECAED4B193F604000D31F61 /* WebOSTVService.h in Headers */,
+				EECAED97193F9E2100D31F61 /* GCDWebServer.h in Headers */,
+				EECAED9B193F9E3400D31F61 /* GCDWebServerRequest.h in Headers */,
+				EECAED9C193F9E3800D31F61 /* GCDWebServerResponse.h in Headers */,
+				EECAED9F193F9E6200D31F61 /* WebOSTVServiceMouse.h in Headers */,
+				EECAED9A193F9E3100D31F61 /* GCDWebServerPrivate.h in Headers */,
+				EECAEDA0193F9E8C00D31F61 /* Guid.h in Headers */,
+				EECAEDA1193F9E9300D31F61 /* LGSRWebSocket.h in Headers */,
+				EECAEDA3193FA02E00D31F61 /* ServiceConfig.h in Headers */,
+				EECAED9E193F9E5D00D31F61 /* CastServiceChannel.h in Headers */,
+				EECAEDA2193F9EDC00D31F61 /* NetcastTVServiceConfig.h in Headers */,
+				EECAED9D193F9E3E00D31F61 /* XMLReader.h in Headers */,
+				EECAEDA5193FA03600D31F61 /* ServiceDescription.h in Headers */,
+				EECAEDA4193FA03200D31F61 /* ServiceConfigDelegate.h in Headers */,
+				EECAED98193F9E2B00D31F61 /* GCDWebServerConnection.h in Headers */,
+				EECAEDA6193FA04000D31F61 /* WebOSTVServiceConfig.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
