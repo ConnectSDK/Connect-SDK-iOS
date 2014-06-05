@@ -22,18 +22,21 @@
 #import "DeviceService.h"
 #import "AirPlayService.h"
 #import "ConnectError.h"
-#import "XMLReader.h"
 #import "DeviceServiceReachability.h"
 #import "Guid.h"
 #import "GCDWebServer.h"
 
+#import "ASIHTTPRequest.h"
+
 @interface AirPlayServiceHTTP () <ServiceCommandDelegate, DeviceServiceReachabilityDelegate>
 
-@property (nonatomic) DeviceServiceReachability *serviceReachability;
-@property (nonatomic) NSString *sessionId;
-@property (nonatomic) GCDWebServer *subscriptionServer;
-@property (nonatomic) NSOperationQueue *commandQueue;
-@property (nonatomic) dispatch_queue_t imageProcessingQueue;
+@property (nonatomic, readonly) UIBackgroundTaskIdentifier backgroundTaskId;
+@property (nonatomic, readonly) DeviceServiceReachability *serviceReachability;
+@property (nonatomic, readonly) NSString *sessionId;
+@property (nonatomic, readonly) NSString *assetId;
+@property (nonatomic, readonly) GCDWebServer *subscriptionServer;
+@property (nonatomic, readonly) dispatch_queue_t networkingQueue;
+@property (nonatomic, readonly) dispatch_queue_t imageProcessingQueue;
 
 @end
 
@@ -46,7 +49,8 @@
     if (self)
     {
         _service = service;
-        _commandQueue = [[NSOperationQueue alloc] init];
+        _backgroundTaskId = UIBackgroundTaskInvalid;
+        _networkingQueue = dispatch_queue_create("com.connectsdk.AirPlayServiceHTTP.Networking", DISPATCH_QUEUE_SERIAL);
         _imageProcessingQueue = dispatch_queue_create("com.connectsdk.AirPlayServiceHTTP.ImageProcessing", DISPATCH_QUEUE_SERIAL);
     }
 
@@ -57,52 +61,8 @@
 
 - (void) connect
 {
-    _connecting = YES;
+    _sessionId = [[Guid randomGuid] stringValue];
 
-    self.sessionId = [[Guid randomGuid] stringValue];
-
-    NSURL *connectionURL = [self.service.serviceDescription.commandURL URLByAppendingPathComponent:@"reverse"];
-    NSMutableURLRequest *connectionRequest = [NSMutableURLRequest requestWithURL:connectionURL];
-
-    [connectionRequest setHTTPMethod:@"POST"];
-    [connectionRequest setValue:@"PTTH/1.0" forHTTPHeaderField:@"Upgrade"];
-    [connectionRequest setValue:@"Upgrade" forHTTPHeaderField:@"Connection"];
-    [connectionRequest setValue:@"event" forHTTPHeaderField:@"X-Apple-Purpose"];
-    [connectionRequest setValue:@"0" forHTTPHeaderField: @"Content-Length"];
-    [connectionRequest setValue:@"MediaControl/1.0" forHTTPHeaderField:@"User-Agent"];
-    [connectionRequest setValue:self.service.serviceDescription.UUID forHTTPHeaderField:@"X-Apple-Device-ID"];
-    [connectionRequest setValue:self.sessionId forHTTPHeaderField: @"X-Apple-Session-ID"];
-
-    [connectionRequest setValue:nil forHTTPHeaderField:@"Host"];
-    [connectionRequest setValue:nil forHTTPHeaderField:@"Accept-Language"];
-    [connectionRequest setValue:nil forHTTPHeaderField:@"Accept"];
-    [connectionRequest setValue:nil forHTTPHeaderField:@"Accept-Encoding"];
-    [connectionRequest setValue:nil forHTTPHeaderField:@"Accept-Language"];
-
-    [NSURLConnection sendAsynchronousRequest:connectionRequest queue:self.commandQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
-
-        if (connectionError)
-        {
-            [self hConnectError:connectionError];
-        } else
-        {
-            if (httpResponse.statusCode == 101)
-                [self hConnectSuccess];
-            else
-            {
-                NSString *errorMessage = [NSString stringWithFormat:@"Could not establish a connection with device, received HTTP status code %@", @(httpResponse.statusCode)];
-                [self hConnectError:[ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:errorMessage]];
-            }
-        }
-    }];
-}
-
-- (void) hConnectSuccess
-{
-    [self startSubscriptionServer];
-
-    _connecting = NO;
     _connected = YES;
 
     _serviceReachability = [DeviceServiceReachability reachabilityWithTargetURL:self.service.serviceDescription.commandURL];
@@ -113,23 +73,17 @@
         dispatch_on_main(^{ [self.service.delegate deviceServiceConnectionSuccess:self.service]; });
 }
 
-- (void) hConnectError:(NSError *)error
-{
-    self.sessionId = nil;
-
-    _connecting = NO;
-    _connected = NO;
-
-    if (self.service.delegate && [self.service.delegate respondsToSelector:@selector(deviceService:didFailConnectWithError:)])
-        dispatch_on_main(^{ [self.service.delegate deviceService:self.service didFailConnectWithError:error]; });
-}
-
 - (void) disconnect
 {
-    self.sessionId = nil;
+    _sessionId = nil;
 
-    if (_subscriptionServer)
-        [self stopSubscriptionServer];
+    if (self.backgroundTaskId != UIBackgroundTaskInvalid)
+    {
+        dispatch_async(self.networkingQueue, ^{
+            [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskId];
+            _backgroundTaskId = UIBackgroundTaskInvalid;
+        });
+    }
 
     if (_serviceReachability)
         [_serviceReachability stop];
@@ -145,76 +99,48 @@
         [_serviceReachability stop];
 }
 
-#pragma mark - HTTP server for events/subscriptions
-
-- (void) startSubscriptionServer
-{
-    if (_subscriptionServer)
-        [self stopSubscriptionServer];
-
-    _subscriptionServer = [[GCDWebServer alloc] init];
-
-    [_subscriptionServer addDefaultHandlerForMethod:@"POST"
-                                       requestClass:[GCDWebServerDataRequest class]
-                                       processBlock:^GCDWebServerResponse *(GCDWebServerRequest* request) {
-        GCDWebServerDataRequest *dataRequest = (GCDWebServerDataRequest *)request;
-
-        NSString *firstPathComponent = [dataRequest.path.pathComponents[0] lowercaseString];
-
-        if (firstPathComponent && [firstPathComponent isEqualToString:@"event"])
-        {
-            NSError *xmlError;
-            NSDictionary *responseXML = [XMLReader dictionaryForXMLData:dataRequest.data error:&xmlError];
-
-            if (xmlError)
-            {
-                return [GCDWebServerResponse responseWithStatusCode:400];
-            } else
-            {
-                return [GCDWebServerResponse responseWithStatusCode:200];
-            }
-        } else
-        {
-            return [GCDWebServerResponse responseWithStatusCode:404];
-        }
-    }];
-
-    [_subscriptionServer startWithPort:self.service.serviceDescription.port bonjourName:nil];
-}
-
-- (void) stopSubscriptionServer
-{
-    if (!_subscriptionServer)
-        return;
-
-    [_subscriptionServer stop];
-    _subscriptionServer = nil;
-}
-
 #pragma mark - Command management
 
 - (int) sendCommand:(ServiceCommand *)command withPayload:(id)payload toURL:(NSURL *)URL
 {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
-    [request setTimeoutInterval:6];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:command.target];
 
     if (payload || [command.HTTPMethod isEqualToString:@"POST"] || [command.HTTPMethod isEqualToString:@"PUT"])
     {
-        [request setHTTPMethod:@"POST"];
-
         if (payload)
         {
             NSData *payloadData;
+            NSString *contentType;
 
             if ([payload isKindOfClass:[NSString class]])
             {
                 NSString *payloadString = (NSString *)payload;
                 payloadData = [payloadString dataUsingEncoding:NSUTF8StringEncoding];
+                contentType = @"text/parameters";
             } else if ([payload isKindOfClass:[NSDictionary class]])
-                payloadData = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
-            else if ([payload isKindOfClass:[NSData class]])
+            {
+                NSError *parseError;
+                payloadData = [NSPropertyListSerialization dataWithPropertyList:payload format:NSPropertyListBinaryFormat_v1_0 options:0 error:&parseError];
+
+                if (parseError || !payloadData)
+                {
+                    NSError *error = parseError;
+
+                    if (!error)
+                        error = [ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Error occurred while parsing property list"];
+
+                    if (command.callbackError)
+                        dispatch_on_main(^{ command.callbackError(error); });
+
+                    return -1;
+                }
+
+                contentType = @"application/x-apple-binary-plist";
+            } else if ([payload isKindOfClass:[NSData class]])
+            {
                 payloadData = payload;
+                contentType = @"image/jpeg";
+            }
 
             if (payloadData == nil)
             {
@@ -224,105 +150,67 @@
                 return -1;
             }
 
-            [request addValue:[NSString stringWithFormat:@"%i", (unsigned int) [payloadData length]] forHTTPHeaderField:@"Content-Length"];
-            [request addValue:@"text/plain;charset=\"utf-8\"" forHTTPHeaderField:@"Content-Type"];
-            [request setHTTPBody:payloadData];
-
-            DLog(@"[OUT] : %@ \n %@", [request allHTTPHeaderFields], payload);
+            [request addRequestHeader: @"Content-Length" value:[NSString stringWithFormat:@"%i", (unsigned int) [payloadData length]]];
+            [request addRequestHeader: @"Content-Type" value:contentType];
+            [request addRequestHeader: @"Connection" value:@"Keep-Alive"];
+            [request setPostBody:payloadData];
         } else
         {
-            [request addValue:@"0" forHTTPHeaderField:@"Content-Length"];
+            [request addRequestHeader: @"Content-Length" value:@"0"];
         }
+
+        DLog(@"[OUT] : %@ \n %@", request.requestHeaders, payload);
     } else
     {
-        [request setHTTPMethod:command.HTTPMethod];
-        [request addValue:@"0" forHTTPHeaderField:@"Content-Length"];
+        [request addRequestHeader: @"Content-Length" value:@"0"];
 
-        DLog(@"[OUT] : %@", [request allHTTPHeaderFields]);
+        DLog(@"[OUT] : %@", request.requestHeaders);
     }
 
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
-    {
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    [request setRequestMethod:command.HTTPMethod];
 
-        DLog(@"[IN] : %@", [httpResponse allHeaderFields]);
+    if (self.sessionId)
+        [request addRequestHeader:@"X-Apple-Session-ID" value:self.sessionId];
 
-        if (connectionError)
+    if (self.assetId)
+        [request addRequestHeader:@"X-Apple-AssetKey" value:self.assetId];
+
+    [request setShouldAttemptPersistentConnection:YES];
+    [request setShouldContinueWhenAppEntersBackground:YES];
+
+    [request setCompletionBlock:^{
+        if (request.responseStatusCode == 200)
         {
-            if (command.callbackError)
-                dispatch_on_main(^{ command.callbackError(connectionError); });
-        } else
-        {
-            BOOL statusOK = NO;
-            NSError *error;
-            NSString *locationPath;
+            NSError *xmlError;
+            NSMutableDictionary *plist = [NSPropertyListSerialization propertyListWithData:request.responseData options:NSPropertyListImmutable format:NULL error:&xmlError];
 
-            switch ([httpResponse statusCode])
+            if (xmlError)
             {
-                case 503:
-                    error = [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@"Could not start application"];
-                    break;
-
-                case 501:
-                    error = [ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:@"Was unable to perform the requested action, not supported"];
-                    break;
-
-                case 413:
-                    error = [ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Message body is too long"];
-                    break;
-
-                case 404:
-                    error = [ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Could not find requested application"];
-                    break;
-
-                case 201: // CREATED:  application launch success
-                    statusOK = YES;
-                    locationPath = [httpResponse.allHeaderFields objectForKey:@"Location"];
-                    break;
-
-                case 206: // PARTIAL CONTENT: not listed in DIAL spec, but don't want to exclude successful 2xx response code
-                case 205: // RESET CONTENT: not listed in DIAL spec, but don't want to exclude successful 2xx response code
-                case 204: // NO CONTENT: not listed in DIAL spec, but don't want to exclude successful 2xx response code
-                case 203: // NON-AUTHORITATIVE INFORMATION: not listed in DIAL spec, but don't want to exclude successful 2xx response code
-                case 202: // ACCEPTED: not listed in DIAL spec, but don't want to exclude successful 2xx response code
-                case 200: // OK: command success
-                    statusOK = YES;
-                    break;
-
-                default:
-                    error = [ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"An unknown error occurred"];
-            }
-
-            if (statusOK)
-            {
-                NSError *xmlError;
-                NSDictionary *responseXML = [XMLReader dictionaryForXMLData:data error:&xmlError];
-
-                DLog(@"[IN] : %@", responseXML);
-
-                if (xmlError)
-                {
-                    if (command.callbackError)
-                        command.callbackError(xmlError);
-                } else
-                {
-                    if (command.callbackComplete)
-                    {
-                        if (locationPath)
-                            dispatch_on_main(^{ command.callbackComplete(locationPath); });
-                        else
-                            dispatch_on_main(^{ command.callbackComplete(responseXML); });
-                    }
-                }
+                if (command.callbackComplete)
+                    dispatch_on_main(^{ command.callbackComplete(request.responseData); });
             } else
             {
-                if (command.callbackError)
-                    command.callbackError(error);
+                if (plist)
+                {
+                    if (command.callbackComplete)
+                        dispatch_on_main(^{ command.callbackComplete(plist); });
+                }
             }
+        } else
+        {
+            if (command.callbackError)
+                dispatch_on_main(^{ command.callbackError([ConnectError generateErrorWithCode:request.responseStatusCode andDetails:nil]); });
         }
     }];
 
-    // TODO: need to implement callIds in here
+    dispatch_async(self.networkingQueue, ^void {
+        // this will prevent the connection dropping on background/sleep modes
+        if (self.backgroundTaskId == UIBackgroundTaskInvalid)
+            _backgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:NULL];
+
+        [request startSynchronous];
+    });
+
     return -1;
 }
 
@@ -345,11 +233,13 @@
 
 - (void) displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
+    _assetId = [[Guid randomGuid] stringValue];
+
     NSString *commandPathComponent = @"photo";
     NSURL *commandURL = [self.service.serviceDescription.commandURL URLByAppendingPathComponent:commandPathComponent];
 
     ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:commandURL payload:nil];
-    command.HTTPMethod = @"PUT";
+    command.HTTPMethod = @"POST";
     command.callbackComplete = ^(id responseObject) {
         LaunchSession *launchSession = [LaunchSession launchSessionForAppId:commandPathComponent];
         launchSession.sessionType = LaunchSessionTypeMedia;
@@ -414,12 +304,52 @@
 
 - (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
+    _assetId = [[Guid randomGuid] stringValue];
 
+    NSMutableDictionary *plist = [NSMutableDictionary new];
+    plist[@"Content-Location"] = mediaURL.absoluteString;
+    plist[@"Start-Position"] = @(0.0);
+
+    NSError *parseError;
+    NSData *plistData = [NSPropertyListSerialization dataWithPropertyList:plist format:NSPropertyListBinaryFormat_v1_0 options:0 error:&parseError];
+
+    if (parseError || !plistData)
+    {
+        NSError *error = parseError;
+
+        if (!error)
+            error = [ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Error occurred while parsing property list"];
+
+        if (failure)
+            failure(error);
+
+        return;
+    }
+
+    NSString *payload = [NSString stringWithFormat:@"Content-Location: %@\r\nStart-Position: 0.000000", mediaURL.absoluteString];
+
+    NSString *commandPathComponent = @"play";
+    NSURL *commandURL = [self.service.serviceDescription.commandURL URLByAppendingPathComponent:commandPathComponent];
+
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:commandURL payload:plist];
+    command.HTTPMethod = @"POST";
+    command.callbackComplete = ^(id responseObject) {
+        LaunchSession *launchSession = [LaunchSession launchSessionForAppId:commandPathComponent];
+        launchSession.sessionType = LaunchSessionTypeMedia;
+        launchSession.service = self.service;
+        launchSession.sessionId = self.sessionId;
+
+        if (success)
+            dispatch_on_main(^{ success(launchSession, self.service.mediaControl); });
+    };
+    command.callbackError = failure;
+
+    [command send];
 }
 
 - (void) closeMedia:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
 {
-
+    [self.mediaControl stopWithSuccess:success failure:failure];
 }
 
 #pragma mark - Media Control
@@ -436,51 +366,158 @@
 
 - (void) playWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
+    NSString *commandPath = [NSString stringWithFormat:@"%@rate?value=1.000000", self.service.serviceDescription.commandURL.absoluteString];
+    NSURL *commandURL = [NSURL URLWithString:commandPath];
 
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:commandURL payload:nil];
+    command.HTTPMethod = @"POST";
+    command.callbackComplete = success;
+    command.callbackError = failure;
+
+    [command send];
 }
 
 - (void) pauseWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
+    NSString *commandPath = [NSString stringWithFormat:@"%@rate?value=0.000000", self.service.serviceDescription.commandURL.absoluteString];
+    NSURL *commandURL = [NSURL URLWithString:commandPath];
 
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:commandURL payload:nil];
+    command.HTTPMethod = @"POST";
+    command.callbackComplete = success;
+    command.callbackError = failure;
+
+    [command send];
 }
 
 - (void) stopWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
+    NSString *commandPathComponent = @"stop";
+    NSURL *commandURL = [self.service.serviceDescription.commandURL URLByAppendingPathComponent:commandPathComponent];
 
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:commandURL payload:nil];
+    command.HTTPMethod = @"POST";
+    command.callbackComplete = ^(id responseObject) {
+        _assetId = nil;
+
+        if (success)
+            success(responseObject);
+    };
+    command.callbackError = failure;
+
+    [command send];
 }
 
 - (void) rewindWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
+    NSString *commandPath = [NSString stringWithFormat:@"%@rate?value=-2.000000", self.service.serviceDescription.commandURL.absoluteString];
+    NSURL *commandURL = [NSURL URLWithString:commandPath];
 
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:commandURL payload:nil];
+    command.HTTPMethod = @"POST";
+    command.callbackComplete = success;
+    command.callbackError = failure;
+
+    [command send];
 }
 
 - (void) fastForwardWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
+    NSString *commandPath = [NSString stringWithFormat:@"%@rate?value=2.000000", self.service.serviceDescription.commandURL.absoluteString];
+    NSURL *commandURL = [NSURL URLWithString:commandPath];
 
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:commandURL payload:nil];
+    command.HTTPMethod = @"POST";
+    command.callbackComplete = success;
+    command.callbackError = failure;
+
+    [command send];
 }
 
 - (void) getDurationWithSuccess:(MediaDurationSuccessBlock)success failure:(FailureBlock)failure
 {
+    NSString *commandPathComponent = [NSString stringWithFormat:@"playback-info"];
+    NSURL *commandURL = [self.service.serviceDescription.commandURL URLByAppendingPathComponent:commandPathComponent];
 
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:commandURL payload:nil];
+    command.HTTPMethod = @"GET";
+    command.callbackComplete = ^(id responseObject) {
+        NSTimeInterval duration = [responseObject[@"duration"] floatValue];
+
+        if (success)
+            success(duration);
+    };
+    command.callbackError = failure;
+
+    [command send];
 }
 
 - (void) getPlayStateWithSuccess:(MediaPlayStateSuccessBlock)success failure:(FailureBlock)failure
 {
+    NSString *commandPathComponent = [NSString stringWithFormat:@"playback-info"];
+    NSURL *commandURL = [self.service.serviceDescription.commandURL URLByAppendingPathComponent:commandPathComponent];
 
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:commandURL payload:nil];
+    command.HTTPMethod = @"GET";
+    command.callbackComplete = ^(NSDictionary *responseObject) {
+        MediaControlPlayState playState = MediaControlPlayStateUnknown;
+
+        if (responseObject.count == 0)
+            playState = MediaControlPlayStateFinished;
+        else
+        {
+            int rate = [responseObject[@"rate"] intValue];
+
+            if (rate == 0)
+                playState = MediaControlPlayStatePaused;
+            else if (rate == 1)
+                playState = MediaControlPlayStatePlaying;
+        }
+
+        if (success)
+            success(playState);
+    };
+    command.callbackError = failure;
+
+    [command send];
 }
 
 - (void) getPositionWithSuccess:(MediaPositionSuccessBlock)success failure:(FailureBlock)failure
 {
+    NSString *commandPathComponent = [NSString stringWithFormat:@"playback-info"];
+    NSURL *commandURL = [self.service.serviceDescription.commandURL URLByAppendingPathComponent:commandPathComponent];
 
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:commandURL payload:nil];
+    command.HTTPMethod = @"GET";
+    command.callbackComplete = ^(id responseObject) {
+        NSTimeInterval position = [responseObject[@"position"] floatValue];
+
+        if (success)
+            success(position);
+    };
+    command.callbackError = failure;
+
+    [command send];
 }
 
 - (void) seek:(NSTimeInterval)position success:(SuccessBlock)success failure:(FailureBlock)failure
 {
+    NSString *commandPath = [NSString stringWithFormat:@"%@scrub?position=%.06f", self.service.serviceDescription.commandURL.absoluteString, position];
+    NSURL *commandURL = [NSURL URLWithString:commandPath];
 
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:commandURL payload:nil];
+    command.HTTPMethod = @"POST";
+    command.callbackComplete = success;
+    command.callbackError = failure;
+
+    [command send];
 }
 
 - (ServiceSubscription *) subscribePlayStateWithSuccess:(MediaPlayStateSuccessBlock)success failure:(FailureBlock)failure
 {
+    if (failure)
+        failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
+
     return nil;
 }
 

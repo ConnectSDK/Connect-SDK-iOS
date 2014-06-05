@@ -59,8 +59,28 @@ static AirPlayServiceMode airPlayServiceMode;
 {
     NSArray *caps = [NSArray array];
 
-    caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
-    caps = [caps arrayByAddingObjectsFromArray:kMediaControlCapabilities];
+    caps = [caps arrayByAddingObjectsFromArray:@[
+            kMediaPlayerDisplayImage,
+            kMediaPlayerPlayVideo,
+            kMediaPlayerPlayAudio,
+            kMediaPlayerClose,
+            kMediaPlayerMetaDataMimeType
+    ]];
+
+    if ([AirPlayService serviceMode] == AirPlayServiceModeMirrored)
+        caps = [caps arrayByAddingObjectsFromArray:kMediaControlCapabilities];
+    else
+        caps = [caps arrayByAddingObjectsFromArray:@[
+                kMediaControlPlay,
+                kMediaControlPause,
+                kMediaControlStop,
+                kMediaControlRewind,
+                kMediaControlFastForward,
+                kMediaControlPlayState,
+                kMediaControlDuration,
+                kMediaControlPosition,
+                kMediaControlSeek
+        ]];
 
     if ([AirPlayService serviceMode] == AirPlayServiceModeMirrored
             || [AirPlayService serviceMode] == AirPlayServiceModeMixed)
