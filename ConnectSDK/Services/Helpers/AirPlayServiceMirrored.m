@@ -70,8 +70,10 @@
 
         _connectingAlertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:ok, nil];
 
-        if (self.service.delegate && [self.service.delegate respondsToSelector:@selector(deviceService:pairingRequiredOfType:withData:)])
+        if (self.service && self.service.delegate && [self.service.delegate respondsToSelector:@selector(deviceService:pairingRequiredOfType:withData:)])
             dispatch_on_main(^{ [self.service.delegate deviceService:self.service pairingRequiredOfType:DeviceServicePairingTypeAirPlayMirroring withData:_connectingAlertView]; });
+
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hScreenConnected:) name:UIScreenDidConnectNotification object:nil];
     }
 }
 
@@ -79,9 +81,13 @@
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
 
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenDidConnectNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenDidDisconnectNotification object:nil];
+
     [self.mediaPlayer closeMedia:nil success:nil failure:nil];
 
-    [self hScreenDisconnected:nil];
+    if (self.secondWindow)
+        [self hScreenDisconnected:nil];
 
     if (_connectTimer)
     {
@@ -94,6 +100,9 @@
 
     if (_connectingAlertView)
         dispatch_on_main(^{ [_connectingAlertView dismissWithClickedButtonIndex:0 animated:NO]; });
+
+    if (self.service && self.service.delegate && [self.service.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
+        [self.service.delegate deviceService:self.service disconnectedWithError:nil];
 }
 
 - (void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -139,6 +148,8 @@
         _connecting = NO;
         _connected = YES;
 
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hScreenDisconnected:) name:UIScreenDidDisconnectNotification object:nil];
+
         if (_connectingAlertView)
             dispatch_on_main(^{ [_connectingAlertView dismissWithClickedButtonIndex:1 animated:NO]; });
 
@@ -155,12 +166,14 @@
     if ([[UIScreen screens] count] > 1)
     {
         UIScreen *secondScreen = [[UIScreen screens] objectAtIndex:1];
-        [secondScreen setOverscanCompensation:UIScreenOverscanCompensationScale];
 
         CGRect screenBounds = secondScreen.bounds;
 
-        _secondWindow = [[UIWindow alloc] initWithFrame:screenBounds];
+        _secondWindow = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, secondScreen.bounds.size.width / secondScreen.scale, secondScreen.bounds.size.height / secondScreen.scale)];
         _secondWindow.screen = secondScreen;
+        _secondWindow.contentScaleFactor = 0.5;
+
+        DLog(@"Displaying content with bounds %@", NSStringFromCGRect(screenBounds));
     }
 }
 
@@ -170,6 +183,8 @@
 
     if (!self.secondWindow)
         [self checkForExistingScreenAndInitializeIfPresent];
+
+    [self checkScreenCount];
 }
 
 - (void) hScreenDisconnected:(NSNotification *)notification
@@ -631,7 +646,9 @@
         }
     }
 
-    _webAppWebView = [[UIWebView alloc] initWithFrame:self.secondWindow.bounds];
+    DLog(@"Created a web view with bounds %@", NSStringFromCGRect(self.secondWindow.bounds));
+
+    _webAppWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.secondWindow.bounds.size.width / self.secondWindow.screen.scale, self.secondWindow.bounds.size.height / self.secondWindow.screen.scale)];
     _webAppWebView.allowsInlineMediaPlayback = YES;
     _webAppWebView.mediaPlaybackAllowsAirPlay = NO;
     _webAppWebView.mediaPlaybackRequiresUserAction = NO;
@@ -641,9 +658,6 @@
     _webAppWebView.delegate = self;
     self.secondWindow.rootViewController = secondScreenViewController;
     self.secondWindow.hidden = NO;
-
-    NSURL *URL = [NSURL URLWithString:webAppId];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
 
     LaunchSession *launchSession = [LaunchSession launchSessionForAppId:webAppId];
     launchSession.sessionType = LaunchSessionTypeWebApp;
@@ -677,6 +691,9 @@
     }
 
     self.launchFailureBlock = failure;
+
+    NSURL *URL = [NSURL URLWithString:webAppId];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
 
     [self.webAppWebView loadRequest:request];
 }
