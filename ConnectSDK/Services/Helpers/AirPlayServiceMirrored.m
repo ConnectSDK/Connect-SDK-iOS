@@ -601,7 +601,7 @@
 
     [self checkForExistingScreenAndInitializeIfPresent];
 
-    if (!self.secondWindow)
+    if (self.secondWindow && self.secondWindow.screen)
     {
         if (failure)
             failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Could not detect a second screen -- make sure you have mirroring enabled"]);
