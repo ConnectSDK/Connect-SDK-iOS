@@ -34,6 +34,7 @@
 {
     int UID;
 
+    NSString *_currentAppId;
     NSString *_launchingAppId;
 
     NSMutableDictionary *_launchSuccessBlocks;
@@ -215,6 +216,16 @@
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didDisconnectFromApplicationWithError:(NSError *)error
 {
     DLog(@"%@", error.localizedDescription);
+
+    if (!_currentAppId)
+        return;
+
+    WebAppSession *webAppSession = [_sessions objectForKey:_currentAppId];
+
+    if (!webAppSession || !webAppSession.delegate)
+        return;
+
+    [webAppSession.delegate webAppSessionDidDisconnect:webAppSession];
 }
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didFailToConnectToApplicationWithError:(NSError *)error
@@ -250,6 +261,8 @@
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didReceiveStatusForApplication:(GCKApplicationMetadata *)applicationMetadata
 {
     DLog(@"%@", applicationMetadata);
+
+    _currentAppId = applicationMetadata.applicationID;
 }
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager volumeDidChangeToLevel:(float)volumeLevel isMuted:(BOOL)isMuted
