@@ -41,7 +41,10 @@ typedef enum {
     ConnectStatusCodeNotSupported = 1100,
 
     /*! There was a problem with the provided arguments, see error description for details */
-    ConnectStatusCodeArgumentError = 1101
+    ConnectStatusCodeArgumentError = 1101,
+
+    /*! Device is not connected */
+    ConnectStatusCodeNotConnected = 1102
 } ConnectStatusCode;
 
 @interface ConnectError : NSObject

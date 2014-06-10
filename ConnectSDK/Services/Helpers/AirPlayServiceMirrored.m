@@ -57,24 +57,16 @@
 
 - (void) connect
 {
-    _connecting = YES;
+    [self checkForExistingScreenAndInitializeIfPresent];
 
-    [self checkScreenCount];
+    _connected = self.secondWindow != nil;
+    _connecting = !_connected;
 
-    if (!self.connected)
-    {
-        NSString *title = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_Title" value:@"Mirroring Required" table:@"ConnectSDK"];
-        NSString *message = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_Description" value:@"Enable AirPlay mirroring to connect to this device" table:@"ConnectSDK"];
-        NSString *ok = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_OK" value:@"OK" table:@"ConnectSDK"];
-        NSString *cancel = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_Cancel" value:@"Cancel" table:@"ConnectSDK"];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hScreenConnected:) name:UIScreenDidConnectNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hScreenDisconnected:) name:UIScreenDidDisconnectNotification object:nil];
 
-        _connectingAlertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:ok, nil];
-
-        if (self.service && self.service.delegate && [self.service.delegate respondsToSelector:@selector(deviceService:pairingRequiredOfType:withData:)])
-            dispatch_on_main(^{ [self.service.delegate deviceService:self.service pairingRequiredOfType:DeviceServicePairingTypeAirPlayMirroring withData:_connectingAlertView]; });
-
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hScreenConnected:) name:UIScreenDidConnectNotification object:nil];
-    }
+    if (self.service.connected && self.service.delegate && [self.service.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
+        dispatch_on_main(^{ [self.service.delegate deviceServiceConnectionSuccess:self.service]; });
 }
 
 - (void) disconnect
@@ -148,8 +140,6 @@
         _connecting = NO;
         _connected = YES;
 
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hScreenDisconnected:) name:UIScreenDidDisconnectNotification object:nil];
-
         if (_connectingAlertView)
             dispatch_on_main(^{ [_connectingAlertView dismissWithClickedButtonIndex:1 animated:NO]; });
 
@@ -169,9 +159,9 @@
 
         CGRect screenBounds = secondScreen.bounds;
 
-        _secondWindow = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, secondScreen.bounds.size.width / secondScreen.scale, secondScreen.bounds.size.height / secondScreen.scale)];
+        _secondWindow = [[UIWindow alloc] initWithFrame:screenBounds];
         _secondWindow.screen = secondScreen;
-        _secondWindow.contentScaleFactor = 0.5;
+        [_secondWindow makeKeyAndVisible];
 
         DLog(@"Displaying content with bounds %@", NSStringFromCGRect(screenBounds));
     }
@@ -193,10 +183,43 @@
 
     if (self.secondWindow)
     {
+        _secondWindow.screen = nil;
         _secondWindow.hidden = YES;
         _secondWindow = nil;
+    }
+}
 
-        [self disconnect];
+- (BOOL) hasSecondScreen
+{
+    if (!_connected && !_connecting)
+        return NO;
+
+    [self checkForExistingScreenAndInitializeIfPresent];
+
+    if (self.secondWindow && self.secondWindow.screen)
+    {
+        _connecting = NO;
+        _connected = YES;
+
+        return YES;
+    } else
+    {
+        _connected = NO;
+        _connecting = YES;
+
+        [self checkScreenCount];
+
+        NSString *title = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_Title" value:@"Mirroring Required" table:@"ConnectSDK"];
+        NSString *message = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_Description" value:@"Enable AirPlay mirroring to connect to this device" table:@"ConnectSDK"];
+        NSString *ok = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_OK" value:@"OK" table:@"ConnectSDK"];
+        NSString *cancel = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_Cancel" value:@"Cancel" table:@"ConnectSDK"];
+
+        _connectingAlertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:ok, nil];
+
+        if (self.service && self.service.delegate && [self.service.delegate respondsToSelector:@selector(deviceService:pairingRequiredOfType:withData:)])
+            dispatch_on_main(^{ [self.service.delegate deviceService:self.service pairingRequiredOfType:DeviceServicePairingTypeAirPlayMirroring withData:_connectingAlertView]; });
+
+        return NO;
     }
 }
 
@@ -214,13 +237,17 @@
 
 - (void) displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    if (self.avPlayer)
+//    if (self.avPlayer)
+//        [self closeMedia:nil success:nil failure:nil];
+
+    if (self.hasSecondScreen)
+    {
+        // this is a ridiculously, ludicrously messy hack to force/trigger the 2nd display to appearing again
+        // localhost/video.mp4 DOES NOT and SHOULD NOT exist
+        [self.mediaPlayer playMedia:[NSURL URLWithString:@"http://localhost/video.mp4"] iconURL:nil title:nil description:nil mimeType:@"video/mp4" shouldLoop:NO success:nil failure:nil];
+
         [self closeMedia:nil success:nil failure:nil];
 
-    [self checkForExistingScreenAndInitializeIfPresent];
-
-    if (self.secondWindow && self.secondWindow.screen)
-    {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.secondWindow.frame];
         [imageView setContentMode:UIViewContentModeScaleAspectFit];
 
@@ -265,11 +292,7 @@
 
 - (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    [self closeMedia:nil success:nil failure:nil];
-
-    [self checkForExistingScreenAndInitializeIfPresent];
-
-    if (self.secondWindow && self.secondWindow.screen)
+    if (self.hasSecondScreen)
     {
         AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:mediaURL options:@{AVURLAssetPreferPreciseDurationAndTimingKey: @YES}];
         AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
@@ -298,10 +321,19 @@
 
 - (void) closeMedia:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
 {
+    BOOL successful = NO;
+
     if (self.avPlayer)
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-        [self.avPlayer removeObserver:self forKeyPath:@"rate"];
+
+        @try
+        {
+            [self.avPlayer removeObserver:self forKeyPath:@"rate"];
+        } @catch (NSException *ex)
+        {
+            // don't need to do anything here, since not observing value
+        }
 
         if (self.playStateSubscription)
         {
@@ -315,12 +347,17 @@
         _avPlayer.usesExternalPlaybackWhileExternalScreenIsActive = NO;
         _avPlayer = nil;
 
-        if (success)
-            dispatch_on_main(^{ success(nil); });
-    } else if (self.secondWindow && self.secondWindow.screen)
-    {
-        [self hScreenDisconnected:nil];
+        successful = YES;
+    }
 
+    if (self.secondWindow && self.secondWindow.screen)
+    {
+        self.secondWindow.hidden = YES;
+        successful = YES;
+    }
+
+    if (successful)
+    {
         if (success)
             dispatch_on_main(^{ success(nil); });
     } else
@@ -601,7 +638,7 @@
 
     [self checkForExistingScreenAndInitializeIfPresent];
 
-    if (self.secondWindow && self.secondWindow.screen)
+    if (!self.secondWindow || !self.secondWindow.screen)
     {
         if (failure)
             failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Could not detect a second screen -- make sure you have mirroring enabled"]);
@@ -648,7 +685,7 @@
 
     DLog(@"Created a web view with bounds %@", NSStringFromCGRect(self.secondWindow.bounds));
 
-    _webAppWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.secondWindow.bounds.size.width / self.secondWindow.screen.scale, self.secondWindow.bounds.size.height / self.secondWindow.screen.scale)];
+    _webAppWebView = [[UIWebView alloc] initWithFrame:self.secondWindow.bounds];
     _webAppWebView.allowsInlineMediaPlayback = YES;
     _webAppWebView.mediaPlaybackAllowsAirPlay = NO;
     _webAppWebView.mediaPlaybackRequiresUserAction = NO;

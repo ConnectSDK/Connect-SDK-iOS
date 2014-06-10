@@ -36,10 +36,7 @@ typedef enum {
     AirPlayServiceModeMirrored = 0,
 
     /*! Sends commands to the AirPlay device via HTTP request */
-    AirPlayServiceModeHTTP,
-
-    /*! Mixes the mirrored & HTTP modes (HTTP for photo/media, mirrored for web app launcher) */
-    AirPlayServiceModeMixed
+    AirPlayServiceModeHTTP
 } AirPlayServiceMode;
 
 /*!
