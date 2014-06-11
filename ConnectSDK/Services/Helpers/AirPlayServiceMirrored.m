@@ -27,7 +27,7 @@
 #import "AirPlayService.h"
 
 
-@interface AirPlayServiceMirrored () <ServiceCommandDelegate, UIWebViewDelegate>
+@interface AirPlayServiceMirrored () <ServiceCommandDelegate, UIWebViewDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, copy) SuccessBlock launchSuccessBlock;
 @property (nonatomic, copy) FailureBlock launchFailureBlock;
@@ -59,14 +59,34 @@
 {
     [self checkForExistingScreenAndInitializeIfPresent];
 
-    _connected = self.secondWindow != nil;
-    _connecting = !_connected;
+    if (self.secondWindow && self.secondWindow.screen)
+    {
+        _connecting = NO;
+        _connected = YES;
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hScreenConnected:) name:UIScreenDidConnectNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hScreenDisconnected:) name:UIScreenDidDisconnectNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hScreenDisconnected:) name:UIScreenDidDisconnectNotification object:nil];
 
-    if (self.service.connected && self.service.delegate && [self.service.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
-        dispatch_on_main(^{ [self.service.delegate deviceServiceConnectionSuccess:self.service]; });
+        if (self.service.connected && self.service.delegate && [self.service.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
+            dispatch_on_main(^{ [self.service.delegate deviceServiceConnectionSuccess:self.service]; });
+    } else
+    {
+        _connected = NO;
+        _connecting = YES;
+
+        [self checkScreenCount];
+
+        NSString *title = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_Title" value:@"Mirroring Required" table:@"ConnectSDK"];
+        NSString *message = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_Description" value:@"Enable AirPlay mirroring to connect to this device" table:@"ConnectSDK"];
+        NSString *ok = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_OK" value:@"OK" table:@"ConnectSDK"];
+        NSString *cancel = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_Cancel" value:@"Cancel" table:@"ConnectSDK"];
+
+        _connectingAlertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:ok, nil];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hScreenConnected:) name:UIScreenDidConnectNotification object:nil];
+
+        if (self.service && self.service.delegate && [self.service.delegate respondsToSelector:@selector(deviceService:pairingRequiredOfType:withData:)])
+            dispatch_on_main(^{ [self.service.delegate deviceService:self.service pairingRequiredOfType:DeviceServicePairingTypeAirPlayMirroring withData:_connectingAlertView]; });
+    }
 }
 
 - (void) disconnect
@@ -141,6 +161,8 @@
         if (_connectingAlertView)
             dispatch_on_main(^{ [_connectingAlertView dismissWithClickedButtonIndex:1 animated:NO]; });
 
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hScreenDisconnected:) name:UIScreenDidDisconnectNotification object:nil];
+
         if (self.service.connected && self.service.delegate && [self.service.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
             dispatch_on_main(^{ [self.service.delegate deviceServiceConnectionSuccess:self.service]; });
     } else
@@ -179,46 +201,8 @@
 {
     DLog(@"%@", notification);
 
-    if (self.secondWindow)
-    {
-        _secondWindow.screen = nil;
-        _secondWindow.hidden = YES;
-        _secondWindow = nil;
-    }
-}
-
-- (BOOL) hasSecondScreen
-{
-    if (!_connected && !_connecting)
-        return NO;
-
-    [self checkForExistingScreenAndInitializeIfPresent];
-
-    if (self.secondWindow && self.secondWindow.screen)
-    {
-        _connecting = NO;
-        _connected = YES;
-
-        return YES;
-    } else
-    {
-        _connected = NO;
-        _connecting = YES;
-
-        [self checkScreenCount];
-
-        NSString *title = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_Title" value:@"Mirroring Required" table:@"ConnectSDK"];
-        NSString *message = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_Description" value:@"Enable AirPlay mirroring to connect to this device" table:@"ConnectSDK"];
-        NSString *ok = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_OK" value:@"OK" table:@"ConnectSDK"];
-        NSString *cancel = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_Cancel" value:@"Cancel" table:@"ConnectSDK"];
-
-        _connectingAlertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:ok, nil];
-
-        if (self.service && self.service.delegate && [self.service.delegate respondsToSelector:@selector(deviceService:pairingRequiredOfType:withData:)])
-            dispatch_on_main(^{ [self.service.delegate deviceService:self.service pairingRequiredOfType:DeviceServicePairingTypeAirPlayMirroring withData:_connectingAlertView]; });
-
-        return NO;
-    }
+    if (self.connecting || self.connected)
+        [self disconnect];
 }
 
 #pragma mark - WebAppLauncher
