@@ -59,17 +59,16 @@ static AirPlayServiceMode airPlayServiceMode;
 {
     NSArray *caps = [NSArray array];
 
-    caps = [caps arrayByAddingObjectsFromArray:@[
-            kMediaPlayerDisplayImage,
-            kMediaPlayerPlayVideo,
-            kMediaPlayerPlayAudio,
-            kMediaPlayerClose,
-            kMediaPlayerMetaDataMimeType
-    ]];
-
     if ([AirPlayService serviceMode] == AirPlayServiceModeMedia)
-        caps = [caps arrayByAddingObjectsFromArray:kMediaControlCapabilities];
-    else
+    {
+        caps = [caps arrayByAddingObjectsFromArray:@[
+                kMediaPlayerDisplayImage,
+                kMediaPlayerPlayVideo,
+                kMediaPlayerPlayAudio,
+                kMediaPlayerClose,
+                kMediaPlayerMetaDataMimeType
+        ]];
+
         caps = [caps arrayByAddingObjectsFromArray:@[
                 kMediaControlPlay,
                 kMediaControlPause,
@@ -81,9 +80,10 @@ static AirPlayServiceMode airPlayServiceMode;
                 kMediaControlPosition,
                 kMediaControlSeek
         ]];
-
-    if ([AirPlayService serviceMode] == AirPlayServiceModeMedia)
+    } else if ([AirPlayService serviceMode] == AirPlayServiceModeWebApp)
+    {
         caps = [caps arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
+    }
 
     [super setCapabilities:caps];
 }
@@ -95,10 +95,10 @@ static AirPlayServiceMode airPlayServiceMode;
 
 - (void) connect
 {
-    if ([AirPlayService serviceMode] == AirPlayServiceModeMedia)
+    if ([AirPlayService serviceMode] == AirPlayServiceModeWebApp)
         [self.mirroredService connect];
 
-    if ([AirPlayService serviceMode] == AirPlayServiceModeWebApp)
+    if ([AirPlayService serviceMode] == AirPlayServiceModeMedia)
         [self.httpService connect];
 
      // delegate will receive connected message from either mirroredService or httpService, depending on the value AirPlayService serviceMode property
@@ -106,10 +106,10 @@ static AirPlayServiceMode airPlayServiceMode;
 
 - (void) disconnect
 {
-    if ([AirPlayService serviceMode] == AirPlayServiceModeMedia)
+    if ([AirPlayService serviceMode] == AirPlayServiceModeWebApp)
         [self.mirroredService disconnect];
 
-    if ([AirPlayService serviceMode] == AirPlayServiceModeWebApp)
+    if ([AirPlayService serviceMode] == AirPlayServiceModeMedia)
         [self.httpService disconnect];
 
     if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
@@ -120,10 +120,10 @@ static AirPlayServiceMode airPlayServiceMode;
 {
     switch ([AirPlayService serviceMode])
     {
-        case AirPlayServiceModeMedia:
+        case AirPlayServiceModeWebApp:
             return self.mirroredService.connected;
 
-        case AirPlayServiceModeWebApp:
+        case AirPlayServiceModeMedia:
             return self.httpService.connected;
 
         default:
@@ -133,9 +133,6 @@ static AirPlayServiceMode airPlayServiceMode;
 
 - (AirPlayServiceHTTP *) httpService
 {
-    if ([AirPlayService serviceMode] == AirPlayServiceModeMedia)
-        return nil;
-
     if (!_httpService)
         _httpService = [[AirPlayServiceHTTP alloc] initWithAirPlayService:self];
 
@@ -144,9 +141,6 @@ static AirPlayServiceMode airPlayServiceMode;
 
 - (AirPlayServiceMirrored *) mirroredService
 {
-    if ([AirPlayService serviceMode] == AirPlayServiceModeWebApp)
-        return nil;
-
     if (!_mirroredService)
         _mirroredService = [[AirPlayServiceMirrored alloc] initWithAirPlayService:self];
 
@@ -157,12 +151,7 @@ static AirPlayServiceMode airPlayServiceMode;
 
 - (id <MediaPlayer>) mediaPlayer
 {
-    id<MediaPlayer> player = self.mirroredService.mediaPlayer;
-
-    if ([AirPlayService serviceMode] == AirPlayServiceModeWebApp)
-        player = self.httpService.mediaPlayer;
-
-    return player;
+    return self.httpService.mediaPlayer;
 }
 
 - (CapabilityPriorityLevel) mediaPlayerPriority
@@ -189,12 +178,7 @@ static AirPlayServiceMode airPlayServiceMode;
 
 - (id <MediaControl>) mediaControl
 {
-    id<MediaControl> control = self.mirroredService.mediaControl;
-
-    if ([AirPlayService serviceMode] == AirPlayServiceModeWebApp)
-        control = self.httpService.mediaControl;
-
-    return control;
+    return self.httpService.mediaControl;
 }
 
 - (CapabilityPriorityLevel) mediaControlPriority
@@ -273,10 +257,7 @@ static AirPlayServiceMode airPlayServiceMode;
 
 - (id <WebAppLauncher>) webAppLauncher
 {
-    if ([AirPlayService serviceMode] == AirPlayServiceModeWebApp)
-        return nil;
-    else
-        return self.mirroredService.webAppLauncher;
+    return self.mirroredService.webAppLauncher;
 }
 
 - (CapabilityPriorityLevel) webAppLauncherPriority

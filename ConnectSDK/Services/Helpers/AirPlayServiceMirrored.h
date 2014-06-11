@@ -27,7 +27,7 @@
 
 @class AirPlayService;
 
-@interface AirPlayServiceMirrored : NSObject<MediaPlayer, MediaControl, WebAppLauncher>
+@interface AirPlayServiceMirrored : NSObject<WebAppLauncher>
 
 - (instancetype) initWithAirPlayService:(AirPlayService *)service;
 
@@ -40,7 +40,6 @@
 
 @property (nonatomic, readonly) UIWindow *secondWindow;
 @property (nonatomic, readonly) UIWebView *webAppWebView;
-@property (nonatomic, readonly) AVPlayer *avPlayer;
 
 @property (nonatomic, readonly) BOOL connecting;
 @property (nonatomic, readonly) BOOL connected;
