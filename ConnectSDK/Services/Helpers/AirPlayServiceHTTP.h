@@ -1,8 +1,8 @@
 //
-//  DIALService.h
+//  AirPlayServiceHTTP.h
 //  Connect SDK
 //
-//  Created by Jeremy White on 12/13/13.
+//  Created by Jeremy White on 5/28/14.
 //  Copyright (c) 2014 LG Electronics.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,13 +18,20 @@
 //  limitations under the License.
 //
 
-#define kConnectSDKDIALServiceId @"DIAL"
+#import <Foundation/Foundation.h>
+#import "MediaPlayer.h"
+#import "MediaControl.h"
 
-#import "ConnectSDK.h"
-#import "Launcher.h"
+@class AirPlayService;
 
-@interface DIALService : DeviceService <ServiceCommandDelegate, Launcher>
+@interface AirPlayServiceHTTP : NSObject <MediaPlayer, MediaControl>
 
-+ (void) registerApp:(NSString *)appId;
+- (instancetype) initWithAirPlayService:(AirPlayService *)service;
+- (void) connect;
+- (void) disconnect;
+
+@property (nonatomic, readonly) AirPlayService *service;
+@property (nonatomic, readonly) BOOL connecting;
+@property (nonatomic, readonly) BOOL connected;
 
 @end

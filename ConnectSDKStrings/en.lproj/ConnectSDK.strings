@@ -29,3 +29,9 @@
 "Connect_SDK_Pair_Request_Pin" = "Please enter the pin code";
 "Connect_SDK_Pair_OK" = "OK";
 "Connect_SDK_Pair_Cancel" = "Cancel";
+
+/* AirPlay alert view */
+"Connect_SDK_AirPlay_Mirror_Title" = "Mirroring Required";
+"Connect_SDK_AirPlay_Mirror_Message" = "Enable AirPlay mirroring to connect to this device";
+"Connect_SDK_AirPlay_Mirror_OK" = "OK";
+"Connect_SDK_AirPlay_Mirror_Cancel" = "Cancel";

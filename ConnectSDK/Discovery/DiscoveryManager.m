@@ -25,7 +25,9 @@
 
 #import "CastDiscoveryProvider.h"
 #import "SSDPDiscoveryProvider.h"
+#import "ZeroConfDiscoveryProvider.h"
 
+#import "AirPlayService.h"
 #import "CastService.h"
 #import "DIALService.h"
 #import "DLNAService.h"
@@ -130,6 +132,7 @@
 
 - (void) registerDefaultServices
 {
+    [self registerDeviceService:[AirPlayService class] withDiscovery:[ZeroConfDiscoveryProvider class]];
     [self registerDeviceService:[CastService class] withDiscovery:[CastDiscoveryProvider class]];
     [self registerDeviceService:[DIALService class] withDiscovery:[SSDPDiscoveryProvider class]];
     [self registerDeviceService:[RokuService class] withDiscovery:[SSDPDiscoveryProvider  class]];

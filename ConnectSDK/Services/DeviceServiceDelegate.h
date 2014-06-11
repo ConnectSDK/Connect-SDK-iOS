@@ -36,6 +36,9 @@ typedef enum {
     /*! DeviceService can pair with multiple pairing types (ex. first screen OR pin) */
     DeviceServicePairingTypeMixed,
 
+    /*! DeviceService requires AirPlay mirroring to be enabled to connect */
+    DeviceServicePairingTypeAirPlayMirroring,
+
     /*! DeviceService pairing type is unknown */
     DeviceServicePairingTypeUnknown
 } DeviceServicePairingType;
@@ -98,7 +101,7 @@ typedef enum {
  *
  * @param service DeviceService that requires pairing
  * @param pairingType DeviceServicePairingType that the DeviceService requires
- * @param pairingData Any data that might be required for the pairing process, will usually be nil
+ * @param pairingData Any object/data that might be required for the pairing process, will usually be nil
  */
 - (void) deviceService:(DeviceService *)service pairingRequiredOfType:(DeviceServicePairingType)pairingType withData:(id)pairingData;
 

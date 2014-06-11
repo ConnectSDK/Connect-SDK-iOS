@@ -1167,7 +1167,7 @@ NSString *lgeUDAPRequestURI[8] = {
             launchSession.name = kSmartShareName;
 
             if (success)
-                success(launchSession, mediaControl);
+                success(launchSession, self.mediaControl);
         } failure:failure];
         return;
     }
@@ -1186,8 +1186,8 @@ NSString *lgeUDAPRequestURI[8] = {
             launchSession.name = kSmartShareName;
 
             if (success)
-                success(launchSession, mediaControl);
-        }                               failure:failure];
+                success(launchSession, self.mediaControl);
+        } failure:failure];
         return;
     }
 
@@ -1264,6 +1264,18 @@ NSString *lgeUDAPRequestURI[8] = {
     if (self.dlnaService)
     {
         [self.dlnaService getPlayStateWithSuccess:success failure:failure];
+        return;
+    }
+
+    if (failure)
+        failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
+}
+
+- (void) getDurationWithSuccess:(MediaDurationSuccessBlock)success failure:(FailureBlock)failure
+{
+    if (self.dlnaService)
+    {
+        [self.dlnaService getDurationWithSuccess:success failure:failure];
         return;
     }
 
@@ -1941,7 +1953,7 @@ NSString *lgeUDAPRequestURI[8] = {
 
 - (void)closeInputPicker:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    [self closeApp:launchSession success:success failure:failure];
+    [self.keyControl sendKeyCode:NetcastTVKeyCodeExit success:success failure:failure];
 }
 
 - (void)getExternalInputListWithSuccess:(ExternalInputListSuccessBlock)success failure:(FailureBlock)failure

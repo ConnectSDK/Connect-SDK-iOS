@@ -1,8 +1,8 @@
 //
-//  DIALService.h
+//  ZeroConfDiscoveryProvider.h
 //  Connect SDK
 //
-//  Created by Jeremy White on 12/13/13.
+//  Created by Jeremy White on 4/18/14.
 //  Copyright (c) 2014 LG Electronics.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,13 +18,9 @@
 //  limitations under the License.
 //
 
-#define kConnectSDKDIALServiceId @"DIAL"
+#import <Foundation/Foundation.h>
+#import "DiscoveryProvider.h"
 
-#import "ConnectSDK.h"
-#import "Launcher.h"
 
-@interface DIALService : DeviceService <ServiceCommandDelegate, Launcher>
-
-+ (void) registerApp:(NSString *)appId;
-
+@interface ZeroConfDiscoveryProvider : DiscoveryProvider
 @end
