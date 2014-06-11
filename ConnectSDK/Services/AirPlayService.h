@@ -43,7 +43,7 @@ typedef enum {
  * ###Default functionality
  * Out of the box, AirPlayService will only support web app launching through AirPlay mirroring. AirPlayService also provides a Media mode, in which HTTP commands will be sent to the AirPlay device to play and control media files (image, video, audio). Due to certain limitations of the AirPlay protocol, you may only support web apps OR media capabilities through Connect SDK. You may still directly access AirPlay APIs through AVPlayer, MPMoviePlayerController, UIWebView, audio routing, etc.
  *
- * To set the capability mode for the AirPlayService, see the `- setAirPlayServiceMode` static method on the AirPlayService class.
+ * To set the capability mode for the AirPlayService, see the `setAirPlayServiceMode:` static method on the AirPlayService class.
  */
 @interface AirPlayService : DeviceService <MediaPlayer, MediaControl, WebAppLauncher>
 
