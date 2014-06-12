@@ -30,7 +30,7 @@ This project has the following dependencies.
 9. Download the [Google Cast SDK iOS sender library file](https://developers.google.com/cast/docs/downloads)
 10. Extract GoogleCast.framework and copy it to $(Connect SDK project directory)/ConnectSDK/Frameworks
 11. Drag and drop GoogleCast.framework into your project's Frameworks folder
- 
+
 ###Include Strings File for Localization (optional)
 1. Locate the Connect SDK Xcode project in the Finder
 2. Drag the ConnectSDKStrings folder into your project's library
@@ -57,6 +57,7 @@ Connect SDK for iOS makes use of the following projects, some of which are open-
 * [objc-guid](https://code.google.com/p/objc-guid/) (BSD 3-Clause revised)
 * [GCDWebServer](https://github.com/swisspol/GCDWebServer) (MIT)
 * [XMLReader](https://github.com/amarcadet/XMLReader) (MIT)
+* [ASIHTTPRequest](https://github.com/pokeb/asi-http-request) (MIT)
 
 ##License
 Copyright (c) 2013-2014 LG Electronics.
