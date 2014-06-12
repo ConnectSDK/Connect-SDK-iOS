@@ -91,22 +91,26 @@
 
 - (void) disconnect
 {
+    _connected = NO;
+    _connecting = NO;
+
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenDidConnectNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenDidDisconnectNotification object:nil];
 
     if (self.secondWindow)
-        [self hScreenDisconnected:nil];
+    {
+        _secondWindow.hidden = YES;
+        _secondWindow.screen = nil;
+        _secondWindow = nil;
+    }
 
     if (_connectTimer)
     {
         [_connectTimer invalidate];
         _connectTimer = nil;
     }
-
-    _connected = NO;
-    _connecting = NO;
 
     if (_connectingAlertView)
         dispatch_on_main(^{ [_connectingAlertView dismissWithClickedButtonIndex:0 animated:NO]; });
@@ -201,7 +205,7 @@
 {
     DLog(@"%@", notification);
 
-    if (self.connecting || self.connected)
+    if (_connecting || _connected)
         [self disconnect];
 }
 
