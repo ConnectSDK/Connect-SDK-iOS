@@ -28,12 +28,10 @@
 
 static AirPlayServiceMode airPlayServiceMode;
 
-
 @implementation AirPlayService
-{
-    AirPlayServiceHTTP *_httpService;
-    AirPlayServiceMirrored *_mirroredService;
-}
+
+@synthesize httpService = _httpService;
+@synthesize mirroredService = _mirroredService;
 
 + (void) setAirPlayServiceMode:(AirPlayServiceMode)serviceMode
 {
@@ -106,10 +104,10 @@ static AirPlayServiceMode airPlayServiceMode;
 
 - (void) disconnect
 {
-    if ([AirPlayService serviceMode] == AirPlayServiceModeWebApp)
+    if ([AirPlayService serviceMode] == AirPlayServiceModeWebApp && self.mirroredService.connected)
         [self.mirroredService disconnect];
 
-    if ([AirPlayService serviceMode] == AirPlayServiceModeMedia)
+    if ([AirPlayService serviceMode] == AirPlayServiceModeMedia && self.httpService.connected)
         [self.httpService disconnect];
 
     if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])

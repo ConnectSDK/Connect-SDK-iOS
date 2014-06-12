@@ -94,8 +94,10 @@
 - (void) didLoseReachability:(DeviceServiceReachability *)reachability
 {
     if (self.connected)
+    {
+        [self.service disconnect];
         [self disconnect];
-    else
+    } else
         [_serviceReachability stop];
 }
 
