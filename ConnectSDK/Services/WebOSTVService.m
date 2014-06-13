@@ -2251,6 +2251,9 @@
 
         [_appToAppMessageCallbacks removeObjectForKey:fullAppId];
     }
+
+    if (webAppSession.delegate && [webAppSession.delegate respondsToSelector:@selector(webAppSessionDidDisconnect:)])
+        dispatch_on_main(^{ [webAppSession.delegate webAppSessionDidDisconnect:webAppSession]; });
 }
 
 - (int) sendMessage:(id)message toApp:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
