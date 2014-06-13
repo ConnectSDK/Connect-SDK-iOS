@@ -35,6 +35,7 @@
     LGSRWebSocket *_socket;
     NSMutableArray *_commandQueue;
     NSMutableDictionary *_activeConnections;
+    NSMutableDictionary *_webAppIdMappings;
     NSMutableDictionary *_appToAppMessageCallbacks;
     NSMutableDictionary *_appToAppSubscriptions;
 
@@ -472,6 +473,7 @@
 
     // TODO: we may want to notify the subscribers that they are going away
     _subscribed = [NSMutableDictionary new];
+    _webAppIdMappings = [NSMutableDictionary new];
     _appToAppSubscriptions = [NSMutableDictionary new];
     _activeConnections = [NSMutableDictionary new];
 
@@ -518,6 +520,7 @@
     }
 
     _appToAppMessageCallbacks = [NSMutableDictionary dictionary];
+    _webAppIdMappings = [NSMutableDictionary dictionary];
     _appToAppSubscriptions = [NSMutableDictionary dictionary];
     _activeConnections = [NSMutableDictionary dictionary];
 
@@ -1111,7 +1114,6 @@
     ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self target:URL payload:params];
     command.callbackComplete = ^(NSDictionary * responseObject)
     {
-        // TODO: need to test this
         BOOL running = [[responseObject objectForKey:@"running"] boolValue];
         BOOL visible = [[responseObject objectForKey:@"visible"] boolValue];
 
@@ -1132,7 +1134,6 @@
 
     ServiceSubscription *subscription = [self addSubscribe:URL payload:params success:^(NSDictionary *responseObject)
     {
-        // TODO: need to test this
         BOOL running = [[responseObject objectForKey:@"running"] boolValue];
         BOOL visible = [[responseObject objectForKey:@"visible"] boolValue];
 
@@ -2100,6 +2101,9 @@
     if (!_appToAppSubscriptions)
         _appToAppSubscriptions = [NSMutableDictionary new];
 
+    if (!_webAppIdMappings)
+        _webAppIdMappings = [NSMutableDictionary new];
+
     if (!webAppSession || !webAppSession.launchSession)
     {
         if (failure)
@@ -2114,23 +2118,15 @@
         return;
     }
 
-    NSString *fullAppId;
-    NSString *subscriptionKey;
+    NSString *appId = webAppSession.launchSession.appId;
     NSString *idKey;
 
     if (webAppSession.launchSession.sessionType == LaunchSessionTypeWebApp)
-    {
-        // TODO: don't hard code com.webos.app.webapphost
-        fullAppId = [NSString stringWithFormat:@"com.webos.app.webapphost.%@", webAppSession.launchSession.appId];
-        subscriptionKey = webAppSession.launchSession.appId;
         idKey = @"webAppId";
-    } else if (webAppSession.launchSession.sessionType == LaunchSessionTypeApp)
-    {
-        fullAppId = subscriptionKey = webAppSession.launchSession.appId;
+    else
         idKey = @"appId";
-    }
 
-    if (!fullAppId || fullAppId.length == 0)
+    if (!appId || appId.length == 0)
     {
         if (failure)
             failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid web app session"]);
@@ -2138,31 +2134,50 @@
         return;
     }
 
-    if ([_appToAppSubscriptions objectForKey:subscriptionKey])
-    {
-        [_appToAppMessageCallbacks setObject:webAppSession.messageHandler forKey:fullAppId];
+    NSString *subscriptionKey;
 
-        if (success)
-            success(webAppSession);
-        return;
+    if (_webAppIdMappings[appId])
+        subscriptionKey = _webAppIdMappings[appId];
+    else if (_appToAppSubscriptions[appId])
+        subscriptionKey = appId;
+
+    if (subscriptionKey && subscriptionKey.length > 0)
+    {
+        ServiceSubscription *appToAppSubscription = _appToAppSubscriptions[appId];
+
+        if (appToAppSubscription)
+        {
+            [_appToAppMessageCallbacks setObject:webAppSession.messageHandler forKey:subscriptionKey];
+
+            if (success)
+                success(webAppSession);
+            return;
+        }
     }
 
     NSURL *URL = [NSURL URLWithString:@"ssap://webapp/connectToApp"];
 
     NSMutableDictionary *payload = [NSMutableDictionary new];
-    [payload setValue:subscriptionKey forKey:idKey];
+    [payload setValue:appId forKey:idKey];
 
     FailureBlock connectFailure = ^(NSError *error)
     {
-        ServiceSubscription *connectionSubscription = [_appToAppSubscriptions objectForKey:subscriptionKey];
+        ServiceSubscription *connectionSubscription = [_appToAppSubscriptions objectForKey:appId];
 
         if (connectionSubscription)
         {
             if ([self.serviceDescription.version rangeOfString:@"4.0.2"].location == NSNotFound)
                 [connectionSubscription unsubscribe];
 
-            [_appToAppSubscriptions removeObjectForKey:subscriptionKey];
-            [_appToAppMessageCallbacks removeObjectForKey:fullAppId];
+            [_appToAppSubscriptions removeObjectForKey:appId];
+
+            NSString *fullAppId = appId;
+
+            if (webAppSession.launchSession.sessionType == LaunchSessionTypeWebApp)
+                fullAppId = _webAppIdMappings[appId];
+
+            if (fullAppId && fullAppId.length > 0)
+                [_appToAppMessageCallbacks removeObjectForKey:fullAppId];
         }
 
         BOOL appChannelDidClose = [error.localizedDescription rangeOfString:@"app channel closed"].location != NSNotFound;
@@ -2195,21 +2210,14 @@
             return;
         }
 
-        NSString *appId = [responseObject objectForKey:@"appId"];
+        NSString *fullAppId = responseObject[@"appId"];
 
-        if (appId)
+        if (fullAppId)
         {
-            [_appToAppMessageCallbacks setObject:webAppSession.messageHandler forKey:appId];
+            if (webAppSession.launchSession.sessionType == LaunchSessionTypeWebApp)
+                _webAppIdMappings[appId] = fullAppId;
 
-            NSMutableDictionary *newRawData;
-
-            if (webAppSession.launchSession.rawData)
-                newRawData = [NSMutableDictionary dictionaryWithDictionary:webAppSession.launchSession.rawData];
-            else
-                newRawData = [NSMutableDictionary new];
-
-            [newRawData setObject:appId forKey:idKey];
-            webAppSession.launchSession.rawData = [NSDictionary dictionaryWithDictionary:newRawData];
+            [_appToAppMessageCallbacks setObject:webAppSession.messageHandler forKey:fullAppId];
         }
 
         if (success)
@@ -2217,39 +2225,31 @@
     };
 
     ServiceSubscription *subscription = [self addSubscribe:URL payload:payload success:connectSuccess failure:connectFailure];
-    [_appToAppSubscriptions setObject:subscription forKey:subscriptionKey];
+    [_appToAppSubscriptions setObject:subscription forKey:appId];
 }
 
 - (void)disconnectFromWebApp:(WebOSWebAppSession *)webAppSession
 {
-    __block NSString *appId = [webAppSession.launchSession.rawData objectForKey:@"webAppId"];
+    NSString *appId = webAppSession.launchSession.appId;
+    NSString *fullAppId = appId;
 
-    if (!appId)
-    {
-        [_appToAppMessageCallbacks enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop)
-        {
-            if ([key rangeOfString:webAppSession.launchSession.appId].location != NSNotFound)
-            {
-                appId = key;
-                *stop = YES;
-            }
-        }];
-    }
+    if (webAppSession.launchSession.sessionType == LaunchSessionTypeWebApp)
+        fullAppId = _webAppIdMappings[appId];
 
-    if (appId)
-        [_appToAppMessageCallbacks removeObjectForKey:appId];
+    if (fullAppId)
+        [_appToAppMessageCallbacks removeObjectForKey:fullAppId];
 
-    ServiceSubscription *connectionSubscription = [_appToAppSubscriptions objectForKey:webAppSession.launchSession.appId];
+    ServiceSubscription *connectionSubscription = [_appToAppSubscriptions objectForKey:appId];
 
     if (connectionSubscription)
     {
         if ([self.serviceDescription.version rangeOfString:@"4.0.2"].location == NSNotFound)
         {
             [connectionSubscription unsubscribe];
-            [_appToAppSubscriptions removeObjectForKey:webAppSession.launchSession.appId];
+            [_appToAppSubscriptions removeObjectForKey:appId];
         }
 
-        [_appToAppMessageCallbacks removeObjectForKey:webAppSession.launchSession.appId];
+        [_appToAppMessageCallbacks removeObjectForKey:fullAppId];
     }
 }
 
@@ -2263,15 +2263,13 @@
         return -1;
     }
 
-    // TODO: don't hard code com.webos.app.webapphost
-    NSString *appId;
+    NSString *appId = launchSession.appId;
+    NSString *fullAppId = appId;
 
     if (launchSession.sessionType == LaunchSessionTypeWebApp)
-        appId = [NSString stringWithFormat:@"com.webos.app.webapphost.%@", launchSession.appId];
-    else if (launchSession.sessionType == LaunchSessionTypeApp)
-        appId = launchSession.appId;
+        fullAppId = _webAppIdMappings[appId];
 
-    if (!appId)
+    if (!fullAppId || fullAppId.length == 0)
     {
         if (failure)
             failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid LaunchSession to send messages to"]);
@@ -2286,7 +2284,7 @@
 
     NSDictionary *payload = @{
             @"type" : @"p2p",
-            @"to" : appId,
+            @"to" : fullAppId,
             @"payload" : message
     };
 

@@ -80,7 +80,15 @@ static AirPlayServiceMode airPlayServiceMode;
         ]];
     } else if ([AirPlayService serviceMode] == AirPlayServiceModeWebApp)
     {
-        caps = [caps arrayByAddingObjectsFromArray:kWebAppLauncherCapabilities];
+        caps = [caps arrayByAddingObjectsFromArray:@[
+                kWebAppLauncherLaunch,
+                kWebAppLauncherMessageSend,
+                kWebAppLauncherMessageReceive,
+                kWebAppLauncherMessageSendJSON,
+                kWebAppLauncherMessageReceiveJSON,
+                kWebAppLauncherConnect,
+                kWebAppLauncherDisconnect
+        ]];
     }
 
     [super setCapabilities:caps];
