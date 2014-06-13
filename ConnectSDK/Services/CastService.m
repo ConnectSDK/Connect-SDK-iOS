@@ -111,6 +111,9 @@
             kWebAppLauncherMessageReceive,
             kWebAppLauncherMessageSendJSON,
             kWebAppLauncherMessageReceiveJSON,
+            kWebAppLauncherConnect,
+            kWebAppLauncherDisconnect,
+            kWebAppLauncherJoin,
             kWebAppLauncherClose
     ]];
 
