@@ -1,37 +1,40 @@
 //
-//  ASIInputStream.m
-//  Part of ASIHTTPRequest -> http://allseeing-i.com/ASIHTTPRequest
+//  CTASIInputStream.m
+//  Part of CTASIHTTPRequest -> http://allseeing-i.com/CTASIHTTPRequest
 //
 //  Created by Ben Copsey on 10/08/2009.
 //  Copyright 2009 All-Seeing Interactive. All rights reserved.
 //
+//  Connect SDK Note:
+//  CT has been prepended to all members of this framework to avoid namespace collisions
+//
 
-#import "ASIInputStream.h"
-#import "ASIHTTPRequest.h"
+#import "CTASIInputStream.h"
+#import "CTASIHTTPRequest.h"
 
 // Used to ensure only one request can read data at once
 static NSLock *readLock = nil;
 
-@implementation ASIInputStream
+@implementation CTASIInputStream
 
 + (void)initialize
 {
-	if (self == [ASIInputStream class]) {
+	if (self == [CTASIInputStream class]) {
 		readLock = [[NSLock alloc] init];
 	}
 }
 
-+ (id)inputStreamWithFileAtPath:(NSString *)path request:(ASIHTTPRequest *)theRequest
++ (id)inputStreamWithFileAtPath:(NSString *)path request:(CTASIHTTPRequest *)theRequest
 {
-	ASIInputStream *theStream = [[[self alloc] init] autorelease];
+	CTASIInputStream *theStream = [[[self alloc] init] autorelease];
 	[theStream setRequest:theRequest];
 	[theStream setStream:[NSInputStream inputStreamWithFileAtPath:path]];
 	return theStream;
 }
 
-+ (id)inputStreamWithData:(NSData *)data request:(ASIHTTPRequest *)theRequest
++ (id)inputStreamWithData:(NSData *)data request:(CTASIHTTPRequest *)theRequest
 {
-	ASIInputStream *theStream = [[[self alloc] init] autorelease];
+	CTASIInputStream *theStream = [[[self alloc] init] autorelease];
 	[theStream setRequest:theRequest];
 	[theStream setStream:[NSInputStream inputStreamWithData:data]];
 	return theStream;
@@ -44,13 +47,13 @@ static NSLock *readLock = nil;
 }
 
 // Called when CFNetwork wants to read more of our request body
-// When throttling is on, we ask ASIHTTPRequest for the maximum amount of data we can read
+// When throttling is on, we ask CTASIHTTPRequest for the maximum amount of data we can read
 - (NSInteger)read:(uint8_t *)buffer maxLength:(NSUInteger)len
 {
 	[readLock lock];
 	unsigned long toRead = len;
-	if ([ASIHTTPRequest isBandwidthThrottled]) {
-		toRead = [ASIHTTPRequest maxUploadReadLength];
+	if ([CTASIHTTPRequest isBandwidthThrottled]) {
+		toRead = [CTASIHTTPRequest maxUploadReadLength];
 		if (toRead > len) {
 			toRead = len;
 		} else if (toRead == 0) {
@@ -61,7 +64,7 @@ static NSLock *readLock = nil;
 	[readLock unlock];
 	NSInteger rv = [stream read:buffer maxLength:toRead];
 	if (rv > 0)
-		[ASIHTTPRequest incrementBandwidthUsedInLastSecond:(NSUInteger)rv];
+		[CTASIHTTPRequest incrementBandwidthUsedInLastSecond:(NSUInteger) rv];
 	return rv;
 }
 
