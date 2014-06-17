@@ -103,8 +103,6 @@ NSString *lgeUDAPRequestURI[8] = {
     if (self)
     {
         [self setServiceConfig:serviceConfig];
-
-        [self commonConfig];
     }
 
     return self;

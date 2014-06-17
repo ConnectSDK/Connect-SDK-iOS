@@ -133,7 +133,8 @@
     [self registerDeviceService:[CastService class] withDiscovery:[CastDiscoveryProvider class]];
     [self registerDeviceService:[DIALService class] withDiscovery:[SSDPDiscoveryProvider class]];
     [self registerDeviceService:[RokuService class] withDiscovery:[SSDPDiscoveryProvider  class]];
-    [self registerDeviceService:[DLNAService class] withDiscovery:[SSDPDiscoveryProvider class]]; // includes Netcast
+    [self registerDeviceService:[DLNAService class] withDiscovery:[SSDPDiscoveryProvider class]];
+    [self registerDeviceService:[NetcastTVService class] withDiscovery:[SSDPDiscoveryProvider class]];
     [self registerDeviceService:[WebOSTVService class] withDiscovery:[SSDPDiscoveryProvider class]];
 }
 
@@ -328,7 +329,7 @@
     {
         if ([description.modelDescription.uppercaseString rangeOfString:@"WEBOS"].location == NSNotFound)
         {
-            isNetcast = YES;
+            isNetcast = [description.serviceId isEqualToString:kConnectSDKNetcastTVServiceId];
         }
     }
 
@@ -466,9 +467,6 @@
 - (void)discoveryProvider:(DiscoveryProvider *)provider didFindService:(ServiceDescription *)description
 {
     DLog(@"%@ (%@)", description.friendlyName, description.serviceId);
-
-    if ([description.friendlyName isEqualToString:@"A SDK webOS TV"] && [description.serviceId isEqualToString:@"DLNA"])
-        NSLog(@"break");
 
     BOOL deviceIsNew = [_allDevices objectForKey:description.address] == nil;
     ConnectableDevice *device;
