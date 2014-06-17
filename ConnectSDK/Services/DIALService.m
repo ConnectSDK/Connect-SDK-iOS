@@ -22,7 +22,7 @@
 #import "ConnectError.h"
 #import "CTXMLReader.h"
 #import "DeviceServiceReachability.h"
-#import "Guid.h"
+#import "CTGuid.h"
 
 static NSMutableArray *registeredApps = nil;
 
@@ -392,7 +392,7 @@ static NSMutableArray *registeredApps = nil;
 
     if (contentId && contentId.length > 0) {
         // YouTube on some platforms requires a pairing code, which may be a random string
-        NSString *pairingCode = [[Guid randomGuid] stringValue];
+        NSString *pairingCode = [[CTGuid randomGuid] stringValue];
 
         params = [NSString stringWithFormat:@"pairingCode=%@&v=%@&t=0.0", pairingCode, contentId];
     }

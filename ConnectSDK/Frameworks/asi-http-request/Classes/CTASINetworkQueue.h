@@ -1,16 +1,19 @@
 //
-//  ASINetworkQueue.h
-//  Part of ASIHTTPRequest -> http://allseeing-i.com/ASIHTTPRequest
+//  CTASINetworkQueue.h
+//  Part of CTASIHTTPRequest -> http://allseeing-i.com/CTASIHTTPRequest
 //
 //  Created by Ben Copsey on 07/11/2008.
 //  Copyright 2008-2009 All-Seeing Interactive. All rights reserved.
 //
+//  Connect SDK Note:
+//  CT has been prepended to all members of this framework to avoid namespace collisions
+//
 
 #import <Foundation/Foundation.h>
-#import "ASIHTTPRequestDelegate.h"
-#import "ASIProgressDelegate.h"
+#import "CTASIHTTPRequestDelegate.h"
+#import "CTASIProgressDelegate.h"
 
-@interface ASINetworkQueue : NSOperationQueue <ASIProgressDelegate, ASIHTTPRequestDelegate, NSCopying> {
+@interface CTASINetworkQueue : NSOperationQueue <CTASIProgressDelegate, CTASIHTTPRequestDelegate, NSCopying> {
 	
 	// Delegate will get didFail + didFinish messages (if set)
 	id delegate;

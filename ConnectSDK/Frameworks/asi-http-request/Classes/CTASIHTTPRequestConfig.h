@@ -1,9 +1,12 @@
 //
 //  ASIHTTPRequestConfig.h
-//  Part of ASIHTTPRequest -> http://allseeing-i.com/ASIHTTPRequest
+//  Part of CTASIHTTPRequest -> http://allseeing-i.com/CTASIHTTPRequest
 //
 //  Created by Ben Copsey on 14/12/2009.
 //  Copyright 2009 All-Seeing Interactive. All rights reserved.
+//
+//  Connect SDK Note:
+//  CT has been prepended to all members of this framework to avoid namespace collisions
 //
 
 

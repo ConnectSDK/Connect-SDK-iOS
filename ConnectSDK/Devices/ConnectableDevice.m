@@ -24,7 +24,7 @@
 #import "ExternalInputControl.h"
 #import "ToastControl.h"
 #import "TextInputControl.h"
-#import "Guid.h"
+#import "CTGuid.h"
 
 @implementation ConnectableDevice
 {
@@ -133,7 +133,7 @@
 - (NSString *) id
 {
     if (!_id)
-        _id = [[Guid randomGuid] stringValueWithFormat:GuidFormatDashed];
+        _id = [[CTGuid randomGuid] stringValueWithFormat:CTGuidFormatDashed];
 
     return _id;
 }

@@ -1,22 +1,25 @@
 //
-//  Guid.m
+//  CTGuid.m
 //  Copyright (c) 2012 Thong Nguyen (tumtumtum@gmail.com). All rights reserved.
 //  Source: https://code.google.com/p/objc-guid/
 //
+//  Connect SDK Note:
+//  CT has been prepended to all members of this framework to avoid namespace collisions
+//
 
-#import "Guid.h"
+#import "CTGuid.h"
 
 #define ConvertToHexCharLower(x) (((x) >= 0 && (x) <= 9) ? (char)((x) + '0') : (char)((x) - 10 + 'a'))
 #define ConvertToHexCharUpper(x) (((x) >= 0 && (x) <= 9) ? (char)((x) + '0') : (char)((x) - 10 + 'A'))
 #define IsHexChar(x) ((((x) >= '0' && (x) <= '9') || ((x) >= 'a' && (x) <= 'f') || ((x) >= 'A' && (x) <= 'F')))
 
-@interface Guid()
+@interface CTGuid ()
 -(id) initWithCFUUIDBytes:(CFUUIDBytes)bytes;
 -(id) initWithBytePointer:(unsigned char*)bytes;
 +(BOOL) guidBytesFromString:(NSString*)guidString bytes:(UInt8*)bytes;
 @end
 
-@implementation Guid
+@implementation CTGuid
 
 -(id) initWithCoder:(NSCoder*)decoder
 {
@@ -40,13 +43,13 @@
 	[coder encodeBytes:&data[0] length:16 forKey:@"data"];
 }
 
-+(Guid*) emptyGuid
++(CTGuid *) emptyGuid
 {
-	static Guid* retval;
+	static CTGuid * retval;
 	
 	if (retval == nil)
 	{
-		retval = [[Guid alloc] init];
+		retval = [[CTGuid alloc] init];
 	}
 	
 	return retval;
@@ -81,7 +84,7 @@
 {
     if (self = [super init])
     {
-		if (![Guid guidBytesFromString:string bytes:&data[0]])
+		if (![CTGuid guidBytesFromString:string bytes:&data[0]])
 		{
 			[NSException raise:@"Guid wrong format" format:@"The string %@ is not a value guid", string];
 		}
@@ -90,23 +93,23 @@
     return self;
 }
 
--(NSString*) stringValueWithFormat:(GuidFormat)format
+-(NSString*) stringValueWithFormat:(CTGuidFormat)format
 {
 	int index = 0;
 	unichar buffer[32 + 4 + 2];
 	
-	if (format & GuidFormatIncludeBraces)
+	if (format & CTGuidFormatIncludeBraces)
 	{
 		buffer[index++] = '{';
 	}
-	else if (format & GuidFormatIncludeParenthesis)
+	else if (format & CTGuidFormatIncludeParenthesis)
 	{
 		buffer[index++] = '(';
 	}
 	
-	if (format & GuidFormatUpperCase)
+	if (format & CTGuidFormatUpperCase)
 	{
-		if (format & GuidFormatIncludeDashes)
+		if (format & CTGuidFormatIncludeDashes)
 		{
 			for (int i = 0; i < 4; i++)
 			{
@@ -181,7 +184,7 @@
 	}
 	else
 	{
-		if (format & GuidFormatIncludeDashes)
+		if (format & CTGuidFormatIncludeDashes)
 		{
 			for (int i = 0; i < 4; i++)
 			{
@@ -254,11 +257,11 @@
 			}
 		}
 	}		
-	if (format & GuidFormatIncludeBraces)
+	if (format & CTGuidFormatIncludeBraces)
 	{
 		buffer[index++] = '}';
 	}
-	else if (format & GuidFormatIncludeParenthesis)
+	else if (format & CTGuidFormatIncludeParenthesis)
 	{
 		buffer[index++] = ')';
 	}
@@ -266,24 +269,24 @@
 	return [NSString stringWithCharacters:buffer length:index];
 }
 
-+(Guid*) randomGuid
++(CTGuid *) randomGuid
 {
 	CFUUIDRef uuid = CFUUIDCreate(0);
 	CFUUIDBytes bytes = CFUUIDGetUUIDBytes(uuid);
 	CFRelease(uuid);
 	
-	Guid* retval = [[Guid alloc] initWithCFUUIDBytes:bytes];
+	CTGuid * retval = [[CTGuid alloc] initWithCFUUIDBytes:bytes];
 	
 	return retval;
 }
 		 
-+(Guid*) guidFromString:(NSString*)guidString
++(CTGuid *) guidFromString:(NSString*)guidString
 {
 	UInt8 bytes[16];
 	
 	if ([self guidBytesFromString:guidString bytes:&bytes[0]])
 	{
-		return [[Guid alloc] initWithBytes:bytes];
+		return [[CTGuid alloc] initWithBytes:bytes];
 	}
 	
 	return nil;
@@ -425,12 +428,12 @@
 		return YES;
 	}
 	
-    if (other == nil || [other class] != Guid.class)
+    if (other == nil || [other class] != CTGuid.class)
 	{
         return NO;
 	}
 	
-    return memcmp(&data[0], ((Guid*)other)->data, 16) == 0;
+    return memcmp(&data[0], ((CTGuid *)other)->data, 16) == 0;
 }
 
 -(NSUInteger) hash
@@ -456,27 +459,27 @@
 
 -(BOOL) isEmpty
 {
-	return [self isEqual:Guid.emptyGuid];
+	return [self isEqual:CTGuid.emptyGuid];
 }
 
 -(NSString*) stringValue
 {
-	return [self stringValueWithFormat:GuidFormatDashed];
+	return [self stringValueWithFormat:CTGuidFormatDashed];
 }
 
 -(NSString*) description
 {
-	return [self stringValueWithFormat:GuidFormatDashed];
+	return [self stringValueWithFormat:CTGuidFormatDashed];
 }
 
 -(NSString*) compactStringValue
 {
-	return [self stringValueWithFormat:GuidFormatCompact];
+	return [self stringValueWithFormat:CTGuidFormatCompact];
 }
 
 -(id) copyWithZone:(NSZone*)zone
 {
-	Guid* retval = [[Guid alloc] initWithBytes:data];
+	CTGuid * retval = [[CTGuid alloc] initWithBytes:data];
 
 	return retval;
 }

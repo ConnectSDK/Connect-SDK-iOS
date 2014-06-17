@@ -1,26 +1,29 @@
 //
 //  ASIDataCompressor.m
-//  Part of ASIHTTPRequest -> http://allseeing-i.com/ASIHTTPRequest
+//  Part of CTASIHTTPRequest -> http://allseeing-i.com/CTASIHTTPRequest
 //
 //  Created by Ben Copsey on 17/08/2010.
 //  Copyright 2010 All-Seeing Interactive. All rights reserved.
 //
+//  Connect SDK Note:
+//  CT has been prepended to all members of this framework to avoid namespace collisions
+//
 
-#import "ASIDataCompressor.h"
-#import "ASIHTTPRequest.h"
+#import "CTASIDataCompressor.h"
+#import "CTASIHTTPRequest.h"
 
 #define DATA_CHUNK_SIZE 262144 // Deal with gzipped data in 256KB chunks
 #define COMPRESSION_AMOUNT Z_DEFAULT_COMPRESSION
 
-@interface ASIDataCompressor ()
+@interface CTASIDataCompressor ()
 + (NSError *)deflateErrorWithCode:(int)code;
 @end
 
-@implementation ASIDataCompressor
+@implementation CTASIDataCompressor
 
 + (id)compressor
 {
-	ASIDataCompressor *compressor = [[[self alloc] init] autorelease];
+	CTASIDataCompressor *compressor = [[[self alloc] init] autorelease];
 	[compressor setupStream];
 	return compressor;
 }
@@ -111,7 +114,7 @@
 + (NSData *)compressData:(NSData*)uncompressedData error:(NSError **)err
 {
 	NSError *theError = nil;
-	NSData *outputData = [[ASIDataCompressor compressor] compressBytes:(Bytef *)[uncompressedData bytes] length:[uncompressedData length] error:&theError shouldFinish:YES];
+	NSData *outputData = [[CTASIDataCompressor compressor] compressBytes:(Bytef *)[uncompressedData bytes] length:[uncompressedData length] error:&theError shouldFinish:YES];
 	if (theError) {
 		if (err) {
 			*err = theError;
@@ -148,7 +151,7 @@
 	NSInteger readLength;
 	NSError *theError = nil;
 	
-	ASIDataCompressor *compressor = [ASIDataCompressor compressor];
+	CTASIDataCompressor *compressor = [CTASIDataCompressor compressor];
 	
 	NSInputStream *inputStream = [NSInputStream inputStreamWithFileAtPath:sourcePath];
 	[inputStream open];

@@ -1,27 +1,30 @@
 //
-//  ASIHTTPRequest.m
+//  CTASIHTTPRequest.m
 //
 //  Created by Ben Copsey on 04/10/2007.
 //  Copyright 2007-2011 All-Seeing Interactive. All rights reserved.
 //
 //  A guide to the main features is available at:
-//  http://allseeing-i.com/ASIHTTPRequest
+//  http://allseeing-i.com/CTASIHTTPRequest
 //
 //  Portions are based on the ImageClient example from Apple:
 //  See: http://developer.apple.com/samplecode/ImageClient/listing37.html
+//
+//  Connect SDK Note:
+//  CT has been prepended to all members of this framework to avoid namespace collisions
 
-#import "ASIHTTPRequest.h"
+#import "CTASIHTTPRequest.h"
 
 #if TARGET_OS_IPHONE
 #import "Reachability.h"
-#import "ASIAuthenticationDialog.h"
+#import "CTASIAuthenticationDialog.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #else
 #import <SystemConfiguration/SystemConfiguration.h>
 #endif
-#import "ASIInputStream.h"
-#import "ASIDataDecompressor.h"
-#import "ASIDataCompressor.h"
+#import "CTASIInputStream.h"
+#import "CTASIDataDecompressor.h"
+#import "CTASIDataCompressor.h"
 
 // Automatically set on build
 NSString *ASIHTTPRequestVersion = @"v1.8.1-61 2011-09-19";
@@ -51,7 +54,7 @@ const int RedirectionLimit = 5;
 static NSTimeInterval defaultTimeOutSeconds = 10;
 
 static void ReadStreamClientCallBack(CFReadStreamRef readStream, CFStreamEventType type, void *clientCallBackInfo) {
-    [((ASIHTTPRequest*)clientCallBackInfo) handleNetworkEvent: type];
+    [((CTASIHTTPRequest *)clientCallBackInfo) handleNetworkEvent: type];
 }
 
 // This lock prevents the operation from being cancelled while it is trying to update the progress, and vice versa
@@ -121,12 +124,12 @@ static NSRecursiveLock *delegateAuthenticationLock = nil;
 // When throttling bandwidth, Set to a date in future that we will allow all requests to wake up and reschedule their streams
 static NSDate *throttleWakeUpTime = nil;
 
-static id <ASICacheDelegate> defaultCache = nil;
+static id <CTASICacheDelegate> defaultCache = nil;
 
 // Used for tracking when requests are using the network
 static unsigned int runningRequestCount = 0;
 
-// You can use [ASIHTTPRequest setShouldUpdateNetworkActivityIndicator:NO] if you want to manage it yourself
+// You can use [CTASIHTTPRequest setShouldUpdateNetworkActivityIndicator:NO] if you want to manage it yourself
 // Alternatively, override showNetworkActivityIndicator / hideNetworkActivityIndicator
 // By default this does nothing on Mac OS X, but again override the above methods for a different behaviour
 static BOOL shouldUpdateNetworkActivityIndicator = YES;
@@ -138,7 +141,7 @@ static NSThread *networkThread = nil;
 static NSOperationQueue *sharedQueue = nil;
 
 // Private stuff
-@interface ASIHTTPRequest ()
+@interface CTASIHTTPRequest ()
 
 - (void)cancelLoad;
 
@@ -174,7 +177,7 @@ static NSOperationQueue *sharedQueue = nil;
 // Handling Proxy autodetection and PAC file downloads
 - (BOOL)configureProxies;
 - (void)fetchPACFile;
-- (void)finishedDownloadingPACFile:(ASIHTTPRequest *)theRequest;
+- (void)finishedDownloadingPACFile:(CTASIHTTPRequest *)theRequest;
 - (void)runPACScript:(NSString *)script;
 - (void)timeOutPACRead;
 
@@ -241,7 +244,7 @@ static NSOperationQueue *sharedQueue = nil;
 @property (retain, nonatomic) NSURL *redirectURL;
 
 @property (assign, nonatomic) BOOL isPACFileRequest;
-@property (retain, nonatomic) ASIHTTPRequest *PACFileRequest;
+@property (retain, nonatomic) CTASIHTTPRequest *PACFileRequest;
 @property (retain, nonatomic) NSInputStream *PACFileReadStream;
 @property (retain, nonatomic) NSMutableData *PACFileData;
 
@@ -249,13 +252,13 @@ static NSOperationQueue *sharedQueue = nil;
 @end
 
 
-@implementation ASIHTTPRequest
+@implementation CTASIHTTPRequest
 
 #pragma mark init / dealloc
 
 + (void)initialize
 {
-	if (self == [ASIHTTPRequest class]) {
+	if (self == [CTASIHTTPRequest class]) {
 		persistentConnectionsPool = [[NSMutableArray alloc] init];
 		connectionsLock = [[NSRecursiveLock alloc] init];
 		progressLock = [[NSRecursiveLock alloc] init];
@@ -294,7 +297,7 @@ static NSOperationQueue *sharedQueue = nil;
 	[self setDefaultResponseEncoding:NSISOLatin1StringEncoding];
 	[self setShouldPresentProxyAuthenticationDialog:YES];
 	
-	[self setTimeOutSeconds:[ASIHTTPRequest defaultTimeOutSeconds]];
+	[self setTimeOutSeconds:[CTASIHTTPRequest defaultTimeOutSeconds]];
 	[self setUseSessionPersistence:YES];
 	[self setUseCookiePersistence:YES];
 	[self setValidatesSecureCertificate:YES];
@@ -316,14 +319,14 @@ static NSOperationQueue *sharedQueue = nil;
 	return [[[self alloc] initWithURL:newURL] autorelease];
 }
 
-+ (id)requestWithURL:(NSURL *)newURL usingCache:(id <ASICacheDelegate>)cache
++ (id)requestWithURL:(NSURL *)newURL usingCache:(id <CTASICacheDelegate>)cache
 {
-	return [self requestWithURL:newURL usingCache:cache andCachePolicy:ASIUseDefaultCachePolicy];
+	return [self requestWithURL:newURL usingCache:cache andCachePolicy:CTASIUseDefaultCachePolicy];
 }
 
-+ (id)requestWithURL:(NSURL *)newURL usingCache:(id <ASICacheDelegate>)cache andCachePolicy:(ASICachePolicy)policy
++ (id)requestWithURL:(NSURL *)newURL usingCache:(id <CTASICacheDelegate>)cache andCachePolicy:(CTASICachePolicy)policy
 {
-	ASIHTTPRequest *request = [[[self alloc] initWithURL:newURL] autorelease];
+	CTASIHTTPRequest *request = [[[self alloc] initWithURL:newURL] autorelease];
 	[request setDownloadCache:cache];
 	[request setCachePolicy:policy];
 	return request;
@@ -510,7 +513,7 @@ static NSOperationQueue *sharedQueue = nil;
 				[self setCompressedPostBodyFilePath:[NSTemporaryDirectory() stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]]];
 				
 				NSError *err = nil;
-				if (![ASIDataCompressor compressDataFromFile:[self postBodyFilePath] toFile:[self compressedPostBodyFilePath] error:&err]) {
+				if (![CTASIDataCompressor compressDataFromFile:[self postBodyFilePath] toFile:[self compressedPostBodyFilePath] error:&err]) {
 					[self failWithError:err];
 					return;
 				}
@@ -530,7 +533,7 @@ static NSOperationQueue *sharedQueue = nil;
 	} else {
 		if ([self shouldCompressRequestBody]) {
 			NSError *err = nil;
-			NSData *compressedBody = [ASIDataCompressor compressData:[self postBody] error:&err];
+			NSData *compressedBody = [CTASIDataCompressor compressData:[self postBody] error:&err];
 			if (err) {
 				[self failWithError:err];
 				return;
@@ -782,7 +785,7 @@ static NSOperationQueue *sharedQueue = nil;
 - (NSData *)responseData
 {	
 	if ([self isResponseCompressed] && [self shouldWaitToInflateCompressedResponses]) {
-		return [ASIDataDecompressor uncompressData:[self rawResponseData] error:NULL];
+		return [CTASIDataDecompressor uncompressData:[self rawResponseData] error:NULL];
 	} else {
 		return [self rawResponseData];
 	}
@@ -850,7 +853,7 @@ static NSOperationQueue *sharedQueue = nil;
 		[[self cancelledLock] lock];
 		
 		#if TARGET_OS_IPHONE && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_4_0
-		if ([ASIHTTPRequest isMultitaskingSupported] && [self shouldContinueWhenAppEntersBackground]) {
+		if ([CTASIHTTPRequest isMultitaskingSupported] && [self shouldContinueWhenAppEntersBackground]) {
             if (!backgroundTask || backgroundTask == UIBackgroundTaskInvalid) {
                 backgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
                     // Synchronize the cleanup call on the main thread in case
@@ -869,7 +872,7 @@ static NSOperationQueue *sharedQueue = nil;
 		#endif
 
 
-		// A HEAD request generated by an ASINetworkQueue may have set the error already. If so, we should not proceed.
+		// A HEAD request generated by an CTASINetworkQueue may have set the error already. If so, we should not proceed.
 		if ([self error]) {
 			[self setComplete:YES];
 			[self markAsFinished];
@@ -906,7 +909,7 @@ static NSOperationQueue *sharedQueue = nil;
 			return;
 		}
 
-		//If this is a HEAD request generated by an ASINetworkQueue, we need to let the main request generate its headers first so we can use them
+		//If this is a HEAD request generated by an CTASINetworkQueue, we need to let the main request generate its headers first so we can use them
 		if ([self mainRequest]) {
 			[[self mainRequest] buildRequestHeaders];
 		}
@@ -928,7 +931,7 @@ static NSOperationQueue *sharedQueue = nil;
 			}
 
 			// If cached data is stale, or we have been told to ask the server if it has been modified anyway, we need to add headers for a conditional GET
-			if ([self cachePolicy] & (ASIAskServerIfModifiedWhenStaleCachePolicy|ASIAskServerIfModifiedCachePolicy)) {
+			if ([self cachePolicy] & (CTASIAskServerIfModifiedWhenStaleCachePolicy | CTASIAskServerIfModifiedCachePolicy)) {
 
 				NSDictionary *cachedHeaders = [[self downloadCache] cachedResponseHeadersForURL:[self url]];
 				if (cachedHeaders) {
@@ -987,7 +990,7 @@ static NSOperationQueue *sharedQueue = nil;
 			[self addBasicAuthenticationHeaderWithUsername:[self username] andPassword:[self password]];
 
 			#if DEBUG_HTTP_AUTHENTICATION
-			ASI_DEBUG_LOG(@"[AUTH] Request %@ has a username and password set, and was manually configured to use BASIC. Will send credentials without waiting for an authentication challenge",self);	
+			ASI_DEBUG_LOG(@"[AUTH] Request %@ has a username and password set, and was manually configured to use BASIC. Will send credentials without waiting for an authentication challenge",self);
 			#endif
 
 		} else {
@@ -1093,7 +1096,7 @@ static NSOperationQueue *sharedQueue = nil;
 	if (![[self requestHeaders] objectForKey:@"User-Agent"]) {
 		NSString *tempUserAgentString = [self userAgentString];
 		if (!tempUserAgentString) {
-			tempUserAgentString = [ASIHTTPRequest defaultUserAgentString];
+			tempUserAgentString = [CTASIHTTPRequest defaultUserAgentString];
 		}
 		if (tempUserAgentString) {
 			[self addRequestHeader:@"User-Agent" value:tempUserAgentString];
@@ -1175,9 +1178,9 @@ static NSOperationQueue *sharedQueue = nil;
 		
 		// Are we gzipping the request body?
 		if ([self compressedPostBodyFilePath] && [fileManager fileExistsAtPath:[self compressedPostBodyFilePath]]) {
-			[self setPostBodyReadStream:[ASIInputStream inputStreamWithFileAtPath:[self compressedPostBodyFilePath] request:self]];
+			[self setPostBodyReadStream:[CTASIInputStream inputStreamWithFileAtPath:[self compressedPostBodyFilePath] request:self]];
 		} else {
-			[self setPostBodyReadStream:[ASIInputStream inputStreamWithFileAtPath:[self postBodyFilePath] request:self]];
+			[self setPostBodyReadStream:[CTASIInputStream inputStreamWithFileAtPath:[self postBodyFilePath] request:self]];
 		}
 		[self setReadStream:[NSMakeCollectable(CFReadStreamCreateForStreamedHTTPRequest(kCFAllocatorDefault, request,(CFReadStreamRef)[self postBodyReadStream])) autorelease]];    
     } else {
@@ -1185,9 +1188,9 @@ static NSOperationQueue *sharedQueue = nil;
 		// If we have a request body, we'll stream it from memory using our custom stream, so that we can measure bandwidth use and it can be bandwidth-throttled if necessary
 		if ([self postBody] && [[self postBody] length] > 0) {
 			if ([self shouldCompressRequestBody] && [self compressedPostBody]) {
-				[self setPostBodyReadStream:[ASIInputStream inputStreamWithData:[self compressedPostBody] request:self]];
+				[self setPostBodyReadStream:[CTASIInputStream inputStreamWithData:[self compressedPostBody] request:self]];
 			} else if ([self postBody]) {
-				[self setPostBodyReadStream:[ASIInputStream inputStreamWithData:[self postBody] request:self]];
+				[self setPostBodyReadStream:[CTASIInputStream inputStreamWithData:[self postBody] request:self]];
 			}
 			[self setReadStream:[NSMakeCollectable(CFReadStreamCreateForStreamedHTTPRequest(kCFAllocatorDefault, request,(CFReadStreamRef)[self postBodyReadStream])) autorelease]];
 		
@@ -1285,7 +1288,7 @@ static NSOperationQueue *sharedQueue = nil;
 	// Handle persistent connections
 	//
 	
-	[ASIHTTPRequest expirePersistentConnections];
+	[CTASIHTTPRequest expirePersistentConnections];
 
 	[connectionsLock lock];
 	
@@ -1419,10 +1422,10 @@ static NSOperationQueue *sharedQueue = nil;
 			} else {
 				[self incrementUploadSizeBy:1];	 
 			}
-			[ASIHTTPRequest updateProgressIndicator:&uploadProgressDelegate withProgress:0 ofTotal:1];
+			[CTASIHTTPRequest updateProgressIndicator:&uploadProgressDelegate withProgress:0 ofTotal:1];
 		}
 		if ([self shouldResetDownloadProgress] && ![self partialDownloadSize]) {
-			[ASIHTTPRequest updateProgressIndicator:&downloadProgressDelegate withProgress:0 ofTotal:1];
+			[CTASIHTTPRequest updateProgressIndicator:&downloadProgressDelegate withProgress:0 ofTotal:1];
 		}
 	}	
 	
@@ -1547,7 +1550,7 @@ static NSOperationQueue *sharedQueue = nil;
 				
 				// We've uploaded more data,  reset the timeout
 				[self setLastActivityTime:[NSDate date]];
-				[ASIHTTPRequest incrementBandwidthUsedInLastSecond:(unsigned long)(totalBytesSent-lastBytesSent)];		
+				[CTASIHTTPRequest incrementBandwidthUsedInLastSecond:(unsigned long) (totalBytesSent - lastBytesSent)];
 						
 				#if DEBUG_REQUEST_STATUS
 				if ([self totalBytesSent] == [self postLength]) {
@@ -1616,10 +1619,10 @@ static NSOperationQueue *sharedQueue = nil;
 
 #pragma mark HEAD request
 
-// Used by ASINetworkQueue to create a HEAD request appropriate for this request with the same headers (though you can use it yourself)
-- (ASIHTTPRequest *)HEADRequest
+// Used by CTASINetworkQueue to create a HEAD request appropriate for this request with the same headers (though you can use it yourself)
+- (CTASIHTTPRequest *)HEADRequest
 {
-	ASIHTTPRequest *headRequest = [[self class] requestWithURL:[self url]];
+	CTASIHTTPRequest *headRequest = [[self class] requestWithURL:[self url]];
 	
 	// Copy the properties that make sense for a HEAD request
 	[headRequest setRequestHeaders:[[[self requestHeaders] mutableCopy] autorelease]];
@@ -1687,7 +1690,7 @@ static NSOperationQueue *sharedQueue = nil;
 	#if !TARGET_OS_IPHONE
 	// If the uploadProgressDelegate is an NSProgressIndicator, we set its MaxValue to 1.0 so we can update it as if it were a UIProgressView
 	double max = 1.0;
-	[ASIHTTPRequest performSelector:@selector(setMaxValue:) onTarget:&uploadProgressDelegate withObject:nil amount:&max callerToRetain:nil];
+	[CTASIHTTPRequest performSelector:@selector(setMaxValue:) onTarget:&uploadProgressDelegate withObject:nil amount:&max callerToRetain:nil];
 	#endif
 	[[self cancelledLock] unlock];
 }
@@ -1708,7 +1711,7 @@ static NSOperationQueue *sharedQueue = nil;
 	#if !TARGET_OS_IPHONE
 	// If the downloadProgressDelegate is an NSProgressIndicator, we set its MaxValue to 1.0 so we can update it as if it were a UIProgressView
 	double max = 1.0;
-	[ASIHTTPRequest performSelector:@selector(setMaxValue:) onTarget:&downloadProgressDelegate withObject:nil amount:&max callerToRetain:nil];	
+	[CTASIHTTPRequest performSelector:@selector(setMaxValue:) onTarget:&downloadProgressDelegate withObject:nil amount:&max callerToRetain:nil];
 	#endif
 	[[self cancelledLock] unlock];
 }
@@ -1737,10 +1740,10 @@ static NSOperationQueue *sharedQueue = nil;
 		return;
 	}
 
-	[ASIHTTPRequest performSelector:@selector(request:didReceiveBytes:) onTarget:&queue withObject:self amount:&value callerToRetain:self];
-	[ASIHTTPRequest performSelector:@selector(request:didReceiveBytes:) onTarget:&downloadProgressDelegate withObject:self amount:&value callerToRetain:self];
+	[CTASIHTTPRequest performSelector:@selector(request:didReceiveBytes:) onTarget:&queue withObject:self amount:&value callerToRetain:self];
+	[CTASIHTTPRequest performSelector:@selector(request:didReceiveBytes:) onTarget:&downloadProgressDelegate withObject:self amount:&value callerToRetain:self];
 
-	[ASIHTTPRequest updateProgressIndicator:&downloadProgressDelegate withProgress:[self totalBytesRead]+[self partialDownloadSize] ofTotal:[self contentLength]+[self partialDownloadSize]];
+	[CTASIHTTPRequest updateProgressIndicator:&downloadProgressDelegate withProgress:[self totalBytesRead] + [self partialDownloadSize] ofTotal:[self contentLength] + [self partialDownloadSize]];
 
 	#if NS_BLOCKS_AVAILABLE
     if (bytesReceivedBlock) {
@@ -1782,9 +1785,9 @@ static NSOperationQueue *sharedQueue = nil;
 		return;
 	}
 	
-	[ASIHTTPRequest performSelector:@selector(request:didSendBytes:) onTarget:&queue withObject:self amount:&value callerToRetain:self];
-	[ASIHTTPRequest performSelector:@selector(request:didSendBytes:) onTarget:&uploadProgressDelegate withObject:self amount:&value callerToRetain:self];
-	[ASIHTTPRequest updateProgressIndicator:&uploadProgressDelegate withProgress:[self totalBytesSent]-[self uploadBufferSize] ofTotal:[self postLength]-[self uploadBufferSize]];
+	[CTASIHTTPRequest performSelector:@selector(request:didSendBytes:) onTarget:&queue withObject:self amount:&value callerToRetain:self];
+	[CTASIHTTPRequest performSelector:@selector(request:didSendBytes:) onTarget:&uploadProgressDelegate withObject:self amount:&value callerToRetain:self];
+	[CTASIHTTPRequest updateProgressIndicator:&uploadProgressDelegate withProgress:[self totalBytesSent] - [self uploadBufferSize] ofTotal:[self postLength] - [self uploadBufferSize]];
 
 	#if NS_BLOCKS_AVAILABLE
     if(bytesSentBlock){
@@ -1797,8 +1800,8 @@ static NSOperationQueue *sharedQueue = nil;
 
 - (void)incrementDownloadSizeBy:(long long)length
 {
-	[ASIHTTPRequest performSelector:@selector(request:incrementDownloadSizeBy:) onTarget:&queue withObject:self amount:&length callerToRetain:self];
-	[ASIHTTPRequest performSelector:@selector(request:incrementDownloadSizeBy:) onTarget:&downloadProgressDelegate withObject:self amount:&length callerToRetain:self];
+	[CTASIHTTPRequest performSelector:@selector(request:incrementDownloadSizeBy:) onTarget:&queue withObject:self amount:&length callerToRetain:self];
+	[CTASIHTTPRequest performSelector:@selector(request:incrementDownloadSizeBy:) onTarget:&downloadProgressDelegate withObject:self amount:&length callerToRetain:self];
 
 	#if NS_BLOCKS_AVAILABLE
     if(downloadSizeIncrementedBlock){
@@ -1809,8 +1812,8 @@ static NSOperationQueue *sharedQueue = nil;
 
 - (void)incrementUploadSizeBy:(long long)length
 {
-	[ASIHTTPRequest performSelector:@selector(request:incrementUploadSizeBy:) onTarget:&queue withObject:self amount:&length callerToRetain:self];
-	[ASIHTTPRequest performSelector:@selector(request:incrementUploadSizeBy:) onTarget:&uploadProgressDelegate withObject:self amount:&length callerToRetain:self];
+	[CTASIHTTPRequest performSelector:@selector(request:incrementUploadSizeBy:) onTarget:&queue withObject:self amount:&length callerToRetain:self];
+	[CTASIHTTPRequest performSelector:@selector(request:incrementUploadSizeBy:) onTarget:&uploadProgressDelegate withObject:self amount:&length callerToRetain:self];
 
 	#if NS_BLOCKS_AVAILABLE
     if(uploadSizeIncrementedBlock) {
@@ -1823,9 +1826,9 @@ static NSOperationQueue *sharedQueue = nil;
 -(void)removeUploadProgressSoFar
 {
 	long long progressToRemove = -(long long)[self totalBytesSent];
-	[ASIHTTPRequest performSelector:@selector(request:didSendBytes:) onTarget:&queue withObject:self amount:&progressToRemove callerToRetain:self];
-	[ASIHTTPRequest performSelector:@selector(request:didSendBytes:) onTarget:&uploadProgressDelegate withObject:self amount:&progressToRemove callerToRetain:self];
-	[ASIHTTPRequest updateProgressIndicator:&uploadProgressDelegate withProgress:0 ofTotal:[self postLength]];
+	[CTASIHTTPRequest performSelector:@selector(request:didSendBytes:) onTarget:&queue withObject:self amount:&progressToRemove callerToRetain:self];
+	[CTASIHTTPRequest performSelector:@selector(request:didSendBytes:) onTarget:&uploadProgressDelegate withObject:self amount:&progressToRemove callerToRetain:self];
+	[CTASIHTTPRequest updateProgressIndicator:&uploadProgressDelegate withProgress:0 ofTotal:[self postLength]];
 
 	#if NS_BLOCKS_AVAILABLE
     if(bytesSentBlock){
@@ -1871,7 +1874,7 @@ static NSOperationQueue *sharedQueue = nil;
 		}
 
         SEL callback = @selector(performInvocation:onTarget:releasingObject:);
-        NSMethodSignature *cbSignature = [ASIHTTPRequest methodSignatureForSelector:callback];
+        NSMethodSignature *cbSignature = [CTASIHTTPRequest methodSignatureForSelector:callback];
         NSInvocation *cbInvocation = [NSInvocation invocationWithMethodSignature:cbSignature];
         [cbInvocation setSelector:callback];
         [cbInvocation setTarget:self];
@@ -1922,7 +1925,7 @@ static NSOperationQueue *sharedQueue = nil;
 	}
 	
 	[progressLock lock];
-	[ASIHTTPRequest performSelector:selector onTarget:indicator withObject:nil amount:&progressAmount callerToRetain:nil];
+	[CTASIHTTPRequest performSelector:selector onTarget:indicator withObject:nil amount:&progressAmount callerToRetain:nil];
 	[progressLock unlock];
 }
 
@@ -2098,8 +2101,8 @@ static NSOperationQueue *sharedQueue = nil;
 		return;
 	}
 	
-	// If we have cached data, use it and ignore the error when using ASIFallbackToCacheIfLoadFailsCachePolicy
-	if ([self downloadCache] && ([self cachePolicy] & ASIFallbackToCacheIfLoadFailsCachePolicy)) {
+	// If we have cached data, use it and ignore the error when using CTASIFallbackToCacheIfLoadFailsCachePolicy
+	if ([self downloadCache] && ([self cachePolicy] & CTASIFallbackToCacheIfLoadFailsCachePolicy)) {
 		if ([[self downloadCache] canUseCachedDataForRequest:self]) {
 			[self useDataFromCache];
 			return;
@@ -2109,9 +2112,9 @@ static NSOperationQueue *sharedQueue = nil;
 	
 	[self setError:theError];
 	
-	ASIHTTPRequest *failedRequest = self;
+	CTASIHTTPRequest *failedRequest = self;
 	
-	// If this is a HEAD request created by an ASINetworkQueue or compatible queue delegate, make the main request fail
+	// If this is a HEAD request created by an CTASINetworkQueue or compatible queue delegate, make the main request fail
 	if ([self mainRequest]) {
 		failedRequest = [self mainRequest];
 		[failedRequest setError:theError];
@@ -2222,7 +2225,7 @@ static NSOperationQueue *sharedQueue = nil;
 		// We also keep any cookies in the sessionCookies array, so that we have a reference to them if we need to remove them later
 		NSHTTPCookie *cookie;
 		for (cookie in newCookies) {
-			[ASIHTTPRequest addSessionCookie:cookie];
+			[CTASIHTTPRequest addSessionCookie:cookie];
 		}
 	}
 	
@@ -2230,7 +2233,7 @@ static NSOperationQueue *sharedQueue = nil;
 	if (![self willRedirect]) {
 		// See if we got a Content-length header
 		NSString *cLength = [responseHeaders valueForKey:@"Content-Length"];
-		ASIHTTPRequest *theRequest = self;
+		CTASIHTTPRequest *theRequest = self;
 		if ([self mainRequest]) {
 			theRequest = [self mainRequest];
 		}
@@ -2311,7 +2314,7 @@ static NSOperationQueue *sharedQueue = nil;
 		return NO;
 	}
 
-	// Note that ASIHTTPRequest does not currently support 305 Use Proxy
+	// Note that CTASIHTTPRequest does not currently support 305 Use Proxy
 	int responseCode = [self responseStatusCode];
 	if (responseCode != 301 && responseCode != 302 && responseCode != 303 && responseCode != 307) {
 		return NO;
@@ -2382,7 +2385,7 @@ static NSOperationQueue *sharedQueue = nil;
 {
 	NSURLCredential *authenticationCredentials = [NSURLCredential credentialWithUser:[newCredentials objectForKey:(NSString *)kCFHTTPAuthenticationUsername] password:[newCredentials objectForKey:(NSString *)kCFHTTPAuthenticationPassword] persistence:NSURLCredentialPersistencePermanent];
 	if (authenticationCredentials) {
-		[ASIHTTPRequest saveCredentials:authenticationCredentials forProxy:[self proxyHost] port:[self proxyPort] realm:[self proxyAuthenticationRealm]];
+		[CTASIHTTPRequest saveCredentials:authenticationCredentials forProxy:[self proxyHost] port:[self proxyPort] realm:[self proxyAuthenticationRealm]];
 	}	
 }
 
@@ -2392,7 +2395,7 @@ static NSOperationQueue *sharedQueue = nil;
 	NSURLCredential *authenticationCredentials = [NSURLCredential credentialWithUser:[newCredentials objectForKey:(NSString *)kCFHTTPAuthenticationUsername] password:[newCredentials objectForKey:(NSString *)kCFHTTPAuthenticationPassword] persistence:NSURLCredentialPersistencePermanent];
 	
 	if (authenticationCredentials) {
-		[ASIHTTPRequest saveCredentials:authenticationCredentials forHost:[[self url] host] port:[[[self url] port] intValue] protocol:[[self url] scheme] realm:[self authenticationRealm]];
+		[CTASIHTTPRequest saveCredentials:authenticationCredentials forHost:[[self url] host] port:[[[self url] port] intValue] protocol:[[self url] scheme] realm:[self authenticationRealm]];
 	}	
 }
 
@@ -2468,8 +2471,8 @@ static NSOperationQueue *sharedQueue = nil;
 	NSString *user = nil;
 	NSString *pass = nil;
 	
-	ASIHTTPRequest *theRequest = [self mainRequest];
-	// If this is a HEAD request generated by an ASINetworkQueue, we'll try to use the details from the main request
+	CTASIHTTPRequest *theRequest = [self mainRequest];
+	// If this is a HEAD request generated by an CTASINetworkQueue, we'll try to use the details from the main request
 	if ([theRequest proxyUsername] && [theRequest proxyPassword]) {
 		user = [theRequest proxyUsername];
 		pass = [theRequest proxyPassword];
@@ -2491,7 +2494,7 @@ static NSOperationQueue *sharedQueue = nil;
 	// Ok, that didn't work, let's try the keychain
 	// For authenticating proxies, we'll look in the keychain regardless of the value of useKeychainPersistence
 	if ((!user || !pass)) {
-		NSURLCredential *authenticationCredentials = [ASIHTTPRequest savedCredentialsForProxy:[self proxyHost] port:[self proxyPort] protocol:[[self url] scheme] realm:[self proxyAuthenticationRealm]];
+		NSURLCredential *authenticationCredentials = [CTASIHTTPRequest savedCredentialsForProxy:[self proxyHost] port:[self proxyPort] protocol:[[self url] scheme] realm:[self proxyAuthenticationRealm]];
 		if (authenticationCredentials) {
 			user = [authenticationCredentials user];
 			pass = [authenticationCredentials password];
@@ -2551,7 +2554,7 @@ static NSOperationQueue *sharedQueue = nil;
 
 	} else {
 		
-		// If this is a HEAD request generated by an ASINetworkQueue, we'll try to use the details from the main request
+		// If this is a HEAD request generated by an CTASINetworkQueue, we'll try to use the details from the main request
 		if ([self mainRequest] && [[self mainRequest] username] && [[self mainRequest] password]) {
 			user = [[self mainRequest] username];
 			pass = [[self mainRequest] password];
@@ -2573,7 +2576,7 @@ static NSOperationQueue *sharedQueue = nil;
 	
 	// Ok, that didn't work, let's try the keychain
 	if ((!user || !pass) && useKeychainPersistence) {
-		NSURLCredential *authenticationCredentials = [ASIHTTPRequest savedCredentialsForHost:[[self url] host] port:[[[self url] port] intValue] protocol:[[self url] scheme] realm:[self authenticationRealm]];
+		NSURLCredential *authenticationCredentials = [CTASIHTTPRequest savedCredentialsForHost:[[self url] host] port:[[[self url] port] intValue] protocol:[[self url] scheme] realm:[self authenticationRealm]];
 		if (authenticationCredentials) {
 			user = [authenticationCredentials user];
 			pass = [authenticationCredentials password];
@@ -2615,7 +2618,7 @@ static NSOperationQueue *sharedQueue = nil;
 - (void)retryUsingSuppliedCredentials
 {
 	#if DEBUG_HTTP_AUTHENTICATION
-		ASI_DEBUG_LOG(@"[AUTH] Request %@ received credentials from its delegate or an ASIAuthenticationDialog, will retry",self);
+		ASI_DEBUG_LOG(@CTASIAuthenticationDialogy",self);
 	#endif
 	//If the url was changed by the delegate, our CFHTTPMessageRef will be NULL and we'll go back to the start
 	if (!request) {
@@ -2629,7 +2632,7 @@ static NSOperationQueue *sharedQueue = nil;
 - (void)cancelAuthentication
 {
 	#if DEBUG_HTTP_AUTHENTICATION
-		ASI_DEBUG_LOG(@"[AUTH] Request %@ had authentication cancelled by its delegate or an ASIAuthenticationDialog",self);
+		ASI_DEBUG_LOG(@CTASIAuthenticationDialogg",self);
 	#endif
 	[self performSelector:@selector(failAuthentication) onThread:[[self class] threadForRequest:self] withObject:nil waitUntilDone:NO];
 }
@@ -2648,7 +2651,7 @@ static NSOperationQueue *sharedQueue = nil;
 	// Mac authentication dialog coming soon!
 	#if TARGET_OS_IPHONE
 	if ([self shouldPresentProxyAuthenticationDialog]) {
-		[ASIAuthenticationDialog performSelectorOnMainThread:@selector(presentAuthenticationDialogForRequest:) withObject:self waitUntilDone:[NSThread isMainThread]];
+		[CTASIAuthenticationDialog performSelectorOnMainThread:@selector(presentAuthenticationDialogForRequest:) withObject:self waitUntilDone:[NSThread isMainThread]];
 		return YES;
 	}
 	return NO;
@@ -2923,7 +2926,7 @@ static NSOperationQueue *sharedQueue = nil;
 	// Mac authentication dialog coming soon!
 	#if TARGET_OS_IPHONE
 	if ([self shouldPresentAuthenticationDialog]) {
-		[ASIAuthenticationDialog performSelectorOnMainThread:@selector(presentAuthenticationDialogForRequest:) withObject:self waitUntilDone:[NSThread isMainThread]];
+		[CTASIAuthenticationDialog performSelectorOnMainThread:@selector(presentAuthenticationDialogForRequest:) withObject:self waitUntilDone:[NSThread isMainThread]];
 		return YES;
 	}
 	return NO;
@@ -3043,7 +3046,7 @@ static NSOperationQueue *sharedQueue = nil;
 			if ([self showAuthenticationDialog]) {
 
 				#if DEBUG_HTTP_AUTHENTICATION
-				ASI_DEBUG_LOG(@"[AUTH] Request %@ will ask ASIAuthenticationDialog for credentials",self);
+				ASI_DEBUG_LOG(@CTASIAuthenticationDialogs",self);
 				#endif
 
 				[delegateAuthenticationLock unlock];
@@ -3147,7 +3150,7 @@ static NSOperationQueue *sharedQueue = nil;
 		if ([self showAuthenticationDialog]) {
 
 			#if DEBUG_HTTP_AUTHENTICATION
-			ASI_DEBUG_LOG(@"[AUTH] Request %@ will ask ASIAuthenticationDialog for credentials",self);
+			ASI_DEBUG_LOG(@CTASIAuthenticationDialogs",self);
 			#endif
 
 			[delegateAuthenticationLock unlock];
@@ -3166,7 +3169,7 @@ static NSOperationQueue *sharedQueue = nil;
 
 - (void)addBasicAuthenticationHeaderWithUsername:(NSString *)theUsername andPassword:(NSString *)thePassword
 {
-	[self addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[ASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@",theUsername,thePassword] dataUsingEncoding:NSUTF8StringEncoding]]]];	
+	[self addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[CTASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@", theUsername, thePassword] dataUsingEncoding:NSUTF8StringEncoding]]]];
 	[self setAuthenticationScheme:(NSString *)kCFHTTPAuthenticationSchemeBasic];
 
 }
@@ -3304,7 +3307,7 @@ static NSOperationQueue *sharedQueue = nil;
 		NSData *inflatedData = nil;
 		if ([self isResponseCompressed] && ![self shouldWaitToInflateCompressedResponses]) {
 			if (![self dataDecompressor]) {
-				[self setDataDecompressor:[ASIDataDecompressor decompressor]];
+				[self setDataDecompressor:[CTASIDataDecompressor decompressor]];
 			}
 			NSError *err = nil;
 			inflatedData = [[self dataDecompressor] uncompressBytes:buffer length:(NSUInteger)bytesRead error:&err];
@@ -3318,7 +3321,7 @@ static NSOperationQueue *sharedQueue = nil;
 		[self setLastActivityTime:[NSDate date]];
 
 		// For bandwidth measurement / throttling
-		[ASIHTTPRequest incrementBandwidthUsedInLastSecond:(NSUInteger)bytesRead];
+		[CTASIHTTPRequest incrementBandwidthUsedInLastSecond:(NSUInteger) bytesRead];
 		
 		// If we need to redirect, and have automatic redirect on, and might be resuming a download, let's do nothing with the content
 		if ([self needsRedirect] && [self shouldRedirect] && [self allowResumeForFileDownloads]) {
@@ -3445,7 +3448,7 @@ static NSOperationQueue *sharedQueue = nil;
 			
 			// Decompress the file directly to the destination path
 			if ([self shouldWaitToInflateCompressedResponses]) {
-				[ASIDataDecompressor uncompressDataFromFile:[self temporaryFileDownloadPath] toFile:[self downloadDestinationPath] error:&fileError];
+				[CTASIDataDecompressor uncompressDataFromFile:[self temporaryFileDownloadPath] toFile:[self downloadDestinationPath] error:&fileError];
 
 			// Response should already have been inflated, move the temporary file to the destination path
 			} else {
@@ -3516,7 +3519,7 @@ static NSOperationQueue *sharedQueue = nil;
 
 		[self markAsFinished];
 		
-	// If request has asked delegate or ASIAuthenticationDialog for credentials
+	// If request has asked delegate or CTASIAuthenticationDialog for credentials
 	} else if ([self authenticationNeeded]) {
         // Do nothing.
 	}
@@ -3559,7 +3562,7 @@ static NSOperationQueue *sharedQueue = nil;
         [self didChangeValueForKey:@"isFinished"];
 
 	#if TARGET_OS_IPHONE && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_4_0
-	if ([ASIHTTPRequest isMultitaskingSupported] && [self shouldContinueWhenAppEntersBackground]) {
+	if ([CTASIHTTPRequest isMultitaskingSupported] && [self shouldContinueWhenAppEntersBackground]) {
 		dispatch_async(dispatch_get_main_queue(), ^{
 			if (backgroundTask != UIBackgroundTaskInvalid) {
 				[[UIApplication sharedApplication] endBackgroundTask:backgroundTask];
@@ -3576,7 +3579,7 @@ static NSOperationQueue *sharedQueue = nil;
 	NSDictionary *headers = [[self downloadCache] cachedResponseHeadersForURL:[self url]];
 	NSString *dataPath = [[self downloadCache] pathToCachedResponseDataForURL:[self url]];
 
-	ASIHTTPRequest *theRequest = self;
+	CTASIHTTPRequest *theRequest = self;
 	if ([self mainRequest]) {
 		theRequest = [self mainRequest];
 	}
@@ -3870,7 +3873,7 @@ static NSOperationQueue *sharedQueue = nil;
 // PAC files at file://, http:// and https:// addresses are supported
 - (void)fetchPACFile
 {
-	// For file:// urls, we'll use an async NSInputStream (ASIHTTPRequest does not support file:// urls)
+	// For file:// urls, we'll use an async NSInputStream (CTASIHTTPRequest does not support file:// urls)
 	if ([[self PACurl] isFileURL]) {
 		NSInputStream *stream = [[[NSInputStream alloc] initWithFileAtPath:[[self PACurl] path]] autorelease];
 		[self setPACFileReadStream:stream];
@@ -3892,8 +3895,8 @@ static NSOperationQueue *sharedQueue = nil;
 		return;
 	}
 
-	// Create an ASIHTTPRequest to fetch the PAC file
-	ASIHTTPRequest *PACRequest = [ASIHTTPRequest requestWithURL:[self PACurl]];
+	// Create an CTASIHTTPRequest to fetch the PAC file
+	CTASIHTTPRequest *PACRequest = [CTASIHTTPRequest requestWithURL:[self PACurl]];
 
 	// Will prevent this request attempting to configure proxy settings for itself
 	[PACRequest setIsPACFileRequest:YES];
@@ -4000,7 +4003,7 @@ static NSOperationQueue *sharedQueue = nil;
 }
 
 // Called if we successfully downloaded a PAC file from a webserver
-- (void)finishedDownloadingPACFile:(ASIHTTPRequest *)theRequest
+- (void)finishedDownloadingPACFile:(CTASIHTTPRequest *)theRequest
 {
 	if (![theRequest error] && [theRequest responseString]) {
 		[self runPACScript:[theRequest responseString]];
@@ -4051,7 +4054,7 @@ static NSOperationQueue *sharedQueue = nil;
 - (id)copyWithZone:(NSZone *)zone
 {
 	// Don't forget - this will return a retained copy!
-	ASIHTTPRequest *newRequest = [[[self class] alloc] initWithURL:[self url]];
+	CTASIHTTPRequest *newRequest = [[[self class] alloc] initWithURL:[self url]];
 	[newRequest setDelegate:[self delegate]];
 	[newRequest setRequestMethod:[self requestMethod]];
 	[newRequest setPostBody:[self postBody]];
@@ -4326,7 +4329,7 @@ static NSOperationQueue *sharedQueue = nil;
 {
 	[sessionCookiesLock lock];
 	if (!sessionCookies) {
-		[ASIHTTPRequest setSessionCookies:[NSMutableArray array]];
+		[CTASIHTTPRequest setSessionCookies:[NSMutableArray array]];
 	}
 	NSMutableArray *cookies = [[sessionCookies retain] autorelease];
 	[sessionCookiesLock unlock];
@@ -4350,15 +4353,15 @@ static NSOperationQueue *sharedQueue = nil;
 	[sessionCookiesLock lock];
 	NSHTTPCookie *cookie;
 	NSUInteger i;
-	NSUInteger max = [[ASIHTTPRequest sessionCookies] count];
+	NSUInteger max = [[CTASIHTTPRequest sessionCookies] count];
 	for (i=0; i<max; i++) {
-		cookie = [[ASIHTTPRequest sessionCookies] objectAtIndex:i];
+		cookie = [[CTASIHTTPRequest sessionCookies] objectAtIndex:i];
 		if ([[cookie domain] isEqualToString:[newCookie domain]] && [[cookie path] isEqualToString:[newCookie path]] && [[cookie name] isEqualToString:[newCookie name]]) {
-			[[ASIHTTPRequest sessionCookies] removeObjectAtIndex:i];
+			[[CTASIHTTPRequest sessionCookies] removeObjectAtIndex:i];
 			break;
 		}
 	}
-	[[ASIHTTPRequest sessionCookies] addObject:newCookie];
+	[[CTASIHTTPRequest sessionCookies] addObject:newCookie];
 	[sessionCookiesLock unlock];
 }
 
@@ -4369,7 +4372,7 @@ static NSOperationQueue *sharedQueue = nil;
 	[[[self class] sessionCredentialsStore] removeAllObjects];
 	[sessionCredentialsLock unlock];
 	[[self class] setSessionCookies:nil];
-	[[[self class] defaultCache] clearCachedResponsesForStoragePolicy:ASICacheForSessionDurationCacheStoragePolicy];
+    [[[self class] defaultCache] clearCachedResponsesForStoragePolicy:CTASICacheForSessionDurationCacheStoragePolicy];
 }
 
 #pragma mark get user agent
@@ -4391,7 +4394,7 @@ static NSOperationQueue *sharedQueue = nil;
 			NSData *latin1Data = [appName dataUsingEncoding:NSUTF8StringEncoding];
 			appName = [[[NSString alloc] initWithData:latin1Data encoding:NSISOLatin1StringEncoding] autorelease];
 
-			// If we couldn't find one, we'll give up (and ASIHTTPRequest will use the standard CFNetwork user agent)
+			// If we couldn't find one, we'll give up (and CTASIHTTPRequest will use the standard CFNetwork user agent)
 			if (!appName) {
 				return nil;
 			}
@@ -4425,7 +4428,7 @@ static NSOperationQueue *sharedQueue = nil;
 				OSName = @"Mac OS X";
 
 				// From http://www.cocoadev.com/index.pl?DeterminingOSVersion
-				// We won't bother to check for systems prior to 10.4, since ASIHTTPRequest only works on 10.5+
+				CTASIHTTPRequest5+
 				OSErr err;
 				SInt32 versionMajor, versionMinor, versionBugFix;
 				err = Gestalt(gestaltSystemVersionMajor, &versionMajor);
@@ -4481,8 +4484,8 @@ static NSOperationQueue *sharedQueue = nil;
 	if (![self readStream]) {
 		return;
 	}
-	[ASIHTTPRequest measureBandwidthUsage];
-	if ([ASIHTTPRequest isBandwidthThrottled]) {
+	[CTASIHTTPRequest measureBandwidthUsage];
+	if ([CTASIHTTPRequest isBandwidthThrottled]) {
 		[bandwidthThrottlingLock lock];
 		// Handle throttling
 		if (throttleWakeUpTime) {
@@ -4590,7 +4593,7 @@ static NSOperationQueue *sharedQueue = nil;
 	[bandwidthThrottlingLock lock];
 
 	if (!bandwidthMeasurementDate || [bandwidthMeasurementDate timeIntervalSinceNow] < -0) {
-		[ASIHTTPRequest recordBandwidthUsage];
+		[CTASIHTTPRequest recordBandwidthUsage];
 	}
 	
 	// Are we performing bandwidth throttling?
@@ -4620,7 +4623,7 @@ static NSOperationQueue *sharedQueue = nil;
 {
 	[bandwidthThrottlingLock lock];
 	
-	// We'll split our bandwidth allowance into 4 (which is the default for an ASINetworkQueue's max concurrent operations count) to give all running requests a fighting chance of reading data this cycle
+	// We'll split our bandwidth allowance into 4 (which is the default for an CTASINetworkQueue's max concurrent operations count) to give all running requests a fighting chance of reading data this cycle
 	long long toRead = maxBandwidthPerSecond/4;
 	if (maxBandwidthPerSecond > 0 && (bandwidthUsedInLastSecond + toRead > maxBandwidthPerSecond)) {
 		toRead = (long long)maxBandwidthPerSecond-(long long)bandwidthUsedInLastSecond;
@@ -4642,10 +4645,10 @@ static NSOperationQueue *sharedQueue = nil;
 + (void)setShouldThrottleBandwidthForWWAN:(BOOL)throttle
 {
 	if (throttle) {
-		[ASIHTTPRequest throttleBandwidthForWWANUsingLimit:ASIWWANBandwidthThrottleAmount];
+		[CTASIHTTPRequest throttleBandwidthForWWANUsingLimit:ASIWWANBandwidthThrottleAmount];
 	} else {
-		[ASIHTTPRequest unsubscribeFromNetworkReachabilityNotifications];
-		[ASIHTTPRequest setMaxBandwidthPerSecond:0];
+		[CTASIHTTPRequest unsubscribeFromNetworkReachabilityNotifications];
+		[CTASIHTTPRequest setMaxBandwidthPerSecond:0];
 		[bandwidthThrottlingLock lock];
 		isBandwidthThrottled = NO;
 		shouldThrottleBandwidthForWWANOnly = NO;
@@ -4658,9 +4661,9 @@ static NSOperationQueue *sharedQueue = nil;
 	[bandwidthThrottlingLock lock];
 	shouldThrottleBandwidthForWWANOnly = YES;
 	maxBandwidthPerSecond = limit;
-	[ASIHTTPRequest registerForNetworkReachabilityNotifications];	
+	[CTASIHTTPRequest registerForNetworkReachabilityNotifications];
 	[bandwidthThrottlingLock unlock];
-	[ASIHTTPRequest reachabilityChanged:nil];
+	[CTASIHTTPRequest reachabilityChanged:nil];
 }
 
 #pragma mark reachability
@@ -4685,7 +4688,7 @@ static NSOperationQueue *sharedQueue = nil;
 + (void)reachabilityChanged:(NSNotification *)note
 {
 	[bandwidthThrottlingLock lock];
-	isBandwidthThrottled = [ASIHTTPRequest isNetworkReachableViaWWAN];
+	isBandwidthThrottled = [CTASIHTTPRequest isNetworkReachableViaWWAN];
 	[bandwidthThrottlingLock unlock];
 }
 #endif
@@ -4700,7 +4703,7 @@ static NSOperationQueue *sharedQueue = nil;
 
 #pragma mark cache
 
-+ (void)setDefaultCache:(id <ASICacheDelegate>)cache
++ (void)setDefaultCache:(id <CTASICacheDelegate>)cache
 {
 	@synchronized (self) {
 		[cache retain];
@@ -4709,7 +4712,7 @@ static NSOperationQueue *sharedQueue = nil;
 	}
 }
 
-+ (id <ASICacheDelegate>)defaultCache
++ (id <CTASICacheDelegate>)defaultCache
 {
     @synchronized(self) {
         return [[defaultCache retain] autorelease];
@@ -4775,7 +4778,7 @@ static NSOperationQueue *sharedQueue = nil;
 // Threads returned by this method will need to run the runloop in default mode (eg CFRunLoopRun())
 // Requests will stop the runloop when they complete
 // If you have multiple requests sharing the thread or you want to re-use the thread, you'll need to restart the runloop
-+ (NSThread *)threadForRequest:(ASIHTTPRequest *)request
++ (NSThread *)threadForRequest:(CTASIHTTPRequest *)request
 {
 	if (networkThread == nil) {
 		@synchronized(self) {
@@ -4852,7 +4855,7 @@ static NSOperationQueue *sharedQueue = nil;
     return [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] autorelease];
 }
 
-+ (NSDate *)expiryDateForRequest:(ASIHTTPRequest *)request maxAge:(NSTimeInterval)maxAge
++ (NSDate *)expiryDateForRequest:(CTASIHTTPRequest *)request maxAge:(NSTimeInterval)maxAge
 {
 	NSDictionary *responseHeaders = [request responseHeaders];
   
@@ -4883,7 +4886,7 @@ static NSOperationQueue *sharedQueue = nil;
 	} else {
 		NSString *expires = [responseHeaders objectForKey:@"Expires"];
 		if (expires) {
-			return [ASIHTTPRequest dateFromRFC1123String:expires];
+			return [CTASIHTTPRequest dateFromRFC1123String:expires];
 		}
 	}
 	return nil;

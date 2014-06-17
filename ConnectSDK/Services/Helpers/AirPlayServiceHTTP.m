@@ -23,10 +23,10 @@
 #import "AirPlayService.h"
 #import "ConnectError.h"
 #import "DeviceServiceReachability.h"
-#import "Guid.h"
+#import "CTGuid.h"
 #import "GCDWebServer.h"
 
-#import "ASIHTTPRequest.h"
+#import "CTASIHTTPRequest.h"
 
 @interface AirPlayServiceHTTP () <ServiceCommandDelegate, DeviceServiceReachabilityDelegate>
 
@@ -61,7 +61,7 @@
 
 - (void) connect
 {
-    _sessionId = [[Guid randomGuid] stringValue];
+    _sessionId = [[CTGuid randomGuid] stringValue];
 
     _connected = YES;
 
@@ -105,7 +105,7 @@
 
 - (int) sendCommand:(ServiceCommand *)command withPayload:(id)payload toURL:(NSURL *)URL
 {
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:command.target];
+    CTASIHTTPRequest *request = [CTASIHTTPRequest requestWithURL:command.target];
 
     if (payload || [command.HTTPMethod isEqualToString:@"POST"] || [command.HTTPMethod isEqualToString:@"PUT"])
     {
@@ -235,7 +235,7 @@
 
 - (void) displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    _assetId = [[Guid randomGuid] stringValue];
+    _assetId = [[CTGuid randomGuid] stringValue];
 
     NSString *commandPathComponent = @"photo";
     NSURL *commandURL = [self.service.serviceDescription.commandURL URLByAppendingPathComponent:commandPathComponent];
@@ -306,7 +306,7 @@
 
 - (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    _assetId = [[Guid randomGuid] stringValue];
+    _assetId = [[CTGuid randomGuid] stringValue];
 
     NSMutableDictionary *plist = [NSMutableDictionary new];
     plist[@"Content-Location"] = mediaURL.absoluteString;

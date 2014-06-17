@@ -1,21 +1,24 @@
 //
-//  ASINetworkQueue.m
-//  Part of ASIHTTPRequest -> http://allseeing-i.com/ASIHTTPRequest
+//  CTASINetworkQueue.m
+//  Part of CTASIHTTPRequest -> http://allseeing-i.com/CTASIHTTPRequest
 //
 //  Created by Ben Copsey on 07/11/2008.
 //  Copyright 2008-2009 All-Seeing Interactive. All rights reserved.
 //
+//  Connect SDK Note:
+//  CT has been prepended to all members of this framework to avoid namespace collisions
+//
 
-#import "ASINetworkQueue.h"
-#import "ASIHTTPRequest.h"
+#import "CTASINetworkQueue.h"
+#import "CTASIHTTPRequest.h"
 
 // Private stuff
-@interface ASINetworkQueue ()
+@interface CTASINetworkQueue ()
 	- (void)resetProgressDelegate:(id *)progressDelegate;
 	@property (assign) int requestsCount;
 @end
 
-@implementation ASINetworkQueue
+@implementation CTASINetworkQueue
 
 - (id)init
 {
@@ -35,7 +38,7 @@
 - (void)dealloc
 {
 	//We need to clear the queue on any requests that haven't got around to cleaning up yet, as otherwise they'll try to let us know if something goes wrong, and we'll be long gone by then
-	for (ASIHTTPRequest *request in [self operations]) {
+	for (CTASIHTTPRequest *request in [self operations]) {
 		[request setQueue:nil];
 	}
 	[userInfo release];
@@ -96,27 +99,27 @@
 	SEL selector = @selector(setMaxValue:);
 	if ([*progressDelegate respondsToSelector:selector]) {
 		double max = 1.0;
-		[ASIHTTPRequest performSelector:selector onTarget:progressDelegate withObject:nil amount:&max callerToRetain:nil];
+		[CTASIHTTPRequest performSelector:selector onTarget:progressDelegate withObject:nil amount:&max callerToRetain:nil];
 	}
 	selector = @selector(setDoubleValue:);
 	if ([*progressDelegate respondsToSelector:selector]) {
 		double value = 0.0;
-		[ASIHTTPRequest performSelector:selector onTarget:progressDelegate withObject:nil amount:&value callerToRetain:nil];
+		[CTASIHTTPRequest performSelector:selector onTarget:progressDelegate withObject:nil amount:&value callerToRetain:nil];
 	}
 #else
 	SEL selector = @selector(setProgress:);
 	if ([*progressDelegate respondsToSelector:selector]) {
 		float value = 0.0f;
-		[ASIHTTPRequest performSelector:selector onTarget:progressDelegate withObject:nil amount:&value callerToRetain:nil];
+		[CTASIHTTPRequest performSelector:selector onTarget:progressDelegate withObject:nil amount:&value callerToRetain:nil];
 	}
 #endif
 }
 
 - (void)addHEADOperation:(NSOperation *)operation
 {
-	if ([operation isKindOfClass:[ASIHTTPRequest class]]) {
+	if ([operation isKindOfClass:[CTASIHTTPRequest class]]) {
 		
-		ASIHTTPRequest *request = (ASIHTTPRequest *)operation;
+		CTASIHTTPRequest *request = (CTASIHTTPRequest *)operation;
 		[request setRequestMethod:@"HEAD"];
 		[request setQueuePriority:10];
 		[request setShowAccurateProgress:YES];
@@ -130,13 +133,13 @@
 // Only add ASIHTTPRequests to this queue!!
 - (void)addOperation:(NSOperation *)operation
 {
-	if (![operation isKindOfClass:[ASIHTTPRequest class]]) {
-		[NSException raise:@"AttemptToAddInvalidRequest" format:@"Attempted to add an object that was not an ASIHTTPRequest to an ASINetworkQueue"];
+	if (![operation isKindOfClass:[CTASIHTTPRequest class]]) {
+		[NSException raise:@"AttemptToAddInvalidRequest" format:@"Attempted to add an object that was not an ASIHTTPRequest to an CTASINetworkQueue"];
 	}
 		
 	[self setRequestsCount:[self requestsCount]+1];
 	
-	ASIHTTPRequest *request = (ASIHTTPRequest *)operation;
+	CTASIHTTPRequest *request = (CTASIHTTPRequest *)operation;
 	
 	if ([self showAccurateProgress]) {
 		
@@ -149,7 +152,7 @@
 		// Instead, they'll update the total progress if and when they receive a content-length header
 		if ([[request requestMethod] isEqualToString:@"GET"]) {
 			if ([self isSuspended]) {
-				ASIHTTPRequest *HEADRequest = [request HEADRequest];
+				CTASIHTTPRequest *HEADRequest = [request HEADRequest];
 				[self addHEADOperation:HEADRequest];
 				[request addDependency:HEADRequest];
 				if ([request shouldResetDownloadProgress]) {
@@ -179,28 +182,28 @@
 
 }
 
-- (void)requestStarted:(ASIHTTPRequest *)request
+- (void)requestStarted:(CTASIHTTPRequest *)request
 {
 	if ([self requestDidStartSelector]) {
 		[[self delegate] performSelector:[self requestDidStartSelector] withObject:request];
 	}
 }
 
-- (void)request:(ASIHTTPRequest *)request didReceiveResponseHeaders:(NSDictionary *)responseHeaders
+- (void)request:(CTASIHTTPRequest *)request didReceiveResponseHeaders:(NSDictionary *)responseHeaders
 {
 	if ([self requestDidReceiveResponseHeadersSelector]) {
 		[[self delegate] performSelector:[self requestDidReceiveResponseHeadersSelector] withObject:request withObject:responseHeaders];
 	}
 }
 
-- (void)request:(ASIHTTPRequest *)request willRedirectToURL:(NSURL *)newURL
+- (void)request:(CTASIHTTPRequest *)request willRedirectToURL:(NSURL *)newURL
 {
 	if ([self requestWillRedirectSelector]) {
 		[[self delegate] performSelector:[self requestWillRedirectSelector] withObject:request withObject:newURL];
 	}
 }
 
-- (void)requestFinished:(ASIHTTPRequest *)request
+- (void)requestFinished:(CTASIHTTPRequest *)request
 {
 	[self setRequestsCount:[self requestsCount]-1];
 	if ([self requestDidFinishSelector]) {
@@ -213,7 +216,7 @@
 	}
 }
 
-- (void)requestFailed:(ASIHTTPRequest *)request
+- (void)requestFailed:(CTASIHTTPRequest *)request
 {
 	[self setRequestsCount:[self requestsCount]-1];
 	if ([self requestDidFailSelector]) {
@@ -231,42 +234,42 @@
 }
 
 
-- (void)request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes
+- (void)request:(CTASIHTTPRequest *)request didReceiveBytes:(long long)bytes
 {
 	[self setBytesDownloadedSoFar:[self bytesDownloadedSoFar]+(unsigned long long)bytes];
 	if ([self downloadProgressDelegate]) {
-		[ASIHTTPRequest updateProgressIndicator:&downloadProgressDelegate withProgress:[self bytesDownloadedSoFar] ofTotal:[self totalBytesToDownload]];
+		[CTASIHTTPRequest updateProgressIndicator:&downloadProgressDelegate withProgress:[self bytesDownloadedSoFar] ofTotal:[self totalBytesToDownload]];
 	}
 }
 
-- (void)request:(ASIHTTPRequest *)request didSendBytes:(long long)bytes
+- (void)request:(CTASIHTTPRequest *)request didSendBytes:(long long)bytes
 {
 	[self setBytesUploadedSoFar:[self bytesUploadedSoFar]+(unsigned long long)bytes];
 	if ([self uploadProgressDelegate]) {
-		[ASIHTTPRequest updateProgressIndicator:&uploadProgressDelegate withProgress:[self bytesUploadedSoFar] ofTotal:[self totalBytesToUpload]];
+		[CTASIHTTPRequest updateProgressIndicator:&uploadProgressDelegate withProgress:[self bytesUploadedSoFar] ofTotal:[self totalBytesToUpload]];
 	}
 }
 
-- (void)request:(ASIHTTPRequest *)request incrementDownloadSizeBy:(long long)newLength
+- (void)request:(CTASIHTTPRequest *)request incrementDownloadSizeBy:(long long)newLength
 {
 	[self setTotalBytesToDownload:[self totalBytesToDownload]+(unsigned long long)newLength];
 }
 
-- (void)request:(ASIHTTPRequest *)request incrementUploadSizeBy:(long long)newLength
+- (void)request:(CTASIHTTPRequest *)request incrementUploadSizeBy:(long long)newLength
 {
 	[self setTotalBytesToUpload:[self totalBytesToUpload]+(unsigned long long)newLength];
 }
 
 
 // Since this queue takes over as the delegate for all requests it contains, it should forward authorisation requests to its own delegate
-- (void)authenticationNeededForRequest:(ASIHTTPRequest *)request
+- (void)authenticationNeededForRequest:(CTASIHTTPRequest *)request
 {
 	if ([[self delegate] respondsToSelector:@selector(authenticationNeededForRequest:)]) {
 		[[self delegate] performSelector:@selector(authenticationNeededForRequest:) withObject:request];
 	}
 }
 
-- (void)proxyAuthenticationNeededForRequest:(ASIHTTPRequest *)request
+- (void)proxyAuthenticationNeededForRequest:(CTASIHTTPRequest *)request
 {
 	if ([[self delegate] respondsToSelector:@selector(proxyAuthenticationNeededForRequest:)]) {
 		[[self delegate] performSelector:@selector(proxyAuthenticationNeededForRequest:) withObject:request];
@@ -306,7 +309,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	ASINetworkQueue *newQueue = [[[self class] alloc] init];
+	CTASINetworkQueue *newQueue = [[[self class] alloc] init];
 	[newQueue setDelegate:[self delegate]];
 	[newQueue setRequestDidStartSelector:[self requestDidStartSelector]];
 	[newQueue setRequestWillRedirectSelector:[self requestWillRedirectSelector]];

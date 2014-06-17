@@ -1,16 +1,19 @@
 //
-//  ASIFormDataRequest.m
-//  Part of ASIHTTPRequest -> http://allseeing-i.com/ASIHTTPRequest
+//  CTASIFormDataRequest.m
+//  Part of CTASIHTTPRequest -> http://allseeing-i.com/CTASIHTTPRequest
 //
 //  Created by Ben Copsey on 07/11/2008.
 //  Copyright 2008-2009 All-Seeing Interactive. All rights reserved.
 //
+//  Connect SDK Note:
+//  CT has been prepended to all members of this framework to avoid namespace collisions
+//
 
-#import "ASIFormDataRequest.h"
+#import "CTASIFormDataRequest.h"
 
 
 // Private stuff
-@interface ASIFormDataRequest ()
+@interface CTASIFormDataRequest ()
 - (void)buildMultipartFormDataPostBody;
 - (void)buildURLEncodedPostBody;
 - (void)appendPostString:(NSString *)string;
@@ -25,7 +28,7 @@
 
 @end
 
-@implementation ASIFormDataRequest
+@implementation CTASIFormDataRequest
 
 #pragma mark utilities
 - (NSString*)encodeURL:(NSString *)string
@@ -47,7 +50,7 @@
 - (id)initWithURL:(NSURL *)newURL
 {
 	self = [super initWithURL:newURL];
-	[self setPostFormat:ASIURLEncodedPostFormat];
+    [self setPostFormat:CTASIURLEncodedPostFormat];
 	[self setStringEncoding:NSUTF8StringEncoding];
         [self setRequestMethod:@"POST"];
 	return self;
@@ -115,7 +118,7 @@
 
 	// If we were given the path to a file, and the user didn't specify a mime type, we can detect it from the file extension
 	if (!contentType) {
-		contentType = [ASIHTTPRequest mimeTypeForFileAtPath:filePath];
+		contentType = [CTASIHTTPRequest mimeTypeForFileAtPath:filePath];
 	}
 	[self addData:filePath withFileName:fileName andContentType:contentType forKey:key];
 }
@@ -199,7 +202,7 @@
 		[self setShouldStreamPostDataFromDisk:YES];
 	}
 	
-	if ([self postFormat] == ASIURLEncodedPostFormat) {
+	if ([self postFormat] == CTASIURLEncodedPostFormat) {
 		[self buildURLEncodedPostBody];
 	} else {
 		[self buildMultipartFormDataPostBody];
@@ -276,7 +279,7 @@
 
 	// We can't post binary data using application/x-www-form-urlencoded
 	if ([[self fileData] count] > 0) {
-		[self setPostFormat:ASIMultipartFormDataPostFormat];
+        [self setPostFormat:CTASIMultipartFormDataPostFormat];
 		[self buildMultipartFormDataPostBody];
 		return;
 	}
@@ -343,7 +346,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	ASIFormDataRequest *newRequest = [super copyWithZone:zone];
+	CTASIFormDataRequest *newRequest = [super copyWithZone:zone];
 	[newRequest setPostData:[[[self postData] mutableCopyWithZone:zone] autorelease]];
 	[newRequest setFileData:[[[self fileData] mutableCopyWithZone:zone] autorelease]];
 	[newRequest setPostFormat:[self postFormat]];
