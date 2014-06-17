@@ -57,7 +57,7 @@
 		EA61EBE918FE48D400D75696 /* GCDWebServerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA61EBD818FE48D400D75696 /* GCDWebServerResponse.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		EA61EBEA18FE48D400D75696 /* Guid.m in Sources */ = {isa = PBXBuildFile; fileRef = EA61EBDC18FE48D400D75696 /* Guid.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		EA61EBEB18FE48D400D75696 /* LGSRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = EA61EBE018FE48D400D75696 /* LGSRWebSocket.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		EA61EBEC18FE48D400D75696 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = EA61EBE518FE48D400D75696 /* XMLReader.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		EA61EBEC18FE48D400D75696 /* CTXMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = EA61EBE518FE48D400D75696 /* CTXMLReader.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		EA61EBF018FE48E900D75696 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBEF18FE48E900D75696 /* SystemConfiguration.framework */; };
 		EA61EBF218FE48EF00D75696 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
 		EA649E181901EABB00DD9FC7 /* ZeroConfDiscoveryProvider.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F7C71326AB56D77F39095 /* ZeroConfDiscoveryProvider.h */; };
@@ -143,7 +143,7 @@
 		EAFA98A918FEE9B5001C4FA1 /* GCDWebServerResponse.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EBD718FE48D400D75696 /* GCDWebServerResponse.h */; };
 		EAFA98AA18FEE9B5001C4FA1 /* Guid.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EBDB18FE48D400D75696 /* Guid.h */; };
 		EAFA98AB18FEE9B5001C4FA1 /* LGSRWebSocket.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EBDF18FE48D400D75696 /* LGSRWebSocket.h */; };
-		EAFA98AC18FEE9B5001C4FA1 /* XMLReader.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EBE418FE48D400D75696 /* XMLReader.h */; };
+		EAFA98AC18FEE9B5001C4FA1 /* CTXMLReader.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EBE418FE48D400D75696 /* CTXMLReader.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -187,7 +187,7 @@
 				EAFA98A918FEE9B5001C4FA1 /* GCDWebServerResponse.h in CopyFiles */,
 				EAFA98AA18FEE9B5001C4FA1 /* Guid.h in CopyFiles */,
 				EAFA98AB18FEE9B5001C4FA1 /* LGSRWebSocket.h in CopyFiles */,
-				EAFA98AC18FEE9B5001C4FA1 /* XMLReader.h in CopyFiles */,
+				EAFA98AC18FEE9B5001C4FA1 /* CTXMLReader.h in CopyFiles */,
 				EAFA988018FEE9A2001C4FA1 /* Capability.h in CopyFiles */,
 				EAFA988118FEE9A2001C4FA1 /* ExternalInputControl.h in CopyFiles */,
 				EAFA988218FEE9A2001C4FA1 /* KeyControl.h in CopyFiles */,
@@ -358,8 +358,8 @@
 		EA61EBDC18FE48D400D75696 /* Guid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Guid.m; sourceTree = "<group>"; };
 		EA61EBDF18FE48D400D75696 /* LGSRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGSRWebSocket.h; sourceTree = "<group>"; };
 		EA61EBE018FE48D400D75696 /* LGSRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGSRWebSocket.m; sourceTree = "<group>"; };
-		EA61EBE418FE48D400D75696 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
-		EA61EBE518FE48D400D75696 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
+		EA61EBE418FE48D400D75696 /* CTXMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXMLReader.h; sourceTree = "<group>"; };
+		EA61EBE518FE48D400D75696 /* CTXMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXMLReader.m; sourceTree = "<group>"; };
 		EA61EBED18FE48DC00D75696 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = "Connect SDK/Frameworks/GoogleCast.framework"; sourceTree = "<group>"; };
 		EA61EBEF18FE48E900D75696 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -691,8 +691,8 @@
 		EA61EBE218FE48D400D75696 /* XMLReader */ = {
 			isa = PBXGroup;
 			children = (
-				EA61EBE418FE48D400D75696 /* XMLReader.h */,
-				EA61EBE518FE48D400D75696 /* XMLReader.m */,
+				EA61EBE418FE48D400D75696 /* CTXMLReader.h */,
+				EA61EBE518FE48D400D75696 /* CTXMLReader.m */,
 			);
 			path = XMLReader;
 			sourceTree = "<group>";
@@ -792,7 +792,7 @@
 				EA61EBB718FE48C500D75696 /* ProgramInfo.m in Sources */,
 				EA61EBE818FE48D400D75696 /* GCDWebServerRequest.m in Sources */,
 				EA61EBE618FE48D400D75696 /* GCDWebServer.m in Sources */,
-				EA61EBEC18FE48D400D75696 /* XMLReader.m in Sources */,
+				EA61EBEC18FE48D400D75696 /* CTXMLReader.m in Sources */,
 				EA61EBC418FE48C500D75696 /* DLNAService.m in Sources */,
 				EA61EBAA18FE48C500D75696 /* DefaultConnectableDeviceStore.m in Sources */,
 				EA61EBC618FE48C500D75696 /* WebOSTVServiceMouse.m in Sources */,
