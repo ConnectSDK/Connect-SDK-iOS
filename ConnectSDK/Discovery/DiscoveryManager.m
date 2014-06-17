@@ -53,9 +53,6 @@
     NSMutableDictionary *_allDevices;
     NSMutableDictionary *_compatibleDevices;
 
-    NSArray *_discoveryProviders;
-    NSDictionary *_deviceClasses;
-    
     BOOL _shouldResumeSearch;
     BOOL _searching;
     
