@@ -86,8 +86,6 @@ NSString *lgeUDAPRequestURI[8] = {
     if (self)
     {
         [self setServiceConfig:serviceConfig];
-
-        _dlnaService = [[DLNAService alloc] initWithServiceConfig:serviceConfig];
     }
 
     return self;

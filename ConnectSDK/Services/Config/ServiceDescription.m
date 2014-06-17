@@ -91,4 +91,23 @@
     return [NSDictionary dictionaryWithDictionary:dictionary];
 }
 
+- (id) copy
+{
+    ServiceDescription *serviceDescription = [[ServiceDescription alloc] initWithAddress:self.address UUID:self.UUID];
+    serviceDescription.serviceId = [self.serviceId copy];
+    serviceDescription.address = [self.address copy];
+    serviceDescription.port = self.port;
+    serviceDescription.UUID = [self.UUID copy];
+    serviceDescription.type = [self.serviceId copy];
+    serviceDescription.version = [self.version copy];
+    serviceDescription.friendlyName = [self.friendlyName copy];
+    serviceDescription.manufacturer = [self.manufacturer copy];
+    serviceDescription.modelName = [self.modelName copy];
+    serviceDescription.modelDescription = [self.modelDescription copy];
+    serviceDescription.modelNumber = [self.modelNumber copy];
+    serviceDescription.commandURL = [self.commandURL copy];
+
+    return serviceDescription;
+}
+
 @end
