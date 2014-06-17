@@ -20,7 +20,7 @@
 
 #import "RokuService.h"
 #import "ConnectError.h"
-#import "XMLReader.h"
+#import "CTXMLReader.h"
 #import "ConnectUtil.h"
 #import "DeviceServiceReachability.h"
 
@@ -393,7 +393,7 @@ static NSMutableArray *registeredApps = nil;
     command.callbackComplete = ^(NSString *responseObject)
     {
         NSError *xmlError;
-        NSDictionary *appListDictionary = [XMLReader dictionaryForXMLString:responseObject error:&xmlError];
+        NSDictionary *appListDictionary = [CTXMLReader dictionaryForXMLString:responseObject error:&xmlError];
 
         if (!xmlError)
         {

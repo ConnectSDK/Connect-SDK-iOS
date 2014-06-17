@@ -20,7 +20,7 @@
 
 #import "DLNAService.h"
 #import "ConnectError.h"
-#import "XMLReader.h"
+#import "CTXMLReader.h"
 #import "ConnectUtil.h"
 #import "DeviceServiceReachability.h"
 
@@ -121,7 +121,7 @@
     NSError *parseError;
 
     NSString *cleanLocationXML = [self.serviceDescription.locationXML stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    NSDictionary *dictionary = [XMLReader dictionaryForXMLString:cleanLocationXML error:&parseError];
+    NSDictionary *dictionary = [CTXMLReader dictionaryForXMLString:cleanLocationXML error:&parseError];
 
     if (!parseError)
     {
@@ -222,7 +222,7 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
     {
         NSError *xmlError;
-        NSDictionary *dataXML = [XMLReader dictionaryForXMLData:data error:&xmlError];
+        NSDictionary *dataXML = [CTXMLReader dictionaryForXMLData:data error:&xmlError];
 
         DLog(@"[IN] : %@ \n %@", [((NSHTTPURLResponse *)response) allHeaderFields], dataXML);
 

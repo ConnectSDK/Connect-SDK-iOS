@@ -22,7 +22,7 @@
 #import "SSDPDiscoveryProvider.h"
 #import "ServiceDescription.h"
 #import "SSDPSocketListener.h"
-#import "XMLReader.h"
+#import "CTXMLReader.h"
 
 #import <sys/utsname.h>
 
@@ -374,7 +374,7 @@ static double searchAttemptsBeforeKill = 3.0;
     NSURLRequest *request = [NSURLRequest requestWithURL:req];
     [NSURLConnection sendAsynchronousRequest:request queue:_locationLoadQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         NSError *xmlError;
-        NSDictionary *xml = [XMLReader dictionaryForXMLData:data error:&xmlError];
+        NSDictionary *xml = [CTXMLReader dictionaryForXMLData:data error:&xmlError];
 
         if (!xmlError)
         {

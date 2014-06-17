@@ -20,7 +20,7 @@
 
 #import "NetcastTVService.h"
 #import "ConnectError.h"
-#import "XMLReader.h"
+#import "CTXMLReader.h"
 #import "GCDWebServer.h"
 #import "ConnectUtil.h"
 #import "DeviceServiceReachability.h"
@@ -395,7 +395,7 @@ NSString *lgeUDAPRequestURI[8] = {
                                            GCDWebServerDataRequest *dataRequest = (GCDWebServerDataRequest *)request;
 
                                            NSError *xmlError;
-                                           NSDictionary *responseXML = [XMLReader dictionaryForXMLData:dataRequest.data error:&xmlError];
+                                           NSDictionary *responseXML = [CTXMLReader dictionaryForXMLData:dataRequest.data error:&xmlError];
 
                                            if (!xmlError)
                                            {
@@ -573,7 +573,7 @@ NSString *lgeUDAPRequestURI[8] = {
                     } else
                     {
                         NSError *xmlError;
-                        NSDictionary *responseDic = [XMLReader dictionaryForXMLData:data error:&xmlError];
+                        NSDictionary *responseDic = [CTXMLReader dictionaryForXMLData:data error:&xmlError];
 
                         if (xmlError || !responseDic)
                         {
@@ -677,7 +677,7 @@ NSString *lgeUDAPRequestURI[8] = {
     {
         NSString *xmlString = self.dlnaService.serviceDescription.locationXML;
         NSError *xmlError;
-        NSDictionary *xml = [XMLReader dictionaryForXMLString:xmlString error:&xmlError];
+        NSDictionary *xml = [CTXMLReader dictionaryForXMLString:xmlString error:&xmlError];
 
         if (!xmlError)
         {
