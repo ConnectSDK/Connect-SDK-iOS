@@ -91,13 +91,13 @@
     return [NSDictionary dictionaryWithDictionary:dictionary];
 }
 
+#pragma NSCopying methods
+
 - (id) copy
 {
-    ServiceDescription *serviceDescription = [[ServiceDescription alloc] initWithAddress:self.address UUID:self.UUID];
+    ServiceDescription *serviceDescription = [[ServiceDescription alloc] initWithAddress:[self.address copy] UUID:[self.UUID copy]];
     serviceDescription.serviceId = [self.serviceId copy];
-    serviceDescription.address = [self.address copy];
     serviceDescription.port = self.port;
-    serviceDescription.UUID = [self.UUID copy];
     serviceDescription.type = [self.serviceId copy];
     serviceDescription.version = [self.version copy];
     serviceDescription.friendlyName = [self.friendlyName copy];
@@ -108,6 +108,11 @@
     serviceDescription.commandURL = [self.commandURL copy];
 
     return serviceDescription;
+}
+
+- (id) copyWithZone:(NSZone *)zone
+{
+    return [self copy];
 }
 
 @end
