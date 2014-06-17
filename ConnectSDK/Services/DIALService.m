@@ -20,7 +20,7 @@
 
 #import "DIALService.h"
 #import "ConnectError.h"
-#import "XMLReader.h"
+#import "CTXMLReader.h"
 #import "DeviceServiceReachability.h"
 #import "Guid.h"
 
@@ -270,7 +270,7 @@ static NSMutableArray *registeredApps = nil;
             if (statusOK)
             {
                 NSError *xmlError;
-                NSDictionary *responseXML = [XMLReader dictionaryForXMLData:data error:&xmlError];
+                NSDictionary *responseXML = [CTXMLReader dictionaryForXMLData:data error:&xmlError];
 
                 DLog(@"[IN] : %@", responseXML);
 
