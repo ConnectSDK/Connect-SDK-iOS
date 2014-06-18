@@ -12,6 +12,7 @@
 		BB9F75C707C7D86EB1934BD5 /* ZeroConfDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F752184AD57C1730A2B40 /* ZeroConfDiscoveryProvider.m */; };
 		BB9F77CAA91F6D159BAC3C28 /* WebOSTVServiceSocketClient.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7EB7477EC3A22B5E3114 /* WebOSTVServiceSocketClient.m */; };
 		BB9F7C2660FBFFFDA89D5683 /* AirPlayServiceMirrored.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7C85F1073867229D87EA /* AirPlayServiceMirrored.m */; };
+		BB9F7CDB67FB3D8332D181B8 /* MultiScreenWebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7031A171ACD30560EDA0 /* MultiScreenWebAppSession.m */; };
 		BB9F7E608449C36E86D9B9A0 /* MultiScreenService.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F73670546E728070CDD81 /* MultiScreenService.m */; };
 		BB9F7ED4584DEA55E1EB958B /* AirPlayServiceHTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7960CFCF1CEA2AF317F0 /* AirPlayServiceHTTP.m */; };
 		BB9F7F752202B7FBD1E31649 /* MultiScreenDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F74ED2B2847524F1683A0 /* MultiScreenDiscoveryProvider.m */; };
@@ -239,7 +240,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BB9F7031A171ACD30560EDA0 /* MultiScreenWebAppSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiScreenWebAppSession.m; sourceTree = "<group>"; };
 		BB9F70542218D4E63AE948E9 /* MultiScreenService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiScreenService.h; sourceTree = "<group>"; };
+		BB9F7162575F886D1B3A63F1 /* MultiScreenWebAppSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiScreenWebAppSession.h; sourceTree = "<group>"; };
 		BB9F725D0F278CD7B78F1FC6 /* AirPlayWebAppSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayWebAppSession.h; sourceTree = "<group>"; };
 		BB9F73670546E728070CDD81 /* MultiScreenService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiScreenService.m; sourceTree = "<group>"; };
 		BB9F74D76D7D96D4136929C8 /* AirPlayServiceMirrored.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayServiceMirrored.h; sourceTree = "<group>"; };
@@ -658,6 +661,8 @@
 				EA61EBA618FE48C500D75696 /* WebOSWebAppSession.m */,
 				BB9F76C6A6C862002C9FB89D /* AirPlayWebAppSession.m */,
 				BB9F725D0F278CD7B78F1FC6 /* AirPlayWebAppSession.h */,
+				BB9F7031A171ACD30560EDA0 /* MultiScreenWebAppSession.m */,
+				BB9F7162575F886D1B3A63F1 /* MultiScreenWebAppSession.h */,
 			);
 			path = Sessions;
 			sourceTree = "<group>";
@@ -868,6 +873,7 @@
 				BB9F77CAA91F6D159BAC3C28 /* WebOSTVServiceSocketClient.m in Sources */,
 				BB9F7E608449C36E86D9B9A0 /* MultiScreenService.m in Sources */,
 				BB9F7F752202B7FBD1E31649 /* MultiScreenDiscoveryProvider.m in Sources */,
+				BB9F7CDB67FB3D8332D181B8 /* MultiScreenWebAppSession.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
