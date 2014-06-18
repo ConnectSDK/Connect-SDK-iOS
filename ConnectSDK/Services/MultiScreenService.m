@@ -7,6 +7,7 @@
 #import "DiscoveryManager.h"
 #import "MultiScreenDiscoveryProvider.h"
 #import "ConnectError.h"
+#import "MultiScreenWebAppSession.h"
 
 @implementation MultiScreenService
 
@@ -24,12 +25,12 @@
 
     [super setServiceDescription:serviceDescription];
 
-    _device = [self deviceForAddress:serviceDescription.address];
+    _device = [self deviceForId:serviceDescription.UUID];
 }
 
-- (MSDevice *) deviceForAddress:(NSString *)address
+- (MSDevice *) deviceForId:(NSString *)deviceId
 {
-    if (!address || address.length == 0)
+    if (!deviceId || deviceId.length == 0)
         return nil;
 
     __block MSDevice *device;
@@ -38,12 +39,25 @@
         if ([provider isKindOfClass:[MultiScreenDiscoveryProvider class]])
         {
             MultiScreenDiscoveryProvider *multiScreenProvider = (MultiScreenDiscoveryProvider *) provider;
-            device = multiScreenProvider.devices[address];
+            device = multiScreenProvider.devices[deviceId];
             *stop = YES;
         }
     }];
 
     return device;
+}
+
+#pragma mark - DeviceService methods
+
+- (void) updateCapabilities
+{
+    NSArray *caps = @[
+            kWebAppLauncherLaunch,
+            kWebAppLauncherLaunchParams,
+            kWebAppLauncherClose
+    ];
+
+    self.capabilities = caps;
 }
 
 - (void) connect
@@ -72,6 +86,154 @@
         dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:nil]; });
 }
 
+- (void) closeLaunchSession:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    if (launchSession.sessionType == LaunchSessionTypeWebApp)
+        [self.webAppLauncher closeWebApp:launchSession success:success failure:failure];
+    else
+    {
+        if (failure)
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Could not find launcher for provided LaunchSession."]);
+    }
+}
+
 #pragma mark - Web App Launcher
+
+- (id <WebAppLauncher>) webAppLauncher
+{
+    return self;
+}
+
+- (CapabilityPriorityLevel) webAppLauncherPriority
+{
+    return CapabilityPriorityLevelHigh;
+}
+
+- (void) launchWebApp:(NSString *)webAppId success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    [self.webAppLauncher launchWebApp:webAppId params:nil relaunchIfRunning:YES success:success failure:failure];
+}
+
+- (void) launchWebApp:(NSString *)webAppId params:(NSDictionary *)params success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    [self.webAppLauncher launchWebApp:webAppId params:params relaunchIfRunning:YES success:success failure:failure];
+}
+
+- (void) launchWebApp:(NSString *)webAppId relaunchIfRunning:(BOOL)relaunchIfRunning success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    [self.webAppLauncher launchWebApp:webAppId params:nil relaunchIfRunning:relaunchIfRunning success:success failure:failure];
+}
+
+- (void) launchWebApp:(NSString *)webAppId params:(NSDictionary *)params relaunchIfRunning:(BOOL)relaunchIfRunning success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    NSError *error;
+
+    if (!webAppId || webAppId.length == 0)
+        error = [ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid web app id"];
+
+    if (!self.device)
+        error = [ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Could not find a reference to the native device object"];
+
+    if (error)
+    {
+        if (failure)
+            failure(error);
+
+        return;
+    }
+
+    if (!params)
+        params = @{};
+
+    [self.device getApplication:webAppId completionBlock:^(MSApplication *application, NSError *getError) {
+        if (getError || !application)
+        {
+            if (!getError)
+                getError = [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@"Experienced an unknown error getting app info, app may not be installed"];
+
+            if (failure)
+                failure(getError);
+        } else
+        {
+            [application launchWithOptions:params completionBlock:^(BOOL launchSuccess, NSError *launchError) {
+                if (launchSuccess)
+                {
+                    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:webAppId];
+                    launchSession.sessionType = LaunchSessionTypeWebApp;
+                    launchSession.service = self;
+
+                    MultiScreenWebAppSession *webAppSession = [[MultiScreenWebAppSession alloc] initWithLaunchSession:launchSession service:self];
+                    webAppSession.application = application;
+
+                    if (success)
+                        success(webAppSession);
+                } else
+                {
+                    if (!launchError)
+                        launchError = [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@"Experienced an unknown error launching app"];
+
+                    if (failure)
+                        failure(launchError);
+                }
+            } queue:dispatch_get_main_queue()];
+        }
+    } queue:dispatch_get_main_queue()];
+}
+
+- (void) joinWebApp:(LaunchSession *)webAppLaunchSession success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+
+}
+
+- (void) joinWebAppWithId:(NSString *)webAppId success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+
+}
+
+- (void) closeWebApp:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    NSError *error;
+
+    if (!launchSession || !launchSession.appId || launchSession.appId.length == 0)
+        error = [ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid launch session"];
+
+    if (!self.device)
+        error = [ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Could not find a reference to the native device object"];
+
+    if (error)
+    {
+        if (failure)
+            failure(error);
+
+        return;
+    }
+
+    [self.device getApplication:launchSession.appId completionBlock:^(MSApplication *application, NSError *getError) {
+        if (getError || !application)
+        {
+            if (!getError)
+                getError = [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@"Experienced an unknown error getting app info, app may not be installed"];
+
+            if (failure)
+                failure(getError);
+        } else
+        {
+            [application terminateWithCompletionBlock:^(BOOL terminateSuccess, NSError *terminateError) {
+                if (terminateSuccess)
+                {
+                    if (success)
+                        success(nil);
+                } else
+                {
+                    if (!terminateError)
+                        terminateError = [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@"Experienced an unknown error terminating app"];
+
+                    if (failure)
+                        failure(terminateError);
+                }
+            } queue:dispatch_get_main_queue()];
+        }
+    } queue:dispatch_get_main_queue()];
+}
 
 @end
