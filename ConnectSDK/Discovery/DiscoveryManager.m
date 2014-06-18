@@ -555,24 +555,22 @@
 
 - (void) addServiceDescription:(ServiceDescription *)description toDevice:(ConnectableDevice *)device
 {
-    Class deviceServiceClass;
-
-    if ([self descriptionIsNetcastTV:description])
-    {
-        deviceServiceClass = [NetcastTVService class];
-        description.serviceId = [[NetcastTVService discoveryParameters] objectForKey:@"serviceId"];
-    } else
-    {
-        deviceServiceClass = [_deviceClasses objectForKey:description.serviceId];
-    }
+    Class deviceServiceClass = [_deviceClasses objectForKey:description.serviceId];
 
     // Prevent non-LG TV DLNA devices from being picked up
     if (deviceServiceClass == [DLNAService class])
     {
+        if (!description.locationXML)
+            return;
+
         NSRange rangeOfNetcast = [description.locationXML.lowercaseString rangeOfString:@"netcast"];
         NSRange rangeOfWebOS = [description.locationXML.lowercaseString rangeOfString:@"webos"];
 
         if (rangeOfNetcast.location == NSNotFound && rangeOfWebOS.location == NSNotFound)
+            return;
+    } else if (deviceServiceClass == [NetcastTVService class])
+    {
+        if (![self descriptionIsNetcastTV:description])
             return;
     }
 
