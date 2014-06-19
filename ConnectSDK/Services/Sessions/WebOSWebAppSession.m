@@ -29,7 +29,6 @@
     NSMutableDictionary *_activeCommands;
 
     int _UID;
-    BOOL _connected;
 }
 
 - (instancetype)initWithLaunchSession:(LaunchSession *)launchSession service:(DeviceService *)service
@@ -40,7 +39,7 @@
     {
         _UID = 0;
         _activeCommands = [NSMutableDictionary new];
-        _connected = NO;
+        _state = WebOSWebAppSessionStateDisconnected;
 
         __weak id weakSelf = self;
 
@@ -87,6 +86,35 @@
 {
     _UID = _UID + 1;
     return _UID;
+}
+
+- (BOOL) connected
+{
+    return self.state == WebOSWebAppSessionStateConnected;
+}
+
+- (NSString *) fullAppId
+{
+    if (!_fullAppId)
+    {
+        if (self.launchSession.sessionType != LaunchSessionTypeWebApp)
+            _fullAppId = self.launchSession.appId;
+        else
+        {
+            [self.service.appToAppIdMappings enumerateKeysAndObjectsUsingBlock:^(NSString *mappedFullAppId, NSString *mappedAppId, BOOL *stop) {
+                if ([mappedAppId isEqualToString:self.launchSession.appId])
+                {
+                    _fullAppId = mappedFullAppId;
+                    *stop = YES;
+                }
+            }];
+        }
+    }
+
+    if (!_fullAppId)
+        return self.launchSession.appId;
+    else
+        return _fullAppId;
 }
 
 #pragma mark - Subscription methods
@@ -181,7 +209,7 @@
     if (!_messageSubscription)
         _messageSubscription = [ServiceSubscription subscriptionWithDelegate:nil target:nil payload:nil callId:-1];
 
-    if (_connected)
+    if (self.state == WebOSWebAppSessionStateConnected || self.state == WebOSWebAppSessionStateConnecting)
     {
         if (success)
             success(nil);
@@ -189,9 +217,11 @@
         return;
     }
 
+    self.state = WebOSWebAppSessionStateConnecting;
+
     [self.service connectToWebApp:self success:^(id responseObject)
     {
-        _connected = YES;
+        _state = WebOSWebAppSessionStateConnected;
 
         if (success)
             success(nil);
@@ -200,9 +230,19 @@
 
 - (void) joinWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
+    if (self.connected)
+    {
+        if (success)
+            success(nil);
+
+        return;
+    }
+
+    self.state = WebOSWebAppSessionStateConnecting;
+
     [self.service connectToWebApp:self joinOnly:YES success:^(id responseObject)
     {
-        _connected = YES;
+        _state = WebOSWebAppSessionStateConnected;
 
         if (success)
             success(self);
@@ -219,13 +259,13 @@
         return;
     }
 
-    if (_connected)
-        [self.service sendMessage:message toApp:self.launchSession success:success failure:failure];
+    if (self.connected)
+        [self.service sendMessage:message toApp:self success:success failure:failure];
     else
     {
         [self connectWithSuccess:^(id responseObject)
         {
-            [self.service sendMessage:message toApp:self.launchSession success:success failure:failure];
+            [self.service sendMessage:message toApp:self success:success failure:failure];
         }                failure:failure];
     }
 }
@@ -240,34 +280,35 @@
         return;
     }
 
-    if (_connected)
-        [self.service sendMessage:message toApp:self.launchSession success:success failure:failure];
+    if (self.connected)
+        [self.service sendMessage:message toApp:self success:success failure:failure];
     else
     {
         [self connectWithSuccess:^(id responseObject)
         {
-            [self.service sendMessage:message toApp:self.launchSession success:success failure:failure];
+            [self.service sendMessage:message toApp:self success:success failure:failure];
         }                failure:failure];
     }
 }
 
 - (void) disconnectFromWebApp
 {
-    [self.service disconnectFromWebApp:self];
+    BOOL disconnectWasClean = [self.service disconnectFromWebApp:self];
+
+    if (disconnectWasClean)
+        _state = WebOSWebAppSessionStateDisconnected;
+    else
+        _state = WebOSWebAppSessionStateConnecting;
 }
 
 - (void)closeWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    _connected = NO;
     _activeCommands = [NSMutableDictionary new];
 
     [_playStateSubscription unsubscribe];
     _playStateSubscription = nil;
 
     _messageSubscription = nil;
-
-    if (self.launchSession.sessionId)
-        [self.service disconnectFromWebApp:self];
 
     [self.service.webAppLauncher closeWebApp:self.launchSession success:success failure:failure];
 }
@@ -479,8 +520,8 @@
     if (!_playStateSubscription)
         _playStateSubscription = [ServiceSubscription subscriptionWithDelegate:nil target:nil payload:nil callId:-1];
 
-    if (!_connected)
-        [self connectWithSuccess:nil             failure:failure];
+    if (!self.connected)
+        [self connectWithSuccess:nil failure:failure];
 
     if (![_playStateSubscription.successCalls containsObject:success])
         [_playStateSubscription addSuccess:success];

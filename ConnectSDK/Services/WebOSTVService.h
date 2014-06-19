@@ -79,6 +79,8 @@ typedef enum {
 @property (nonatomic, strong, readonly) WebOSTVServiceMouse *mouseSocket;
 @property (nonatomic, strong) WebOSTVServiceConfig *serviceConfig;
 @property (nonatomic, strong) NSArray *permissions;
+@property (nonatomic, readonly) NSDictionary *appToAppIdMappings;
+@property (nonatomic, readonly) NSDictionary *webAppSessions;
 
 - (void) setServiceConfig:(ServiceConfig *)serviceConfig;
 // @endcond
@@ -88,8 +90,8 @@ typedef enum {
 // @cond INTERNAL
 - (void) connectToWebApp:(WebOSWebAppSession *)webAppSession success:(SuccessBlock)success failure:(FailureBlock)failure;
 - (void) connectToWebApp:(WebOSWebAppSession *)webAppSession joinOnly:(BOOL)joinOnly success:(SuccessBlock)success failure:(FailureBlock)failure;
-- (void) disconnectFromWebApp:(WebOSWebAppSession *)webAppSession;
-- (int) sendMessage:(id)message toApp:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure;
+- (BOOL) disconnectFromWebApp:(WebOSWebAppSession *)webAppSession;
+- (int) sendMessage:(id)message toApp:(WebOSWebAppSession *)webAppSession success:(SuccessBlock)success failure:(FailureBlock)failure;
 // @endcond
 
 #pragma mark - Native app to app
