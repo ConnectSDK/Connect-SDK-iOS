@@ -46,6 +46,10 @@
     };
     
     _castServiceChannel = [[CastServiceChannel alloc] initWithAppId:self.launchSession.appId session:self];
+
+    // clean up old instance of channel, if it exists
+    [self.service.castDeviceManager removeChannel:_castServiceChannel];
+
     _castServiceChannel.connectionSuccess = success;
     _castServiceChannel.connectionFailure = channelFailure;
 

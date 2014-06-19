@@ -18,7 +18,6 @@
 //  limitations under the License.
 //
 
-#import <GoogleCast/GoogleCast.h>
 #import "DeviceService.h"
 #import "Launcher.h"
 #import "MediaPlayer.h"
