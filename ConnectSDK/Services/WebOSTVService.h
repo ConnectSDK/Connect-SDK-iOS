@@ -38,6 +38,7 @@
 #import "TextInputControl.h"
 
 @class WebOSWebAppSession;
+@class WebOSTVServiceSocketClient;
 
 @interface WebOSTVService : DeviceService <Launcher, MediaPlayer, MediaControl, VolumeControl, TVControl, KeyControl, MouseControl, PowerControl, WebAppLauncher, ExternalInputControl, ToastControl, TextInputControl>
 
@@ -76,6 +77,7 @@ typedef enum {
 
 #define kWebOSTVServicePersonalActivityPermissions @[@"CONTROL_INPUT_TEXT", @"CONTROL_MOUSE_AND_KEYBOARD", @"READ_CURRENT_CHANNEL", @"READ_RUNNING_APPS"]
 
+@property (nonatomic, strong, readonly) WebOSTVServiceSocketClient *socket;
 @property (nonatomic, strong, readonly) WebOSTVServiceMouse *mouseSocket;
 @property (nonatomic, strong) WebOSTVServiceConfig *serviceConfig;
 @property (nonatomic, strong) NSArray *permissions;

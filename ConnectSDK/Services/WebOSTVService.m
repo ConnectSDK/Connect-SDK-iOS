@@ -19,27 +19,21 @@
 //
 
 #import "WebOSTVService.h"
-#import "LGSRWebSocket.h"
 #import "ConnectError.h"
 #import "DiscoveryManager.h"
 #import "ServiceAsyncCommand.h"
 #import "WebOSWebAppSession.h"
+#import "WebOSTVServiceSocketClient.h"
 
 #define kKeyboardEnter @"\x1b ENTER \x1b"
 #define kKeyboardDelete @"\x1b DELETE \x1b"
 
-@interface WebOSTVService () <LGSRWebSocketDelegate, ServiceCommandDelegate, UIAlertViewDelegate>
+@interface WebOSTVService () <UIAlertViewDelegate, WebOSTVServiceSocketClientDelegate>
 {
-    int _UID;
-
-    LGSRWebSocket *_socket;
-    NSMutableArray *_commandQueue;
-    NSMutableDictionary *_activeConnections;
+    NSArray *_permissions;
 
     NSMutableDictionary *_webAppSessions;
     NSMutableDictionary *_appToAppIdMappings;
-
-    NSMutableDictionary *_subscribed;
 
     NSTimer *_pairingTimer;
     UIAlertView *_pairingAlert;
@@ -48,15 +42,12 @@
     BOOL _keyboardQueueProcessing;
 
     BOOL _mouseInit;
-    BOOL _reconnectOnWake;
 }
 
 @end
 
 @implementation WebOSTVService
 
-@synthesize connected = _connected;
-@synthesize permissions = _permissions;
 @synthesize serviceDescription = _serviceDescription;
 
 #pragma mark - Setup
@@ -68,11 +59,6 @@
     if (self)
     {
         [self setServiceConfig:serviceConfig];
-
-        _commandQueue = [[NSMutableArray alloc] init];
-        _activeConnections = [[NSMutableDictionary alloc] init];
-
-        _UID = 0;
     }
 
     return self;
@@ -223,82 +209,36 @@
     return YES;
 }
 
-- (void) connect
-{
-    [self openSocket];
-}
-
 - (BOOL) connected
 {
     if ([DiscoveryManager sharedManager].pairingLevel == ConnectableDevicePairingLevelOn)
-        return _connected && self.serviceConfig.clientKey != nil;
+        return self.socket.connected && self.serviceConfig.clientKey != nil;
     else
-        return _connected;
+        return self.socket.connected;
 }
 
-- (void) openSocket
+- (void) connect
 {
-    NSString *address = self.serviceDescription.address;
-    unsigned long port = self.serviceDescription.port;
+    if (!self.socket)
+    {
+        _socket = [[WebOSTVServiceSocketClient alloc] initWithService:self];
+        _socket.delegate = self;
+    }
 
-    NSString *socketPath = [NSString stringWithFormat:@"wss://%@:%lu", address, port];
-    NSURL *url = [[NSURL alloc] initWithString:socketPath];
-    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:url];
-
-    if (self.serviceConfig.SSLCertificates)
-        [urlRequest setLGSR_SSLPinnedCertificates:self.serviceConfig.SSLCertificates];
-
-    _socket = [[LGSRWebSocket alloc] initWithURLRequest:urlRequest];
-    _socket.delegate = self;
-    [_socket open];
+    if (!self.connected)
+        [self.socket connect];
 }
 
 - (void) disconnect
 {
-    [self disconnectWithError:nil];
+    if (self.connected)
+        [self disconnectWithError:nil];
 }
 
 - (void) disconnectWithError:(NSError *)error
 {
-    if (!_connected)
-        return;
-
-    if (!_reconnectOnWake)
-    {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
-    }
-
-    _connected = NO;
-
-    if (_socket && _socket.readyState != LGSR_CLOSED && _socket.readyState != LGSR_CLOSING)
-    {
-        if (error)
-            [_socket closeWithCode:LGSRStatusCodeNormal reason:error.localizedDescription];
-        else
-            [_socket closeWithCode:LGSRStatusCodeNormal reason:@"Disconnected by client"];
-    }
-
-    if ([self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
-        dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:error]; });
-}
-
-- (void) hAppDidEnterBackground:(NSNotification *)notification
-{
-    if (_connected)
-    {
-        _reconnectOnWake = YES;
-        [self disconnect];
-    }
-}
-
-- (void) hAppDidBecomeActive:(NSNotification *)notification
-{
-    if (_reconnectOnWake)
-    {
-        [self connect];
-        _reconnectOnWake = NO;
-    }
+    if (self.connected)
+        [self.socket disconnectWithError:error];
 }
 
 #pragma mark - Initial connection & pairing
@@ -306,138 +246,6 @@
 - (BOOL) requiresPairing
 {
     return [DiscoveryManager sharedManager].pairingLevel == ConnectableDevicePairingLevelOn;
-}
-
--(void) helloTv
-{
-    NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
-
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    CGFloat screenScale = [[UIScreen mainScreen] scale];
-    CGSize screenSize = CGSizeMake(screenBounds.size.width * screenScale, screenBounds.size.height * screenScale);
-    NSString *screenResolution = [NSString stringWithFormat:@"%dx%d", (int)screenSize.width, (int)screenSize.height];
-
-    NSDictionary *payload = @{
-            @"sdkVersion" : CONNECT_SDK_VERSION,
-            @"deviceModel" : ensureString([[UIDevice currentDevice] model]),
-            @"OSVersion" : ensureString([infoDic objectForKey:@"DTPlatformVersion"]),
-            @"resolution" : screenResolution,
-            @"appId" : ensureString([infoDic objectForKey:@"CFBundleIdentifier"]),
-            @"appName" : ensureString([infoDic objectForKey:@"CFBundleDisplayName"]),
-            @"appRegion" : ensureString([infoDic objectForKey:@"CFBundleDevelopmentRegion"])
-    };
-
-    ServiceCommand *hello = [[ServiceCommand alloc] init];
-    hello.payload = payload;
-
-    hello.delegate = self;
-    hello.callbackComplete = ^(NSDictionary* response){
-        if (self.serviceConfig.UUID != nil)
-        {
-            if (![self.serviceConfig.UUID isEqualToString:[response objectForKey:@"deviceUUID"]])
-            {
-                //Imposter UUID, kill it, kill it with fire
-                self.serviceConfig.clientKey = nil;
-                self.serviceConfig.SSLCertificates = nil;
-                self.serviceConfig.UUID = nil;
-                self.serviceDescription.address = nil;
-                self.serviceDescription.UUID = nil;
-
-                NSError *UUIDError = [ConnectError generateErrorWithCode:ConnectStatusCodeCertificateError andDetails:nil];
-                [self disconnectWithError:UUIDError];
-            }
-        } else
-        {
-            self.serviceConfig.UUID = self.serviceDescription.UUID = [response objectForKey:@"deviceUUID"];
-        }
-
-        [self registerWithTv];
-    };
-
-    hello.callbackError = ^(NSError*err)
-    {
-        NSError *connectionError = [ConnectError generateErrorWithCode:ConnectStatusCodeSocketError andDetails:nil];
-        [self disconnectWithError:connectionError];
-    };
-
-    if (_activeConnections == nil)
-        _activeConnections = [[NSMutableDictionary alloc] init];
-
-    [_activeConnections setValue:hello forKey:@"hello"];
-
-    int dataId = [self getNextId];
-
-    NSDictionary *sendData = @{
-            @"id" : @(dataId),
-            @"type" : @"hello",
-            @"payload" : hello.payload
-    };
-
-    NSString *sendString = [self writeToJSON:sendData];
-
-    DLog(@"[OUT] : %@", sendString);
-
-    [_socket send:sendString];
-
-    if ([_commandQueue containsObject:sendString])
-        [_commandQueue removeObject:sendString];
-}
-
--(void) registerWithTv
-{
-    _pairingTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(showAlert) userInfo:nil repeats:NO];
-
-    ServiceCommand *reg = [[ServiceCommand alloc] init];
-    reg.delegate = self;
-
-    reg.callbackComplete = ^(NSDictionary* response)
-    {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
-        
-//        if ([self.delegate respondsToSelector:@selector(deviceServicePairingSuccess:)])
-//            dispatch_on_main(^{ [self.delegate deviceServicePairingSuccess:self]; });
-//
-//        if ([self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
-//            dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
-
-        if([_commandQueue count] > 0)
-        {
-            [_commandQueue enumerateObjectsUsingBlock:^(NSString *sendString, NSUInteger idx, BOOL *stop)
-            {
-                DLog(@"[OUT] : %@", sendString);
-
-                [_socket send:sendString];
-            }];
-
-            _commandQueue = [[NSMutableArray alloc] init];
-        }
-    };
-    // TODO: this is getting cleaned up before a potential pairing cancelled message is received
-    reg.callbackError = ^(NSError *error) {
-        if (_pairingAlert && _pairingAlert.isVisible)
-            dispatch_on_main(^{ [_pairingAlert dismissWithClickedButtonIndex:0 animated:NO]; });
-
-        if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:pairingFailedWithError:)])
-            dispatch_on_main(^{ [self.delegate deviceService:self pairingFailedWithError:error]; });
-    };
-
-    int dataId = [self getNextId];
-
-    [_activeConnections setObject:reg forKey:[NSString stringWithFormat:@"req%d",dataId]];
-
-    NSDictionary *registerInfo = @{
-            @"manifest" : self.manifest
-    };
-
-    NSString *sendString = [self encodeData:registerInfo andAddress:nil withId:dataId];
-
-    DLog(@"[OUT] : %@", sendString);
-
-    [_socket send:sendString];
-
-    if ([_commandQueue containsObject:sendString])
-        [_commandQueue removeObject:sendString];
 }
 
 #pragma mark - Paring alert
@@ -459,118 +267,58 @@
         [self disconnect];
 }
 
-#pragma mark - LGSRWebSocketDelegate
+#pragma - WebOSTVServiceSocketClientDelegate
 
-- (void)webSocketDidOpen:(LGSRWebSocket *)webSocket
+- (void) socketWillRegister:(WebOSTVServiceSocketClient *)socket
 {
-    _connected = YES;
-    [self helloTv];
+    _pairingTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(showAlert) userInfo:nil repeats:NO];
 }
 
-- (void)webSocket:(LGSRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean
+- (void) socket:(WebOSTVServiceSocketClient *)socket registrationFailed:(NSError *)error
 {
-    _connected = NO;
+    if (_pairingAlert && _pairingAlert.isVisible)
+        dispatch_on_main(^{ [_pairingAlert dismissWithClickedButtonIndex:0 animated:NO]; });
 
-    // TODO: we may want to notify the subscribers that they are going away
-    _subscribed = [NSMutableDictionary new];
-    _webAppSessions = [NSMutableDictionary new];
-    _appToAppIdMappings = [NSMutableDictionary new];
-    _activeConnections = [NSMutableDictionary new];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:pairingFailedWithError:)])
+        dispatch_on_main(^{ [self.delegate deviceService:self pairingFailedWithError:error]; });
+}
 
-    _socket.delegate = nil;
-    _socket = nil;
+- (void) socketDidConnect:(WebOSTVServiceSocketClient *)socket
+{
+    [_pairingTimer invalidate];
 
-    NSError *error;
+    if (_pairingAlert && _pairingAlert.visible)
+        dispatch_on_main(^{ [_pairingAlert dismissWithClickedButtonIndex:1 animated:YES]; });
 
-    if (!wasClean)
-        error = [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:reason];
+    if ([self.delegate respondsToSelector:@selector(deviceServicePairingSuccess:)])
+        dispatch_on_main(^{ [self.delegate deviceServicePairingSuccess:self]; });
 
+    if ([self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
+        dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
+}
+
+- (void) socket:(WebOSTVServiceSocketClient *)socket didFailWithError:(NSError *)error
+{
+    if (_pairingAlert && _pairingAlert.visible)
+        dispatch_on_main(^{ [_pairingAlert dismissWithClickedButtonIndex:0 animated:YES]; });
+
+    if ([self.delegate respondsToSelector:@selector(deviceService:didFailConnectWithError:)])
+        dispatch_on_main(^{ [self.delegate deviceService:self didFailConnectWithError:error]; });
+}
+
+- (void) socket:(WebOSTVServiceSocketClient *)socket didCloseWithError:(NSError *)error
+{
     if ([self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
         dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:error]; });
 }
 
-- (void)webSocket:(LGSRWebSocket *)webSocket didFailWithError:(NSError *)error
+- (BOOL) socket:(WebOSTVServiceSocketClient *)socket didReceiveMessage:(NSDictionary *)message
 {
-    BOOL shouldRetry = NO;
-    BOOL wasConnected = _connected;
-    _connected = NO;
-    
-    if (_pairingAlert && _pairingAlert.visible)
-        dispatch_on_main(^{ [_pairingAlert dismissWithClickedButtonIndex:0 animated:YES]; });
+    NSString *type = message[@"type"];
 
-    NSError *intError;
-    
-    if (error.code == 23556)
+    if ([type isEqualToString:@"p2p"])
     {
-        intError = [ConnectError generateErrorWithCode:ConnectStatusCodeCertificateError andDetails:nil];
-        
-        self.serviceConfig.SSLCertificates = nil;
-        self.serviceConfig.clientKey = nil;
-
-        shouldRetry = YES;
-    } else
-        intError = [ConnectError generateErrorWithCode:ConnectStatusCodeSocketError andDetails:error.localizedDescription];
-
-    for (NSString *key in _activeConnections)
-    {
-        ServiceCommand *comm = (ServiceCommand *)[_activeConnections objectForKey:key];
-
-        if (comm.callbackError)
-            dispatch_on_main(^{ comm.callbackError(intError); });
-    }
-
-    _webAppSessions = [NSMutableDictionary new];
-    _appToAppIdMappings = [NSMutableDictionary new];
-    _activeConnections = [NSMutableDictionary dictionary];
-
-    if (shouldRetry)
-    {
-        [self connect];
-        return;
-    }
-    
-    if (wasConnected)
-    {
-        if ([self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
-            dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:intError]; });
-    } else
-    {
-        if ([self.delegate respondsToSelector:@selector(deviceService:didFailConnectWithError:)])
-            dispatch_on_main(^{ [self.delegate deviceService:self didFailConnectWithError:intError]; });
-    }
-}
-
-- (void)webSocket:(LGSRWebSocket *)webSocket didGetCertificates:(NSArray *)certs
-{
-    self.serviceConfig.SSLCertificates = certs;
-}
-
-- (void)webSocket:(LGSRWebSocket *)webSocket didReceiveMessage:(id)message
-{
-    NSDictionary *decodeData = [self decodeData:message];
-
-    DLog(@"[IN] : %@", decodeData);
-
-    NSNumber *comId = [decodeData objectForKey:@"id"];
-    NSString *type = [decodeData objectForKey:@"type"];
-
-    if ([type isEqualToString:@"error"])
-    {
-        if (comId)
-        {
-            ServiceCommand *comm = [_activeConnections objectForKey:[NSString stringWithFormat:@"req%@", comId]];
-
-            if (comm.callbackError != nil)
-            {
-                NSError *err = [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:decodeData];
-                dispatch_on_main(^{ comm.callbackError(err); });
-            }
-        }
-    } else if ([type isEqualToString:@"p2p"])
-    {
-        NSString *fromAppId = [decodeData objectForKey:@"from"];
-        id messageContent = [decodeData objectForKey:@"payload"];
-
+        NSString *fromAppId = message[@"from"];
         NSString *appId = _appToAppIdMappings[fromAppId];
 
         if (!appId)
@@ -578,175 +326,21 @@
 
         WebOSWebAppSession *webAppSession = _webAppSessions[appId];
 
-        if (webAppSession && webAppSession.connected && webAppSession.messageHandler)
-            dispatch_on_main(^{ webAppSession.messageHandler(messageContent); });
-    } else
-    {
-        NSDictionary *payload = [decodeData objectForKey:@"payload"];
-
-        if ([type isEqualToString:@"registered"])
+        if (webAppSession && webAppSession.messageHandler)
         {
-            [_pairingTimer invalidate];
+            id payload = message[@"payload"];
 
-            NSString *client = [payload objectForKey:@"client-key"];
-            self.serviceConfig.clientKey = client;
-
-            if (_pairingAlert && _pairingAlert.visible)
-                dispatch_on_main(^{ [_pairingAlert dismissWithClickedButtonIndex:1 animated:YES]; });
-
-            if ([self.delegate respondsToSelector:@selector(deviceServicePairingSuccess:)])
-                dispatch_on_main(^{ [self.delegate deviceServicePairingSuccess:self]; });
-
-            if ([self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
-                dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
-        } else if ([type isEqualToString:@"hello"])
-        {
-            //Store information here
-            ServiceCommand *comm = [_activeConnections objectForKey:[NSString stringWithFormat:@"hello"]];
-
-            if (comm.callbackComplete)
-                dispatch_on_main(^{ comm.callbackComplete(payload); });
-
-            [_activeConnections removeObjectForKey:@"hello"];
+            if (payload)
+                webAppSession.messageHandler(payload);
         }
 
-        if (comId)
-        {
-            ServiceCommand *comm = [_activeConnections objectForKey:[NSString stringWithFormat:@"req%@", comId]];
-
-            if(comm.callbackComplete)
-                dispatch_on_main(^{ comm.callbackComplete(payload); });
-        }
+        return NO;
     }
 
-    if (![[_activeConnections objectForKey:[NSString stringWithFormat:@"req%@", comId]] isKindOfClass:[ServiceSubscription class]])
-        [_activeConnections removeObjectForKey:[NSString stringWithFormat:@"req%@", comId]];
-}
-
-#pragma mark - Subscription methods
-
-- (ServiceSubscription *) addSubscribe:(NSURL *)URL payload:(NSDictionary *)payload success:(SuccessBlock)success failure:(FailureBlock)failure
-{
-    if (_subscribed == nil)
-        _subscribed = [[NSMutableDictionary alloc] init];
-
-    NSString *subscriptionReferenceId = [self subscriptionReferenceForURL:URL payload:payload];
-    ServiceSubscription *subscription = [_subscribed objectForKey:subscriptionReferenceId];
-
-    if (subscription == nil)
-    {
-        int callId = [self getNextId];
-        subscription = [ServiceSubscription subscriptionWithDelegate:self target:URL payload:payload callId:callId];
-        [_subscribed setObject:subscription forKey:subscriptionReferenceId];
-    }
-
-    if (success)
-        [subscription addSuccess:success];
-
-    if (failure)
-        [subscription addFailure:failure];
-
-    if (![subscription isSubscribed])
-        [subscription subscribe];
-
-    return subscription;
-}
-
-- (ServiceSubscription *) killSubscribe:(NSURL *)URL payload:(NSDictionary *)payload
-{
-    NSString *subscriptionReferenceId = [self subscriptionReferenceForURL:URL payload:payload];
-    ServiceSubscription *subscription = [_subscribed objectForKey:subscriptionReferenceId];
-
-    if (subscription)
-        [_subscribed removeObjectForKey:subscriptionReferenceId];
-
-    return subscription;
-}
-
-- (NSString *)subscriptionReferenceForURL:(NSURL *)URL payload:(NSDictionary *)payload
-{
-    NSString *subscriptionReferenceId;
-
-    if (payload)
-    {
-        NSString *payloadKeys = [[payload allValues] componentsJoinedByString:@""];
-        subscriptionReferenceId = [NSString stringWithFormat:@"%@%@", URL.absoluteString, payloadKeys];
-    } else
-    {
-        subscriptionReferenceId = URL.absoluteString;
-    }
-
-    return subscriptionReferenceId;
-}
-
-- (int) sendSubscription:(ServiceSubscription *)subscription type:(ServiceSubscriptionType)type payload:(id)payload toURL:(NSURL *)URL withId:(int)callId
-{
-    if (callId < 0)
-        callId = [self getNextId];
-
-    NSString *subscriptionKey = [NSString stringWithFormat:@"req%d", callId];
-
-    [_activeConnections setObject:subscription forKey:subscriptionKey];
-
-    NSMutableDictionary *subscriptionPayload = [[NSMutableDictionary alloc] init];
-    [subscriptionPayload setObject:@(callId) forKey:@"id"];
-    [subscriptionPayload setObject:URL.absoluteString forKey:@"uri"];
-
-    if (type == ServiceSubscriptionTypeSubscribe)
-    {
-        [subscriptionPayload setObject:@"subscribe" forKey:@"type"];
-
-        if (payload)
-            [subscriptionPayload setObject:payload forKey:@"payload"];
-    } else
-    {
-        if (!_connected)
-            return -1;
-
-        [subscriptionPayload setObject:@"unsubscribe" forKey:@"type"];
-        [self killSubscribe:URL payload:payload];
-    }
-
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:subscriptionPayload options:0 error:nil];
-    NSString *sendString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
-    if ([_socket readyState] == LGSR_OPEN)
-    {
-        DLog(@"[OUT] : %@", sendString);
-
-        [_socket send:sendString];
-
-        if ([_commandQueue containsObject:sendString])
-            [_commandQueue removeObject:sendString];
-    } else if ([_socket readyState] == LGSR_CONNECTING)
-    {
-        [_commandQueue addObject:sendString];
-    } else
-    {
-        [_socket open];
-
-        [_commandQueue addObject:sendString];
-    }
-
-    return callId;
+    return YES;
 }
 
 #pragma mark - Helper methods
-
-- (NSDictionary *) manifest
-{
-    NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
-
-    return @{
-            @"manifestVersion" : @(1),
-            @"appId" : [infoDic objectForKey:@"CFBundleIdentifier"],
-            @"vendorId" : @"",
-            @"localizedAppNames" : @{
-                    @"" : [infoDic objectForKey:@"CFBundleDisplayName"]
-            },
-            @"permissions" : self.permissions
-    };
-}
 
 - (NSArray *)permissions
 {
@@ -779,50 +373,6 @@
             [self disconnectWithError:error];
         }
     }
-}
-
-- (NSDictionary *) decodeData:(NSString *) data
-{
-    return [NSJSONSerialization JSONObjectWithData:[data dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
-}
-
-- (NSString *) writeToJSON:(id) obj
-{
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:obj options:0 error:nil];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
-    return jsonString;
-}
-
-- (NSString*) encodeData:(NSDictionary*)data andAddress:(NSURL*)add withId:(int)reqId{
-    NSMutableDictionary *sendData = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary *payloadData = [[NSMutableDictionary alloc] initWithDictionary:data];
-
-    if (reqId < 0)
-        reqId = [self getNextId];
-
-    [sendData setObject:[NSString stringWithFormat:@"%d", reqId] forKey:@"id"];
-    [sendData setObject:payloadData forKey:@"payload"];
-
-    if (add != nil)
-    {
-        [sendData setObject:[add absoluteString] forKey:@"uri"];
-        [sendData setObject:@"request" forKey:@"type"];
-    } else
-    {
-        if (self.serviceConfig.clientKey)
-            [payloadData setObject:self.serviceConfig.clientKey forKey:@"client-key"];
-
-        [sendData setObject:@"register" forKey:@"type"];
-    }
-
-    return [self writeToJSON:sendData];
-}
-
-- (int) getNextId
-{
-    _UID = _UID + 1;
-    return _UID;
 }
 
 + (ChannelInfo *)channelInfoFromDictionary:(NSDictionary *)info
@@ -860,40 +410,6 @@
     return externalInputInfo;
 }
 
-#pragma mark - ServiceCommandDelegate
-
-- (int) sendCommand:(ServiceCommand *)comm withPayload:(NSDictionary *)payload toURL:(NSURL *)URL
-{
-    if (_socket == nil)
-        [self openSocket];
-
-    int callId = [self getNextId];
-
-    [_activeConnections setObject:comm forKey:[NSString stringWithFormat:@"req%d",callId]];
-
-    NSString *sendString = [self encodeData:payload andAddress:URL withId:callId];
-
-    if (_socket.readyState == LGSR_OPEN)
-    {
-        DLog(@"[OUT] : %@", sendString);
-
-        [_socket send:sendString];
-
-        if ([_commandQueue containsObject:sendString])
-            [_commandQueue removeObject:sendString];
-    } else if (_socket.readyState == LGSR_CONNECTING ||
-            _socket.readyState == LGSR_CLOSING)
-    {
-        [_commandQueue addObject:sendString];
-    } else
-    {
-        [_commandQueue addObject:sendString];
-        [self openSocket];
-    }
-
-    return callId;
-}
-
 #pragma mark - Launcher
 
 - (id <Launcher>)launcher
@@ -910,7 +426,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.applicationManager/listApps"];
 
-    ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = ^(NSDictionary *responseDic)
     {
         NSArray *foundApps = [responseDic objectForKey:@"apps"];
@@ -950,7 +466,7 @@
             [payload setValue:contentId forKey:@"contentId"];
     }
 
-    ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self target:URL payload:payload];
+    ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self.socket target:URL payload:payload];
     command.callbackComplete = ^(NSDictionary *responseObject)
     {
         LaunchSession *launchSession = [LaunchSession launchSessionForAppId:appId];
@@ -997,7 +513,7 @@
     NSURL *URL = [NSURL URLWithString:@"ssap://system.launcher/open"];
     NSDictionary *params = @{ @"target" : target.absoluteString };
 
-    ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self target:URL payload:params];
+    ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self.socket target:URL payload:params];
     command.callbackComplete = ^(NSDictionary * responseObject)
     {
         LaunchSession *launchSession = [LaunchSession launchSessionForAppId:[responseObject objectForKey:@"id"]];
@@ -1043,7 +559,7 @@
     launchSession.service = self;
     launchSession.sessionType = LaunchSessionTypeApp;
 
-    WebOSWebAppSession *webAppSession = [[WebOSWebAppSession alloc] initWithLaunchSession:launchSession service:self];
+    WebOSWebAppSession *webAppSession = [self webAppSessionForLaunchSession:launchSession];
 
     [self connectToApp:webAppSession joinOnly:NO success:^(id responseObject)
     {
@@ -1058,7 +574,7 @@
     launchSession.service = self;
     launchSession.sessionType = LaunchSessionTypeApp;
 
-    WebOSWebAppSession *webAppSession = [[WebOSWebAppSession alloc] initWithLaunchSession:launchSession service:self];
+    WebOSWebAppSession *webAppSession = [self webAppSessionForLaunchSession:launchSession];
 
     [self connectToApp:webAppSession joinOnly:YES success:^(id responseObject)
     {
@@ -1076,7 +592,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.applicationManager/getForegroundAppInfo"];
 
-    ServiceSubscription *subscription = [self addSubscribe:URL payload:nil success:^(NSDictionary *responseObject)
+    ServiceSubscription *subscription = [self.socket addSubscribe:URL payload:nil success:^(NSDictionary *responseObject)
     {
         AppInfo *appInfo = [[AppInfo alloc] init];
         appInfo.id = [responseObject objectForKey:@"appId"];
@@ -1116,7 +632,7 @@
     if (launchSession && launchSession.appId) [params setValue:launchSession.appId forKey:@"appId"];
     if (launchSession && launchSession.sessionId) [params setValue:launchSession.sessionId forKey:@"sessionId"];
 
-    ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self target:URL payload:params];
+    ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self.socket target:URL payload:params];
     command.callbackComplete = ^(NSDictionary * responseObject)
     {
         BOOL running = [[responseObject objectForKey:@"running"] boolValue];
@@ -1137,7 +653,7 @@
     if (launchSession && launchSession.appId) [params setValue:launchSession.appId forKey:@"appId"];
     if (launchSession && launchSession.sessionId) [params setValue:launchSession.sessionId forKey:@"sessionId"];
 
-    ServiceSubscription *subscription = [self addSubscribe:URL payload:params success:^(NSDictionary *responseObject)
+    ServiceSubscription *subscription = [self.socket addSubscribe:URL payload:params success:^(NSDictionary *responseObject)
     {
         BOOL running = [[responseObject objectForKey:@"running"] boolValue];
         BOOL visible = [[responseObject objectForKey:@"visible"] boolValue];
@@ -1157,7 +673,7 @@
     if (launchSession.appId) [payload setValue:launchSession.appId forKey:@"id"]; // yes, this is id not appId (groan)
     if (launchSession.sessionId) [payload setValue:launchSession.sessionId forKey:@"sessionId"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:payload];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:payload];
     command.callbackComplete = success;
     command.callbackError = failure;
     [command send];
@@ -1189,7 +705,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://tv/getExternalInputList"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = ^(NSDictionary *responseObject)
     {
         NSArray *externalInputsData = [responseObject objectForKey:@"devices"];
@@ -1214,7 +730,7 @@
     NSMutableDictionary *payload = [NSMutableDictionary new];
     if (externalInputInfo && externalInputInfo.id) [payload setValue:externalInputInfo.id forKey:@"inputId"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:payload];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:payload];
     command.callbackComplete = success;
     command.callbackError = failure;
     [command send];
@@ -1325,7 +841,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://media.viewer/open"];
 
-    ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self target:URL payload:params];
+    ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self.socket target:URL payload:params];
     command.callbackComplete = ^(NSDictionary *responseObject)
     {
         LaunchSession *launchSession = [LaunchSession launchSessionForAppId:[responseObject objectForKey:@"id"]];
@@ -1362,7 +878,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://media.controls/play"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = success;
     command.callbackError = failure;
     [command send];
@@ -1372,7 +888,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://media.controls/pause"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = success;
     command.callbackError = failure;
     [command send];
@@ -1382,7 +898,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://media.controls/stop"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = success;
     command.callbackError = failure;
     [command send];
@@ -1392,7 +908,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://media.controls/rewind"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = success;
     command.callbackError = failure;
     [command send];
@@ -1402,7 +918,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://media.controls/fastForward"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = success;
     command.callbackError = failure;
     [command send];
@@ -1450,7 +966,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://audio/getMute"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
 
     command.callbackComplete = ^(NSDictionary *responseDic)
     {
@@ -1469,7 +985,7 @@
     NSURL *URL = [NSURL URLWithString:@"ssap://audio/setMute"];
     NSDictionary *payload = @{ @"mute" : @(mute) };
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:payload];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:payload];
 
     command.callbackComplete = success;
     command.callbackError = failure;
@@ -1480,7 +996,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://audio/getVolume"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
 
     command.callbackComplete = (^(NSDictionary *responseDic)
     {
@@ -1500,7 +1016,7 @@
     NSURL *URL = [NSURL URLWithString:@"ssap://audio/setVolume"];
     NSDictionary *payload = @{ @"volume" : @(roundf(volume * 100.0f)) };
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:payload];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:payload];
 
     command.callbackComplete = success;
     command.callbackError = failure;
@@ -1511,7 +1027,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://audio/volumeUp"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = success;
     command.callbackError = failure;
     [command send];
@@ -1521,7 +1037,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://audio/volumeDown"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = success;
     command.callbackError = failure;
     [command send];
@@ -1531,7 +1047,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://audio/getMute"];
 
-    ServiceSubscription *subscription = [self addSubscribe:URL payload:nil success:^(NSDictionary *responseObject)
+    ServiceSubscription *subscription = [self.socket addSubscribe:URL payload:nil success:^(NSDictionary *responseObject)
     {
         BOOL muteValue = [[responseObject valueForKey:@"mute"] boolValue];
 
@@ -1546,7 +1062,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://audio/getVolume"];
 
-    ServiceSubscription *subscription = [self addSubscribe:URL payload:nil success:^(NSDictionary *responseObject)
+    ServiceSubscription *subscription = [self.socket addSubscribe:URL payload:nil success:^(NSDictionary *responseObject)
     {
         float volumeValue = [[responseObject valueForKey:@"volume"] floatValue] / 100.0;
 
@@ -1573,7 +1089,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://tv/getCurrentChannel"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = ^(NSDictionary *responseDic)
     {
         if (success)
@@ -1587,7 +1103,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://tv/getChannelList"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
 
     command.callbackComplete = (^(NSDictionary *responseDic)
     {
@@ -1611,7 +1127,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://tv/getCurrentChannel"];
 
-    ServiceSubscription *subscription = [self addSubscribe:URL payload:nil success:^(NSDictionary *responseObject)
+    ServiceSubscription *subscription = [self.socket addSubscribe:URL payload:nil success:^(NSDictionary *responseObject)
     {
         ChannelInfo *channelInfo = [WebOSTVService channelInfoFromDictionary:responseObject];
 
@@ -1626,7 +1142,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://tv/channelUp"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = success;
     command.callbackError = failure;
     [command send];
@@ -1636,7 +1152,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://tv/channelDown"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = success;
     command.callbackError = failure;
     [command send];
@@ -1647,7 +1163,7 @@
     NSURL *URL = [NSURL URLWithString:@"ssap://tv/openChannel"];
     NSDictionary *payload = @{ @"channelId" : channelInfo.id};
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:payload];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:payload];
     command.callbackComplete = success;
     command.callbackError = failure;
     [command send];
@@ -1685,7 +1201,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.service.tv.display/get3DStatus"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = ^(NSDictionary *responseObject)
     {
         NSDictionary *status3D = [responseObject objectForKey:@"status3D"];
@@ -1707,7 +1223,7 @@
     else
         URL = [NSURL URLWithString:@"ssap://com.webos.service.tv.display/set3DOff"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = success;
     command.callbackError = failure;
     [command send];
@@ -1717,7 +1233,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.service.tv.display/get3DStatus"];
 
-    ServiceSubscription *subscription = [self addSubscribe:URL payload:nil success:^(NSDictionary *responseObject)
+    ServiceSubscription *subscription = [self.socket addSubscribe:URL payload:nil success:^(NSDictionary *responseObject)
     {
         NSDictionary *status3D = [responseObject objectForKey:@"status3D"];
         BOOL status = [[status3D objectForKey:@"status"] boolValue];
@@ -1837,7 +1353,7 @@
     _mouseInit = YES;
 
     NSURL *commandURL = [NSURL URLWithString:@"ssap://com.webos.service.networkinput/getPointerInputSocket"];
-    ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self target:commandURL payload:nil];
+    ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self.socket target:commandURL payload:nil];
 
     command.callbackComplete = (^(NSDictionary *responseDic)
     {
@@ -1914,7 +1430,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://system/turnOff"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:nil];
 
     command.callbackComplete = (^(NSDictionary *responseDic)
     {
@@ -1976,7 +1492,7 @@
     if (webAppId) [payload setObject:webAppId forKey:@"webAppId"];
     if (params) [payload setObject:params forKey:@"urlParams"];
 
-    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:payload];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:payload];
     command.callbackComplete = ^(NSDictionary *responseObject)
     {
         LaunchSession *launchSession;
@@ -2084,7 +1600,7 @@
         if (launchSession.appId) [payload setValue:launchSession.appId forKey:@"webAppId"];
         if (launchSession.sessionId) [payload setValue:launchSession.sessionId forKey:@"sessionId"];
 
-        ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self target:URL payload:payload];
+        ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:payload];
         command.callbackComplete = success;
         command.callbackError = failure;
         [command send];
@@ -2154,11 +1670,6 @@
         return;
     }
 
-//    NSString *subscriptionKey = appId;
-//
-//    if (_appToAppIdMappings[appId])
-//        subscriptionKey = _appToAppIdMappings[appId];
-
     NSURL *URL = [NSURL URLWithString:@"ssap://webapp/connectToApp"];
 
     NSMutableDictionary *payload = [NSMutableDictionary new];
@@ -2175,18 +1686,7 @@
                 [connectionSubscription unsubscribe];
                 webAppSession.state = WebOSWebAppSessionStateDisconnected;
                 webAppSession.appToAppSubscription = nil;
-            } else
-            {
-                webAppSession.state = WebOSWebAppSessionStateConnecting;
             }
-
-//            NSString *fullAppId = appId;
-//
-//            if (webAppSession.launchSession.sessionType == LaunchSessionTypeWebApp)
-//                fullAppId = _appToAppIdMappings[appId];
-//
-//            if (fullAppId && fullAppId.length > 0)
-//                [_appToAppMessageCallbacks removeObjectForKey:fullAppId];
         }
 
         BOOL appChannelDidClose = [error.localizedDescription rangeOfString:@"app channel closed"].location != NSNotFound;
@@ -2196,7 +1696,6 @@
             if (connectionSubscription)
                 [connectionSubscription unsubscribe];
 
-            webAppSession.state = WebOSWebAppSessionStateDisconnected;
             webAppSession.appToAppSubscription = nil;
 
             if (webAppSession && webAppSession.delegate && [webAppSession.delegate respondsToSelector:@selector(webAppSessionDidDisconnect:)])
@@ -2230,8 +1729,6 @@
                 _appToAppIdMappings[fullAppId] = appId;
 
             webAppSession.fullAppId = fullAppId;
-
-//            [_appToAppMessageCallbacks setObject:webAppSession.messageHandler forKey:fullAppId];
         }
 
         if (success)
@@ -2240,7 +1737,7 @@
 
     if (!webAppSession.appToAppSubscription)
     {
-        ServiceSubscription *subscription = [self addSubscribe:URL payload:payload success:connectSuccess failure:connectFailure];
+        ServiceSubscription *subscription = [self.socket addSubscribe:URL payload:payload success:connectSuccess failure:connectFailure];
         webAppSession.appToAppSubscription = subscription;
     } else
     {
@@ -2269,12 +1766,6 @@
 
 - (BOOL) disconnectFromWebApp:(WebOSWebAppSession *)webAppSession
 {
-    NSString *appId = webAppSession.launchSession.appId;
-    NSString *fullAppId = appId;
-
-    if (webAppSession.launchSession.sessionType == LaunchSessionTypeWebApp)
-        fullAppId = _appToAppIdMappings[appId];
-
     ServiceSubscription *connectionSubscription = webAppSession.appToAppSubscription;
 
     if (connectionSubscription)
@@ -2302,41 +1793,18 @@
         return -1;
     }
 
-    if (_socket == nil)
-        [self openSocket];
-
-    int callId = [self getNextId];
-
     NSDictionary *payload = @{
             @"type" : @"p2p",
             @"to" : webAppSession.fullAppId,
             @"payload" : message
     };
 
-    NSString *sendString = [self writeToJSON:payload];
-
-    if (_socket.readyState == LGSR_OPEN)
-    {
-        DLog(@"[OUT] : %@", sendString);
-
-        [_socket send:sendString];
-
-        if ([_commandQueue containsObject:sendString])
-            [_commandQueue removeObject:sendString];
-    } else if (_socket.readyState == LGSR_CONNECTING ||
-            _socket.readyState == LGSR_CLOSING)
-    {
-        [_commandQueue addObject:sendString];
-    } else
-    {
-        [_commandQueue addObject:sendString];
-        [self openSocket];
-    }
+    [self.socket sendDictionaryOverSocket:payload];
 
     if (success)
         success(nil);
 
-    return callId;
+    return -1;
 }
 
 - (NSDictionary *) appToAppIdMappings
@@ -2469,7 +1937,7 @@
 
     NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.service.ime/registerRemoteKeyboard"];
 
-    ServiceSubscription *subscription = [self addSubscribe:URL payload:nil success:^(NSDictionary *responseObject)
+    ServiceSubscription *subscription = [self.socket addSubscribe:URL payload:nil success:^(NSDictionary *responseObject)
     {
         BOOL isVisible = [[[responseObject objectForKey:@"currentWidget"] objectForKey:@"focus"] boolValue];
         NSString *type = [[responseObject objectForKey:@"currentWidget"] objectForKey:@"contentType"];
@@ -2593,7 +2061,7 @@
         }
     }
 
-    ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self target:[NSURL URLWithString:@"ssap://system.notifications/createToast"] payload:toastParams];
+    ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self.socket target:[NSURL URLWithString:@"ssap://system.notifications/createToast"] payload:toastParams];
     command.callbackComplete = success;
     command.callbackError = failure;
     [command send];
