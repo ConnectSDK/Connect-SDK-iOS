@@ -312,34 +312,6 @@
         dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:error]; });
 }
 
-- (BOOL) socket:(WebOSTVServiceSocketClient *)socket didReceiveMessage:(NSDictionary *)message
-{
-    NSString *type = message[@"type"];
-
-    if ([type isEqualToString:@"p2p"])
-    {
-        NSString *fromAppId = message[@"from"];
-        NSString *appId = _appToAppIdMappings[fromAppId];
-
-        if (!appId)
-            appId = fromAppId;
-
-        WebOSWebAppSession *webAppSession = _webAppSessions[appId];
-
-        if (webAppSession && webAppSession.messageHandler)
-        {
-            id payload = message[@"payload"];
-
-            if (payload)
-                webAppSession.messageHandler(payload);
-        }
-
-        return NO;
-    }
-
-    return YES;
-}
-
 #pragma mark - Helper methods
 
 - (NSArray *)permissions
@@ -1607,11 +1579,6 @@
     }
 }
 
-- (void)connectToWebApp:(WebOSWebAppSession *)webAppSession success:(SuccessBlock)success failure:(FailureBlock)failure
-{
-    [self connectToWebApp:webAppSession joinOnly:NO success:success failure:failure];
-}
-
 - (void)joinWebApp:(LaunchSession *)webAppLaunchSession success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
     WebOSWebAppSession *webAppSession = [self webAppSessionForLaunchSession:webAppLaunchSession];
@@ -1647,13 +1614,6 @@
         return;
     }
 
-    if (!webAppSession.messageHandler)
-    {
-        if (failure)
-            failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a message handler callback."]);
-        return;
-    }
-
     NSString *appId = webAppSession.launchSession.appId;
     NSString *idKey;
 
@@ -1677,27 +1637,12 @@
 
     FailureBlock connectFailure = ^(NSError *error)
     {
-        ServiceSubscription *connectionSubscription = webAppSession.appToAppSubscription;
-
-        if (connectionSubscription)
-        {
-            if ([self.serviceDescription.version rangeOfString:@"4.0.2"].location == NSNotFound)
-            {
-                [connectionSubscription unsubscribe];
-                webAppSession.state = WebOSWebAppSessionStateDisconnected;
-                webAppSession.appToAppSubscription = nil;
-            }
-        }
+        [webAppSession disconnectFromWebApp];
 
         BOOL appChannelDidClose = [error.localizedDescription rangeOfString:@"app channel closed"].location != NSNotFound;
 
         if (appChannelDidClose)
         {
-            if (connectionSubscription)
-                [connectionSubscription unsubscribe];
-
-            webAppSession.appToAppSubscription = nil;
-
             if (webAppSession && webAppSession.delegate && [webAppSession.delegate respondsToSelector:@selector(webAppSessionDidDisconnect:)])
                 [webAppSession.delegate webAppSessionDidDisconnect:webAppSession];
         } else
@@ -1735,14 +1680,7 @@
             success(responseObject);
     };
 
-    if (!webAppSession.appToAppSubscription)
-    {
-        ServiceSubscription *subscription = [self.socket addSubscribe:URL payload:payload success:connectSuccess failure:connectFailure];
-        webAppSession.appToAppSubscription = subscription;
-    } else
-    {
-        // TODO: any steps needed here?
-    }
+    webAppSession.appToAppSubscription = [webAppSession.socket addSubscribe:URL payload:payload success:connectSuccess failure:connectFailure];
 }
 
 - (WebOSWebAppSession *) webAppSessionForLaunchSession:(LaunchSession *)launchSession
@@ -1762,49 +1700,6 @@
     }
 
     return webAppSession;
-}
-
-- (BOOL) disconnectFromWebApp:(WebOSWebAppSession *)webAppSession
-{
-    ServiceSubscription *connectionSubscription = webAppSession.appToAppSubscription;
-
-    if (connectionSubscription)
-    {
-        if ([self.serviceDescription.version rangeOfString:@"4.0.2"].location == NSNotFound)
-        {
-            [connectionSubscription unsubscribe];
-            webAppSession.appToAppSubscription = nil;
-        }
-    }
-
-    if (webAppSession.delegate && [webAppSession.delegate respondsToSelector:@selector(webAppSessionDidDisconnect:)])
-        dispatch_on_main(^{ [webAppSession.delegate webAppSessionDidDisconnect:webAppSession]; });
-
-    return YES; // TODO: should return a value if we successfully disconnected (check for 4.0.2)
-}
-
-- (int) sendMessage:(id)message toApp:(WebOSWebAppSession *)webAppSession success:(SuccessBlock)success failure:(FailureBlock)failure
-{
-    if (!webAppSession || !webAppSession.fullAppId)
-    {
-        if (failure)
-            failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid WebAppSession to send messages to"]);
-
-        return -1;
-    }
-
-    NSDictionary *payload = @{
-            @"type" : @"p2p",
-            @"to" : webAppSession.fullAppId,
-            @"payload" : message
-    };
-
-    [self.socket sendDictionaryOverSocket:payload];
-
-    if (success)
-        success(nil);
-
-    return -1;
 }
 
 - (NSDictionary *) appToAppIdMappings

@@ -37,7 +37,9 @@
 
 - (ServiceSubscription *) addSubscribe:(NSURL *)URL payload:(NSDictionary *)payload success:(SuccessBlock)success failure:(FailureBlock)failure;
 - (ServiceSubscription *) killSubscribe:(NSURL *)URL payload:(NSDictionary *)payload;
+
 - (void) sendDictionaryOverSocket:(NSDictionary *)payload;
+- (void) sendStringOverSocket:(NSString *)payload;
 
 @property (nonatomic) id<WebOSTVServiceSocketClientDelegate> delegate;
 @property (nonatomic) WebOSTVService *service;

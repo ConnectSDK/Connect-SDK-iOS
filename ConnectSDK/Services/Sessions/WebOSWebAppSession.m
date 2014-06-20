@@ -28,6 +28,9 @@
     ServiceSubscription *_messageSubscription;
     NSMutableDictionary *_activeCommands;
 
+    SuccessBlock _connectSuccess;
+    FailureBlock _connectFailure;
+
     int _UID;
 }
 
@@ -38,45 +41,8 @@
     if (self)
     {
         _UID = 0;
+
         _activeCommands = [NSMutableDictionary new];
-        _state = WebOSWebAppSessionStateDisconnected;
-
-        __weak id weakSelf = self;
-
-        _messageHandler = ^(id message)
-        {
-            if ([message isKindOfClass:[NSDictionary class]])
-            {
-                NSDictionary *messageJSON = (NSDictionary *)message;
-
-                NSString *contentType = [messageJSON objectForKey:@"contentType"];
-                NSRange contentTypeRange = [contentType rangeOfString:@"connectsdk."];
-
-                if (contentType && contentTypeRange.location != NSNotFound)
-                {
-                    NSString *payloadKey = [contentType substringFromIndex:contentTypeRange.length];
-
-                    if (!payloadKey || payloadKey.length == 0)
-                        return;
-
-                    id payload = [messageJSON objectForKey:payloadKey];
-
-                    if (!payload)
-                        return;
-
-                    if ([payloadKey isEqualToString:@"mediaEvent"])
-                        [weakSelf handleMediaEvent:payload];
-                    else if ([payloadKey isEqualToString:@"mediaCommandResponse"])
-                        [weakSelf handleMediaCommandResponse:payload];
-                } else
-                {
-                    [weakSelf handleMessage:messageJSON];
-                }
-            } else if ([message isKindOfClass:[NSString class]])
-            {
-                [weakSelf handleMessage:message];
-            }
-        };
     }
 
     return self;
@@ -86,11 +52,6 @@
 {
     _UID = _UID + 1;
     return _UID;
-}
-
-- (BOOL) connected
-{
-    return self.state == WebOSWebAppSessionStateConnected;
 }
 
 - (NSString *) fullAppId
@@ -115,6 +76,105 @@
         return self.launchSession.appId;
     else
         return _fullAppId;
+}
+
+#pragma mark - WebOSTVServiceSocketClientDelegate methods
+
+- (void) socketDidConnect:(WebOSTVServiceSocketClient *)socket
+{
+    if (_connectSuccess)
+        _connectSuccess(nil);
+
+    _connectSuccess = nil;
+    _connectFailure = nil;
+}
+
+- (void) socket:(WebOSTVServiceSocketClient *)socket didFailWithError:(NSError *)error
+{
+    _connected = NO;
+    _appToAppSubscription = nil;
+
+    if (_connectFailure)
+    {
+        if (!error)
+            error = [ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Unknown error connecting to web socket"];
+
+        _connectFailure(error);
+    }
+
+    _connectSuccess = nil;
+    _connectFailure = nil;
+}
+
+- (void) socket:(WebOSTVServiceSocketClient *)socket didCloseWithError:(NSError *)error
+{
+    _connected = NO;
+    _appToAppSubscription = nil;
+
+    if (_connectFailure)
+    {
+        if (error)
+            _connectFailure(error);
+        else
+        {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(webAppSessionDidDisconnect:)])
+                [self.delegate webAppSessionDidDisconnect:self];
+        }
+    }
+
+    _connectSuccess = nil;
+    _connectFailure = nil;
+}
+
+- (BOOL) socket:(WebOSTVServiceSocketClient *)socket didReceiveMessage:(NSDictionary *)payload
+{
+    NSString *type = payload[@"type"];
+
+    if ([type isEqualToString:@"p2p"])
+    {
+        NSString *fromAppId = payload[@"from"];
+
+        if (![fromAppId isEqualToString:self.fullAppId])
+            return NO;
+
+        id message = payload[@"payload"];
+
+        if ([message isKindOfClass:[NSDictionary class]])
+        {
+            NSDictionary *messageJSON = (NSDictionary *)message;
+
+            NSString *contentType = [messageJSON objectForKey:@"contentType"];
+            NSRange contentTypeRange = [contentType rangeOfString:@"connectsdk."];
+
+            if (contentType && contentTypeRange.location != NSNotFound)
+            {
+                NSString *payloadKey = [contentType substringFromIndex:contentTypeRange.length];
+
+                if (!payloadKey || payloadKey.length == 0)
+                    return NO;
+
+                id messagePayload = [messageJSON objectForKey:payloadKey];
+
+                if (!messagePayload)
+                    return NO;
+
+                if ([payloadKey isEqualToString:@"mediaEvent"])
+                    [self handleMediaEvent:messagePayload];
+                else if ([payloadKey isEqualToString:@"mediaCommandResponse"])
+                    [self handleMediaCommandResponse:messagePayload];
+            } else
+            {
+                [self handleMessage:messageJSON];
+            }
+        } else if ([message isKindOfClass:[NSString class]])
+        {
+            [self handleMessage:message];
+        }
+
+        return NO;
+    }
+
+    return YES;
 }
 
 #pragma mark - Subscription methods
@@ -206,30 +266,24 @@
 
 - (void) connectWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    if (!_messageSubscription)
-        _messageSubscription = [ServiceSubscription subscriptionWithDelegate:nil target:nil payload:nil callId:-1];
-
-    if (self.state == WebOSWebAppSessionStateConnected || self.state == WebOSWebAppSessionStateConnecting)
-    {
-        if (success)
-            success(nil);
-
-        return;
-    }
-
-    self.state = WebOSWebAppSessionStateConnecting;
-
-    [self.service connectToWebApp:self success:^(id responseObject)
-    {
-        _state = WebOSWebAppSessionStateConnected;
-
-        if (success)
-            success(nil);
-    } failure:failure];
+    [self connect:NO success:success failure:failure];
 }
 
 - (void) joinWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
+    [self connect:YES success:success failure:failure];
+}
+
+- (void) connect:(BOOL)joinOnly success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    if (self.socket && self.socket.socket.readyState == LGSR_CONNECTING)
+    {
+        if (failure)
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"You have a connect request pending, please wait until it has finished"]);
+
+        return;
+    }
+
     if (self.connected)
     {
         if (success)
@@ -238,15 +292,57 @@
         return;
     }
 
-    self.state = WebOSWebAppSessionStateConnecting;
+    if (!_messageSubscription)
+        _messageSubscription = [ServiceSubscription subscriptionWithDelegate:nil target:nil payload:nil callId:-1];
 
-    [self.service connectToWebApp:self joinOnly:YES success:^(id responseObject)
+    __weak WebOSWebAppSession *weakSelf = self;
+
+    _connectFailure = ^(NSError *error) {
+        if (weakSelf)
+        {
+            WebOSWebAppSession *strongSelf = weakSelf;
+
+            if (strongSelf.socket)
+                [strongSelf disconnectFromWebApp];
+        }
+
+        if (failure)
+        {
+            if (!error)
+                error = [ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Unknown error connecting to web app"];
+            failure(error);
+        }
+    };
+
+    __weak FailureBlock weakConnectFailure = _connectFailure;
+
+    _connectSuccess = ^(id socketResponseObject) {
+        if (!weakSelf)
+            return;
+
+        WebOSWebAppSession *strongSelf = weakSelf;
+
+        [strongSelf.service connectToWebApp:strongSelf joinOnly:joinOnly success:^(id connectResponseObject)
+        {
+            strongSelf.connected = YES;
+
+            if (success)
+                success(nil);
+        } failure:weakConnectFailure];
+    };
+
+    if (self.socket)
     {
-        _state = WebOSWebAppSessionStateConnected;
-
-        if (success)
-            success(self);
-    } failure:failure];
+        if (self.socket.connected)
+            _connectSuccess(nil);
+        else
+            [self.socket connect];
+    } else
+    {
+        _socket = [[WebOSTVServiceSocketClient alloc] initWithService:self.service];
+        _socket.delegate = self;
+        [_socket connect];
+    }
 }
 
 - (void)sendText:(NSString *)message success:(SuccessBlock)success failure:(FailureBlock)failure
@@ -254,51 +350,66 @@
     if (!message || message.length == 0)
     {
         if (failure)
-            failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"Cannot send a nil message"]);
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"Cannot send an empty message"]);
 
         return;
     }
 
-    if (self.connected)
-        [self.service sendMessage:message toApp:self success:success failure:failure];
-    else
-    {
-        [self connectWithSuccess:^(id responseObject)
-        {
-            [self.service sendMessage:message toApp:self success:success failure:failure];
-        }                failure:failure];
-    }
+    [self sendP2PMessage:message success:success failure:failure];
 }
 
 - (void)sendJSON:(NSDictionary *)message success:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    if (!message)
+    if (!message || message.count == 0)
     {
         if (failure)
-            failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"Cannot send a nil message"]);
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"Cannot send an empty message"]);
 
         return;
     }
 
+    [self sendP2PMessage:message success:success failure:failure];
+}
+
+- (void) sendP2PMessage:(id)message success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    NSDictionary *payload = @{
+            @"type" : @"p2p",
+            @"to" : self.fullAppId,
+            @"payload" : message
+    };
+
     if (self.connected)
-        [self.service sendMessage:message toApp:self success:success failure:failure];
-    else
     {
-        [self connectWithSuccess:^(id responseObject)
-        {
-            [self.service sendMessage:message toApp:self success:success failure:failure];
-        }                failure:failure];
+        [self.socket sendDictionaryOverSocket:payload];
+
+        if (success)
+            success(nil);
+    } else
+    {
+        [self joinWithSuccess:^(id responseObject) {
+            [self.socket sendDictionaryOverSocket:payload];
+
+            if (success)
+                success(nil);
+        } failure:failure];
     }
 }
 
 - (void) disconnectFromWebApp
 {
-    BOOL disconnectWasClean = [self.service disconnectFromWebApp:self];
+    _connected = NO;
 
-    if (disconnectWasClean)
-        _state = WebOSWebAppSessionStateDisconnected;
-    else
-        _state = WebOSWebAppSessionStateConnecting;
+    _connectSuccess = nil;
+    _connectFailure = nil;
+
+    [_appToAppSubscription.failureCalls removeAllObjects];
+    [_appToAppSubscription.successCalls removeAllObjects];
+    _appToAppSubscription = nil;
+
+    self.socket.delegate = nil;
+    [self.socket disconnectWithError:nil];
+    _socket = nil;
 }
 
 - (void)closeWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure

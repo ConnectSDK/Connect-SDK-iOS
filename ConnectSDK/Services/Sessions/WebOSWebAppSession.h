@@ -21,6 +21,7 @@
 #import <Foundation/Foundation.h>
 #import "WebOSTVService.h"
 #import "WebAppSession.h"
+#import "WebOSTVServiceSocketClient.h"
 
 typedef enum
 {
@@ -29,13 +30,12 @@ typedef enum
     WebOSWebAppSessionStateConnected
 } WebOSWebAppSessionState;
 
-@interface WebOSWebAppSession : WebAppSession
+@interface WebOSWebAppSession : WebAppSession <WebOSTVServiceSocketClientDelegate>
 
-@property (nonatomic, readonly) BOOL connected;
-@property (nonatomic) WebOSWebAppSessionState state;
-@property (nonatomic, readonly) WebAppMessageBlock messageHandler;
 @property (nonatomic, readonly) WebOSTVService *service;
 @property (nonatomic) ServiceSubscription *appToAppSubscription;
 @property (nonatomic) NSString *fullAppId;
+@property (nonatomic) BOOL connected;
+@property (nonatomic, readonly) WebOSTVServiceSocketClient *socket;
 
 @end
