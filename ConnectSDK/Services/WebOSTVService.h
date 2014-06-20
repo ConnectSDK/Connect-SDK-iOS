@@ -90,10 +90,7 @@ typedef enum {
 #pragma mark - Web app & app to app
 
 // @cond INTERNAL
-- (void) connectToWebApp:(WebOSWebAppSession *)webAppSession success:(SuccessBlock)success failure:(FailureBlock)failure;
 - (void) connectToWebApp:(WebOSWebAppSession *)webAppSession joinOnly:(BOOL)joinOnly success:(SuccessBlock)success failure:(FailureBlock)failure;
-- (BOOL) disconnectFromWebApp:(WebOSWebAppSession *)webAppSession;
-- (int) sendMessage:(id)message toApp:(WebOSWebAppSession *)webAppSession success:(SuccessBlock)success failure:(FailureBlock)failure;
 // @endcond
 
 #pragma mark - Native app to app

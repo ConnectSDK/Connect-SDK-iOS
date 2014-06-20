@@ -581,7 +581,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.applicationManager/getForegroundAppInfo"];
 
-    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = ^(NSDictionary *responseObject)
     {
         AppInfo *appInfo = [[AppInfo alloc] init];
@@ -1807,7 +1807,7 @@
 
     NSURL *URL = [NSURL URLWithString:target];
 
-    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:URL payload:payload];
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self.socket target:URL payload:payload];
     command.callbackComplete = ^(id responseObject)
     {
         _keyboardQueueProcessing = NO;
@@ -1968,7 +1968,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://api/getServiceList"];
 
-    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = ^(NSDictionary *responseObject)
     {
         NSArray *services = [responseObject objectForKey:@"services"];
@@ -1984,7 +1984,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://system/getSystemInfo"];
 
-    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = ^(NSDictionary *responseObject)
     {
         NSArray *features = [responseObject objectForKey:@"features"];

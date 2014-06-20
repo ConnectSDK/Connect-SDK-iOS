@@ -155,7 +155,7 @@
             [request addRequestHeader: @"Content-Length" value:[NSString stringWithFormat:@"%i", (unsigned int) [payloadData length]]];
             [request addRequestHeader: @"Content-Type" value:contentType];
             [request addRequestHeader: @"Connection" value:@"Keep-Alive"];
-            [request setPostBody:payloadData];
+            [request setPostBody:[NSMutableData dataWithData:payloadData]];
         } else
         {
             [request addRequestHeader: @"Content-Length" value:@"0"];
@@ -179,17 +179,29 @@
 
     [request setShouldAttemptPersistentConnection:YES];
     [request setShouldContinueWhenAppEntersBackground:YES];
-
+    
+    __weak ASIHTTPRequest *weakRequest = request;
+    
     [request setCompletionBlock:^{
-        if (request.responseStatusCode == 200)
+        if (!weakRequest)
+        {
+            if (command.callbackError)
+                dispatch_on_main(^{ command.callbackError([ConnectError generateErrorWithCode:ConnectStatusCodeSocketError andDetails:@"Could not access request data"]); });
+            
+            return;
+        }
+        
+        ASIHTTPRequest *strongRequest = weakRequest;
+        
+        if (strongRequest.responseStatusCode == 200)
         {
             NSError *xmlError;
-            NSMutableDictionary *plist = [NSPropertyListSerialization propertyListWithData:request.responseData options:NSPropertyListImmutable format:NULL error:&xmlError];
+            NSMutableDictionary *plist = [NSPropertyListSerialization propertyListWithData:strongRequest.responseData options:NSPropertyListImmutable format:NULL error:&xmlError];
 
             if (xmlError)
             {
                 if (command.callbackComplete)
-                    dispatch_on_main(^{ command.callbackComplete(request.responseData); });
+                    dispatch_on_main(^{ command.callbackComplete(strongRequest.responseData); });
             } else
             {
                 if (plist)
@@ -201,7 +213,7 @@
         } else
         {
             if (command.callbackError)
-                dispatch_on_main(^{ command.callbackError([ConnectError generateErrorWithCode:request.responseStatusCode andDetails:nil]); });
+                dispatch_on_main(^{ command.callbackError([ConnectError generateErrorWithCode:strongRequest.responseStatusCode andDetails:nil]); });
         }
     }];
 
@@ -327,9 +339,7 @@
 
         return;
     }
-
-    NSString *payload = [NSString stringWithFormat:@"Content-Location: %@\r\nStart-Position: 0.000000", mediaURL.absoluteString];
-
+    
     NSString *commandPathComponent = @"play";
     NSURL *commandURL = [self.service.serviceDescription.commandURL URLByAppendingPathComponent:commandPathComponent];
 
