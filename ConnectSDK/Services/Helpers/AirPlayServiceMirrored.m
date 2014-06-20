@@ -347,7 +347,7 @@
 
 - (void) joinWebApp:(LaunchSession *)webAppLaunchSession success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
-    if (self.webAppWebView)
+    if (self.webAppWebView && self.connected)
     {
         NSString *webAppHost = self.webAppWebView.request.URL.host;
 
@@ -362,6 +362,10 @@
             if (failure)
                 dispatch_on_main(^{ failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Web is not currently running"]); });
         }
+    } else
+    {
+        if (failure)
+            dispatch_on_main(^{ failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Web is not currently running"]); });
     }
 }
 
