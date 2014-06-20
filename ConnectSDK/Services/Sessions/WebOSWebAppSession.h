@@ -23,12 +23,6 @@
 #import "WebAppSession.h"
 #import "WebOSTVServiceSocketClient.h"
 
-typedef enum
-{
-    WebOSWebAppSessionStateDisconnected = 0,
-    WebOSWebAppSessionStateConnecting,
-    WebOSWebAppSessionStateConnected
-} WebOSWebAppSessionState;
 
 @interface WebOSWebAppSession : WebAppSession <WebOSTVServiceSocketClientDelegate>
 
