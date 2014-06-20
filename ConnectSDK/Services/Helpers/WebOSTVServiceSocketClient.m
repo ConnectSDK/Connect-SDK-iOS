@@ -115,9 +115,6 @@
 
 - (void) disconnectWithError:(NSError *)error
 {
-    if (!_connected)
-        return;
-
     if (!_reconnectOnWake)
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -133,6 +130,8 @@
         else
             [_socket closeWithCode:LGSRStatusCodeNormal reason:@"Disconnected by client"];
     }
+    
+    _subscribed = [[NSMutableDictionary alloc] init];
 
     if (self.delegate)
         [self.delegate socket:self didCloseWithError:error];

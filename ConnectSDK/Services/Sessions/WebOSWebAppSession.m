@@ -104,6 +104,8 @@
 
     _connectSuccess = nil;
     _connectFailure = nil;
+
+    [self disconnectFromWebApp];
 }
 
 - (void) socket:(WebOSTVServiceSocketClient *)socket didCloseWithError:(NSError *)error
@@ -124,6 +126,8 @@
 
     _connectSuccess = nil;
     _connectFailure = nil;
+
+    [self disconnectFromWebApp];
 }
 
 - (BOOL) socket:(WebOSTVServiceSocketClient *)socket didReceiveMessage:(NSDictionary *)payload
@@ -302,8 +306,7 @@
         {
             WebOSWebAppSession *strongSelf = weakSelf;
 
-            if (strongSelf.socket)
-                [strongSelf disconnectFromWebApp];
+            [strongSelf disconnectFromWebApp];
         }
 
         if (failure)
@@ -317,10 +320,11 @@
     __weak FailureBlock weakConnectFailure = _connectFailure;
 
     _connectSuccess = ^(id socketResponseObject) {
-        if (!weakSelf)
+        if (!weakSelf || !weakConnectFailure)
             return;
 
         WebOSWebAppSession *strongSelf = weakSelf;
+        FailureBlock strongConnectFailure = weakConnectFailure;
 
         [strongSelf.service connectToWebApp:strongSelf joinOnly:joinOnly success:^(id connectResponseObject)
         {
@@ -328,15 +332,12 @@
 
             if (success)
                 success(nil);
-        } failure:weakConnectFailure];
+        } failure:strongConnectFailure];
     };
 
-    if (self.socket)
+    if (self.socket && self.socket.connected)
     {
-        if (self.socket.connected)
-            _connectSuccess(nil);
-        else
-            [self.socket connect];
+        _connectSuccess(nil);
     } else
     {
         _socket = [[WebOSTVServiceSocketClient alloc] initWithService:self.service];
@@ -387,8 +388,8 @@
             success(nil);
     } else
     {
-        [self joinWithSuccess:^(id responseObject) {
-            [self.socket sendDictionaryOverSocket:payload];
+        [self connectWithSuccess:^(id responseObject) {
+            [self sendP2PMessage:message success:success failure:failure];
 
             if (success)
                 success(nil);
@@ -410,6 +411,9 @@
     self.socket.delegate = nil;
     [self.socket disconnectWithError:nil];
     _socket = nil;
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(webAppSessionDidDisconnect:)])
+        dispatch_on_main(^{ [self.delegate webAppSessionDidDisconnect:self]; });
 }
 
 - (void)closeWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure

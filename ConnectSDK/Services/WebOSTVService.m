@@ -239,6 +239,12 @@
 {
     if (self.connected)
         [self.socket disconnectWithError:error];
+
+    [_webAppSessions enumerateKeysAndObjectsUsingBlock:^(id key, WebOSWebAppSession *session, BOOL *stop) {
+        [session disconnectFromWebApp];
+    }];
+
+    _webAppSessions = [NSMutableDictionary new];
 }
 
 #pragma mark - Initial connection & pairing
@@ -1679,8 +1685,13 @@
         if (success)
             success(responseObject);
     };
-
-    webAppSession.appToAppSubscription = [webAppSession.socket addSubscribe:URL payload:payload success:connectSuccess failure:connectFailure];
+    
+    ServiceSubscription *appToAppSubscription = [ServiceSubscription subscriptionWithDelegate:webAppSession.socket target:URL payload:payload callId:-1];
+    [appToAppSubscription addSuccess:connectSuccess];
+    [appToAppSubscription addFailure:connectFailure];
+    
+    webAppSession.appToAppSubscription = appToAppSubscription;
+    [appToAppSubscription subscribe];
 }
 
 - (WebOSWebAppSession *) webAppSessionForLaunchSession:(LaunchSession *)launchSession
