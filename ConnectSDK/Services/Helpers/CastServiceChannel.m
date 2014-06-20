@@ -63,14 +63,19 @@
 
 - (void)didConnect
 {
-    if (self.connectionSuccess)
-        dispatch_on_main(^{ self.connectionSuccess(nil); });
+    dispatch_on_main(^{
+        if (self.connectionSuccess)
+            self.connectionSuccess(nil);
+
+        self.connectionSuccess = nil;
+        self.connectionFailure = nil;
+    });
 }
 
 - (void)didDisconnect
 {
     if (_session && _session.delegate && [_session.delegate respondsToSelector:@selector(webAppSessionDidDisconnect:)])
-        [_session.delegate webAppSessionDidDisconnect:_session];
+        dispatch_on_main(^{ [_session.delegate webAppSessionDidDisconnect:_session]; });
 }
 
 @end

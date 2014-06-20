@@ -534,6 +534,9 @@
 
 - (void)launchWebApp:(NSString *)webAppId relaunchIfRunning:(BOOL)relaunchIfRunning success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
+    [_launchSuccessBlocks removeObjectForKey:webAppId];
+    [_launchFailureBlocks removeObjectForKey:webAppId];
+
     if (success)
         [_launchSuccessBlocks setObject:success forKey:webAppId];
 
