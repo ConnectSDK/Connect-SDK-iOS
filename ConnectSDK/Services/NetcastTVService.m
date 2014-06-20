@@ -223,6 +223,10 @@ NSString *lgeUDAPRequestURI[8] = {
 - (void) dealloc
 {
     [self.commandQueue cancelAllOperations];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+
 }
 
 #pragma mark - Connection & Pairing

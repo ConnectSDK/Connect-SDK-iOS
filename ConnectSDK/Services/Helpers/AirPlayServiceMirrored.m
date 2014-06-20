@@ -447,8 +447,12 @@
 
             // check if current running web app matches the current web app session
             if ([self.activeWebAppSession.launchSession.appId rangeOfString:webAppHost].location != NSNotFound)
-                dispatch_on_main(^{ self.activeWebAppSession.messageHandler(messageObject); });
-            else
+            {
+                dispatch_on_main(^{
+                    if (self.activeWebAppSession)
+                        self.activeWebAppSession.messageHandler(messageObject);
+                });
+            } else
                 [self.activeWebAppSession disconnectFromWebApp];
         }
 
