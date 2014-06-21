@@ -442,8 +442,8 @@
         [service startDiscovery];
     }];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void) stopDiscovery
@@ -663,7 +663,7 @@
 
 #pragma mark - Handle background state
 
-- (void) hAppDidEnterBackground
+- (void) hAppDidEnterBackground:(NSNotification *)notification
 {
     [self stopSSIDTimer];
 
@@ -674,7 +674,7 @@
     }
 }
 
-- (void) hAppDidBecomeActive
+- (void) hAppDidBecomeActive:(NSNotification *)notification
 {
     [self startSSIDTimer];
 
@@ -683,6 +683,12 @@
         _shouldResumeSearch = NO;
         [self startDiscovery];
     }
+}
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
 
 #pragma mark - Device Picker creation

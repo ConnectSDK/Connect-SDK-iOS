@@ -86,6 +86,7 @@ static AirPlayServiceMode airPlayServiceMode;
                 kWebAppLauncherMessageReceive,
                 kWebAppLauncherMessageSendJSON,
                 kWebAppLauncherMessageReceiveJSON,
+                kWebAppLauncherClose,
                 kWebAppLauncherConnect,
                 kWebAppLauncherDisconnect
         ]];

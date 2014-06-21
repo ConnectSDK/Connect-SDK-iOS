@@ -239,6 +239,12 @@
 {
     if (self.connected)
         [self.socket disconnectWithError:error];
+
+    [_webAppSessions enumerateKeysAndObjectsUsingBlock:^(id key, WebOSWebAppSession *session, BOOL *stop) {
+        [session disconnectFromWebApp];
+    }];
+
+    _webAppSessions = [NSMutableDictionary new];
 }
 
 #pragma mark - Initial connection & pairing
@@ -581,7 +587,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.applicationManager/getForegroundAppInfo"];
 
-    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = ^(NSDictionary *responseObject)
     {
         AppInfo *appInfo = [[AppInfo alloc] init];
@@ -1679,8 +1685,13 @@
         if (success)
             success(responseObject);
     };
-
-    webAppSession.appToAppSubscription = [webAppSession.socket addSubscribe:URL payload:payload success:connectSuccess failure:connectFailure];
+    
+    ServiceSubscription *appToAppSubscription = [ServiceSubscription subscriptionWithDelegate:webAppSession.socket target:URL payload:payload callId:-1];
+    [appToAppSubscription addSuccess:connectSuccess];
+    [appToAppSubscription addFailure:connectFailure];
+    
+    webAppSession.appToAppSubscription = appToAppSubscription;
+    [appToAppSubscription subscribe];
 }
 
 - (WebOSWebAppSession *) webAppSessionForLaunchSession:(LaunchSession *)launchSession
@@ -1807,7 +1818,7 @@
 
     NSURL *URL = [NSURL URLWithString:target];
 
-    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:URL payload:payload];
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self.socket target:URL payload:payload];
     command.callbackComplete = ^(id responseObject)
     {
         _keyboardQueueProcessing = NO;
@@ -1968,7 +1979,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://api/getServiceList"];
 
-    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = ^(NSDictionary *responseObject)
     {
         NSArray *services = [responseObject objectForKey:@"services"];
@@ -1984,7 +1995,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"ssap://system/getSystemInfo"];
 
-    ServiceCommand *command = [ServiceCommand commandWithDelegate:self target:URL payload:nil];
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:self.socket target:URL payload:nil];
     command.callbackComplete = ^(NSDictionary *responseObject)
     {
         NSArray *features = [responseObject objectForKey:@"features"];

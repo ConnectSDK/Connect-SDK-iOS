@@ -195,6 +195,8 @@
 {
     DLog(@"%@ (%@)", applicationMetadata.applicationName, applicationMetadata.applicationID);
 
+    _currentAppId = applicationMetadata.applicationID;
+
     WebAppLaunchSuccessBlock success = [_launchSuccessBlocks objectForKey:applicationMetadata.applicationID];
 
     LaunchSession *launchSession = [LaunchSession launchSessionForAppId:applicationMetadata.applicationID];
