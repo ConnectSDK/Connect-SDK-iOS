@@ -1,12 +1,12 @@
 # Connect SDK iOS Changelog
 
-## 1.3.0 - 12 June 2014
+## 1.3.0 - 23 June 2014
 
 - Added support for Apple TV
  + Supports web apps via AirPlay mirroring, extended display
  + Supports media playback & control via HTTP requests
 - Added ZeroconfDiscoveryProvider for discovery of devices over mDNS/Bonjour/Zeroconf
- + Only used for AirPlay devices currently, but the two are not coupled
+ + Only used for AirPlay devices currently, but can be used for discovery of other devices over Zeroconf
 - Improved stability of web app capabilities on webOS
 - Improved support for different versions of LG webOS
 - Significant improvement in discovery due to change in Connectable Device Store
