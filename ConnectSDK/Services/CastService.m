@@ -34,6 +34,7 @@
 {
     int UID;
 
+    NSString *_currentAppId;
     NSString *_launchingAppId;
 
     NSMutableDictionary *_launchSuccessBlocks;
@@ -89,29 +90,34 @@
     return YES;
 }
 
-- (NSArray *)capabilities
+- (void) updateCapabilities
 {
-    NSArray *caps = [NSArray new];
-    caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
-    caps = [caps arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
-    caps = [caps arrayByAddingObjectsFromArray:@[
-                                                 kMediaControlPlay,
-                                                 kMediaControlPause,
-                                                 kMediaControlStop,
-                                                 kMediaControlDuration,
-                                                 kMediaControlSeek,
-                                                 kMediaControlPosition,
-                                                 kMediaControlPlayState,
-                                                 kMediaControlPlayStateSubscribe,
-                                                 
-                                                 kWebAppLauncherLaunch,
-                                                 kWebAppLauncherMessageSend,
-                                                 kWebAppLauncherMessageReceive,
-                                                 kWebAppLauncherMessageSendJSON,
-                                                 kWebAppLauncherMessageReceiveJSON,
-                                                 kWebAppLauncherClose
-                                                 ]];
-    return caps;
+    NSArray *capabilities = [NSArray new];
+
+    capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
+    capabilities = [capabilities arrayByAddingObjectsFromArray:kVolumeControlCapabilities];
+    capabilities = [capabilities arrayByAddingObjectsFromArray:@[
+            kMediaControlPlay,
+            kMediaControlPause,
+            kMediaControlStop,
+            kMediaControlDuration,
+            kMediaControlSeek,
+            kMediaControlPosition,
+            kMediaControlPlayState,
+            kMediaControlPlayStateSubscribe,
+
+            kWebAppLauncherLaunch,
+            kWebAppLauncherMessageSend,
+            kWebAppLauncherMessageReceive,
+            kWebAppLauncherMessageSendJSON,
+            kWebAppLauncherMessageReceiveJSON,
+            kWebAppLauncherConnect,
+            kWebAppLauncherDisconnect,
+            kWebAppLauncherJoin,
+            kWebAppLauncherClose
+    ]];
+
+    [self setCapabilities:capabilities];
 }
 
 #pragma mark - Connection
@@ -189,6 +195,8 @@
 {
     DLog(@"%@ (%@)", applicationMetadata.applicationName, applicationMetadata.applicationID);
 
+    _currentAppId = applicationMetadata.applicationID;
+
     WebAppLaunchSuccessBlock success = [_launchSuccessBlocks objectForKey:applicationMetadata.applicationID];
 
     LaunchSession *launchSession = [LaunchSession launchSessionForAppId:applicationMetadata.applicationID];
@@ -213,6 +221,16 @@
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didDisconnectFromApplicationWithError:(NSError *)error
 {
     DLog(@"%@", error.localizedDescription);
+
+    if (!_currentAppId)
+        return;
+
+    WebAppSession *webAppSession = [_sessions objectForKey:_currentAppId];
+
+    if (!webAppSession || !webAppSession.delegate)
+        return;
+
+    [webAppSession.delegate webAppSessionDidDisconnect:webAppSession];
 }
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didFailToConnectToApplicationWithError:(NSError *)error
@@ -248,6 +266,8 @@
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didReceiveStatusForApplication:(GCKApplicationMetadata *)applicationMetadata
 {
     DLog(@"%@", applicationMetadata);
+
+    _currentAppId = applicationMetadata.applicationID;
 }
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager volumeDidChangeToLevel:(float)volumeLevel isMuted:(BOOL)isMuted
@@ -516,6 +536,9 @@
 
 - (void)launchWebApp:(NSString *)webAppId relaunchIfRunning:(BOOL)relaunchIfRunning success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
+    [_launchSuccessBlocks removeObjectForKey:webAppId];
+    [_launchFailureBlocks removeObjectForKey:webAppId];
+
     if (success)
         [_launchSuccessBlocks setObject:success forKey:webAppId];
 

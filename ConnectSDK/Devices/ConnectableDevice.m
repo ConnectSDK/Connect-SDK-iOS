@@ -78,19 +78,6 @@
         if (lastDetection && ![lastDetection isKindOfClass:[NSNull class]])
             _lastDetection = [lastDetection doubleValue];
 
-        NSDictionary *services = dict[@"services"];
-
-        if (services)
-        {
-            [services enumerateKeysAndObjectsUsingBlock:^(id key, NSDictionary *serviceJSON, BOOL *stop)
-            {
-                DeviceService *service = [DeviceService deviceServiceWithJSONObject:serviceJSON];
-
-                if (service)
-                    [self addService:service];
-            }];
-        }
-
         if (!self.address)
             _consolidatedServiceDescription.address = _lastKnownIPAddress;
     }
@@ -453,8 +440,16 @@
 
 - (void)deviceService:(DeviceService *)service pairingRequiredOfType:(DeviceServicePairingType)pairingType withData:(id)pairingData
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(connectableDevice:service:pairingRequiredOfType:withData:)])
-        dispatch_on_main(^{ [self.delegate connectableDevice:self service:service pairingRequiredOfType:pairingType withData:pairingData]; });
+    if (self.delegate)
+    {
+        if ([self.delegate respondsToSelector:@selector(connectableDevice:service:pairingRequiredOfType:withData:)])
+            dispatch_on_main(^{ [self.delegate connectableDevice:self service:service pairingRequiredOfType:pairingType withData:pairingData]; });
+        else
+        {
+            if (pairingType == DeviceServicePairingTypeAirPlayMirroring)
+                [(UIAlertView *)pairingData show];
+        }
+    }
 }
 
 - (void)deviceServicePairingSuccess:(DeviceService *)service
