@@ -24,8 +24,20 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "6.0"
   s.ios.deployment_target = "6.0"
   s.source       = { :git => "https://github.com/ConnectSDK/Connect-SDK-iOS.git", :tag => "1.3.0" }
+
+  non_arc_files =
+    "ConnectSDK/Frameworks/asi-http-request/External/Reachability/*.{h,m}",
+    "ConnectSDK/Frameworks/asi-http-request/Classes/*.{h,m}"
+
   s.source_files  = "ConnectSDK", "ConnectSDK/**/*.{h,m}"
-  s.exclude_files = "Classes/Exclude"
+  s.exclude_files = non_arc_files
+  s.requires_arc = true
+
+  s.subspec 'no-arc' do |sp|
+    sp.source_files = non_arc_files
+    sp.requires_arc = false
+  end
+
   s.framework = "GoogleCast"
   s.libraries = "z", "icucore"
   s.prefix_header_contents = <<-PREFIX
@@ -46,7 +58,6 @@ Pod::Spec.new do |s|
                                   #endif
                                PREFIX
 
-  s.requires_arc = true
   s.xcconfig = {
       "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.2.1-Release",
       "OTHER_LDFLAGS" => "$(inherited) -ObjC"
