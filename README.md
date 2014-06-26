@@ -88,6 +88,7 @@ Connect SDK for iOS makes use of the following projects, some of which are open-
 * [objc-guid](https://code.google.com/p/objc-guid/) (BSD 3-Clause revised)
 * [GCDWebServer](https://github.com/swisspol/GCDWebServer) (MIT)
 * [XMLReader](https://github.com/amarcadet/XMLReader) (MIT)
+* [ASIHTTPRequest](https://github.com/pokeb/asi-http-request) (MIT)
 
 ##License
 Copyright (c) 2013-2014 LG Electronics.

@@ -69,6 +69,13 @@
     return output;
 }
 
++ (NSString *)urlDecode:(NSString *)targetString
+{
+    NSString *result = [targetString stringByReplacingOccurrencesOfString:@"+" withString:@" "];
+    result = [result stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return result;
+}
+
 // credit: karsten @ stackoverflow.com (http://stackoverflow.com/users/272152/karsten)
 // source: http://stackoverflow.com/a/2591544/2715
 + (NSString *) escapedUnicodeForString:(NSString *)input

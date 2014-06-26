@@ -32,6 +32,9 @@
 #define kWebAppLauncherMessageReceive @"WebAppLauncher.Message.Receive"
 #define kWebAppLauncherMessageSendJSON @"WebAppLauncher.Message.Send.JSON"
 #define kWebAppLauncherMessageReceiveJSON @"WebAppLauncher.Message.Receive.JSON"
+#define kWebAppLauncherConnect @"WebAppLauncher.Connect"
+#define kWebAppLauncherDisconnect @"WebAppLauncher.Disconnect"
+#define kWebAppLauncherJoin @"WebAppLauncher.Join"
 #define kWebAppLauncherClose @"WebAppLauncher.Close"
 
 #define kWebAppLauncherCapabilities @[\
@@ -41,6 +44,9 @@
     kWebAppLauncherMessageReceive,\
     kWebAppLauncherMessageSendJSON,\
     kWebAppLauncherMessageReceiveJSON,\
+    kWebAppLauncherConnect,\
+    kWebAppLauncherDisconnect,\
+    kWebAppLauncherJoin,\
     kWebAppLauncherClose\
 ]
 

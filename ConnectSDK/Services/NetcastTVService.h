@@ -31,11 +31,10 @@
 
 @interface NetcastTVService : DeviceService <Launcher, MediaPlayer, MediaControl, VolumeControl, TVControl, KeyControl, MouseControl, PowerControl, ExternalInputControl, TextInputControl>
 
+// @cond INTERNAL
 @property (nonatomic, strong) NetcastTVServiceConfig *serviceConfig;
 
-// @cond INTERNAL
 - (void) setServiceConfig:(ServiceConfig *)serviceConfig;
-// @endcond
 
 // these objects are maintained to provide certain functionality without requiring pairing
 @property (nonatomic, strong, readonly) DIALService *dialService;
@@ -111,10 +110,9 @@ enum {
     NetcastTVKeyCodeMyApps = 417
 };
 
-// @cond INTERNAL
 typedef NSUInteger NetcastTVKeyCode;
-// @endcond
 
 - (void) pairWithData:(NSString *)pairingData;
+// @endcond
 
 @end

@@ -147,18 +147,18 @@ NSString *lgeUDAPRequestURI[8] = {
     return _commandURL;
 }
 
-- (NSArray *)capabilities
+- (void) updateCapabilities
 {
-    NSArray *caps = [NSArray array];
+    NSArray *capabilities = [NSArray array];
 
     if ([DiscoveryManager sharedManager].pairingLevel == ConnectableDevicePairingLevelOn)
     {
-        caps = [caps arrayByAddingObjectsFromArray:kTextInputControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kMouseControlCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:kKeyControlCapabilities];
-        caps = [caps arrayByAddingObject:kPowerControlOff];
-        caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:@[
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kTextInputControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kMouseControlCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kKeyControlCapabilities];
+        capabilities = [capabilities arrayByAddingObject:kPowerControlOff];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:@[
                 kMediaControlPlay,
                 kMediaControlPause,
                 kMediaControlStop,
@@ -201,15 +201,15 @@ NSString *lgeUDAPRequestURI[8] = {
 
         if ([self.modelNumber isEqualToString:@"4.0"])
         {
-            caps = [caps arrayByAddingObjectsFromArray:@[
+            capabilities = [capabilities arrayByAddingObjectsFromArray:@[
                     kLauncherAppStoreParams
             ]];
         }
     } else
     {
         // TODO: need to handle some of these controls over DLNA if no pairing
-        caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
-        caps = [caps arrayByAddingObjectsFromArray:@[
+        capabilities = [capabilities arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
+        capabilities = [capabilities arrayByAddingObjectsFromArray:@[
                 kMediaControlPlay,
                 kMediaControlPause,
                 kMediaControlStop,
@@ -223,7 +223,7 @@ NSString *lgeUDAPRequestURI[8] = {
         ]];
     }
 
-    return caps;
+    [self setCapabilities:capabilities];
 }
 
 + (NSDictionary *) discoveryParameters
@@ -240,6 +240,10 @@ NSString *lgeUDAPRequestURI[8] = {
 - (void) dealloc
 {
     [self.commandQueue cancelAllOperations];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+
 }
 
 #pragma mark - Connection & Pairing
@@ -1184,7 +1188,7 @@ NSString *lgeUDAPRequestURI[8] = {
             launchSession.name = kSmartShareName;
 
             if (success)
-                success(launchSession, mediaControl);
+                success(launchSession, self.mediaControl);
         } failure:failure];
         return;
     }
@@ -1203,8 +1207,8 @@ NSString *lgeUDAPRequestURI[8] = {
             launchSession.name = kSmartShareName;
 
             if (success)
-                success(launchSession, mediaControl);
-        }                               failure:failure];
+                success(launchSession, self.mediaControl);
+        } failure:failure];
         return;
     }
 
@@ -1281,6 +1285,18 @@ NSString *lgeUDAPRequestURI[8] = {
     if (self.dlnaService)
     {
         [self.dlnaService getPlayStateWithSuccess:success failure:failure];
+        return;
+    }
+
+    if (failure)
+        failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
+}
+
+- (void) getDurationWithSuccess:(MediaDurationSuccessBlock)success failure:(FailureBlock)failure
+{
+    if (self.dlnaService)
+    {
+        [self.dlnaService getDurationWithSuccess:success failure:failure];
         return;
     }
 
@@ -1958,7 +1974,7 @@ NSString *lgeUDAPRequestURI[8] = {
 
 - (void)closeInputPicker:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    [self closeApp:launchSession success:success failure:failure];
+    [self.keyControl sendKeyCode:NetcastTVKeyCodeExit success:success failure:failure];
 }
 
 - (void)getExternalInputListWithSuccess:(ExternalInputListSuccessBlock)success failure:(FailureBlock)failure

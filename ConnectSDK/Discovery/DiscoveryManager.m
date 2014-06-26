@@ -25,7 +25,9 @@
 
 #import "CastDiscoveryProvider.h"
 #import "SSDPDiscoveryProvider.h"
+#import "ZeroConfDiscoveryProvider.h"
 
+#import "AirPlayService.h"
 #import "CastService.h"
 #import "DIALService.h"
 #import "DLNAService.h"
@@ -130,6 +132,7 @@
 
 - (void) registerDefaultServices
 {
+    [self registerDeviceService:[AirPlayService class] withDiscovery:[ZeroConfDiscoveryProvider class]];
     [self registerDeviceService:[CastService class] withDiscovery:[CastDiscoveryProvider class]];
     [self registerDeviceService:[DIALService class] withDiscovery:[SSDPDiscoveryProvider class]];
     [self registerDeviceService:[RokuService class] withDiscovery:[SSDPDiscoveryProvider  class]];
@@ -439,8 +442,8 @@
         [service startDiscovery];
     }];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void) stopDiscovery
@@ -469,7 +472,7 @@
 
     if ([description.friendlyName isEqualToString:@"A SDK webOS TV"] && [description.serviceId isEqualToString:@"DLNA"])
         NSLog(@"break");
-    
+
     BOOL deviceIsNew = [_allDevices objectForKey:description.address] == nil;
     ConnectableDevice *device;
 
@@ -501,7 +504,14 @@
     [self addServiceDescription:description toDevice:device];
 
     if (device.services.count == 0)
-        return; // we get here when a non-LG DLNA TV is found
+    {
+        // we get here when a non-LG DLNA TV is found
+
+        [_allDevices removeObjectForKey:description.address];
+        device = nil;
+
+        return;
+    }
 
     if (deviceIsNew)
         [self handleDeviceAdd:device];
@@ -568,7 +578,14 @@
             return;
     }
 
-    ServiceConfig *serviceConfig = [[ServiceConfig alloc] initWithServiceDescription:description];
+    ServiceConfig *serviceConfig;
+
+    if (self.useDeviceStore)
+        serviceConfig = [self.deviceStore serviceConfigForUUID:description.UUID];
+
+    if (!serviceConfig)
+        serviceConfig = [[ServiceConfig alloc] initWithServiceDescription:description];
+
     serviceConfig.delegate = self;
 
     __block BOOL deviceAlreadyHasServiceType = NO;
@@ -646,7 +663,7 @@
 
 #pragma mark - Handle background state
 
-- (void) hAppDidEnterBackground
+- (void) hAppDidEnterBackground:(NSNotification *)notification
 {
     [self stopSSIDTimer];
 
@@ -657,7 +674,7 @@
     }
 }
 
-- (void) hAppDidBecomeActive
+- (void) hAppDidBecomeActive:(NSNotification *)notification
 {
     [self startSSIDTimer];
 
@@ -666,6 +683,12 @@
         _shouldResumeSearch = NO;
         [self startDiscovery];
     }
+}
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
 
 #pragma mark - Device Picker creation

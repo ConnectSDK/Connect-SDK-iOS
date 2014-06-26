@@ -54,56 +54,35 @@ static NSMutableArray *registeredApps = nil;
     };
 }
 
-- (void) setupCapabilities
+- (void) updateCapabilities
 {
-    [self addCapabilities:@[
-            kLauncherAppList,
-            kLauncherApp,
-            kLauncherAppParams,
-            kLauncherAppStore,
-            kLauncherAppStoreParams,
-            kLauncherAppClose,
+    NSArray *capabilities = @[
+        kLauncherAppList,
+        kLauncherApp,
+        kLauncherAppParams,
+        kLauncherAppStore,
+        kLauncherAppStoreParams,
+        kLauncherAppClose,
 
-            kMediaPlayerDisplayImage,
-            kMediaPlayerPlayVideo,
-            kMediaPlayerPlayAudio,
-            kMediaPlayerClose,
-            kMediaPlayerMetaDataTitle,
+        kMediaPlayerDisplayImage,
+        kMediaPlayerPlayVideo,
+        kMediaPlayerPlayAudio,
+        kMediaPlayerClose,
+        kMediaPlayerMetaDataTitle,
 
-            kMediaControlPlay,
-            kMediaControlPause,
-            kMediaControlRewind,
-            kMediaControlFastForward,
+        kMediaControlPlay,
+        kMediaControlPause,
+        kMediaControlRewind,
+        kMediaControlFastForward,
 
-            kTextInputControlSendText,
-            kTextInputControlSendEnter,
-            kTextInputControlSendDelete
-    ]];
-    [self addCapabilities:kKeyControlCapabilities];
-}
+        kTextInputControlSendText,
+        kTextInputControlSendEnter,
+        kTextInputControlSendDelete
+    ];
 
-- (instancetype) initWithServiceConfig:(ServiceConfig *)serviceConfig
-{
-    self = [super initWithServiceConfig:serviceConfig];
+    capabilities = [capabilities arrayByAddingObjectsFromArray:kKeyControlCapabilities];
 
-    if (self)
-    {
-        [self setupCapabilities];
-    }
-
-    return self;
-}
-
-- (instancetype) initWithJSONObject:(NSDictionary *)dict
-{
-    self = [super initWithJSONObject:dict];
-
-    if (self)
-    {
-        [self setupCapabilities];
-    }
-
-    return self;
+    [self setCapabilities:capabilities];
 }
 
 + (void) registerApp:(NSString *)appId
@@ -121,8 +100,7 @@ static NSMutableArray *registeredApps = nil;
             NSString *capability = [NSString stringWithFormat:@"Launcher.%@", appName];
             NSString *capabilityParams = [NSString stringWithFormat:@"Launcher.%@.Params", appName];
 
-            [self addCapability:capability];
-            [self addCapability:capabilityParams];
+            [self addCapabilities:@[capability, capabilityParams]];
         } failure:nil];
     }];
 }
@@ -543,12 +521,13 @@ static NSMutableArray *registeredApps = nil;
         ];
     } else
     {
-        applicationPath = [NSString stringWithFormat:@"15985?t=a&u=%@&k=(null)&h=%@&songname=%@&artistname=%@&songformat=%@",
+        applicationPath = [NSString stringWithFormat:@"15985?t=a&u=%@&k=(null)&h=%@&songname=%@&artistname=%@&songformat=%@&albumarturl=%@",
                                                      [ConnectUtil urlEncode:mediaURL.absoluteString], // content path
                                                      [ConnectUtil urlEncode:host], // host
                                                      title ? [ConnectUtil urlEncode:title] : @"(null)", // song name
                                                      description ? [ConnectUtil urlEncode:description] : @"(null)", // artist name
-                                                     ensureString(mediaType) // audio format
+                                                     ensureString(mediaType), // audio format
+                                                     iconURL ? [ConnectUtil urlEncode:iconURL.absoluteString] : @"(null)"
         ];
     }
 

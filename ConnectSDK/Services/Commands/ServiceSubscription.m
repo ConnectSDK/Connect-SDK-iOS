@@ -58,7 +58,7 @@
 -(void) addSuccess:(id)success{
     if(!_successCalls) _successCalls = [[NSMutableArray alloc] init];
 
-    if (success)
+    if (success && ![_successCalls containsObject:success])
         [_successCalls addObject:success];
 
     NSArray *successes = [NSArray arrayWithArray:_successCalls];
@@ -72,7 +72,7 @@
 {
     if(!_failureCalls) _failureCalls = [[NSMutableArray alloc] init];
 
-    if (failure)
+    if (failure && ![_failureCalls containsObject:failure])
         [_failureCalls addObject:failure];
 
     NSArray *fails = [NSArray arrayWithArray:_failureCalls];
