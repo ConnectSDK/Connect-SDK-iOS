@@ -53,14 +53,20 @@
 - (void)startDiscovery
 {
     self.isRunning = YES;
-    [_deviceScanner startScan];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_deviceScanner startScan];
+    });
 }
 
 - (void)stopDiscovery
 {
     self.isRunning = NO;
     
-    [_deviceScanner stopScan];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_deviceScanner stopScan];
+    });
+    
     _devices = [NSMutableDictionary new];
     _deviceDescriptions = [NSMutableDictionary new];
 }
