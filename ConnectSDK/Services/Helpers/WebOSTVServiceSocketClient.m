@@ -98,6 +98,32 @@
 
 - (void) openSocket
 {
+    if (_socket)
+    {
+        switch (_socket.readyState)
+        {
+            case LGSR_OPEN:
+                if (_socket.delegate != self)
+                    _socket.delegate = self;
+                
+                [self webSocketDidOpen:_socket];
+                return;
+                
+            case LGSR_CONNECTING:
+                if (_socket.delegate != self)
+                    _socket.delegate = self;
+                return;
+                
+            case LGSR_CLOSED:
+            case LGSR_CLOSING:
+                _socket.delegate = nil;
+                _socket = nil;
+                break;
+                
+            default:break;
+        }
+    }
+    
     NSString *address = self.service.serviceDescription.address;
     unsigned long port = self.service.serviceDescription.port;
 
