@@ -13,6 +13,16 @@ To build: Select Product->Scheme->Framework, then Product->Build.
 Right click 'libConnectSDK.a' from 'Project navigator', select 'Show in finder'
 
 
+#update with upstream (https://help.github.com/articles/syncing-a-fork)
+git fetch upstream
+git co master
+git merge upstream/master
+
+#pull request with single commit:
+git checkout -b upstream upstream/master
+git cherry-pick <SHA hash of commit>
+git push origin upstream
+
 #################original README#########################
 
 #Connect SDK iOS
