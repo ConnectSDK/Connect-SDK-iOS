@@ -468,7 +468,7 @@ static NSMutableArray *registeredApps = nil;
     }
     
     NSString *commandPath = [NSString stringWithFormat:@"http://%@:%@", self.serviceDescription.commandURL.host, self.serviceDescription.commandURL.port];
-    if ([launchSession.sessionId hasPrefix:commandPath])
+    if ([launchSession.sessionId hasPrefix:@"http://"] || [launchSession.sessionId hasPrefix:@"https://"])
       commandPath = launchSession.sessionId;//chromecast returns full url
     else
       commandPath = [commandPath stringByAppendingPathComponent:launchSession.sessionId];
