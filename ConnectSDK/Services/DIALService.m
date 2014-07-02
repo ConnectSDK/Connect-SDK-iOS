@@ -410,7 +410,7 @@ static NSMutableArray *registeredApps = nil;
         // YouTube on some platforms requires a pairing code, which may be a random string
         NSString *pairingCode = [[Guid randomGuid] stringValue];
 
-        params = [NSString stringWithFormat:@"pairingCode=%@&v=%@&t=0.0", pairingCode, contentId];
+        params = [NSString stringWithFormat:@"pairingCode=%@&v=%@", pairingCode, contentId];
     }
 
     AppInfo *appInfo = [AppInfo appInfoForId:@"YouTube"];
