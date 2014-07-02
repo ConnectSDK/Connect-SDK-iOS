@@ -410,7 +410,7 @@ static NSMutableArray *registeredApps = nil;
         // YouTube on some platforms requires a pairing code, which may be a random string
         NSString *pairingCode = [[Guid randomGuid] stringValue];
 
-        params = [NSString stringWithFormat:@"pairingCode=%@&v=%@&t=0.0", pairingCode, contentId];
+        params = [NSString stringWithFormat:@"pairingCode=%@&v=%@", pairingCode, contentId];
     }
 
     AppInfo *appInfo = [AppInfo appInfoForId:@"YouTube"];
@@ -468,7 +468,10 @@ static NSMutableArray *registeredApps = nil;
     }
     
     NSString *commandPath = [NSString stringWithFormat:@"http://%@:%@", self.serviceDescription.commandURL.host, self.serviceDescription.commandURL.port];
-    commandPath = [commandPath stringByAppendingPathComponent:launchSession.sessionId];
+    if ([launchSession.sessionId hasPrefix:@"http://"] || [launchSession.sessionId hasPrefix:@"https://"])
+      commandPath = launchSession.sessionId;//chromecast returns full url
+    else
+      commandPath = [commandPath stringByAppendingPathComponent:launchSession.sessionId];
     NSURL *commandURL = [NSURL URLWithString:commandPath];
 
     ServiceCommand *command = [[ServiceCommand alloc] initWithDelegate:self target:commandURL payload:nil];

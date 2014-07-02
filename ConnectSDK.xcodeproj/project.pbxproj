@@ -6,6 +6,21 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		EECAED52193F611900D31F61 /* Framework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = EECAED53193F611900D31F61 /* Build configuration list for PBXAggregateTarget "Framework" */;
+			buildPhases = (
+				EECAED58193F614F00D31F61 /* ShellScript */,
+			);
+			dependencies = (
+				EECAED57193F612100D31F61 /* PBXTargetDependency */,
+			);
+			name = Framework;
+			productName = Framework;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		BB9F70B6CD7601E5E08902A1 /* AirPlayService.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F786205D0DD1F8718CF96 /* AirPlayService.m */; };
 		BB9F710601FE8B999634A5BF /* AirPlayWebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F76C6A6C862002C9FB89D /* AirPlayWebAppSession.m */; };
@@ -146,7 +161,89 @@
 		EAFA98AA18FEE9B5001C4FA1 /* Guid.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EBDB18FE48D400D75696 /* Guid.h */; };
 		EAFA98AB18FEE9B5001C4FA1 /* LGSRWebSocket.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EBDF18FE48D400D75696 /* LGSRWebSocket.h */; };
 		EAFA98AC18FEE9B5001C4FA1 /* XMLReader.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EBE418FE48D400D75696 /* XMLReader.h */; };
+		EEA016D41963B94000C3C140 /* AirPlayServiceHTTP.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F7C3C796FA0C8CD18C649 /* AirPlayServiceHTTP.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EEA016D51963BB6600C3C140 /* AirPlayServiceMirrored.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F74D76D7D96D4136929C8 /* AirPlayServiceMirrored.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EEA016D61963BB7400C3C140 /* AirPlayService.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F765C7443AC13CB37632E /* AirPlayService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED1B193F5EE900D31F61 /* ConnectSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB3D18FE48C500D75696 /* ConnectSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED1C193F5EED00D31F61 /* ConnectableDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB3F18FE48C500D75696 /* ConnectableDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED1D193F5EEF00D31F61 /* ConnectableDeviceDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB4118FE48C500D75696 /* ConnectableDeviceDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED1E193F5EF100D31F61 /* ConnectableDeviceStore.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB4218FE48C500D75696 /* ConnectableDeviceStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED1F193F5EF700D31F61 /* DefaultConnectableDeviceStore.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB4318FE48C500D75696 /* DefaultConnectableDeviceStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED20193F5EFD00D31F61 /* DevicePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB4518FE48C500D75696 /* DevicePicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED21193F5EFF00D31F61 /* DevicePickerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB4718FE48C500D75696 /* DevicePickerDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED22193F5F5800D31F61 /* CapabilityFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB4918FE48C500D75696 /* CapabilityFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED23193F5F5B00D31F61 /* DiscoveryManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB4B18FE48C500D75696 /* DiscoveryManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED24193F5F6000D31F61 /* DiscoveryManagerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB4D18FE48C500D75696 /* DiscoveryManagerDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED25193F5F6600D31F61 /* DiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB4E18FE48C500D75696 /* DiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED26193F5F6900D31F61 /* DiscoveryProviderDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB5018FE48C500D75696 /* DiscoveryProviderDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED27193F5F6E00D31F61 /* CastDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB5218FE48C500D75696 /* CastDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED28193F5F7000D31F61 /* SSDPDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB5418FE48C500D75696 /* SSDPDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED29193F5F7600D31F61 /* AppInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB5718FE48C500D75696 /* AppInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED2A193F5F7A00D31F61 /* ChannelInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB5918FE48C500D75696 /* ChannelInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED2B193F5F8900D31F61 /* ConnectError.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB5B18FE48C500D75696 /* ConnectError.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED2C193F5FA200D31F61 /* ConnectUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB5D18FE48C500D75696 /* ConnectUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED2D193F5FA600D31F61 /* DeviceServiceReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB5F18FE48C500D75696 /* DeviceServiceReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED2E193F5FAB00D31F61 /* ExternalInputInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB6118FE48C500D75696 /* ExternalInputInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED2F193F5FAF00D31F61 /* JSONObjectCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB6318FE48C500D75696 /* JSONObjectCoding.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED30193F5FBA00D31F61 /* ProgramInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB6418FE48C500D75696 /* ProgramInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED31193F5FBD00D31F61 /* SSDPSocketListener.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB6618FE48C500D75696 /* SSDPSocketListener.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED32193F5FC100D31F61 /* TextInputStatusInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB6818FE48C500D75696 /* TextInputStatusInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED33193F5FCA00D31F61 /* Capability.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB6C18FE48C500D75696 /* Capability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED34193F5FD000D31F61 /* ExternalInputControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB6D18FE48C500D75696 /* ExternalInputControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED35193F5FD300D31F61 /* KeyControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB6E18FE48C500D75696 /* KeyControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED36193F5FD600D31F61 /* Launcher.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB6F18FE48C500D75696 /* Launcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED37193F5FD900D31F61 /* MediaControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB7018FE48C500D75696 /* MediaControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED38193F5FE100D31F61 /* MediaPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB7118FE48C500D75696 /* MediaPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED39193F5FE500D31F61 /* MouseControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB7218FE48C500D75696 /* MouseControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED3A193F5FE800D31F61 /* PowerControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB7318FE48C500D75696 /* PowerControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED3B193F5FEB00D31F61 /* TextInputControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB7418FE48C500D75696 /* TextInputControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED3C193F5FF000D31F61 /* ToastControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB7518FE48C500D75696 /* ToastControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED3D193F5FF700D31F61 /* TVControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB7618FE48C500D75696 /* TVControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED3E193F5FFC00D31F61 /* VolumeControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB7718FE48C500D75696 /* VolumeControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED3F193F600100D31F61 /* WebAppLauncher.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB7818FE48C500D75696 /* WebAppLauncher.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED40193F600500D31F61 /* CastService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB7918FE48C500D75696 /* CastService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED41193F600C00D31F61 /* ServiceAsyncCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB7C18FE48C500D75696 /* ServiceAsyncCommand.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED42193F601200D31F61 /* ServiceCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB7E18FE48C500D75696 /* ServiceCommand.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED43193F601B00D31F61 /* ServiceCommandDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB8018FE48C500D75696 /* ServiceCommandDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED44193F601F00D31F61 /* ServiceSubscription.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB8118FE48C500D75696 /* ServiceSubscription.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED45193F602200D31F61 /* DeviceService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB8D18FE48C500D75696 /* DeviceService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED46193F602500D31F61 /* DeviceServiceDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB8F18FE48C500D75696 /* DeviceServiceDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED47193F602A00D31F61 /* DIALService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB9018FE48C500D75696 /* DIALService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED48193F603300D31F61 /* DLNAService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB9218FE48C500D75696 /* DLNAService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED49193F603800D31F61 /* NetcastTVService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB9918FE48C500D75696 /* NetcastTVService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED4A193F603D00D31F61 /* RokuService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB9B18FE48C500D75696 /* RokuService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED4B193F604000D31F61 /* WebOSTVService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBA718FE48C500D75696 /* WebOSTVService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED4C193F604900D31F61 /* CastWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB9E18FE48C500D75696 /* CastWebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED4D193F604F00D31F61 /* LaunchSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBA018FE48C500D75696 /* LaunchSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED4E193F605200D31F61 /* WebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBA218FE48C500D75696 /* WebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED4F193F605700D31F61 /* WebAppSessionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBA418FE48C500D75696 /* WebAppSessionDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED50193F605900D31F61 /* WebOSWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBA518FE48C500D75696 /* WebOSWebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED97193F9E2100D31F61 /* GCDWebServer.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBD018FE48D400D75696 /* GCDWebServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED98193F9E2B00D31F61 /* GCDWebServerConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBD218FE48D400D75696 /* GCDWebServerConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED9A193F9E3100D31F61 /* GCDWebServerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBD418FE48D400D75696 /* GCDWebServerPrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED9B193F9E3400D31F61 /* GCDWebServerRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBD518FE48D400D75696 /* GCDWebServerRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED9C193F9E3800D31F61 /* GCDWebServerResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBD718FE48D400D75696 /* GCDWebServerResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED9D193F9E3E00D31F61 /* XMLReader.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBE418FE48D400D75696 /* XMLReader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED9E193F9E5D00D31F61 /* CastServiceChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB9518FE48C500D75696 /* CastServiceChannel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAED9F193F9E6200D31F61 /* WebOSTVServiceMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB9718FE48C500D75696 /* WebOSTVServiceMouse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAEDA0193F9E8C00D31F61 /* Guid.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBDB18FE48D400D75696 /* Guid.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAEDA1193F9E9300D31F61 /* LGSRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EBDF18FE48D400D75696 /* LGSRWebSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAEDA2193F9EDC00D31F61 /* NetcastTVServiceConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB8418FE48C500D75696 /* NetcastTVServiceConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAEDA3193FA02E00D31F61 /* ServiceConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB8618FE48C500D75696 /* ServiceConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAEDA4193FA03200D31F61 /* ServiceConfigDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB8818FE48C500D75696 /* ServiceConfigDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAEDA5193FA03600D31F61 /* ServiceDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB8918FE48C500D75696 /* ServiceDescription.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EECAEDA6193FA04000D31F61 /* WebOSTVServiceConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB8B18FE48C500D75696 /* WebOSTVServiceConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EECAED56193F612100D31F61 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA61EB0818FE485B00D75696 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA61EB0F18FE485B00D75696;
+			remoteInfo = ConnectSDK;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		EA61EB0E18FE485B00D75696 /* CopyFiles */ = {
@@ -744,6 +841,88 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		EECAED1A193F5ED900D31F61 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EECAED1B193F5EE900D31F61 /* ConnectSDK.h in Headers */,
+				EECAED1C193F5EED00D31F61 /* ConnectableDevice.h in Headers */,
+				EECAED1D193F5EEF00D31F61 /* ConnectableDeviceDelegate.h in Headers */,
+				EECAED1E193F5EF100D31F61 /* ConnectableDeviceStore.h in Headers */,
+				EECAED1F193F5EF700D31F61 /* DefaultConnectableDeviceStore.h in Headers */,
+				EECAED20193F5EFD00D31F61 /* DevicePicker.h in Headers */,
+				EECAED21193F5EFF00D31F61 /* DevicePickerDelegate.h in Headers */,
+				EECAED22193F5F5800D31F61 /* CapabilityFilter.h in Headers */,
+				EECAED23193F5F5B00D31F61 /* DiscoveryManager.h in Headers */,
+				EECAED24193F5F6000D31F61 /* DiscoveryManagerDelegate.h in Headers */,
+				EECAED25193F5F6600D31F61 /* DiscoveryProvider.h in Headers */,
+				EECAED26193F5F6900D31F61 /* DiscoveryProviderDelegate.h in Headers */,
+				EECAED27193F5F6E00D31F61 /* CastDiscoveryProvider.h in Headers */,
+				EECAED28193F5F7000D31F61 /* SSDPDiscoveryProvider.h in Headers */,
+				EECAED29193F5F7600D31F61 /* AppInfo.h in Headers */,
+				EECAED2A193F5F7A00D31F61 /* ChannelInfo.h in Headers */,
+				EECAED2B193F5F8900D31F61 /* ConnectError.h in Headers */,
+				EECAED2C193F5FA200D31F61 /* ConnectUtil.h in Headers */,
+				EECAED2D193F5FA600D31F61 /* DeviceServiceReachability.h in Headers */,
+				EECAED2E193F5FAB00D31F61 /* ExternalInputInfo.h in Headers */,
+				EECAED2F193F5FAF00D31F61 /* JSONObjectCoding.h in Headers */,
+				EECAED30193F5FBA00D31F61 /* ProgramInfo.h in Headers */,
+				EECAED31193F5FBD00D31F61 /* SSDPSocketListener.h in Headers */,
+				EECAED32193F5FC100D31F61 /* TextInputStatusInfo.h in Headers */,
+				EECAED33193F5FCA00D31F61 /* Capability.h in Headers */,
+				EECAED34193F5FD000D31F61 /* ExternalInputControl.h in Headers */,
+				EECAED35193F5FD300D31F61 /* KeyControl.h in Headers */,
+				EECAED36193F5FD600D31F61 /* Launcher.h in Headers */,
+				EECAED37193F5FD900D31F61 /* MediaControl.h in Headers */,
+				EECAED38193F5FE100D31F61 /* MediaPlayer.h in Headers */,
+				EECAED39193F5FE500D31F61 /* MouseControl.h in Headers */,
+				EECAED3A193F5FE800D31F61 /* PowerControl.h in Headers */,
+				EECAED3B193F5FEB00D31F61 /* TextInputControl.h in Headers */,
+				EECAED3C193F5FF000D31F61 /* ToastControl.h in Headers */,
+				EECAED3D193F5FF700D31F61 /* TVControl.h in Headers */,
+				EECAED3E193F5FFC00D31F61 /* VolumeControl.h in Headers */,
+				EECAED3F193F600100D31F61 /* WebAppLauncher.h in Headers */,
+				EECAED40193F600500D31F61 /* CastService.h in Headers */,
+				EECAED41193F600C00D31F61 /* ServiceAsyncCommand.h in Headers */,
+				EECAED42193F601200D31F61 /* ServiceCommand.h in Headers */,
+				EECAED43193F601B00D31F61 /* ServiceCommandDelegate.h in Headers */,
+				EECAED44193F601F00D31F61 /* ServiceSubscription.h in Headers */,
+				EECAED45193F602200D31F61 /* DeviceService.h in Headers */,
+				EECAED46193F602500D31F61 /* DeviceServiceDelegate.h in Headers */,
+				EECAED47193F602A00D31F61 /* DIALService.h in Headers */,
+				EECAED48193F603300D31F61 /* DLNAService.h in Headers */,
+				EECAED49193F603800D31F61 /* NetcastTVService.h in Headers */,
+				EECAED4A193F603D00D31F61 /* RokuService.h in Headers */,
+				EECAED4C193F604900D31F61 /* CastWebAppSession.h in Headers */,
+				EECAED4D193F604F00D31F61 /* LaunchSession.h in Headers */,
+				EECAED4E193F605200D31F61 /* WebAppSession.h in Headers */,
+				EECAED4F193F605700D31F61 /* WebAppSessionDelegate.h in Headers */,
+				EECAED50193F605900D31F61 /* WebOSWebAppSession.h in Headers */,
+				EECAED4B193F604000D31F61 /* WebOSTVService.h in Headers */,
+				EECAED97193F9E2100D31F61 /* GCDWebServer.h in Headers */,
+				EECAED9B193F9E3400D31F61 /* GCDWebServerRequest.h in Headers */,
+				EECAED9C193F9E3800D31F61 /* GCDWebServerResponse.h in Headers */,
+				EECAED9F193F9E6200D31F61 /* WebOSTVServiceMouse.h in Headers */,
+				EECAED9A193F9E3100D31F61 /* GCDWebServerPrivate.h in Headers */,
+				EECAEDA0193F9E8C00D31F61 /* Guid.h in Headers */,
+				EECAEDA1193F9E9300D31F61 /* LGSRWebSocket.h in Headers */,
+				EECAEDA3193FA02E00D31F61 /* ServiceConfig.h in Headers */,
+				EECAED9E193F9E5D00D31F61 /* CastServiceChannel.h in Headers */,
+				EECAEDA2193F9EDC00D31F61 /* NetcastTVServiceConfig.h in Headers */,
+				EECAED9D193F9E3E00D31F61 /* XMLReader.h in Headers */,
+				EECAEDA5193FA03600D31F61 /* ServiceDescription.h in Headers */,
+				EECAEDA4193FA03200D31F61 /* ServiceConfigDelegate.h in Headers */,
+				EECAED98193F9E2B00D31F61 /* GCDWebServerConnection.h in Headers */,
+				EECAEDA6193FA04000D31F61 /* WebOSTVServiceConfig.h in Headers */,
+				EEA016D51963BB6600C3C140 /* AirPlayServiceMirrored.h in Headers */,
+				EEA016D61963BB7400C3C140 /* AirPlayService.h in Headers */,
+				EEA016D41963B94000C3C140 /* AirPlayServiceHTTP.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		EA61EB0F18FE485B00D75696 /* ConnectSDK */ = {
 			isa = PBXNativeTarget;
@@ -752,6 +931,8 @@
 				EA61EB0C18FE485B00D75696 /* Sources */,
 				EA61EB0D18FE485B00D75696 /* Frameworks */,
 				EA61EB0E18FE485B00D75696 /* CopyFiles */,
+				EECAED1A193F5ED900D31F61 /* Headers */,
+				EECAED51193F60C900D31F61 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -784,9 +965,39 @@
 			projectRoot = "";
 			targets = (
 				EA61EB0F18FE485B00D75696 /* ConnectSDK */,
+				EECAED52193F611900D31F61 /* Framework */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		EECAED51193F60C900D31F61 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n\n# Link the \"Current\" version to \"A\"\n/bin/ln -sfh A \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/Current\"\n/bin/ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Headers\"\n/bin/ln -sfh \"Versions/Current/${PRODUCT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}\"\n\n# The -a ensures that the headers maintain the source modification date so that we don't constantly\n# cause propagating rebuilds of files that import these headers.\n/bin/cp -a \"${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n";
+		};
+		EECAED58193F614F00D31F61 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nset +u\n# Avoid recursively calling this script.\nif [[ $SF_MASTER_SCRIPT_RUNNING ]]\nthen\nexit 0\nfi\nset -u\nexport SF_MASTER_SCRIPT_RUNNING=1\n\nSF_TARGET_NAME=ConnectSDK\nSF_EXECUTABLE_PATH=\"lib${SF_TARGET_NAME}.a\"\nSF_WRAPPER_NAME=\"${SF_TARGET_NAME}.framework\"\n\n# The following conditionals come from\n# https://github.com/kstenerud/iOS-Universal-Framework\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\nSF_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\necho \"Could not find platform name from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\nSF_SDK_VERSION=${BASH_REMATCH[1]}\nelse\necho \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\nif [[ \"$SF_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\nSF_OTHER_PLATFORM=iphonesimulator\nelse\nSF_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$SF_SDK_PLATFORM$ ]]\nthen\nSF_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${SF_OTHER_PLATFORM}\"\nelse\necho \"Could not find platform name from build products directory: $BUILT_PRODUCTS_DIR\"\nexit 1\nfi\n\n# Build the other platform.\nxcrun xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${SF_OTHER_PLATFORM}${SF_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" OBJROOT=\"${OBJROOT}\" BUILD_ROOT=\"${BUILD_ROOT}\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# Smash the two static libraries into one fat binary and store it in the .framework\nxcrun lipo -create \"${BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" -output \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"\n\n# Copy the binary to the other architecture folder to have a complete framework in both.\ncp -a \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EA61EB0C18FE485B00D75696 /* Sources */ = {
@@ -857,6 +1068,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		EECAED57193F612100D31F61 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA61EB0F18FE485B00D75696 /* ConnectSDK */;
+			targetProxy = EECAED56193F612100D31F61 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
 		EA61EB3118FE485B00D75696 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -892,6 +1111,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
 			};
 			name = Debug;
 		};
@@ -923,6 +1143,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
 			};
 			name = Release;
 		};
@@ -930,6 +1151,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
 				DSTROOT = /tmp/Connect_SDK.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -938,10 +1161,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConnectSDK/ConnectSDK-Prefix.pch";
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ConnectSDK;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				STRIP_STYLE = "non-global";
+				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -949,6 +1175,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
 				DSTROOT = /tmp/Connect_SDK.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -959,8 +1187,28 @@
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ConnectSDK;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				STRIP_STYLE = "non-global";
+				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
+			};
+			name = Release;
+		};
+		EECAED54193F611900D31F61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
+			};
+			name = Debug;
+		};
+		EECAED55193F611900D31F61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 			};
 			name = Release;
 		};
@@ -981,6 +1229,15 @@
 			buildConfigurations = (
 				EA61EB3418FE485B00D75696 /* Debug */,
 				EA61EB3518FE485B00D75696 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EECAED53193F611900D31F61 /* Build configuration list for PBXAggregateTarget "Framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EECAED54193F611900D31F61 /* Debug */,
+				EECAED55193F611900D31F61 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
