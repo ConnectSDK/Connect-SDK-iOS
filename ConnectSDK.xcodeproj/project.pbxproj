@@ -161,6 +161,7 @@
 		EAFA98AA18FEE9B5001C4FA1 /* Guid.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EBDB18FE48D400D75696 /* Guid.h */; };
 		EAFA98AB18FEE9B5001C4FA1 /* LGSRWebSocket.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EBDF18FE48D400D75696 /* LGSRWebSocket.h */; };
 		EAFA98AC18FEE9B5001C4FA1 /* XMLReader.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EBE418FE48D400D75696 /* XMLReader.h */; };
+		EEA016D41963B94000C3C140 /* AirPlayServiceHTTP.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F7C3C796FA0C8CD18C649 /* AirPlayServiceHTTP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EECAED1B193F5EE900D31F61 /* ConnectSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB3D18FE48C500D75696 /* ConnectSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EECAED1C193F5EED00D31F61 /* ConnectableDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB3F18FE48C500D75696 /* ConnectableDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EECAED1D193F5EEF00D31F61 /* ConnectableDeviceDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA61EB4118FE48C500D75696 /* ConnectableDeviceDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -912,6 +913,7 @@
 				EECAEDA4193FA03200D31F61 /* ServiceConfigDelegate.h in Headers */,
 				EECAED98193F9E2B00D31F61 /* GCDWebServerConnection.h in Headers */,
 				EECAEDA6193FA04000D31F61 /* WebOSTVServiceConfig.h in Headers */,
+				EEA016D41963B94000C3C140 /* AirPlayServiceHTTP.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
