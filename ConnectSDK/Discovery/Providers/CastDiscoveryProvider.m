@@ -53,19 +53,25 @@
 - (void)startDiscovery
 {
     self.isRunning = YES;
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_deviceScanner startScan];
-    });
+
+    if (!_deviceScanner.scanning)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_deviceScanner startScan];
+        });
+    }
 }
 
 - (void)stopDiscovery
 {
     self.isRunning = NO;
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_deviceScanner stopScan];
-    });
+
+    if (_deviceScanner.scanning)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_deviceScanner stopScan];
+        });
+    }
     
     _devices = [NSMutableDictionary new];
     _deviceDescriptions = [NSMutableDictionary new];
