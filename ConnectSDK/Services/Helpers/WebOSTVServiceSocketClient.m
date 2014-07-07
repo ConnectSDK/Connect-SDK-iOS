@@ -276,8 +276,11 @@
 
     reg.callbackComplete = ^(NSDictionary* response)
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        if ([DeviceService shouldDisconnectOnBackground])
+        {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        }
 
 //        if ([self.delegate respondsToSelector:@selector(deviceServicePairingSuccess:)])
 //            dispatch_on_main(^{ [self.delegate deviceServicePairingSuccess:self]; });
