@@ -445,7 +445,10 @@ NSString *lgeUDAPRequestURI[8] = {
 {
     if (_subscriptionServer)
     {
-        [_subscriptionServer stop];
+        if ([_subscriptionServer isRunning])
+        {
+            [_subscriptionServer stop];
+        }
         _subscriptionServer = nil;
     }
 }
