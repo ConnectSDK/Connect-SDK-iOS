@@ -180,7 +180,7 @@
     [request setShouldAttemptPersistentConnection:YES];
     [request setShouldContinueWhenAppEntersBackground:YES];
     
-    __weak ASIHTTPRequest *weakRequest = request;
+    __weak CTASIHTTPRequest *weakRequest = request;
     
     [request setCompletionBlock:^{
         if (!weakRequest)
@@ -190,8 +190,8 @@
             
             return;
         }
-        
-        ASIHTTPRequest *strongRequest = weakRequest;
+
+        CTASIHTTPRequest *strongRequest = weakRequest;
         
         if (strongRequest.responseStatusCode == 200)
         {
