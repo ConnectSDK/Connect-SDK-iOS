@@ -13,6 +13,7 @@
 
 @property (nonatomic, readonly) WebAppMessageBlock messageHandler;
 @property (nonatomic) MSApplication *application;
+@property (nonatomic, readonly) MSChannel *channel;
 @property (nonatomic, readonly) MultiScreenService *service;
 
 @end

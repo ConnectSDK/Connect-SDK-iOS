@@ -8,6 +8,7 @@
 #import "MultiScreenDiscoveryProvider.h"
 #import "ConnectError.h"
 #import "MultiScreenWebAppSession.h"
+#import "ConnectUtil.h"
 
 @implementation MultiScreenService
 
@@ -54,6 +55,13 @@
     NSArray *caps = @[
             kWebAppLauncherLaunch,
             kWebAppLauncherLaunchParams,
+            kWebAppLauncherJoin,
+            kWebAppLauncherConnect,
+            kWebAppLauncherDisconnect,
+            kWebAppLauncherMessageSend,
+            kWebAppLauncherMessageSendJSON,
+            kWebAppLauncherMessageReceive,
+            kWebAppLauncherMessageReceiveJSON,
             kWebAppLauncherClose
     ];
 
@@ -144,6 +152,8 @@
 
     if (!params)
         params = @{};
+
+    webAppId = [ConnectUtil urlEncode:webAppId];
 
     [self.device getApplication:webAppId completionBlock:^(MSApplication *application, NSError *getError) {
         if (getError || !application)
