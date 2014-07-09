@@ -143,11 +143,7 @@
 
     DLog(@"%@", aNetService.name);
 
-    NSString *serviceId = [self serviceIdFromFilter:aNetService.type];
-
-    ServiceDescription *serviceDescription = [ServiceDescription descriptionWithAddress:@"0.0.0.0" UUID:aNetService.name];
-    serviceDescription.friendlyName = aNetService.name;
-    serviceDescription.serviceId = serviceId;
+    ServiceDescription *serviceDescription = _discoveredDevices[aNetService.name];
 
     [_discoveredDevices removeObjectForKey:aNetService.name];
 
