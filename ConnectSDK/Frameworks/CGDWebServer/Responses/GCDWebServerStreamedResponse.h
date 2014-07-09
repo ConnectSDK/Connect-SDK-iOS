@@ -25,21 +25,29 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "GCDWebServer.h"
+#import "GCDWebServerStreamedResponse.h"
 
-@class GCDWebServerHandler;
+/**
+ *  The GCDWebServerStreamingBlock is called to stream the data for the HTTP body.
+ *  The block must return empty NSData when done or nil on error and set the
+ *  "error" argument which is guaranteed to be non-NULL.
+ */
+typedef NSData* (^GCDWebServerStreamingBlock)(NSError** error);
 
-@interface GCDWebServerConnection : NSObject
-@property(nonatomic, readonly) GCDWebServer* server;
-@property(nonatomic, readonly) NSData* address;  // struct sockaddr
-@property(nonatomic, readonly) NSUInteger totalBytesRead;
-@property(nonatomic, readonly) NSUInteger totalBytesWritten;
-@end
+/**
+ *  The GCDWebServerStreamedResponse subclass of GCDWebServerResponse streams
+ *  the body of the HTTP response using a GCD block.
+ */
+@interface GCDWebServerStreamedResponse : GCDWebServerResponse
 
-@interface GCDWebServerConnection (Subclassing)
-- (void)open;
-- (void)didUpdateBytesRead;  // Called from arbitrary thread after @totalBytesRead is updated - Default implementation does nothing
-- (void)didUpdateBytesWritten;  // Called from arbitrary thread after @totalBytesWritten is updated - Default implementation does nothing
-- (GCDWebServerResponse*)processRequest:(GCDWebServerRequest*)request withBlock:(GCDWebServerProcessBlock)block;
-- (void)close;
+/**
+ *  Creates a response with streamed data and a given content type.
+ */
++ (instancetype)responseWithContentType:(NSString*)type streamBlock:(GCDWebServerStreamingBlock)block;
+
+/**
+ *  This method is the designated initializer for the class.
+ */
+- (instancetype)initWithContentType:(NSString*)type streamBlock:(GCDWebServerStreamingBlock)block;
+
 @end

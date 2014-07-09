@@ -22,6 +22,7 @@
 #import "ConnectError.h"
 #import "CTXMLReader.h"
 #import "GCDWebServer.h"
+#import "GCDWebServerDataRequest.h"
 #import "ConnectUtil.h"
 #import "DeviceServiceReachability.h"
 
