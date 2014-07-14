@@ -69,6 +69,18 @@
     return self;
 }
 
+static BOOL _shouldDisconnectOnBackground = YES;
+
++ (BOOL) shouldDisconnectOnBackground
+{
+    return _shouldDisconnectOnBackground;
+}
+
++ (void) setShouldDisconnectOnBackround:(BOOL)shouldDisconnectOnBackground
+{
+    _shouldDisconnectOnBackground = shouldDisconnectOnBackground;
+}
+
 #pragma mark - Capabilities
 
 - (NSArray *) capabilities { return [NSArray arrayWithArray:_capabilities]; }

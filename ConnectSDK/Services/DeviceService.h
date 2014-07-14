@@ -169,6 +169,18 @@
 
 #pragma mark - Utility
 
+/*!
+ * Static property that determines whether a DeviceService subclass should shut down communication channels when the app enters a background state. This may be helpful for apps that need to communicate with web apps from the background. This property may not be applicable to all DeviceService subclasses.
+ */
++ (BOOL) shouldDisconnectOnBackground;
+
+/*!
+ * Sets the shouldDisconnectOnBackground static property. This property should be set before starting DiscoveryManager for the first time.
+ *
+ * @property shouldDisconnectOnBackground New value for DeviceService.shouldDisconnectOnBackground
+ */
++ (void) setShouldDisconnectOnBackround:(BOOL)shouldDisconnectOnBackground;
+
 // @cond INTERNAL
 void dispatch_on_main(dispatch_block_t block);
 id ensureString(id value);

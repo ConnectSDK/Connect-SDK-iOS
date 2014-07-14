@@ -444,7 +444,10 @@ NSString *lgeUDAPRequestURI[8] = {
 {
     if (_subscriptionServer)
     {
-        [_subscriptionServer stop];
+        if ([_subscriptionServer isRunning])
+        {
+            [_subscriptionServer stop];
+        }
         _subscriptionServer = nil;
     }
 }
@@ -504,8 +507,11 @@ NSString *lgeUDAPRequestURI[8] = {
     command.callbackComplete = ^(NSDictionary *responseDic){
         self.serviceConfig.pairingCode = pairingCode;
 
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        if ([DeviceService shouldDisconnectOnBackground])
+        {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        }
 
         [self startSubscriptionServer];
 

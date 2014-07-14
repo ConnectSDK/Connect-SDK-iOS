@@ -98,6 +98,32 @@
 
 - (void) openSocket
 {
+    if (_socket)
+    {
+        switch (_socket.readyState)
+        {
+            case LGSR_OPEN:
+                if (_socket.delegate != self)
+                    _socket.delegate = self;
+                
+                [self webSocketDidOpen:_socket];
+                return;
+                
+            case LGSR_CONNECTING:
+                if (_socket.delegate != self)
+                    _socket.delegate = self;
+                return;
+                
+            case LGSR_CLOSED:
+            case LGSR_CLOSING:
+                _socket.delegate = nil;
+                _socket = nil;
+                break;
+                
+            default:break;
+        }
+    }
+    
     NSString *address = self.service.serviceDescription.address;
     unsigned long port = self.service.serviceDescription.port;
 
@@ -250,8 +276,11 @@
 
     reg.callbackComplete = ^(NSDictionary* response)
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        if ([DeviceService shouldDisconnectOnBackground])
+        {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hAppDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        }
 
 //        if ([self.delegate respondsToSelector:@selector(deviceServicePairingSuccess:)])
 //            dispatch_on_main(^{ [self.delegate deviceServicePairingSuccess:self]; });

@@ -88,6 +88,7 @@ static AirPlayServiceMode airPlayServiceMode;
                 kWebAppLauncherMessageReceiveJSON,
                 kWebAppLauncherClose,
                 kWebAppLauncherConnect,
+                kWebAppLauncherJoin,
                 kWebAppLauncherDisconnect
         ]];
     }
