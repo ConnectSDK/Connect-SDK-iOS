@@ -1,6 +1,6 @@
 # Connect SDK iOS Changelog
 
-## 1.3.1 -- TBD
+## 1.3.1 -- 14 July 2014
 
 - Added ability to prevent DeviceService disconnection on background state
 - Miscellaneous bug fixes
