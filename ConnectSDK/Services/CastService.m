@@ -316,6 +316,7 @@
     
     _castMediaControlChannel.delegate = nil;
     _castMediaControlChannel = nil;
+    _castDeviceManager = nil;
 
     dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:error]; });
 }
