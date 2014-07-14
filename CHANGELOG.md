@@ -2,6 +2,7 @@
 
 ## 1.3.1 -- TBD
 
+- Added ability to prevent DeviceService disconnection on background state
 - Miscellaneous bug fixes
 - [See commits between 1.3.0 and 1.3.1](https://github.com/ConnectSDK/Connect-SDK-iOS/compare/1.3.0...1.3.1)
 
