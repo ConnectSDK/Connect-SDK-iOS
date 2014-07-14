@@ -11,6 +11,9 @@
 #import "ConnectUtil.h"
 
 @implementation MultiScreenService
+{
+    NSMutableDictionary *_sessions;
+}
 
 + (NSDictionary *) discoveryParameters
 {
@@ -82,6 +85,8 @@
 
     self.connected = YES;
 
+    _sessions = [NSMutableDictionary new];
+
     if (self.delegate && [self.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])
         dispatch_on_main(^{ [self.delegate deviceServiceConnectionSuccess:self]; });
 }
@@ -89,6 +94,11 @@
 - (void) disconnect
 {
     self.connected = NO;
+
+    [_sessions enumerateKeysAndObjectsUsingBlock:^(id key, MultiScreenWebAppSession *session, BOOL *stop) {
+        if (session.channel && session.channel.isConnected && session.delegate)
+            dispatch_on_main(^{ [session.delegate webAppSessionDidDisconnect:session]; });
+    }];
 
     if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
         dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:nil]; });
@@ -172,7 +182,14 @@
                     launchSession.sessionType = LaunchSessionTypeWebApp;
                     launchSession.service = self;
 
-                    MultiScreenWebAppSession *webAppSession = [[MultiScreenWebAppSession alloc] initWithLaunchSession:launchSession service:self];
+                    MultiScreenWebAppSession *webAppSession = _sessions[webAppId];
+
+                    if (!webAppSession)
+                    {
+                        webAppSession = [[MultiScreenWebAppSession alloc] initWithLaunchSession:launchSession service:self];
+                        _sessions[webAppId] = webAppSession;
+                    }
+
                     webAppSession.application = application;
 
                     if (success)
@@ -192,12 +209,38 @@
 
 - (void) joinWebApp:(LaunchSession *)webAppLaunchSession success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
+    [self.device getApplication:webAppLaunchSession.appId completionBlock:^(MSApplication *application, NSError *getError) {
+        if (getError || !application)
+        {
+            if (!getError)
+                getError = [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@"Experienced an unknown error getting app info, app may not be installed"];
 
+            if (failure)
+                failure(getError);
+        } else
+        {
+            MultiScreenWebAppSession *webAppSession = _sessions[webAppLaunchSession.appId];
+
+            if (!webAppSession)
+            {
+                webAppSession = [[MultiScreenWebAppSession alloc] initWithLaunchSession:webAppLaunchSession service:self];
+                _sessions[webAppLaunchSession.appId] = webAppSession;
+            }
+
+            webAppSession.application = application;
+
+            [webAppSession joinWithSuccess:success failure:failure];
+        }
+    } queue:dispatch_get_main_queue()];
 }
 
 - (void) joinWebAppWithId:(NSString *)webAppId success:(WebAppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
+    LaunchSession *launchSession = [LaunchSession launchSessionForAppId:webAppId];
+    launchSession.sessionType = LaunchSessionTypeWebApp;
+    launchSession.service = self;
 
+    [self.webAppLauncher joinWebApp:launchSession success:success failure:failure];
 }
 
 - (void) closeWebApp:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
@@ -231,6 +274,8 @@
             [application terminateWithCompletionBlock:^(BOOL terminateSuccess, NSError *terminateError) {
                 if (terminateSuccess)
                 {
+                    [_sessions removeObjectForKey:launchSession.appId];
+
                     if (success)
                         success(nil);
                 } else

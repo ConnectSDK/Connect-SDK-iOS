@@ -72,13 +72,64 @@
     [self connectWithSuccess:success failure:failure];
 }
 
+- (void)sendText:(NSString *)message success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    if (!message || message.length == 0)
+    {
+        if (failure)
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"Cannot send an empty message"]);
+
+        return;
+    }
+
+    if (self.channel && self.channel.isConnected)
+    {
+        [self.channel sendToHost:message];
+
+        if (success)
+            dispatch_on_main(^{ success(nil); });
+    } else
+    {
+        if (failure)
+            dispatch_on_main(^{ failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Connection has not been established or has been lost"]); });
+    }
+}
+
+- (void)sendJSON:(NSDictionary *)message success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    if (!message || message.count == 0)
+    {
+        if (failure)
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"Cannot send an empty message"]);
+
+        return;
+    }
+
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:message options:0 error:&error];
+
+    if (error || !jsonData)
+    {
+        if (!error)
+            error = [ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"You must provide a valid JSON object"];
+
+        if (failure)
+            dispatch_on_main(^{ failure(error); });
+    } else
+    {
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+
+        [self sendText:jsonString success:success failure:failure];
+    }
+}
+
 - (void) disconnectFromWebApp
 {
-    if (!self.channel)
-        return;
-
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MSClientMessageNotification object:_channel];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MSDisconnectNotification object:_channel];
+
+    if (!self.channel)
+        return;
 
     [self.channel disconnectWithCompletionBlock:^{
         _channel = nil;
