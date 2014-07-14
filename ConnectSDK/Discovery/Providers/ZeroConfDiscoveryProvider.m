@@ -165,6 +165,14 @@
     DLog(@"%@", sender.name);
 
     sender.delegate = nil;
+    [_resolvingDevices removeObjectForKey:sender.name];
+
+    // according to Apple's docs, it is possible to have a service resolve with no addresses
+    if (!sender.addresses || sender.addresses.count == 0)
+    {
+        DLog(@"%@ resolved with 0 addresses, bailing ...");
+        return;
+    }
 
     //// credit: http://stackoverflow.com/a/18428117/2715 ////
     NSData *myData = nil;
@@ -229,7 +237,6 @@
     NSString *commandPath = [NSString stringWithFormat:@"http://%@:%@/", address, @(port)];
     serviceDescription.commandURL = [NSURL URLWithString:commandPath];
 
-    [_resolvingDevices removeObjectForKey:sender.name];
     [_discoveredDevices setObject:serviceDescription forKey:sender.name];
 
     if (self.delegate && [self.delegate respondsToSelector:@selector(discoveryProvider:didFindService:)])

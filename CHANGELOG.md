@@ -1,6 +1,14 @@
 # Connect SDK iOS Changelog
 
-## 1.3.0 - 23 June 2014
+## 1.3.1 -- 14 July 2014
+
+- Added ability to prevent DeviceService disconnection on background state
+- Miscellaneous bug fixes
+- [See commits between 1.3.0 and 1.3.1](https://github.com/ConnectSDK/Connect-SDK-iOS/compare/1.3.0...1.3.1)
+
+[View files at version 1.3.1](https://github.com/ConnectSDK/Connect-SDK-iOS/tree/1.3.1)
+
+## 1.3.0 -- 23 June 2014
 
 - Added support for Apple TV
  + Supports web apps via AirPlay mirroring, extended display
@@ -15,7 +23,7 @@
 
 [View files at version 1.3.0](https://github.com/ConnectSDK/Connect-SDK-iOS/tree/1.3.0)
 
-## 1.2.1 - 14 May 2014
+## 1.2.1 -- 14 May 2014
 
 - Fixed numerous issues with Connectable Device Store
 - Added ability to probe for app presence on Roku & DIAL

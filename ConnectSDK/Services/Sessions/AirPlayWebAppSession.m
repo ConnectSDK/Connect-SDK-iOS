@@ -195,7 +195,7 @@
 - (void) connectWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
     if (success)
-        success(nil);
+        success(self);
 }
 
 - (void) disconnectFromWebApp
