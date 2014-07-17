@@ -55,7 +55,18 @@
 
 - (void) updateCapabilities
 {
-    NSArray *caps = @[
+    NSArray *caps = [NSArray new];
+    caps = [caps arrayByAddingObjectsFromArray:kMediaPlayerCapabilities];
+    caps = [caps arrayByAddingObjectsFromArray:@[
+            kMediaControlPlay,
+            kMediaControlPause,
+            kMediaControlStop,
+            kMediaControlDuration,
+            kMediaControlSeek,
+            kMediaControlPosition,
+            kMediaControlPlayState,
+            kMediaControlPlayStateSubscribe,
+
             kWebAppLauncherLaunch,
             kWebAppLauncherLaunchParams,
             kWebAppLauncherJoin,
@@ -66,7 +77,7 @@
             kWebAppLauncherMessageReceive,
             kWebAppLauncherMessageReceiveJSON,
             kWebAppLauncherClose
-    ];
+    ]];
 
     self.capabilities = caps;
 }
@@ -106,13 +117,62 @@
 
 - (void) closeLaunchSession:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    if (launchSession.sessionType == LaunchSessionTypeWebApp)
+    if (launchSession.sessionType == LaunchSessionTypeMedia)
+        [self.mediaPlayer closeMedia:launchSession success:success failure:failure];
+    else if (launchSession.sessionType == LaunchSessionTypeWebApp)
         [self.webAppLauncher closeWebApp:launchSession success:success failure:failure];
     else
     {
         if (failure)
             failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Could not find launcher for provided LaunchSession."]);
     }
+}
+
+#pragma mark - Media Player
+
+- (id <MediaPlayer>) mediaPlayer
+{
+    return self;
+}
+
+- (CapabilityPriorityLevel) mediaPlayerPriority
+{
+    return CapabilityPriorityLevelHigh;
+}
+
+- (void) displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
+{
+    NSString *webAppId = @"ConnectSDKSampler";
+
+    [self.webAppLauncher joinWebAppWithId:webAppId success:^(WebAppSession *webAppSession) {
+        [webAppSession.mediaPlayer displayImage:imageURL iconURL:iconURL title:title description:description mimeType:mimeType success:success failure:failure];
+    } failure:^(NSError *error) {
+        [self.webAppLauncher launchWebApp:webAppId success:^(WebAppSession *webAppSession) {
+            [webAppSession connectWithSuccess:^(id responseObject) {
+                [webAppSession.mediaPlayer displayImage:imageURL iconURL:iconURL title:title description:description mimeType:mimeType success:success failure:failure];
+            } failure:failure];
+        } failure:failure];
+    }];
+}
+
+- (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
+{
+    NSString *webAppId = @"ConnectSDKSampler";
+
+    [self.webAppLauncher joinWebAppWithId:webAppId success:^(WebAppSession *webAppSession) {
+        [webAppSession.mediaPlayer playMedia:mediaURL iconURL:iconURL title:title description:description mimeType:mimeType shouldLoop:shouldLoop success:success failure:failure];
+    } failure:^(NSError *error) {
+        [self.webAppLauncher launchWebApp:webAppId success:^(WebAppSession *webAppSession) {
+            [webAppSession connectWithSuccess:^(id responseObject) {
+                [webAppSession.mediaPlayer playMedia:mediaURL iconURL:iconURL title:title description:description mimeType:mimeType shouldLoop:shouldLoop success:success failure:failure];
+            } failure:failure];
+        } failure:failure];
+    }];
+}
+
+- (void) closeMedia:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    [self.webAppLauncher closeWebApp:launchSession success:success failure:failure];
 }
 
 #pragma mark - Web App Launcher
@@ -243,6 +303,7 @@
     [self.webAppLauncher joinWebApp:launchSession success:success failure:failure];
 }
 
+// TODO: this method is returning a 404 error on app leave/re-join
 - (void) closeWebApp:(LaunchSession *)launchSession success:(SuccessBlock)success failure:(FailureBlock)failure
 {
     NSError *error;

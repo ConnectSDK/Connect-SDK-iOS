@@ -11,7 +11,7 @@
 #define kConnectSDKMultiScreenTVServiceId @"Samsung MultiScreen"
 
 
-@interface MultiScreenService : DeviceService <WebAppLauncher>
+@interface MultiScreenService : DeviceService <MediaPlayer, WebAppLauncher>
 
 @property (nonatomic, readonly) MSDevice *device;
 
