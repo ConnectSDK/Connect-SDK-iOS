@@ -130,7 +130,12 @@
 
 - (void) startDiscovery
 {
+    if (self.isRunning)
+        return;
+
     _devices = [NSMutableDictionary new];
+
+    self.isRunning = YES;
 
     self.searchTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(search) userInfo:nil repeats:YES];
     [self.searchTimer fire];
@@ -143,6 +148,8 @@
         [self.searchTimer invalidate];
         self.searchTimer = nil;
     }
+
+    self.isRunning = NO;
 }
 
 - (void) search
