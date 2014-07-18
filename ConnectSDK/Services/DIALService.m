@@ -404,13 +404,26 @@ static NSMutableArray *registeredApps = nil;
 
 - (void)launchYouTube:(NSString *)contentId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
+    [self.launcher launchYouTube:contentId startTime:0.0 success:success failure:failure];
+}
+
+- (void) launchYouTube:(NSString *)contentId startTime:(float)startTime success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
     NSString *params;
 
     if (contentId && contentId.length > 0) {
+        if (startTime < 0.0)
+        {
+            if (failure)
+                failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"Start time may not be negative"]);
+
+            return;
+        }
+
         // YouTube on some platforms requires a pairing code, which may be a random string
         NSString *pairingCode = [[CTGuid randomGuid] stringValue];
 
-        params = [NSString stringWithFormat:@"pairingCode=%@&v=%@&t=0.0", pairingCode, contentId];
+        params = [NSString stringWithFormat:@"pairingCode=%@&v=%@&t=%.1f", pairingCode, contentId, startTime];
     }
 
     AppInfo *appInfo = [AppInfo appInfoForId:@"YouTube"];

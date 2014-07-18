@@ -1007,20 +1007,31 @@ NSString *lgeUDAPRequestURI[8] = {
 
 - (void)launchYouTube:(NSString *)contentId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
-    // TODO: fix this launch through DIAL
+    [self.launcher launchYouTube:contentId startTime:0.0 success:success failure:failure];
+}
+
+- (void) launchYouTube:(NSString *)contentId startTime:(float)startTime success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
     if (self.dialService)
     {
-        [self.dialService.launcher launchYouTube:contentId success:success failure:failure];
+        [self.dialService.launcher launchYouTube:contentId startTime:startTime success:success failure:failure];
         return;
     }
 
-    [self getAppInfoForId:@"YouTube" success:^(AppInfo *appInfo)
+    if (startTime <= 0.0)
     {
-        [[appInfo.rawData objectForKey:@"cpid"] setObject:contentId forKey:@"text"];
+        [self getAppInfoForId:@"YouTube" success:^(AppInfo *appInfo)
+        {
+            [[appInfo.rawData objectForKey:@"cpid"] setObject:contentId forKey:@"text"];
 
-        if (success)
-            [self launchAppWithInfo:appInfo success:success failure:failure];
-    } failure:failure];
+            if (success)
+                [self launchAppWithInfo:appInfo success:success failure:failure];
+        } failure:failure];
+    } else
+    {
+        if (failure)
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:@"Cannot reach DIAL service for launching with provided start time"]);
+    }
 }
 
 - (void)closeApplicationWithName:(NSString *)appId success:(SuccessBlock)success failure:(FailureBlock)failure

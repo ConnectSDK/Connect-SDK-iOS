@@ -314,12 +314,17 @@ static NSMutableArray *registeredApps = nil;
 
 - (void)launchYouTube:(NSString *)contentId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
+    [self launchYouTube:contentId startTime:0.0 success:success failure:failure];
+}
+
+- (void) launchYouTube:(NSString *)contentId startTime:(float)startTime success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
     if (self.dialService)
-        [self.dialService.launcher launchYouTube:contentId success:success failure:failure];
+        [self.dialService.launcher launchYouTube:contentId startTime:startTime success:success failure:failure];
     else
     {
         if (failure)
-            failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:@"Cannot reach DIAL service for launching with provided start time"]);
     }
 }
 

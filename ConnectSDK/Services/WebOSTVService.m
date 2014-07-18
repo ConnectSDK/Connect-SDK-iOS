@@ -24,6 +24,7 @@
 #import "ServiceAsyncCommand.h"
 #import "WebOSWebAppSession.h"
 #import "WebOSTVServiceSocketClient.h"
+#import "CTGuid.h"
 
 #define kKeyboardEnter @"\x1b ENTER \x1b"
 #define kKeyboardDelete @"\x1b DELETE \x1b"
@@ -526,8 +527,28 @@
 
 - (void)launchYouTube:(NSString *)contentId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
-    NSDictionary *params = @{ @"contentId" : contentId };
-    
+    [self.launcher launchYouTube:contentId startTime:0.0 success:success failure:failure];
+}
+
+- (void) launchYouTube:(NSString *)contentId startTime:(float)startTime success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
+    NSDictionary *params;
+
+    if (contentId && contentId.length > 0)
+    {
+        if (startTime < 0.0)
+        {
+            if (failure)
+                failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"Start time may not be negative"]);
+
+            return;
+        }
+
+        params = @{
+            @"contentId" : [NSString stringWithFormat:@"%@&pairingCode=%@&t=%.1f", contentId, [[CTGuid randomGuid] stringValue], startTime]
+        };
+    }
+
     [self launchApplication:@"youtube.leanback.v4" withParams:params success:success failure:failure];
 }
 
