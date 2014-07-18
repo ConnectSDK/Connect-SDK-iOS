@@ -617,7 +617,7 @@
     }
 
     DeviceService *deviceService = [DeviceService deviceServiceWithClass:deviceServiceClass serviceConfig:serviceConfig];
-    deviceService.serviceDescription = description;
+    [deviceService setServiceDescription:description];
     [device addService:deviceService];
 }
 
