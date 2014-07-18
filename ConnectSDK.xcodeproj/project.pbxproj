@@ -92,6 +92,22 @@
 		EAAA426E1937AD690072ABBF /* AirPlayService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F765C7443AC13CB37632E /* AirPlayService.h */; };
 		EAD7F85E1906E98200B33AAB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7F85D1906E98200B33AAB /* AVFoundation.framework */; };
 		EAD7F8601906E99C00B33AAB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7F85F1906E99C00B33AAB /* UIKit.framework */; };
+		EAF5584C1979E11900230E05 /* ZeroConfDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F7C71326AB56D77F39095 /* ZeroConfDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAF5584D1979E11900230E05 /* WebOSTVServiceSocketClient.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F760BBBC0E963F08D4CD1 /* WebOSTVServiceSocketClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAF5584E1979E11900230E05 /* AirPlayWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F725D0F278CD7B78F1FC6 /* AirPlayWebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAF5584F1979E11900230E05 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AB009193F957800B72990 /* Reachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAF558501979E11900230E05 /* ASIAuthenticationDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAF91193F94F600B72990 /* ASIAuthenticationDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAF558511979E11900230E05 /* ASICacheDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAF93193F94F600B72990 /* ASICacheDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAF558521979E11900230E05 /* ASIDataCompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAF94193F94F600B72990 /* ASIDataCompressor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAF558531979E11900230E05 /* ASIDataDecompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAF96193F94F600B72990 /* ASIDataDecompressor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAF558541979E11900230E05 /* ASIDownloadCache.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAF98193F94F600B72990 /* ASIDownloadCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAF558551979E11900230E05 /* ASIFormDataRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAF9A193F94F600B72990 /* ASIFormDataRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAF558561979E11900230E05 /* ASIHTTPRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAF9C193F94F600B72990 /* ASIHTTPRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAF558571979E11900230E05 /* ASIHTTPRequestConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAF9E193F94F600B72990 /* ASIHTTPRequestConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAF558581979E11900230E05 /* ASIHTTPRequestDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAF9F193F94F600B72990 /* ASIHTTPRequestDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAF558591979E11900230E05 /* ASIInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAFA0193F94F600B72990 /* ASIInputStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAF5585A1979E11900230E05 /* ASINetworkQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAFA2193F94F600B72990 /* ASINetworkQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAF5585B1979E11900230E05 /* ASIProgressDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAFA4193F94F600B72990 /* ASIProgressDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EAFA986818FEE8DF001C4FA1 /* ConnectSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EB3D18FE48C500D75696 /* ConnectSDK.h */; };
 		EAFA986918FEE988001C4FA1 /* ConnectableDevice.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EB3F18FE48C500D75696 /* ConnectableDevice.h */; };
 		EAFA986A18FEE988001C4FA1 /* ConnectableDeviceDelegate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EA61EB4118FE48C500D75696 /* ConnectableDeviceDelegate.h */; };
@@ -918,6 +934,22 @@
 				EEA016D51963BB6600C3C140 /* AirPlayServiceMirrored.h in Headers */,
 				EEA016D61963BB7400C3C140 /* AirPlayService.h in Headers */,
 				EEA016D41963B94000C3C140 /* AirPlayServiceHTTP.h in Headers */,
+				EAF5584C1979E11900230E05 /* ZeroConfDiscoveryProvider.h in Headers */,
+				EAF5584D1979E11900230E05 /* WebOSTVServiceSocketClient.h in Headers */,
+				EAF5584E1979E11900230E05 /* AirPlayWebAppSession.h in Headers */,
+				EAF5584F1979E11900230E05 /* Reachability.h in Headers */,
+				EAF558501979E11900230E05 /* ASIAuthenticationDialog.h in Headers */,
+				EAF558511979E11900230E05 /* ASICacheDelegate.h in Headers */,
+				EAF558521979E11900230E05 /* ASIDataCompressor.h in Headers */,
+				EAF558531979E11900230E05 /* ASIDataDecompressor.h in Headers */,
+				EAF558541979E11900230E05 /* ASIDownloadCache.h in Headers */,
+				EAF558551979E11900230E05 /* ASIFormDataRequest.h in Headers */,
+				EAF558561979E11900230E05 /* ASIHTTPRequest.h in Headers */,
+				EAF558571979E11900230E05 /* ASIHTTPRequestConfig.h in Headers */,
+				EAF558581979E11900230E05 /* ASIHTTPRequestDelegate.h in Headers */,
+				EAF558591979E11900230E05 /* ASIInputStream.h in Headers */,
+				EAF5585A1979E11900230E05 /* ASINetworkQueue.h in Headers */,
+				EAF5585B1979E11900230E05 /* ASIProgressDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
