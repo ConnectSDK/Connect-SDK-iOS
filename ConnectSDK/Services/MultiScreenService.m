@@ -60,12 +60,10 @@
     caps = [caps arrayByAddingObjectsFromArray:@[
             kMediaControlPlay,
             kMediaControlPause,
-            kMediaControlStop,
             kMediaControlDuration,
             kMediaControlSeek,
             kMediaControlPosition,
             kMediaControlPlayState,
-            kMediaControlPlayStateSubscribe,
 
             kWebAppLauncherLaunch,
             kWebAppLauncherLaunchParams,

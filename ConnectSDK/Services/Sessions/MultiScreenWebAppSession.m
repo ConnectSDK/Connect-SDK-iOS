@@ -50,15 +50,15 @@
 
 - (void) handleMessageNotification:(NSNotification *)notification
 {
-    NSLog(@"%@", notification);
-
     NSDictionary *payload = notification.userInfo;
-    id message = payload[@"message"];
+    NSString *message = payload[@"message"];
 
-    if ([message isKindOfClass:[NSDictionary class]])
+    NSData *jsonData = [message dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSDictionary *messageJSON = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+
+    if (messageJSON && !error)
     {
-        NSDictionary *messageJSON = (NSDictionary *)message;
-
         NSString *contentType = [messageJSON objectForKey:@"contentType"];
         NSRange contentTypeRange = [contentType rangeOfString:@"connectsdk."];
 
@@ -349,6 +349,48 @@
 - (CapabilityPriorityLevel) mediaControlPriority
 {
     return CapabilityPriorityLevelHigh;
+}
+
+- (void) playWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    int requestIdNumber = [self getNextId];
+    NSString *requestId = [NSString stringWithFormat:@"req%d", requestIdNumber];
+
+    NSDictionary *message = @{
+            @"contentType" : @"connectsdk.mediaCommand",
+            @"mediaCommand" : @{
+                    @"type" : @"play",
+                    @"requestId" : requestId
+            }
+    };
+
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:nil target:nil payload:nil];
+    command.callbackComplete = success;
+    command.callbackError = failure;
+    [_activeCommands setObject:command forKey:requestId];
+
+    [self sendJSON:message success:nil failure:failure];
+}
+
+- (void) pauseWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    int requestIdNumber = [self getNextId];
+    NSString *requestId = [NSString stringWithFormat:@"req%d", requestIdNumber];
+
+    NSDictionary *message = @{
+            @"contentType" : @"connectsdk.mediaCommand",
+            @"mediaCommand" : @{
+                    @"type" : @"pause",
+                    @"requestId" : requestId
+            }
+    };
+
+    ServiceCommand *command = [ServiceCommand commandWithDelegate:nil target:nil payload:nil];
+    command.callbackComplete = success;
+    command.callbackError = failure;
+    [_activeCommands setObject:command forKey:requestId];
+
+    [self sendJSON:message success:nil failure:failure];
 }
 
 - (void)seek:(NSTimeInterval)position success:(SuccessBlock)success failure:(FailureBlock)failure
