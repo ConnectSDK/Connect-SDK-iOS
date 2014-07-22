@@ -680,10 +680,10 @@ static const SCNetworkReachabilityFlags kOnDemandConnection = kSCNetworkReachabi
 {
 	logReachabilityFlags(flags);
 	
-	BOOL retVal = NotReachable;
+	BOOL retVal = CTNotReachable;
 	if((flags & kSCNetworkReachabilityFlagsReachable) && (flags & kSCNetworkReachabilityFlagsIsDirect))
 	{
-		retVal = ReachableViaWiFi;	
+		retVal = CTReachableViaWiFi;
 	}
 	return retVal;
 }
@@ -695,16 +695,16 @@ static const SCNetworkReachabilityFlags kOnDemandConnection = kSCNetworkReachabi
 	if (!(flags & kSCNetworkReachabilityFlagsReachable))
 	{
 		// if target host is not reachable
-		return NotReachable;
+		return CTNotReachable;
 	}
 	
-	BOOL retVal = NotReachable;
+	BOOL retVal = CTNotReachable;
 	
 	if (!(flags & kSCNetworkReachabilityFlagsConnectionRequired))
 	{
 		// if target host is reachable and no connection is required
 		//  then we'll assume (for now) that your on Wi-Fi
-		retVal = ReachableViaWiFi;
+		retVal = CTReachableViaWiFi;
 	}
 	
 #if (__IPHONE_OS_VERSION_MIN_REQUIRED >= 30000) // Apple advises you to use the magic number instead of a symbol.	
@@ -720,7 +720,7 @@ static const SCNetworkReachabilityFlags kOnDemandConnection = kSCNetworkReachabi
 			if (!(flags & kSCNetworkReachabilityFlagsInterventionRequired))
 			{
 				// ... and no [user] intervention is needed
-				retVal = ReachableViaWiFi;
+				retVal = CTReachableViaWiFi;
 			}
 		}
 	
@@ -728,7 +728,7 @@ static const SCNetworkReachabilityFlags kOnDemandConnection = kSCNetworkReachabi
 	{
 		// ... but WWAN connections are OK if the calling application
 		//     is using the CFNetwork (CFSocketStream?) APIs.
-		retVal = ReachableViaWWAN;
+		retVal = CTReachableViaWWAN;
 	}
 	return retVal;
 }
@@ -738,7 +738,7 @@ static const SCNetworkReachabilityFlags kOnDemandConnection = kSCNetworkReachabi
 {
 	NSAssert(reachabilityRef, @"currentReachabilityStatus called with NULL reachabilityRef");
 	
-	CTNetworkStatus retVal = NotReachable;
+	CTNetworkStatus retVal = CTNotReachable;
 	SCNetworkReachabilityFlags flags;
 	if (SCNetworkReachabilityGetFlags(reachabilityRef, &flags))
 	{

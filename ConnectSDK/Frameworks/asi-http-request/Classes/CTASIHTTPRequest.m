@@ -4682,7 +4682,7 @@ static NSOperationQueue *sharedQueue = nil;
 
 + (BOOL)isNetworkReachableViaWWAN
 {
-	return ([[CTReachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN);
+	return ([[CTReachability reachabilityForInternetConnection] currentReachabilityStatus] == CTReachableViaWWAN);
 }
 
 + (void)reachabilityChanged:(NSNotification *)note
