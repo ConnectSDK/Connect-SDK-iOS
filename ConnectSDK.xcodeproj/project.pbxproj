@@ -99,7 +99,7 @@
 		EA9AAFE8193F94F600B72990 /* CTASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9AAF9D193F94F600B72990 /* CTASIHTTPRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EA9AAFE9193F94F600B72990 /* CTASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9AAFA1193F94F600B72990 /* CTASIInputStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EA9AAFEA193F94F600B72990 /* CTASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9AAFA3193F94F600B72990 /* CTASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		EA9AB00B193F957800B72990 /* CTReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9AB00A193F957800B72990 /* CTReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		EA9AB00B193F957800B72990 /* CTReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9AB00A193F957800B72990 /* CTReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
 		EAAA426C1937AD690072ABBF /* AirPlayServiceMirrored.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F74D76D7D96D4136929C8 /* AirPlayServiceMirrored.h */; };
 		EAAA426D1937AD690072ABBF /* AirPlayServiceHTTP.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F7C3C796FA0C8CD18C649 /* AirPlayServiceHTTP.h */; };
 		EAAA426E1937AD690072ABBF /* AirPlayService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F765C7443AC13CB37632E /* AirPlayService.h */; };
