@@ -114,9 +114,9 @@
 enum {
 	
 	// DDG CTNetworkStatus Constant Names.
-	kNotReachable = 0, // Apple's code depends upon 'NotReachable' being the same value as 'NO'.
-	kReachableViaWWAN, // Switched order from Apple's enum. WWAN is active before WiFi.
-	kReachableViaWiFi
+	kCTNotReachable = 0, // Apple's code depends upon 'NotReachable' being the same value as 'NO'.
+    kCTReachableViaWWAN, // Switched order from Apple's enum. WWAN is active before WiFi.
+    kCTReachableViaWiFi
 	
 };
 typedef	uint32_t CTNetworkStatus;
@@ -124,16 +124,16 @@ typedef	uint32_t CTNetworkStatus;
 enum {
 	
 	// Apple CTNetworkStatus Constant Names.
-	NotReachable     = kNotReachable,
-	ReachableViaWiFi = kReachableViaWiFi,
-	ReachableViaWWAN = kReachableViaWWAN
+	NotReachable     = kCTNotReachable,
+	ReachableViaWiFi = kCTReachableViaWiFi,
+	ReachableViaWWAN = kCTReachableViaWWAN
 	
 };
 
 
-extern NSString *const kInternetConnection;
-extern NSString *const kLocalWiFiConnection;
-extern NSString *const kReachabilityChangedNotification;
+extern NSString *const kCTInternetConnection;
+extern NSString *const kCTLocalWiFiConnection;
+extern NSString *const kCTReachabilityChangedNotification;
 
 @interface CTReachability : NSObject {
 	

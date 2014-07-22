@@ -106,9 +106,9 @@
 
 #import "CTReachability.h"
 
-NSString *const kInternetConnection  = @"InternetConnection";
-NSString *const kLocalWiFiConnection = @"LocalWiFiConnection";
-NSString *const kReachabilityChangedNotification = @"NetworkReachabilityChangedNotification";
+NSString *const kCTInternetConnection = @"InternetConnection";
+NSString *const kCTLocalWiFiConnection = @"LocalWiFiConnection";
+NSString *const kCTReachabilityChangedNotification = @"NetworkReachabilityChangedNotification";
 
 #define CLASS_DEBUG 1 // Turn on logReachabilityFlags. Must also have a project wide defined DEBUG.
 
@@ -160,13 +160,13 @@ static void logNetworkStatus_(const char *name, int line, CTNetworkStatus status
 	NSString *statusString = nil;
 	
 	switch (status) {
-		case kNotReachable:
+		case kCTNotReachable:
 			statusString = @"Not Reachable";
 			break;
-		case kReachableViaWWAN:
+		case kCTReachableViaWWAN:
 			statusString = @"Reachable via WWAN";
 			break;
-		case kReachableViaWiFi:
+		case kCTReachableViaWiFi:
 			statusString = @"Reachable via WiFi";
 			break;
 	}
@@ -258,7 +258,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 	NSAutoreleasePool* pool = [NSAutoreleasePool new];
 	
 	// Post a notification to notify the client that the network reachability changed.
-	[[NSNotificationCenter defaultCenter] postNotificationName: kReachabilityChangedNotification 
+	[[NSNotificationCenter defaultCenter] postNotificationName:kCTReachabilityChangedNotification
 														object: (CTReachability *) info];
 	
 	[pool release];
@@ -373,7 +373,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 	CTReachability *r = [self reachabilityWithAddress: &zeroAddress];
 
-	r.key = kInternetConnection;
+	r.key = kCTInternetConnection;
 	
 	return r;
 
@@ -391,7 +391,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 	CTReachability *r = [self reachabilityWithAddress: &localWifiAddress];
 
-	r.key = kLocalWiFiConnection;
+	r.key = kCTLocalWiFiConnection;
 
 	return r;
 
@@ -427,10 +427,10 @@ const SCNetworkReachabilityFlags kConnectionDown =  kSCNetworkReachabilityFlagsC
 	if (flags & kSCNetworkReachabilityFlagsReachable) {
 		
 		// Local WiFi -- Test derived from Apple's code: -localWiFiStatusForFlags:.
-		if (self.key == kLocalWiFiConnection) {
+		if (self.key == kCTLocalWiFiConnection) {
 
 			// CTReachability Flag Status: xR xxxxxxd Reachable.
-			return (flags & kSCNetworkReachabilityFlagsIsDirect) ? kReachableViaWiFi : kNotReachable;
+			return (flags & kSCNetworkReachabilityFlagsIsDirect) ? kCTReachableViaWiFi : kCTNotReachable;
 
 		}
 		
@@ -439,21 +439,21 @@ const SCNetworkReachabilityFlags kConnectionDown =  kSCNetworkReachabilityFlagsC
 		// WWAN Connection required: CTReachability Flag Status: WR ct-----
 		//
 		// Test Value: CTReachability Flag Status: WR xxxxxxx
-		if (flags & kSCNetworkReachabilityFlagsIsWWAN) { return kReachableViaWWAN; }
+		if (flags & kSCNetworkReachabilityFlagsIsWWAN) { return kCTReachableViaWWAN; }
 		
 		// Clear moot bits.
 		flags &= ~(uint32_t)kSCNetworkReachabilityFlagsReachable;
 		flags &= ~(uint32_t)kSCNetworkReachabilityFlagsIsDirect;
-		flags &= ~(uint32_t)kSCNetworkReachabilityFlagsIsLocalAddress; // kInternetConnection is local.
+		flags &= ~(uint32_t)kSCNetworkReachabilityFlagsIsLocalAddress; // kCTInternetConnection is local.
 		
 		// CTReachability Flag Status: -R ct---xx Connection down.
-		if (flags == kConnectionDown) { return kNotReachable; }
+		if (flags == kConnectionDown) { return kCTNotReachable; }
 		
 		// CTReachability Flag Status: -R -t---xx Reachable. WiFi + VPN(is up) (Thank you Ling Wang)
-		if (flags & kSCNetworkReachabilityFlagsTransientConnection)  { return kReachableViaWiFi; }
+		if (flags & kSCNetworkReachabilityFlagsTransientConnection)  { return kCTReachableViaWiFi; }
 			
 		// CTReachability Flag Status: -R -----xx Reachable.
-		if (flags == 0) { return kReachableViaWiFi; }
+		if (flags == 0) { return kCTReachableViaWiFi; }
 		
 		// Apple's code tests for dynamic connection types here. I don't. 
 		// If a connection is required, regardless of whether it is on demand or not, it is a WiFi connection.
@@ -462,18 +462,18 @@ const SCNetworkReachabilityFlags kConnectionDown =  kSCNetworkReachabilityFlagsC
 		// If you care about dynamically establishing the connection, use -isConnectionIsOnDemand.
 
 		// CTReachability Flag Status: -R cxxxxxx Reachable.
-		if (flags & kSCNetworkReachabilityFlagsConnectionRequired) { return kReachableViaWiFi; }
+		if (flags & kSCNetworkReachabilityFlagsConnectionRequired) { return kCTReachableViaWiFi; }
 		
 		// Required by the compiler. Should never get here. Default to not connected.
 #if (defined DEBUG && defined CLASS_DEBUG)
 		NSAssert1(NO, @"Uncaught reachability test. Flags: %@", reachabilityFlags_(flags));
 #endif
-		return kNotReachable;
+		return kCTNotReachable;
 
 		}
 	
 	// CTReachability Flag Status: x- xxxxxxx
-	return kNotReachable;
+	return kCTNotReachable;
 	
 } // networkStatusForFlags:
 
@@ -483,7 +483,7 @@ const SCNetworkReachabilityFlags kConnectionDown =  kSCNetworkReachabilityFlagsC
 	NSAssert(reachabilityRef, @"currentReachabilityStatus called with NULL reachabilityRef");
 	
 	SCNetworkReachabilityFlags flags = 0;
-	CTNetworkStatus status = kNotReachable;
+	CTNetworkStatus status = kCTNotReachable;
 	
 	if (SCNetworkReachabilityGetFlags(reachabilityRef, &flags)) {
 		
@@ -495,7 +495,7 @@ const SCNetworkReachabilityFlags kConnectionDown =  kSCNetworkReachabilityFlagsC
 		
 	}
 	
-	return kNotReachable;
+	return kCTNotReachable;
 	
 } // currentReachabilityStatus
 
@@ -505,7 +505,7 @@ const SCNetworkReachabilityFlags kConnectionDown =  kSCNetworkReachabilityFlagsC
 	NSAssert(reachabilityRef, @"isReachable called with NULL reachabilityRef");
 	
 	SCNetworkReachabilityFlags flags = 0;
-	CTNetworkStatus status = kNotReachable;
+	CTNetworkStatus status = kCTNotReachable;
 	
 	if (SCNetworkReachabilityGetFlags(reachabilityRef, &flags)) {
 		
@@ -515,7 +515,7 @@ const SCNetworkReachabilityFlags kConnectionDown =  kSCNetworkReachabilityFlagsC
 
 //		logNetworkStatus(status);
 		
-		return (kNotReachable != status);
+		return (kCTNotReachable != status);
 		
 	}
 	
@@ -603,7 +603,7 @@ static const SCNetworkReachabilityFlags kOnDemandConnection = kSCNetworkReachabi
 	NSAssert(reachabilityRef, @"isReachableViaWWAN called with NULL reachabilityRef");
 	
 	SCNetworkReachabilityFlags flags = 0;
-	CTNetworkStatus status = kNotReachable;
+	CTNetworkStatus status = kCTNotReachable;
 	
 	if (SCNetworkReachabilityGetFlags(reachabilityRef, &flags)) {
 		
@@ -611,7 +611,7 @@ static const SCNetworkReachabilityFlags kOnDemandConnection = kSCNetworkReachabi
 		
 		status = [self networkStatusForFlags: flags];
 		
-		return  (kReachableViaWWAN == status);
+		return  (kCTReachableViaWWAN == status);
 			
 	}
 	
@@ -625,7 +625,7 @@ static const SCNetworkReachabilityFlags kOnDemandConnection = kSCNetworkReachabi
 	NSAssert(reachabilityRef, @"isReachableViaWiFi called with NULL reachabilityRef");
 	
 	SCNetworkReachabilityFlags flags = 0;
-	CTNetworkStatus status = kNotReachable;
+	CTNetworkStatus status = kCTNotReachable;
 	
 	if (SCNetworkReachabilityGetFlags(reachabilityRef, &flags)) {
 		
@@ -633,7 +633,7 @@ static const SCNetworkReachabilityFlags kOnDemandConnection = kSCNetworkReachabi
 		
 		status = [self networkStatusForFlags: flags];
 		
-		return  (kReachableViaWiFi == status);
+		return  (kCTReachableViaWiFi == status);
 		
 	}
 	
@@ -742,7 +742,7 @@ static const SCNetworkReachabilityFlags kOnDemandConnection = kSCNetworkReachabi
 	SCNetworkReachabilityFlags flags;
 	if (SCNetworkReachabilityGetFlags(reachabilityRef, &flags))
 	{
-		if(self.key == kLocalWiFiConnection)
+		if(self.key == kCTLocalWiFiConnection)
 		{
 			retVal = [self localWiFiStatusForFlags: flags];
 		}
@@ -760,13 +760,13 @@ static const SCNetworkReachabilityFlags kOnDemandConnection = kSCNetworkReachabi
 	NSAssert(reachabilityRef, @"isReachable called with NULL reachabilityRef");
 	
 	SCNetworkReachabilityFlags flags = 0;
-	CTNetworkStatus status = kNotReachable;
+	CTNetworkStatus status = kCTNotReachable;
 	
 	if (SCNetworkReachabilityGetFlags(reachabilityRef, &flags)) {
 		
 		logReachabilityFlags(flags);
 		
-		if(self.key == kLocalWiFiConnection) {
+		if(self.key == kCTLocalWiFiConnection) {
 			
 			status = [self localWiFiStatusForFlags: flags];
 			
@@ -776,7 +776,7 @@ static const SCNetworkReachabilityFlags kOnDemandConnection = kSCNetworkReachabi
 			
 		}
 		
-		return (kNotReachable != status);
+		return (kCTNotReachable != status);
 		
 	}
 	

@@ -4671,13 +4671,13 @@ static NSOperationQueue *sharedQueue = nil;
 + (void)registerForNetworkReachabilityNotifications
 {
 	[[CTReachability reachabilityForInternetConnection] startNotifier];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kCTReachabilityChangedNotification object:nil];
 }
 
 
 + (void)unsubscribeFromNetworkReachabilityNotifications
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCTReachabilityChangedNotification object:nil];
 }
 
 + (BOOL)isNetworkReachableViaWWAN
