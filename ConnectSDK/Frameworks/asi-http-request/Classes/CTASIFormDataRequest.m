@@ -108,7 +108,7 @@
 	BOOL isDirectory = NO;
 	BOOL fileExists = [[[[NSFileManager alloc] init] autorelease] fileExistsAtPath:filePath isDirectory:&isDirectory];
 	if (!fileExists || isDirectory) {
-		[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIInternalErrorWhileBuildingRequestType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"No file exists at %@",filePath],NSLocalizedDescriptionKey,nil]]];
+		[self failWithError:[NSError errorWithDomain:CTNetworkRequestErrorDomain code:ASIInternalErrorWhileBuildingRequestType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"No file exists at %@", filePath], NSLocalizedDescriptionKey, nil]]];
 	}
 
 	// If the caller didn't specify a custom file name, we'll use the file name of the file we were passed
