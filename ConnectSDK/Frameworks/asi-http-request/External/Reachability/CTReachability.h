@@ -8,7 +8,7 @@
 
 /*
  Significant additions made by Andrew W. Donoho, August 11, 2009.
- This is a derived work of Apple's Reachability v2.0 class.
+ This is a derived work of Apple's CTReachability v2.0 class.
  
  The below license is the new BSD license with the OSI recommended personalizations.
  <http://www.opensource.org/licenses/bsd-license.php>
@@ -47,7 +47,7 @@
 
 /*
  
- Apple's Original License on Reachability v2.0
+ Apple's Original License on CTReachability v2.0
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple Inc.
  ("Apple") in consideration of your agreement to the following terms, and your
@@ -107,23 +107,23 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <netinet/in.h>
 
-#define USE_DDG_EXTENSIONS 1 // Use DDG's Extensions to test network criteria.
+#define CT_USE_DDG_EXTENSIONS 1 // Use DDG's Extensions to test network criteria.
 // Since NSAssert and NSCAssert are used in this code, 
 // I recommend you set NS_BLOCK_ASSERTIONS=1 in the release versions of your projects.
 
 enum {
 	
-	// DDG NetworkStatus Constant Names.
+	// DDG CTNetworkStatus Constant Names.
 	kNotReachable = 0, // Apple's code depends upon 'NotReachable' being the same value as 'NO'.
 	kReachableViaWWAN, // Switched order from Apple's enum. WWAN is active before WiFi.
 	kReachableViaWiFi
 	
 };
-typedef	uint32_t NetworkStatus;
+typedef	uint32_t CTNetworkStatus;
 
 enum {
 	
-	// Apple NetworkStatus Constant Names.
+	// Apple CTNetworkStatus Constant Names.
 	NotReachable     = kNotReachable,
 	ReachableViaWiFi = kReachableViaWiFi,
 	ReachableViaWWAN = kReachableViaWWAN
@@ -135,7 +135,7 @@ extern NSString *const kInternetConnection;
 extern NSString *const kLocalWiFiConnection;
 extern NSString *const kReachabilityChangedNotification;
 
-@interface Reachability: NSObject {
+@interface CTReachability : NSObject {
 	
 @private
 	NSString                *key_;
@@ -146,30 +146,30 @@ extern NSString *const kReachabilityChangedNotification;
 @property (atomic, copy) NSString *key; // Atomic because network operations are asynchronous.
 
 // Designated Initializer.
-- (Reachability *) initWithReachabilityRef: (SCNetworkReachabilityRef) ref;
+- (CTReachability *) initWithReachabilityRef: (SCNetworkReachabilityRef) ref;
 
 // Use to check the reachability of a particular host name. 
-+ (Reachability *) reachabilityWithHostName: (NSString*) hostName;
++ (CTReachability *) reachabilityWithHostName: (NSString*) hostName;
 
 // Use to check the reachability of a particular IP address. 
-+ (Reachability *) reachabilityWithAddress: (const struct sockaddr_in*) hostAddress;
++ (CTReachability *) reachabilityWithAddress: (const struct sockaddr_in*) hostAddress;
 
 // Use to check whether the default route is available.  
 // Should be used to, at minimum, establish network connectivity.
-+ (Reachability *) reachabilityForInternetConnection;
++ (CTReachability *) reachabilityForInternetConnection;
 
 // Use to check whether a local wifi connection is available.
-+ (Reachability *) reachabilityForLocalWiFi;
++ (CTReachability *) reachabilityForLocalWiFi;
 
 //Start listening for reachability notifications on the current run loop.
 - (BOOL) startNotifier;
 - (void)  stopNotifier;
 
 // Comparison routines to enable choosing actions in a notification.
-- (BOOL) isEqual: (Reachability *) r;
+- (BOOL) isEqual: (CTReachability *) r;
 
 // These are the status tests.
-- (NetworkStatus) currentReachabilityStatus;
+- (CTNetworkStatus) currentReachabilityStatus;
 
 // The main direct test of reachability.
 - (BOOL) isReachable;

@@ -99,7 +99,7 @@
 		EA9AAFE8193F94F600B72990 /* CTASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9AAF9D193F94F600B72990 /* CTASIHTTPRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EA9AAFE9193F94F600B72990 /* CTASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9AAFA1193F94F600B72990 /* CTASIInputStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EA9AAFEA193F94F600B72990 /* CTASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9AAFA3193F94F600B72990 /* CTASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		EA9AB00B193F957800B72990 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9AB00A193F957800B72990 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		EA9AB00B193F957800B72990 /* CTReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9AB00A193F957800B72990 /* CTReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EAAA426C1937AD690072ABBF /* AirPlayServiceMirrored.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F74D76D7D96D4136929C8 /* AirPlayServiceMirrored.h */; };
 		EAAA426D1937AD690072ABBF /* AirPlayServiceHTTP.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F7C3C796FA0C8CD18C649 /* AirPlayServiceHTTP.h */; };
 		EAAA426E1937AD690072ABBF /* AirPlayService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F765C7443AC13CB37632E /* AirPlayService.h */; };
@@ -108,7 +108,7 @@
 		EAF5584C1979E11900230E05 /* ZeroConfDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F7C71326AB56D77F39095 /* ZeroConfDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EAF5584D1979E11900230E05 /* WebOSTVServiceSocketClient.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F760BBBC0E963F08D4CD1 /* WebOSTVServiceSocketClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EAF5584E1979E11900230E05 /* AirPlayWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F725D0F278CD7B78F1FC6 /* AirPlayWebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EAF5584F1979E11900230E05 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AB009193F957800B72990 /* Reachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAF5584F1979E11900230E05 /* CTReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AB009193F957800B72990 /* CTReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EAF558501979E11900230E05 /* CTASIAuthenticationDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAF91193F94F600B72990 /* CTASIAuthenticationDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EAF558511979E11900230E05 /* CTASICacheDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAF93193F94F600B72990 /* CTASICacheDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EAF558521979E11900230E05 /* CTASIDataCompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAF94193F94F600B72990 /* CTASIDataCompressor.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -543,8 +543,8 @@
 		EA9AAFA2193F94F600B72990 /* CTASINetworkQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTASINetworkQueue.h; sourceTree = "<group>"; };
 		EA9AAFA3193F94F600B72990 /* CTASINetworkQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTASINetworkQueue.m; sourceTree = "<group>"; };
 		EA9AAFA4193F94F600B72990 /* CTASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTASIProgressDelegate.h; sourceTree = "<group>"; };
-		EA9AB009193F957800B72990 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		EA9AB00A193F957800B72990 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		EA9AB009193F957800B72990 /* CTReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTReachability.h; sourceTree = "<group>"; };
+		EA9AB00A193F957800B72990 /* CTReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTReachability.m; sourceTree = "<group>"; };
 		EAD7F85D1906E98200B33AAB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		EAD7F85F1906E99C00B33AAB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -941,8 +941,8 @@
 		EA9AB008193F957800B72990 /* Reachability */ = {
 			isa = PBXGroup;
 			children = (
-				EA9AB009193F957800B72990 /* Reachability.h */,
-				EA9AB00A193F957800B72990 /* Reachability.m */,
+				EA9AB009193F957800B72990 /* CTReachability.h */,
+				EA9AB00A193F957800B72990 /* CTReachability.m */,
 			);
 			name = Reachability;
 			path = "asi-http-request/External/Reachability";
@@ -1025,7 +1025,7 @@
 				EAF5584C1979E11900230E05 /* ZeroConfDiscoveryProvider.h in Headers */,
 				EAF5584D1979E11900230E05 /* WebOSTVServiceSocketClient.h in Headers */,
 				EAF5584E1979E11900230E05 /* AirPlayWebAppSession.h in Headers */,
-				EAF5584F1979E11900230E05 /* Reachability.h in Headers */,
+				EAF5584F1979E11900230E05 /* CTReachability.h in Headers */,
 				EAF558501979E11900230E05 /* CTASIAuthenticationDialog.h in Headers */,
 				EAF558511979E11900230E05 /* CTASICacheDelegate.h in Headers */,
 				EAF558521979E11900230E05 /* CTASIDataCompressor.h in Headers */,
@@ -1168,7 +1168,7 @@
 				EA61EBB618FE48C500D75696 /* ExternalInputInfo.m in Sources */,
 				EA61EBBB18FE48C500D75696 /* ServiceAsyncCommand.m in Sources */,
 				EA9AAFEA193F94F600B72990 /* CTASINetworkQueue.m in Sources */,
-				EA9AB00B193F957800B72990 /* Reachability.m in Sources */,
+				EA9AB00B193F957800B72990 /* CTReachability.m in Sources */,
 				EA2AA69F196DB1A700799912 /* GCDWebServerRequest.m in Sources */,
 				EA61EBAB18FE48C500D75696 /* DevicePicker.m in Sources */,
 				EA61EBEA18FE48D400D75696 /* CTGuid.m in Sources */,
