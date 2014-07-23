@@ -10,8 +10,6 @@
 
 @implementation MultiScreenWebAppSession
 {
-    NSTimer *_connectTimer;
-
     ServiceSubscription *_playStateSubscription;
     NSMutableDictionary *_activeCommands;
 
@@ -151,26 +149,9 @@
     _channel = nil;
 }
 
-- (void) handleConnectTimeout:(NSTimer *)timer
-{
-    NSDictionary *userInfo = [timer userInfo];
+#pragma mark - WebAppSession methods
 
-    if (_connectTimer)
-    {
-        [_connectTimer invalidate];
-        _connectTimer = nil;
-    }
-
-    if (!userInfo || userInfo.count == 0)
-        return;
-
-    FailureBlock failure = (FailureBlock) userInfo[@"failure"];
-
-    if (failure)
-        failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Could not connect to web app, request timed out."]);
-}
-
-- (void) connectWithTimeout:(NSTimeInterval)timeout success:(SuccessBlock)success failure:(FailureBlock)failure
+- (void) connectWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
     if (!self.service || !self.service.device)
     {
@@ -183,30 +164,7 @@
     _activeCommands = [NSMutableDictionary new];
     _UID = 0;
 
-    if (_connectTimer)
-        [_connectTimer invalidate];
-
-    if (timeout > 0)
-    {
-        NSDictionary *timerInfo = (failure == nil) ? @{ } : @{ @"failure" : failure };
-        _connectTimer = [NSTimer scheduledTimerWithTimeInterval:kCTMultiScreenConnectTimeout target:self selector:@selector(handleConnectTimeout:) userInfo:timerInfo repeats:NO];
-    }
-
     [self.service.device connectToChannel:self.channelId completionBlock:^(MSChannel *channel, NSError *error) {
-        if (!_connectTimer)
-        {
-            if (timeout > 0)
-            {
-                [channel disconnectWithCompletionBlock:nil queue:nil];
-                return;
-            }
-        } else
-        {
-            [_connectTimer invalidate];
-            _connectTimer = nil;
-        }
-
-
         if (error || !channel)
         {
             if (!error)
@@ -227,16 +185,18 @@
     } queue:dispatch_get_main_queue()];
 }
 
-#pragma mark - WebAppSession methods
-
-- (void) connectWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
-{
-    [self connectWithTimeout:0 success:success failure:failure];
-}
-
 - (void) joinWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
 {
-    [self connectWithTimeout:kCTMultiScreenConnectTimeout success:success failure:failure];
+    [self.application updateStatusWithCompletionBlock:^(MS_APPLICATION_STATUS status, NSError *error) {
+        if (status == MS_APP_RUNNING)
+        {
+            [self connectWithSuccess:success failure:failure];
+        } else
+        {
+            if (failure)
+                failure([ConnectError generateErrorWithCode:ConnectStatusCodeError andDetails:@"Cannot join a web app that is not running"]);
+        }
+    } queue:dispatch_get_main_queue()];
 }
 
 - (void)sendText:(NSString *)message success:(SuccessBlock)success failure:(FailureBlock)failure
