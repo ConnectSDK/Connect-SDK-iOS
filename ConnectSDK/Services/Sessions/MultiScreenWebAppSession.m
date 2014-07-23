@@ -6,9 +6,12 @@
 #import "MultiScreenWebAppSession.h"
 #import "ConnectError.h"
 
+#define kCTMultiScreenConnectTimeout 3
 
 @implementation MultiScreenWebAppSession
 {
+    NSTimer *_connectTimer;
+
     ServiceSubscription *_playStateSubscription;
     NSMutableDictionary *_activeCommands;
 
@@ -259,6 +262,37 @@
         if (self.delegate && [self.delegate respondsToSelector:@selector(webAppSessionDidDisconnect:)])
             [self.delegate webAppSessionDidDisconnect:self];
     } queue:dispatch_get_main_queue()];
+}
+
+- (void) closeWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    if (self.channel && self.channel.isConnected)
+    {
+        // This is a hack to enable closing of bridged web apps that we didn't open
+        NSDictionary *closeCommand = @{
+                @"contentType" : @"connectsdk.serviceCommand",
+                @"serviceCommand" : @{
+                        @"type" : @"close"
+                }
+        };
+
+        [self sendJSON:closeCommand success:^(id responseObject)
+                {
+                    [self disconnectFromWebApp];
+
+                    if (success)
+                        success(responseObject);
+                } failure:^(NSError *closeError)
+                {
+                    [self disconnectFromWebApp];
+
+                    if (failure)
+                        failure(closeError);
+                }];
+    } else
+    {
+        [self.service.webAppLauncher closeWebApp:self.launchSession success:success failure:failure];
+    }
 }
 
 #pragma mark - MediaPlayer
