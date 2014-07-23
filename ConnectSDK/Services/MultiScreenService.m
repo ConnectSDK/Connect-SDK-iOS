@@ -102,12 +102,11 @@
 
 - (void) disconnect
 {
-    self.connected = NO;
-
     [_sessions enumerateKeysAndObjectsUsingBlock:^(id key, MultiScreenWebAppSession *session, BOOL *stop) {
-        if (session.channel && session.channel.isConnected && session.delegate)
-            dispatch_on_main(^{ [session.delegate webAppSessionDidDisconnect:session]; });
+        [session disconnectFromWebApp];
     }];
+
+    self.connected = NO;
 
     if (self.delegate && [self.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
         dispatch_on_main(^{ [self.delegate deviceService:self disconnectedWithError:nil]; });
