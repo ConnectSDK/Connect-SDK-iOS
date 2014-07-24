@@ -64,6 +64,7 @@
             kMediaControlSeek,
             kMediaControlPosition,
             kMediaControlPlayState,
+            kMediaControlPlayStateSubscribe,
 
             kWebAppLauncherLaunch,
             kWebAppLauncherLaunchParams,
