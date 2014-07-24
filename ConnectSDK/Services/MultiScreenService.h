@@ -13,6 +13,9 @@
 
 @interface MultiScreenService : DeviceService <MediaPlayer, WebAppLauncher>
 
+/*!
+ * Read-only reference to native Samsung MultiScreen device object.
+ */
 @property (nonatomic, readonly) MSDevice *device;
 
 @end
