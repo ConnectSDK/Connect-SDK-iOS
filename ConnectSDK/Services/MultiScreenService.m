@@ -330,22 +330,29 @@
                 failure(getError);
         } else
         {
-            [application terminateWithCompletionBlock:^(BOOL terminateSuccess, NSError *terminateError) {
-                if (terminateSuccess)
-                {
-                    [_sessions removeObjectForKey:launchSession.appId];
+            if (application.lastKnownStatus == MS_APP_RUNNING || application.lastKnownStatus == MS_APP_STARTING)
+            {
+                [application terminateWithCompletionBlock:^(BOOL terminateSuccess, NSError *terminateError) {
+                    if (terminateSuccess)
+                    {
+                        [_sessions removeObjectForKey:launchSession.appId];
 
-                    if (success)
-                        success(nil);
-                } else
-                {
-                    if (!terminateError)
-                        terminateError = [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@"Experienced an unknown error terminating app"];
+                        if (success)
+                            success(nil);
+                    } else
+                    {
+                        if (!terminateError)
+                            terminateError = [ConnectError generateErrorWithCode:ConnectStatusCodeTvError andDetails:@"Experienced an unknown error terminating app"];
 
-                    if (failure)
-                        failure(terminateError);
-                }
-            } queue:dispatch_get_main_queue()];
+                        if (failure)
+                            failure(terminateError);
+                    }
+                } queue:dispatch_get_main_queue()];
+            } else
+            {
+                if (success)
+                    success(nil);
+            }
         }
     } queue:dispatch_get_main_queue()];
 }
