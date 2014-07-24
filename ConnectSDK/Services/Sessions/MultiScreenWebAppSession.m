@@ -546,8 +546,8 @@
     if (!_playStateSubscription)
         _playStateSubscription = [ServiceSubscription subscriptionWithDelegate:nil target:nil payload:nil callId:-1];
 
-//    if (!self.connected)
-//        [self connectWithSuccess:nil failure:failure];
+    if (!self.channel || !self.channel.isConnected)
+        [self connectWithSuccess:nil failure:failure];
 
     if (![_playStateSubscription.successCalls containsObject:success])
         [_playStateSubscription addSuccess:success];
