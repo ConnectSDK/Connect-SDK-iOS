@@ -140,7 +140,7 @@
 
 - (void) displayImage:(NSURL *)imageURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    NSString *webAppId = @"ConnectSDKSampler";
+    NSString *webAppId = @"ConnectSDKMediaPlayer";
 
     [self.webAppLauncher joinWebAppWithId:webAppId success:^(WebAppSession *webAppSession) {
         [webAppSession.mediaPlayer displayImage:imageURL iconURL:iconURL title:title description:description mimeType:mimeType success:success failure:failure];
@@ -155,7 +155,7 @@
 
 - (void) playMedia:(NSURL *)mediaURL iconURL:(NSURL *)iconURL title:(NSString *)title description:(NSString *)description mimeType:(NSString *)mimeType shouldLoop:(BOOL)shouldLoop success:(MediaPlayerDisplaySuccessBlock)success failure:(FailureBlock)failure
 {
-    NSString *webAppId = @"ConnectSDKSampler";
+    NSString *webAppId = @"ConnectSDKMediaPlayer";
 
     [self.webAppLauncher joinWebAppWithId:webAppId success:^(WebAppSession *webAppSession) {
         [webAppSession.mediaPlayer playMedia:mediaURL iconURL:iconURL title:title description:description mimeType:mimeType shouldLoop:shouldLoop success:success failure:failure];
