@@ -24,7 +24,6 @@
 #import "DiscoveryProvider.h"
 
 #import "CastDiscoveryProvider.h"
-#import "MultiScreenDiscoveryProvider.h"
 #import "SSDPDiscoveryProvider.h"
 #import "ZeroConfDiscoveryProvider.h"
 
@@ -32,7 +31,6 @@
 #import "CastService.h"
 #import "DIALService.h"
 #import "DLNAService.h"
-#import "MultiScreenService.h"
 #import "NetcastTVService.h"
 #import "RokuService.h"
 #import "WebOSTVService.h"
@@ -135,7 +133,6 @@
     [self registerDeviceService:[CastService class] withDiscovery:[CastDiscoveryProvider class]];
     [self registerDeviceService:[DIALService class] withDiscovery:[SSDPDiscoveryProvider class]];
     [self registerDeviceService:[RokuService class] withDiscovery:[SSDPDiscoveryProvider  class]];
-    [self registerDeviceService:[MultiScreenService class] withDiscovery:[MultiScreenDiscoveryProvider class]];
     [self registerDeviceService:[DLNAService class] withDiscovery:[SSDPDiscoveryProvider class]];
     [self registerDeviceService:[NetcastTVService class] withDiscovery:[SSDPDiscoveryProvider class]];
     [self registerDeviceService:[WebOSTVService class] withDiscovery:[SSDPDiscoveryProvider class]];

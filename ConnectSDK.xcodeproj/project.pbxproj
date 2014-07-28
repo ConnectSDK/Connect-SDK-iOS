@@ -27,10 +27,7 @@
 		BB9F75C707C7D86EB1934BD5 /* ZeroConfDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F752184AD57C1730A2B40 /* ZeroConfDiscoveryProvider.m */; };
 		BB9F77CAA91F6D159BAC3C28 /* WebOSTVServiceSocketClient.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7EB7477EC3A22B5E3114 /* WebOSTVServiceSocketClient.m */; };
 		BB9F7C2660FBFFFDA89D5683 /* AirPlayServiceMirrored.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7C85F1073867229D87EA /* AirPlayServiceMirrored.m */; };
-		BB9F7CDB67FB3D8332D181B8 /* MultiScreenWebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7031A171ACD30560EDA0 /* MultiScreenWebAppSession.m */; };
-		BB9F7E608449C36E86D9B9A0 /* MultiScreenService.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F73670546E728070CDD81 /* MultiScreenService.m */; };
 		BB9F7ED4584DEA55E1EB958B /* AirPlayServiceHTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7960CFCF1CEA2AF317F0 /* AirPlayServiceHTTP.m */; };
-		BB9F7F752202B7FBD1E31649 /* MultiScreenDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F74ED2B2847524F1683A0 /* MultiScreenDiscoveryProvider.m */; };
 		EA2AA69C196DB1A700799912 /* GCDWebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2AA67F196DB1A700799912 /* GCDWebServer.m */; };
 		EA2AA69D196DB1A700799912 /* GCDWebServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2AA681196DB1A700799912 /* GCDWebServerConnection.m */; };
 		EA2AA69E196DB1A700799912 /* GCDWebServerFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2AA683196DB1A700799912 /* GCDWebServerFunctions.m */; };
@@ -44,7 +41,6 @@
 		EA2AA6A6196DB1A700799912 /* GCDWebServerErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2AA697196DB1A700799912 /* GCDWebServerErrorResponse.m */; };
 		EA2AA6A7196DB1A700799912 /* GCDWebServerFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2AA699196DB1A700799912 /* GCDWebServerFileResponse.m */; };
 		EA2AA6A8196DB1A700799912 /* GCDWebServerStreamedResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2AA69B196DB1A700799912 /* GCDWebServerStreamedResponse.m */; };
-		EA3730FA194F9B2E002A8EEA /* SamsungMultiscreen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA3730F9194F9B2E002A8EEA /* SamsungMultiscreen.framework */; };
 		EA3F17F81909AC3400EFAA6F /* AirPlayWebAppSession.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F725D0F278CD7B78F1FC6 /* AirPlayWebAppSession.h */; };
 		EA4F02C01953A75200D90E38 /* WebOSTVServiceSocketClient.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BB9F760BBBC0E963F08D4CD1 /* WebOSTVServiceSocketClient.h */; };
 		EA61EB1418FE485B00D75696 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1318FE485B00D75696 /* Foundation.framework */; };
@@ -121,9 +117,6 @@
 		EAF558591979E11900230E05 /* CTASIInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAFA0193F94F600B72990 /* CTASIInputStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EAF5585A1979E11900230E05 /* CTASINetworkQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAFA2193F94F600B72990 /* CTASINetworkQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EAF5585B1979E11900230E05 /* CTASIProgressDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA9AAFA4193F94F600B72990 /* CTASIProgressDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EAF5585C1979E1C500230E05 /* MultiScreenDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F75AFCA8C5D3CBC0D221B /* MultiScreenDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EAF5585D1979E1C500230E05 /* MultiScreenWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F7162575F886D1B3A63F1 /* MultiScreenWebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EAF5585E1979E1C500230E05 /* MultiScreenService.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F70542218D4E63AE948E9 /* MultiScreenService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EAF5585F1979E1C600230E05 /* GCDWebServer.h in Headers */ = {isa = PBXBuildFile; fileRef = EA2AA67E196DB1A700799912 /* GCDWebServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EAF558601979E1C600230E05 /* GCDWebServerConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = EA2AA680196DB1A700799912 /* GCDWebServerConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EAF558611979E1C600230E05 /* GCDWebServerFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = EA2AA682196DB1A700799912 /* GCDWebServerFunctions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -365,15 +358,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		BB9F7031A171ACD30560EDA0 /* MultiScreenWebAppSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiScreenWebAppSession.m; sourceTree = "<group>"; };
-		BB9F70542218D4E63AE948E9 /* MultiScreenService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiScreenService.h; sourceTree = "<group>"; };
-		BB9F7162575F886D1B3A63F1 /* MultiScreenWebAppSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiScreenWebAppSession.h; sourceTree = "<group>"; };
 		BB9F725D0F278CD7B78F1FC6 /* AirPlayWebAppSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayWebAppSession.h; sourceTree = "<group>"; };
-		BB9F73670546E728070CDD81 /* MultiScreenService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiScreenService.m; sourceTree = "<group>"; };
 		BB9F74D76D7D96D4136929C8 /* AirPlayServiceMirrored.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayServiceMirrored.h; sourceTree = "<group>"; };
-		BB9F74ED2B2847524F1683A0 /* MultiScreenDiscoveryProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiScreenDiscoveryProvider.m; sourceTree = "<group>"; };
 		BB9F752184AD57C1730A2B40 /* ZeroConfDiscoveryProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroConfDiscoveryProvider.m; sourceTree = "<group>"; };
-		BB9F75AFCA8C5D3CBC0D221B /* MultiScreenDiscoveryProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiScreenDiscoveryProvider.h; sourceTree = "<group>"; };
 		BB9F760BBBC0E963F08D4CD1 /* WebOSTVServiceSocketClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebOSTVServiceSocketClient.h; sourceTree = "<group>"; };
 		BB9F765C7443AC13CB37632E /* AirPlayService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayService.h; sourceTree = "<group>"; };
 		BB9F76C6A6C862002C9FB89D /* AirPlayWebAppSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayWebAppSession.m; sourceTree = "<group>"; };
@@ -411,7 +398,6 @@
 		EA2AA699196DB1A700799912 /* GCDWebServerFileResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerFileResponse.m; sourceTree = "<group>"; };
 		EA2AA69A196DB1A700799912 /* GCDWebServerStreamedResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerStreamedResponse.h; sourceTree = "<group>"; };
 		EA2AA69B196DB1A700799912 /* GCDWebServerStreamedResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerStreamedResponse.m; sourceTree = "<group>"; };
-		EA3730F9194F9B2E002A8EEA /* SamsungMultiscreen.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SamsungMultiscreen.framework; path = ConnectSDK/Frameworks/SamsungMultiscreen.framework; sourceTree = "<group>"; };
 		EA41388A18FE51A9002CB005 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		EA61EB1018FE485B00D75696 /* libConnectSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libConnectSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA61EB1318FE485B00D75696 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -559,7 +545,6 @@
 				EA61EBF218FE48EF00D75696 /* MobileCoreServices.framework in Frameworks */,
 				EA61EBF018FE48E900D75696 /* SystemConfiguration.framework in Frameworks */,
 				EA61EB1418FE485B00D75696 /* Foundation.framework in Frameworks */,
-				EA3730FA194F9B2E002A8EEA /* SamsungMultiscreen.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,7 +620,6 @@
 		EA61EB1218FE485B00D75696 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EA3730F9194F9B2E002A8EEA /* SamsungMultiscreen.framework */,
 				EAD7F85F1906E99C00B33AAB /* UIKit.framework */,
 				EAD7F85D1906E98200B33AAB /* AVFoundation.framework */,
 				EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */,
@@ -710,8 +694,6 @@
 				EA61EB5518FE48C500D75696 /* SSDPDiscoveryProvider.m */,
 				BB9F752184AD57C1730A2B40 /* ZeroConfDiscoveryProvider.m */,
 				BB9F7C71326AB56D77F39095 /* ZeroConfDiscoveryProvider.h */,
-				BB9F74ED2B2847524F1683A0 /* MultiScreenDiscoveryProvider.m */,
-				BB9F75AFCA8C5D3CBC0D221B /* MultiScreenDiscoveryProvider.h */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -767,8 +749,6 @@
 				EA61EBA818FE48C500D75696 /* WebOSTVService.m */,
 				BB9F786205D0DD1F8718CF96 /* AirPlayService.m */,
 				BB9F765C7443AC13CB37632E /* AirPlayService.h */,
-				BB9F73670546E728070CDD81 /* MultiScreenService.m */,
-				BB9F70542218D4E63AE948E9 /* MultiScreenService.h */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -854,8 +834,6 @@
 				EA61EBA618FE48C500D75696 /* WebOSWebAppSession.m */,
 				BB9F76C6A6C862002C9FB89D /* AirPlayWebAppSession.m */,
 				BB9F725D0F278CD7B78F1FC6 /* AirPlayWebAppSession.h */,
-				BB9F7031A171ACD30560EDA0 /* MultiScreenWebAppSession.m */,
-				BB9F7162575F886D1B3A63F1 /* MultiScreenWebAppSession.h */,
 			);
 			path = Sessions;
 			sourceTree = "<group>";
@@ -1037,9 +1015,6 @@
 				EAF558581979E11900230E05 /* CTASIHTTPRequestDelegate.h in Headers */,
 				EAF558591979E11900230E05 /* CTASIInputStream.h in Headers */,
 				EAF5585A1979E11900230E05 /* CTASINetworkQueue.h in Headers */,
-				EAF5585C1979E1C500230E05 /* MultiScreenDiscoveryProvider.h in Headers */,
-				EAF5585D1979E1C500230E05 /* MultiScreenWebAppSession.h in Headers */,
-				EAF5585E1979E1C500230E05 /* MultiScreenService.h in Headers */,
 				EAF5585F1979E1C600230E05 /* GCDWebServer.h in Headers */,
 				EAF558601979E1C600230E05 /* GCDWebServerConnection.h in Headers */,
 				EAF558611979E1C600230E05 /* GCDWebServerFunctions.h in Headers */,
@@ -1210,9 +1185,6 @@
 				EA2AA6A1196DB1A700799912 /* GCDWebServerDataRequest.m in Sources */,
 				EA2AA69C196DB1A700799912 /* GCDWebServer.m in Sources */,
 				BB9F77CAA91F6D159BAC3C28 /* WebOSTVServiceSocketClient.m in Sources */,
-				BB9F7E608449C36E86D9B9A0 /* MultiScreenService.m in Sources */,
-				BB9F7F752202B7FBD1E31649 /* MultiScreenDiscoveryProvider.m in Sources */,
-				BB9F7CDB67FB3D8332D181B8 /* MultiScreenWebAppSession.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
