@@ -31,4 +31,6 @@
 @property (nonatomic) GCKApplicationMetadata *metadata;
 @property (nonatomic, readonly) CastServiceChannel *castServiceChannel;
 
+- (void) _handleAppClose;
+
 @end

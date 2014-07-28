@@ -225,12 +225,12 @@
     if (!_currentAppId)
         return;
 
-    WebAppSession *webAppSession = [_sessions objectForKey:_currentAppId];
+    CastWebAppSession *webAppSession = [_sessions objectForKey:_currentAppId];
 
-    if (!webAppSession || !webAppSession.delegate)
+    if (!webAppSession)
         return;
 
-    [webAppSession.delegate webAppSessionDidDisconnect:webAppSession];
+    [webAppSession _handleAppClose];
 }
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didFailToConnectToApplicationWithError:(NSError *)error
