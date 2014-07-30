@@ -394,8 +394,15 @@
 
     if (failure)
         [_launchFailureBlocks setObject:failure forKey:mediaAppId];
-
-    BOOL result = [_castDeviceManager launchApplication:mediaAppId relaunchIfRunning:NO];
+    
+    BOOL relaunchIfRunning = NO;
+    
+    if (_castDeviceManager.isConnectedToApp && [mediaAppId isEqualToString:_currentAppId])
+        relaunchIfRunning = NO;
+    else
+        relaunchIfRunning = YES;
+    
+    BOOL result = [_castDeviceManager launchApplication:mediaAppId relaunchIfRunning:relaunchIfRunning];
 
     if (!result)
     {
