@@ -21,7 +21,7 @@
 #import <Foundation/Foundation.h>
 #import "JSONObjectCoding.h"
 
-@interface ServiceDescription : NSObject <JSONObjectCoding>
+@interface ServiceDescription : NSObject <JSONObjectCoding, NSCopying>
 
 @property (nonatomic, strong) NSString *address;
 @property (nonatomic, strong) NSString *serviceId;

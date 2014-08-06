@@ -171,4 +171,12 @@
  */
 @property (nonatomic, readonly) BOOL useDeviceStore;
 
+// @cond INTERNAL
+
+@property (nonatomic, readonly) NSDictionary *deviceClasses;
+
+@property (nonatomic, readonly) NSArray *discoveryProviders;
+
+// @endcond
+
 @end

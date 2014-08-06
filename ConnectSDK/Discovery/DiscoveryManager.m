@@ -53,9 +53,6 @@
     NSMutableDictionary *_allDevices;
     NSMutableDictionary *_compatibleDevices;
 
-    NSArray *_discoveryProviders;
-    NSDictionary *_deviceClasses;
-    
     BOOL _shouldResumeSearch;
     BOOL _searching;
     
@@ -136,7 +133,8 @@
     [self registerDeviceService:[CastService class] withDiscovery:[CastDiscoveryProvider class]];
     [self registerDeviceService:[DIALService class] withDiscovery:[SSDPDiscoveryProvider class]];
     [self registerDeviceService:[RokuService class] withDiscovery:[SSDPDiscoveryProvider  class]];
-    [self registerDeviceService:[DLNAService class] withDiscovery:[SSDPDiscoveryProvider class]]; // includes Netcast
+    [self registerDeviceService:[DLNAService class] withDiscovery:[SSDPDiscoveryProvider class]];
+    [self registerDeviceService:[NetcastTVService class] withDiscovery:[SSDPDiscoveryProvider class]];
     [self registerDeviceService:[WebOSTVService class] withDiscovery:[SSDPDiscoveryProvider class]];
 }
 
@@ -331,7 +329,7 @@
     {
         if ([description.modelDescription.uppercaseString rangeOfString:@"WEBOS"].location == NSNotFound)
         {
-            isNetcast = YES;
+            isNetcast = [description.serviceId isEqualToString:kConnectSDKNetcastTVServiceId];
         }
     }
 
@@ -470,9 +468,6 @@
 {
     DLog(@"%@ (%@)", description.friendlyName, description.serviceId);
 
-    if ([description.friendlyName isEqualToString:@"A SDK webOS TV"] && [description.serviceId isEqualToString:@"DLNA"])
-        NSLog(@"break");
-
     BOOL deviceIsNew = [_allDevices objectForKey:description.address] == nil;
     ConnectableDevice *device;
 
@@ -557,24 +552,22 @@
 
 - (void) addServiceDescription:(ServiceDescription *)description toDevice:(ConnectableDevice *)device
 {
-    Class deviceServiceClass;
-
-    if ([self descriptionIsNetcastTV:description])
-    {
-        deviceServiceClass = [NetcastTVService class];
-        description.serviceId = [[NetcastTVService discoveryParameters] objectForKey:@"serviceId"];
-    } else
-    {
-        deviceServiceClass = [_deviceClasses objectForKey:description.serviceId];
-    }
+    Class deviceServiceClass = [_deviceClasses objectForKey:description.serviceId];
 
     // Prevent non-LG TV DLNA devices from being picked up
     if (deviceServiceClass == [DLNAService class])
     {
+        if (!description.locationXML)
+            return;
+
         NSRange rangeOfNetcast = [description.locationXML.lowercaseString rangeOfString:@"netcast"];
         NSRange rangeOfWebOS = [description.locationXML.lowercaseString rangeOfString:@"webos"];
 
         if (rangeOfNetcast.location == NSNotFound && rangeOfWebOS.location == NSNotFound)
+            return;
+    } else if (deviceServiceClass == [NetcastTVService class])
+    {
+        if (![self descriptionIsNetcastTV:description])
             return;
     }
 
@@ -621,7 +614,7 @@
     }
 
     DeviceService *deviceService = [DeviceService deviceServiceWithClass:deviceServiceClass serviceConfig:serviceConfig];
-    deviceService.serviceDescription = description;
+    [deviceService setServiceDescription:description];
     [device addService:deviceService];
 }
 

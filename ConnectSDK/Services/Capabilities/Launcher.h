@@ -118,9 +118,9 @@ typedef void (^ AppStateSuccessBlock)(BOOL running, BOOL visible);
 
 #pragma mark Helpers for deep linking
 - (void)launchAppStore:(NSString *)appId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure;
-
 - (void)launchBrowser:(NSURL *)target success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure;
 - (void)launchYouTube:(NSString *)contentId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure;
+- (void)launchYouTube:(NSString *)contentId startTime:(float)startTime success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure;
 
 // TODO: add app store deep linking
 

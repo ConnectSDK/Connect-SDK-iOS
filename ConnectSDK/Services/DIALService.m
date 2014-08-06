@@ -20,9 +20,9 @@
 
 #import "DIALService.h"
 #import "ConnectError.h"
-#import "XMLReader.h"
+#import "CTXMLReader.h"
 #import "DeviceServiceReachability.h"
-#import "Guid.h"
+#import "CTGuid.h"
 
 static NSMutableArray *registeredApps = nil;
 
@@ -270,7 +270,7 @@ static NSMutableArray *registeredApps = nil;
             if (statusOK)
             {
                 NSError *xmlError;
-                NSDictionary *responseXML = [XMLReader dictionaryForXMLData:data error:&xmlError];
+                NSDictionary *responseXML = [CTXMLReader dictionaryForXMLData:data error:&xmlError];
 
                 DLog(@"[IN] : %@", responseXML);
 
@@ -404,13 +404,26 @@ static NSMutableArray *registeredApps = nil;
 
 - (void)launchYouTube:(NSString *)contentId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
+    [self.launcher launchYouTube:contentId startTime:0.0 success:success failure:failure];
+}
+
+- (void) launchYouTube:(NSString *)contentId startTime:(float)startTime success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
     NSString *params;
 
     if (contentId && contentId.length > 0) {
-        // YouTube on some platforms requires a pairing code, which may be a random string
-        NSString *pairingCode = [[Guid randomGuid] stringValue];
+        if (startTime < 0.0)
+        {
+            if (failure)
+                failure([ConnectError generateErrorWithCode:ConnectStatusCodeArgumentError andDetails:@"Start time may not be negative"]);
 
-        params = [NSString stringWithFormat:@"pairingCode=%@&v=%@&t=0.0", pairingCode, contentId];
+            return;
+        }
+
+        // YouTube on some platforms requires a pairing code, which may be a random string
+        NSString *pairingCode = [[CTGuid randomGuid] stringValue];
+
+        params = [NSString stringWithFormat:@"pairingCode=%@&v=%@&t=%.1f", pairingCode, contentId, startTime];
     }
 
     AppInfo *appInfo = [AppInfo appInfoForId:@"YouTube"];

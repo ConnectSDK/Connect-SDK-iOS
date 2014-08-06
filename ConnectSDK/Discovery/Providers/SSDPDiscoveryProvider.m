@@ -22,7 +22,8 @@
 #import "SSDPDiscoveryProvider.h"
 #import "ServiceDescription.h"
 #import "SSDPSocketListener.h"
-#import "XMLReader.h"
+#import "CTXMLReader.h"
+#import "DeviceService.h"
 
 #import <sys/utsname.h>
 
@@ -208,10 +209,7 @@ static double searchAttemptsBeforeKill = 3.0;
                 {
                     ServiceDescription *service = [_foundServices objectForKey:key];
 
-                    dispatch_async(dispatch_get_main_queue(), ^
-                    {
-                        [self.delegate discoveryProvider:self didLoseService:service];
-                    });
+                    [self notifyDelegateOfLostService:service];
 
                     [_foundServices removeObjectForKey:key];
                 }];
@@ -306,10 +304,7 @@ static double searchAttemptsBeforeKill = 3.0;
 
                         if (theService != nil)
                         {
-                            dispatch_async(dispatch_get_main_queue(), ^
-                            {
-                                [self.delegate discoveryProvider:self didLoseService:theService];
-                            });
+                            [self notifyDelegateOfLostService:theService];
 
                             [_foundServices removeObjectForKey:theUUID];
 
@@ -374,7 +369,7 @@ static double searchAttemptsBeforeKill = 3.0;
     NSURLRequest *request = [NSURLRequest requestWithURL:req];
     [NSURLConnection sendAsynchronousRequest:request queue:_locationLoadQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         NSError *xmlError;
-        NSDictionary *xml = [XMLReader dictionaryForXMLData:data error:&xmlError];
+        NSDictionary *xml = [CTXMLReader dictionaryForXMLData:data error:&xmlError];
 
         if (!xmlError)
         {
@@ -392,7 +387,6 @@ static double searchAttemptsBeforeKill = 3.0;
 
                     if (service)
                     {
-                        service.serviceId = [self serviceIdForFilter:theType];
                         service.type = theType;
                         service.friendlyName = friendlyName;
                         service.modelName = [[device objectForKey:@"modelName"] objectForKey:@"text"];
@@ -405,15 +399,37 @@ static double searchAttemptsBeforeKill = 3.0;
 
                         @synchronized(_foundServices) { [_foundServices setObject:service forKey:UUID]; }
 
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self.delegate discoveryProvider:self didFindService:service];
-                        });
+                        [self notifyDelegateOfNewService:service];
                     }
                 }
             }
         }
         
         @synchronized(_helloDevices) { [_helloDevices removeObjectForKey:UUID]; }
+    }];
+}
+
+- (void) notifyDelegateOfNewService:(ServiceDescription *)service
+{
+    NSArray *serviceIds = [self serviceIdsForFilter:service.type];
+
+    [serviceIds enumerateObjectsUsingBlock:^(NSString *serviceId, NSUInteger idx, BOOL *stop) {
+        ServiceDescription *newService = [service copy];
+        newService.serviceId = serviceId;
+
+        dispatch_on_main(^{ [self.delegate discoveryProvider:self didFindService:newService]; });
+    }];
+}
+
+- (void) notifyDelegateOfLostService:(ServiceDescription *)service
+{
+    NSArray *serviceIds = [self serviceIdsForFilter:service.type];
+
+    [serviceIds enumerateObjectsUsingBlock:^(NSString *serviceId, NSUInteger idx, BOOL *stop) {
+        ServiceDescription *newService = [service copy];
+        newService.serviceId = serviceId;
+
+        dispatch_on_main(^{ [self.delegate discoveryProvider:self didLoseService:newService]; });
     }];
 }
 
@@ -488,21 +504,18 @@ static double searchAttemptsBeforeKill = 3.0;
     return deviceHasAllServices;
 }
 
-- (NSString *) serviceIdForFilter:(NSString *)filter
+- (NSArray *) serviceIdsForFilter:(NSString *)filter
 {
-    __block NSString *serviceId;
+    __block NSMutableArray *serviceIds = [NSMutableArray new];
     
     [_serviceFilters enumerateObjectsUsingBlock:^(NSDictionary *serviceFilter, NSUInteger idx, BOOL *stop) {
         NSString *ssdpFilter = [[serviceFilter objectForKey:@"ssdp"] objectForKey:@"filter"];
         
         if ([ssdpFilter isEqualToString:filter])
-        {
-            serviceId = [serviceFilter objectForKey:@"serviceId"];
-            *stop = YES;
-        }
+            [serviceIds addObject:[serviceFilter objectForKey:@"serviceId"]];
     }];
     
-    return serviceId;
+    return [NSArray arrayWithArray:serviceIds];
 }
 
 - (void) performBlock:(void (^)())block afterDelay:(NSTimeInterval)delay

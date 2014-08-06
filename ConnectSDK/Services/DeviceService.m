@@ -37,9 +37,9 @@
 
 + (NSDictionary *) discoveryParameters { return nil; }
 
-+ (instancetype) deviceServiceWithClass:(Class)class serviceConfig:(ServiceConfig *)serviceConfig
++ (instancetype) deviceServiceWithClass:(Class)_class serviceConfig:(ServiceConfig *)serviceConfig
 {
-    return [[class alloc] initWithServiceConfig:serviceConfig];
+    return [[_class alloc] initWithServiceConfig:serviceConfig];
 }
 
 - (instancetype) init

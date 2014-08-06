@@ -20,7 +20,7 @@
 
 #import "RokuService.h"
 #import "ConnectError.h"
-#import "XMLReader.h"
+#import "CTXMLReader.h"
 #import "ConnectUtil.h"
 #import "DeviceServiceReachability.h"
 
@@ -314,12 +314,17 @@ static NSMutableArray *registeredApps = nil;
 
 - (void)launchYouTube:(NSString *)contentId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
+    [self launchYouTube:contentId startTime:0.0 success:success failure:failure];
+}
+
+- (void) launchYouTube:(NSString *)contentId startTime:(float)startTime success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
     if (self.dialService)
-        [self.dialService.launcher launchYouTube:contentId success:success failure:failure];
+        [self.dialService.launcher launchYouTube:contentId startTime:startTime success:success failure:failure];
     else
     {
         if (failure)
-            failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:nil]);
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:@"Cannot reach DIAL service for launching with provided start time"]);
     }
 }
 
@@ -393,7 +398,7 @@ static NSMutableArray *registeredApps = nil;
     command.callbackComplete = ^(NSString *responseObject)
     {
         NSError *xmlError;
-        NSDictionary *appListDictionary = [XMLReader dictionaryForXMLString:responseObject error:&xmlError];
+        NSDictionary *appListDictionary = [CTXMLReader dictionaryForXMLString:responseObject error:&xmlError];
 
         if (!xmlError)
         {

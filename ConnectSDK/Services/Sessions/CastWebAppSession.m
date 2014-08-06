@@ -70,6 +70,19 @@
     _castServiceChannel = nil;
 }
 
+- (void) _handleAppClose
+{
+    if (_playStateSubscription)
+    {
+        [_playStateSubscription.successCalls enumerateObjectsUsingBlock:^(MediaPlayStateSuccessBlock success, NSUInteger idx, BOOL *stop) {
+            success(MediaControlPlayStateIdle);
+        }];
+    }
+
+    if (self.delegate)
+        [self.delegate webAppSessionDidDisconnect:self];
+}
+
 #pragma mark - ServiceCommandDelegate
 
 - (int)sendSubscription:(ServiceSubscription *)subscription type:(ServiceSubscriptionType)type payload:(id)payload toURL:(NSURL *)URL withId:(int)callId

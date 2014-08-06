@@ -38,6 +38,9 @@
 
 - (void) startDiscovery
 {
+    if (self.isRunning)
+        return;
+
     if (!_netServiceBrowser)
     {
         _netServiceBrowser = [[NSNetServiceBrowser alloc] init];
@@ -50,12 +53,17 @@
     _resolvingDevices = [NSMutableDictionary new];
     _discoveredDevices = [NSMutableDictionary new];
 
+    self.isRunning = YES;
+
     _refreshTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(searchForServices) userInfo:nil repeats:YES];
     [_refreshTimer fire];
 }
 
 - (void) stopDiscovery
 {
+    if (!self.isRunning)
+        return;
+
     if (_netServiceBrowser)
         [_netServiceBrowser stop];
 
@@ -64,6 +72,8 @@
         [_refreshTimer invalidate];
         _refreshTimer = nil;
     }
+
+    self.isRunning = NO;
 
     _resolvingDevices = [NSMutableDictionary new];
     _discoveredDevices = [NSMutableDictionary new];
@@ -143,11 +153,7 @@
 
     DLog(@"%@", aNetService.name);
 
-    NSString *serviceId = [self serviceIdFromFilter:aNetService.type];
-
-    ServiceDescription *serviceDescription = [ServiceDescription descriptionWithAddress:@"0.0.0.0" UUID:aNetService.name];
-    serviceDescription.friendlyName = aNetService.name;
-    serviceDescription.serviceId = serviceId;
+    ServiceDescription *serviceDescription = _discoveredDevices[aNetService.name];
 
     [_discoveredDevices removeObjectForKey:aNetService.name];
 

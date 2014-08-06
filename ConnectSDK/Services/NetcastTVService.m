@@ -20,8 +20,9 @@
 
 #import "NetcastTVService.h"
 #import "ConnectError.h"
-#import "XMLReader.h"
+#import "CTXMLReader.h"
 #import "GCDWebServer.h"
+#import "GCDWebServerDataRequest.h"
 #import "ConnectUtil.h"
 #import "DeviceServiceReachability.h"
 
@@ -103,8 +104,6 @@ NSString *lgeUDAPRequestURI[8] = {
     if (self)
     {
         [self setServiceConfig:serviceConfig];
-
-        [self commonConfig];
     }
 
     return self;
@@ -416,7 +415,7 @@ NSString *lgeUDAPRequestURI[8] = {
                                            GCDWebServerDataRequest *dataRequest = (GCDWebServerDataRequest *)request;
 
                                            NSError *xmlError;
-                                           NSDictionary *responseXML = [XMLReader dictionaryForXMLData:dataRequest.data error:&xmlError];
+                                           NSDictionary *responseXML = [CTXMLReader dictionaryForXMLData:dataRequest.data error:&xmlError];
 
                                            if (!xmlError)
                                            {
@@ -600,7 +599,7 @@ NSString *lgeUDAPRequestURI[8] = {
                     } else
                     {
                         NSError *xmlError;
-                        NSDictionary *responseDic = [XMLReader dictionaryForXMLData:data error:&xmlError];
+                        NSDictionary *responseDic = [CTXMLReader dictionaryForXMLData:data error:&xmlError];
 
                         if (xmlError || !responseDic)
                         {
@@ -704,7 +703,7 @@ NSString *lgeUDAPRequestURI[8] = {
     {
         NSString *xmlString = self.dlnaService.serviceDescription.locationXML;
         NSError *xmlError;
-        NSDictionary *xml = [XMLReader dictionaryForXMLString:xmlString error:&xmlError];
+        NSDictionary *xml = [CTXMLReader dictionaryForXMLString:xmlString error:&xmlError];
 
         if (!xmlError)
         {
@@ -1008,20 +1007,31 @@ NSString *lgeUDAPRequestURI[8] = {
 
 - (void)launchYouTube:(NSString *)contentId success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
 {
-    // TODO: fix this launch through DIAL
+    [self.launcher launchYouTube:contentId startTime:0.0 success:success failure:failure];
+}
+
+- (void) launchYouTube:(NSString *)contentId startTime:(float)startTime success:(AppLaunchSuccessBlock)success failure:(FailureBlock)failure
+{
     if (self.dialService)
     {
-        [self.dialService.launcher launchYouTube:contentId success:success failure:failure];
+        [self.dialService.launcher launchYouTube:contentId startTime:startTime success:success failure:failure];
         return;
     }
 
-    [self getAppInfoForId:@"YouTube" success:^(AppInfo *appInfo)
+    if (startTime <= 0.0)
     {
-        [[appInfo.rawData objectForKey:@"cpid"] setObject:contentId forKey:@"text"];
+        [self getAppInfoForId:@"YouTube" success:^(AppInfo *appInfo)
+        {
+            [[appInfo.rawData objectForKey:@"cpid"] setObject:contentId forKey:@"text"];
 
-        if (success)
-            [self launchAppWithInfo:appInfo success:success failure:failure];
-    } failure:failure];
+            if (success)
+                [self launchAppWithInfo:appInfo success:success failure:failure];
+        } failure:failure];
+    } else
+    {
+        if (failure)
+            failure([ConnectError generateErrorWithCode:ConnectStatusCodeNotSupported andDetails:@"Cannot reach DIAL service for launching with provided start time"]);
+    }
 }
 
 - (void)closeApplicationWithName:(NSString *)appId success:(SuccessBlock)success failure:(FailureBlock)failure

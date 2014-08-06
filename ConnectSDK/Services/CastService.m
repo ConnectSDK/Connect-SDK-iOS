@@ -225,12 +225,12 @@
     if (!_currentAppId)
         return;
 
-    WebAppSession *webAppSession = [_sessions objectForKey:_currentAppId];
+    CastWebAppSession *webAppSession = [_sessions objectForKey:_currentAppId];
 
-    if (!webAppSession || !webAppSession.delegate)
+    if (!webAppSession)
         return;
 
-    [webAppSession.delegate webAppSessionDidDisconnect:webAppSession];
+    [webAppSession _handleAppClose];
 }
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didFailToConnectToApplicationWithError:(NSError *)error
@@ -394,8 +394,15 @@
 
     if (failure)
         [_launchFailureBlocks setObject:failure forKey:mediaAppId];
-
-    BOOL result = [_castDeviceManager launchApplication:mediaAppId relaunchIfRunning:NO];
+    
+    BOOL relaunchIfRunning = NO;
+    
+    if (_castDeviceManager.isConnectedToApp && [mediaAppId isEqualToString:_currentAppId])
+        relaunchIfRunning = NO;
+    else
+        relaunchIfRunning = YES;
+    
+    BOOL result = [_castDeviceManager launchApplication:mediaAppId relaunchIfRunning:relaunchIfRunning];
 
     if (!result)
     {
