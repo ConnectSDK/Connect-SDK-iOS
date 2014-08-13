@@ -23,7 +23,7 @@
 
 /* Begin PBXBuildFile section */
 		EA5F82F0199BDA2100B7302B /* ConnectSDKDefaultPlatforms.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5F82EF199BD95800B7302B /* ConnectSDKDefaultPlatforms.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5F82F4199BDCD300B7302B /* ConnectSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5F82F3199BDCD300B7302B /* ConnectSDK.h */; };
+		EA5F82F4199BDCD300B7302B /* ConnectSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5F82F3199BDCD300B7302B /* ConnectSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA5FB86D199AEC550057B4B4 /* ConnectSDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB79E199AEC550057B4B4 /* ConnectSDK-Prefix.pch */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA5FB86E199AEC550057B4B4 /* ConnectableDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7A0199AEC550057B4B4 /* ConnectableDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA5FB86F199AEC550057B4B4 /* ConnectableDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7A1199AEC550057B4B4 /* ConnectableDevice.m */; };
@@ -916,7 +916,6 @@
 				EA5FB87F199AEC550057B4B4 /* SSDPDiscoveryProvider.h in Headers */,
 				EA5FB8E9199AEC570057B4B4 /* ServiceDescription.h in Headers */,
 				EA5FB900199AEC570057B4B4 /* AirPlayWebAppSession.h in Headers */,
-				EA5F82F4199BDCD300B7302B /* ConnectSDK.h in Headers */,
 				EA5FB904199AEC570057B4B4 /* WebAppSession.h in Headers */,
 				EA5FB8FE199AEC570057B4B4 /* RokuService.h in Headers */,
 				EA5FB894199AEC560057B4B4 /* CTASINetworkQueue.h in Headers */,
@@ -955,6 +954,7 @@
 				EA5FB902199AEC570057B4B4 /* LaunchSession.h in Headers */,
 				EA5FB8B7199AEC560057B4B4 /* LGSRWebSocket.h in Headers */,
 				EA5FB8B3199AEC560057B4B4 /* GCDWebServerStreamedResponse.h in Headers */,
+				EA5F82F4199BDCD300B7302B /* ConnectSDK.h in Headers */,
 				EA5F82F0199BDA2100B7302B /* ConnectSDKDefaultPlatforms.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
