@@ -22,7 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		EA5FB86C199AEC550057B4B4 /* ConnectSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB79B199AEC550057B4B4 /* ConnectSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EA5F82F2199BDB7000B7302B /* ConnectSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5F82F1199BDB7000B7302B /* ConnectSDK.h */; };
 		EA5FB86D199AEC550057B4B4 /* ConnectSDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB79E199AEC550057B4B4 /* ConnectSDK-Prefix.pch */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA5FB86E199AEC550057B4B4 /* ConnectableDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7A0199AEC550057B4B4 /* ConnectableDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA5FB86F199AEC550057B4B4 /* ConnectableDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7A1199AEC550057B4B4 /* ConnectableDevice.m */; };
@@ -226,7 +226,7 @@
 
 /* Begin PBXFileReference section */
 		EA41388A18FE51A9002CB005 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		EA5FB79B199AEC550057B4B4 /* ConnectSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectSDK.h; sourceTree = "<group>"; };
+		EA5F82F1199BDB7000B7302B /* ConnectSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConnectSDK.h; path = "../../Connect-SDK-iOS-Core/ConnectSDK.h"; sourceTree = "<group>"; };
 		EA5FB79E199AEC550057B4B4 /* ConnectSDK-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConnectSDK-Prefix.pch"; sourceTree = "<group>"; };
 		EA5FB7A0199AEC550057B4B4 /* ConnectableDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectableDevice.h; sourceTree = "<group>"; };
 		EA5FB7A1199AEC550057B4B4 /* ConnectableDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectableDevice.m; sourceTree = "<group>"; };
@@ -427,7 +427,6 @@
 		EA5FB799199AEC2E0057B4B4 /* Connect SDK */ = {
 			isa = PBXGroup;
 			children = (
-				EA5FB79B199AEC550057B4B4 /* ConnectSDK.h */,
 				EA5FB79C199AEC550057B4B4 /* core */,
 				EA5FB859199AEC550057B4B4 /* modules */,
 			);
@@ -437,6 +436,7 @@
 		EA5FB79C199AEC550057B4B4 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				EA5F82F1199BDB7000B7302B /* ConnectSDK.h */,
 				EA5FB79E199AEC550057B4B4 /* ConnectSDK-Prefix.pch */,
 				EA5FB79F199AEC550057B4B4 /* Devices */,
 				EA5FB7A9199AEC550057B4B4 /* Discovery */,
@@ -854,7 +854,6 @@
 				EA5FB8A9199AEC560057B4B4 /* GCDWebServerMultiPartFormRequest.h in Headers */,
 				EA5FB891199AEC560057B4B4 /* CTASIHTTPRequestDelegate.h in Headers */,
 				EA5FB8B9199AEC560057B4B4 /* CTXMLReader.h in Headers */,
-				EA5FB86C199AEC550057B4B4 /* ConnectSDK.h in Headers */,
 				EA5FB8FC199AEC570057B4B4 /* NetcastTVService.h in Headers */,
 				EA5FB8C5199AEC560057B4B4 /* ExternalInputInfo.h in Headers */,
 				EA5FB87E199AEC550057B4B4 /* DiscoveryProviderDelegate.h in Headers */,
@@ -914,6 +913,7 @@
 				EA5FB87F199AEC550057B4B4 /* SSDPDiscoveryProvider.h in Headers */,
 				EA5FB8E9199AEC570057B4B4 /* ServiceDescription.h in Headers */,
 				EA5FB900199AEC570057B4B4 /* AirPlayWebAppSession.h in Headers */,
+				EA5F82F2199BDB7000B7302B /* ConnectSDK.h in Headers */,
 				EA5FB904199AEC570057B4B4 /* WebAppSession.h in Headers */,
 				EA5FB8FE199AEC570057B4B4 /* RokuService.h in Headers */,
 				EA5FB894199AEC560057B4B4 /* CTASINetworkQueue.h in Headers */,
