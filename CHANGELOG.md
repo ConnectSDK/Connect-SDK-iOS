@@ -1,5 +1,23 @@
 # Connect SDK iOS Changelog
 
+## 1.4.0 -- TBD
+
+- Modularized project to allow easy exclusion of modules that have heavy and/or external dependencies
+- Miscellaneous bug fixes
+- [See commits between 1.3.2 and 1.4.0](https://github.com/ConnectSDK/Connect-SDK-iOS/compare/1.3.2...1.4.0)
+
+[View files at version 1.4.0](https://github.com/ConnectSDK/Connect-SDK-iOS/tree/1.4.0)
+
+## 1.3.2 -- 6 Aug 2014
+
+- Added launchYouTube:startTime:success:failure: api to Launcher capability
+- Added "CT" prefix to most bundled libraries
+- Decoupled Netcast and DLNA services
+- Miscellaneous bug fixes
+- [See commits between 1.3.1 and 1.3.2](https://github.com/ConnectSDK/Connect-SDK-iOS/compare/1.3.1...1.3.2)
+
+[View files at version 1.3.2](https://github.com/ConnectSDK/Connect-SDK-iOS/tree/1.3.2)
+
 ## 1.3.1 -- 14 July 2014
 
 - Added ability to prevent DeviceService disconnection on background state

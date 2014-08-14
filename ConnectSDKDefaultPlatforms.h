@@ -1,8 +1,8 @@
 //
-//  DIALService.h
+//  ConnectSDKDefaultPlatforms.h
 //  Connect SDK
 //
-//  Created by Jeremy White on 12/13/13.
+//  Created by Jeremy White on 8/13/14.
 //  Copyright (c) 2014 LG Electronics.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,13 +18,17 @@
 //  limitations under the License.
 //
 
-#define kConnectSDKDIALServiceId @"DIAL"
+#ifndef kConnectSDKDefaultPlatforms
 
-#import "ConnectSDK.h"
-#import "Launcher.h"
+#define kConnectSDKDefaultPlatforms @{ \
+    @"AirPlayService"     : @"ZeroConfDiscoveryProvider", \
+    @"DIALService"        : @"SSDPDiscoveryProvider", \
+    @"DLNAService"        : @"SSDPDiscoveryProvider", \
+    @"NetcastTVService"   : @"SSDPDiscoveryProvider", \
+    @"RokuService"        : @"SSDPDiscoveryProvider", \
+    @"WebOSTVService"     : @"SSDPDiscoveryProvider", \
+    @"CastService"        : @"CastDiscoveryProvider", \
+    @"MultiScreenService" : @"MultiScreenDiscoveryProvider" \
+}
 
-@interface DIALService : DeviceService <ServiceCommandDelegate, Launcher>
-
-+ (void) registerApp:(NSString *)appId;
-
-@end
+#endif

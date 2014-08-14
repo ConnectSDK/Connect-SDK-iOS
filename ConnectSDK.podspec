@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "ConnectSDK"
-  s.version      = "1.3.1"
+  s.version      = "1.3.2"
   s.summary      = "Connect SDK is an open source framework that connects your mobile apps with multiple TV platforms."
 
   s.description  = <<-DESC
@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.platform     = :ios, "6.0"
   s.ios.deployment_target = "6.0"
-  s.source       = { :git => "https://github.com/ConnectSDK/Connect-SDK-iOS.git", :tag => "1.3.1" }
+  s.source       = { :git => "https://github.com/ConnectSDK/Connect-SDK-iOS.git", :tag => "1.3.2" }
 
   non_arc_files =
     "ConnectSDK/Frameworks/asi-http-request/External/Reachability/*.{h,m}",
@@ -41,7 +41,7 @@ Pod::Spec.new do |s|
   s.framework = "GoogleCast"
   s.libraries = "z", "icucore"
   s.prefix_header_contents = <<-PREFIX
-                                  #define CONNECT_SDK_VERSION @"1.3.1"
+                                  #define CONNECT_SDK_VERSION @"1.3.2"
 
                                   // Uncomment this line to enable SDK logging
                                   //#define CONNECT_SDK_ENABLE_LOG
