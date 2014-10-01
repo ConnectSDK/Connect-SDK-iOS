@@ -59,8 +59,8 @@ Pod::Spec.new do |s|
                                PREFIX
 
   s.xcconfig = {
-      "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.3.0-Release",
+      "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.4.0-Release",
       "OTHER_LDFLAGS" => "$(inherited) -ObjC"
   }
-  s.dependency "google-cast-sdk", "2.3.0.1"
+  s.dependency "google-cast-sdk", "2.4.0"
 end

@@ -1234,6 +1234,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/modules/**",
+					"$(PROJECT_DIR)/modules/google-cast",
+					"$(PROJECT_DIR)/modules/samsung-multiscreen",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
@@ -1258,6 +1260,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/modules/**",
+					"$(PROJECT_DIR)/modules/google-cast",
+					"$(PROJECT_DIR)/modules/samsung-multiscreen",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
