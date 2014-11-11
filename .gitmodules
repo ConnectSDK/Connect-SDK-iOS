@@ -6,4 +6,4 @@
 	url = https://github.com/ConnectSDK/Connect-SDK-iOS-Samsung-MultiScreen.git
 [submodule "core"]
 	path = core
-	url = https://github.com/ConnectSDK/Connect-SDK-iOS-Core.git
+	url = https://github.com/eunikolsky/Connect-SDK-iOS-Core.git
