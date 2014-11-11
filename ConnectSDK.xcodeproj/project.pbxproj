@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		4480857F1A12A7BE00E13938 /* ConnectSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4480857E1A12A7BE00E13938 /* ConnectSDKTests.m */; };
 		BB9F706B1155B806AFBF3336 /* DLNAHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F703F509283F37E26C0B4 /* DLNAHTTPServer.m */; };
 		BB9F712900733DE480F64D8E /* DLNAHTTPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F7271D17DCAE1C615A59A /* DLNAHTTPServer.h */; };
 		BB9F726F85973936620CDADD /* MediaInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F735CB760F4387DDA84B4 /* MediaInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -210,6 +211,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		448085811A12A7BE00E13938 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA61EB0818FE485B00D75696 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA61EB0F18FE485B00D75696;
+			remoteInfo = ConnectSDK;
+		};
 		EECAED56193F612100D31F61 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EA61EB0818FE485B00D75696 /* Project object */;
@@ -232,6 +240,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4480857A1A12A7BE00E13938 /* ConnectSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConnectSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4480857D1A12A7BE00E13938 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4480857E1A12A7BE00E13938 /* ConnectSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConnectSDKTests.m; sourceTree = "<group>"; };
 		BB9F703F509283F37E26C0B4 /* DLNAHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLNAHTTPServer.m; sourceTree = "<group>"; };
 		BB9F71B68553DCA74ED1C43E /* ImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageInfo.h; sourceTree = "<group>"; };
 		BB9F7271D17DCAE1C615A59A /* DLNAHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLNAHTTPServer.h; sourceTree = "<group>"; };
@@ -423,21 +434,48 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		448085771A12A7BE00E13938 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				448085801A12A7BE00E13938 /* libConnectSDK.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EA61EB0D18FE485B00D75696 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4485140D1A02FC3200D66710 /* GoogleCast.framework in Frameworks */,
 				EAD7F8601906E99C00B33AAB /* UIKit.framework in Frameworks */,
 				EAD7F85E1906E98200B33AAB /* AVFoundation.framework in Frameworks */,
 				EA61EBF218FE48EF00D75696 /* MobileCoreServices.framework in Frameworks */,
 				EA61EBF018FE48E900D75696 /* SystemConfiguration.framework in Frameworks */,
 				EA61EB1418FE485B00D75696 /* Foundation.framework in Frameworks */,
+				4485140B1A02FC2D00D66710 /* SamsungMultiscreen.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4480857B1A12A7BE00E13938 /* ConnectSDKTests */ = {
+			isa = PBXGroup;
+			children = (
+				4480857E1A12A7BE00E13938 /* ConnectSDKTests.m */,
+				4480857C1A12A7BE00E13938 /* Supporting Files */,
+			);
+			path = ConnectSDKTests;
+			sourceTree = "<group>";
+		};
+		4480857C1A12A7BE00E13938 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4480857D1A12A7BE00E13938 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		EA5FB799199AEC2E0057B4B4 /* Connect SDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -459,6 +497,7 @@
 				EA5FB7B9199AEC550057B4B4 /* Frameworks */,
 				EA5FB802199AEC550057B4B4 /* Helpers */,
 				EA5FB816199AEC550057B4B4 /* Services */,
+				4480857B1A12A7BE00E13938 /* ConnectSDKTests */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -847,6 +886,7 @@
 			isa = PBXGroup;
 			children = (
 				EA61EB1018FE485B00D75696 /* libConnectSDK.a */,
+				4480857A1A12A7BE00E13938 /* ConnectSDKTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -983,6 +1023,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		448085791A12A7BE00E13938 /* ConnectSDKTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 448085851A12A7BE00E13938 /* Build configuration list for PBXNativeTarget "ConnectSDKTests" */;
+			buildPhases = (
+				448085761A12A7BE00E13938 /* Sources */,
+				448085771A12A7BE00E13938 /* Frameworks */,
+				448085781A12A7BE00E13938 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				448085821A12A7BE00E13938 /* PBXTargetDependency */,
+			);
+			name = ConnectSDKTests;
+			productName = ConnectSDKTests;
+			productReference = 4480857A1A12A7BE00E13938 /* ConnectSDKTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		EA61EB0F18FE485B00D75696 /* ConnectSDK */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA61EB3318FE485B00D75696 /* Build configuration list for PBXNativeTarget "ConnectSDK" */;
@@ -1010,6 +1068,11 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "LG Electronics";
+				TargetAttributes = {
+					448085791A12A7BE00E13938 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
 			};
 			buildConfigurationList = EA61EB0B18FE485B00D75696 /* Build configuration list for PBXProject "ConnectSDK" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1025,9 +1088,20 @@
 			targets = (
 				EA61EB0F18FE485B00D75696 /* ConnectSDK */,
 				EECAED52193F611900D31F61 /* Framework */,
+				448085791A12A7BE00E13938 /* ConnectSDKTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		448085781A12A7BE00E13938 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		EECAED51193F60C900D31F61 /* ShellScript */ = {
@@ -1059,6 +1133,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		448085761A12A7BE00E13938 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4480857F1A12A7BE00E13938 /* ConnectSDKTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EA61EB0C18FE485B00D75696 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1143,6 +1225,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		448085821A12A7BE00E13938 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA61EB0F18FE485B00D75696 /* ConnectSDK */;
+			targetProxy = 448085811A12A7BE00E13938 /* PBXContainerItemProxy */;
+		};
 		EECAED57193F612100D31F61 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EA61EB0F18FE485B00D75696 /* ConnectSDK */;
@@ -1162,6 +1249,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		448085831A12A7BE00E13938 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = core/ConnectSDKTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		448085841A12A7BE00E13938 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = core/ConnectSDKTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		EA61EB3118FE485B00D75696 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1304,6 +1429,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		448085851A12A7BE00E13938 /* Build configuration list for PBXNativeTarget "ConnectSDKTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				448085831A12A7BE00E13938 /* Debug */,
+				448085841A12A7BE00E13938 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		EA61EB0B18FE485B00D75696 /* Build configuration list for PBXProject "ConnectSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
