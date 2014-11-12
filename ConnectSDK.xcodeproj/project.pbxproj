@@ -44,6 +44,7 @@
 		44EF619E1A12E7B200CF344C /* SSDPDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7B4199AEC550057B4B4 /* SSDPDiscoveryProvider.m */; };
 		44EF619F1A12E81F00CF344C /* ZeroConfDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7B6199AEC550057B4B4 /* ZeroConfDiscoveryProvider.m */; };
 		44EF61A01A12E82700CF344C /* CastDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB85D199AEC550057B4B4 /* CastDiscoveryProvider.m */; };
+		44EF61A41A12FC8800CF344C /* SSDPDiscoveryProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44EF61A31A12FC8800CF344C /* SSDPDiscoveryProviderTests.m */; };
 		BB9F706B1155B806AFBF3336 /* DLNAHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F703F509283F37E26C0B4 /* DLNAHTTPServer.m */; };
 		BB9F712900733DE480F64D8E /* DLNAHTTPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F7271D17DCAE1C615A59A /* DLNAHTTPServer.h */; };
 		BB9F726F85973936620CDADD /* MediaInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F735CB760F4387DDA84B4 /* MediaInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -269,6 +270,7 @@
 		44EF618E1A12E0A400CF344C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		44EF61971A12E1C800CF344C /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
 		44EF619A1A12E23200CF344C /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		44EF61A31A12FC8800CF344C /* SSDPDiscoveryProviderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSDPDiscoveryProviderTests.m; sourceTree = "<group>"; };
 		BB9F703F509283F37E26C0B4 /* DLNAHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLNAHTTPServer.m; sourceTree = "<group>"; };
 		BB9F71B68553DCA74ED1C43E /* ImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageInfo.h; sourceTree = "<group>"; };
 		BB9F7271D17DCAE1C615A59A /* DLNAHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLNAHTTPServer.h; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 			isa = PBXGroup;
 			children = (
 				4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */,
+				44EF61A11A12FC5000CF344C /* Discovery */,
 				44EF618C1A12DF2D00CF344C /* ConnectSDKTests-Prefix.pch */,
 				4480857C1A12A7BE00E13938 /* Supporting Files */,
 			);
@@ -508,6 +511,22 @@
 				4480857D1A12A7BE00E13938 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		44EF61A11A12FC5000CF344C /* Discovery */ = {
+			isa = PBXGroup;
+			children = (
+				44EF61A21A12FC5000CF344C /* Providers */,
+			);
+			path = Discovery;
+			sourceTree = "<group>";
+		};
+		44EF61A21A12FC5000CF344C /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				44EF61A31A12FC8800CF344C /* SSDPDiscoveryProviderTests.m */,
+			);
+			path = Providers;
 			sourceTree = "<group>";
 		};
 		EA5FB799199AEC2E0057B4B4 /* Connect SDK */ = {
@@ -1179,6 +1198,7 @@
 				44EF618A1A12DBED00CF344C /* DLNAService.m in Sources */,
 				44EF61941A12E16300CF344C /* MultiScreenService.m in Sources */,
 				44EF619D1A12E29500CF344C /* RokuService.m in Sources */,
+				44EF61A41A12FC8800CF344C /* SSDPDiscoveryProviderTests.m in Sources */,
 				4480857F1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m in Sources */,
 				44EF61911A12E0ED00CF344C /* AirPlayService.m in Sources */,
 				44EF61901A12E0E900CF344C /* DIALService.m in Sources */,
