@@ -22,7 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		4480857F1A12A7BE00E13938 /* ConnectSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4480857E1A12A7BE00E13938 /* ConnectSDKTests.m */; };
+		4480857F1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */; };
 		448085801A12A7BE00E13938 /* libConnectSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1018FE485B00D75696 /* libConnectSDK.a */; };
 		4485140B1A02FC2D00D66710 /* SamsungMultiscreen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4485140A1A02FC2D00D66710 /* SamsungMultiscreen.framework */; };
 		4485140D1A02FC3200D66710 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4485140C1A02FC3200D66710 /* GoogleCast.framework */; };
@@ -262,7 +262,7 @@
 /* Begin PBXFileReference section */
 		4480857A1A12A7BE00E13938 /* ConnectSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConnectSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4480857D1A12A7BE00E13938 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4480857E1A12A7BE00E13938 /* ConnectSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConnectSDKTests.m; sourceTree = "<group>"; };
+		4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConnectSDKDefaultPlatformsTests.m; sourceTree = "<group>"; };
 		4485140A1A02FC2D00D66710 /* SamsungMultiscreen.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SamsungMultiscreen.framework; sourceTree = "<group>"; };
 		4485140C1A02FC3200D66710 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleCast.framework; sourceTree = "<group>"; };
 		44EF618C1A12DF2D00CF344C /* ConnectSDKTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConnectSDKTests-Prefix.pch"; sourceTree = "<group>"; };
@@ -495,7 +495,7 @@
 		4480857B1A12A7BE00E13938 /* ConnectSDKTests */ = {
 			isa = PBXGroup;
 			children = (
-				4480857E1A12A7BE00E13938 /* ConnectSDKTests.m */,
+				4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */,
 				44EF618C1A12DF2D00CF344C /* ConnectSDKTests-Prefix.pch */,
 				4480857C1A12A7BE00E13938 /* Supporting Files */,
 			);
@@ -1179,7 +1179,7 @@
 				44EF618A1A12DBED00CF344C /* DLNAService.m in Sources */,
 				44EF61941A12E16300CF344C /* MultiScreenService.m in Sources */,
 				44EF619D1A12E29500CF344C /* RokuService.m in Sources */,
-				4480857F1A12A7BE00E13938 /* ConnectSDKTests.m in Sources */,
+				4480857F1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m in Sources */,
 				44EF61911A12E0ED00CF344C /* AirPlayService.m in Sources */,
 				44EF61901A12E0E900CF344C /* DIALService.m in Sources */,
 				44EF619C1A12E27800CF344C /* WebOSTVService.m in Sources */,
