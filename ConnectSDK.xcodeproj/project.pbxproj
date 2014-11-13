@@ -22,28 +22,19 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		446271DA1A14179500DE27A9 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 446271D91A14179500DE27A9 /* OCMock.framework */; };
 		4480857F1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */; };
 		448085801A12A7BE00E13938 /* libConnectSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1018FE485B00D75696 /* libConnectSDK.a */; };
 		4485140B1A02FC2D00D66710 /* SamsungMultiscreen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4485140A1A02FC2D00D66710 /* SamsungMultiscreen.framework */; };
 		4485140D1A02FC3200D66710 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4485140C1A02FC3200D66710 /* GoogleCast.framework */; };
-		44EF618A1A12DBED00CF344C /* DLNAService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB83F199AEC550057B4B4 /* DLNAService.m */; };
 		44EF618B1A12DC7E00CF344C /* ConnectSDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB79E199AEC550057B4B4 /* ConnectSDK-Prefix.pch */; };
 		44EF618D1A12E02700CF344C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
 		44EF618F1A12E0A400CF344C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EF618E1A12E0A400CF344C /* libz.dylib */; };
-		44EF61901A12E0E900CF344C /* DIALService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB83D199AEC550057B4B4 /* DIALService.m */; };
-		44EF61911A12E0ED00CF344C /* AirPlayService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB818199AEC550057B4B4 /* AirPlayService.m */; };
 		44EF61921A12E10500CF344C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBEF18FE48E900D75696 /* SystemConfiguration.framework */; };
-		44EF61931A12E16000CF344C /* CastService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB85F199AEC550057B4B4 /* CastService.m */; };
-		44EF61941A12E16300CF344C /* MultiScreenService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB869199AEC550057B4B4 /* MultiScreenService.m */; };
 		44EF61951A12E18D00CF344C /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4485140C1A02FC3200D66710 /* GoogleCast.framework */; };
 		44EF61961A12E1A000CF344C /* SamsungMultiscreen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4485140A1A02FC2D00D66710 /* SamsungMultiscreen.framework */; };
 		44EF61981A12E1C800CF344C /* MediaAccessibility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EF61971A12E1C800CF344C /* MediaAccessibility.framework */; };
 		44EF619B1A12E23200CF344C /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EF619A1A12E23200CF344C /* libicucore.dylib */; };
-		44EF619C1A12E27800CF344C /* WebOSTVService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB858199AEC550057B4B4 /* WebOSTVService.m */; };
-		44EF619D1A12E29500CF344C /* RokuService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB84C199AEC550057B4B4 /* RokuService.m */; };
-		44EF619E1A12E7B200CF344C /* SSDPDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7B4199AEC550057B4B4 /* SSDPDiscoveryProvider.m */; };
-		44EF619F1A12E81F00CF344C /* ZeroConfDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7B6199AEC550057B4B4 /* ZeroConfDiscoveryProvider.m */; };
-		44EF61A01A12E82700CF344C /* CastDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB85D199AEC550057B4B4 /* CastDiscoveryProvider.m */; };
 		44EF61A41A12FC8800CF344C /* SSDPDiscoveryProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44EF61A31A12FC8800CF344C /* SSDPDiscoveryProviderTests.m */; };
 		BB9F706B1155B806AFBF3336 /* DLNAHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F703F509283F37E26C0B4 /* DLNAHTTPServer.m */; };
 		BB9F712900733DE480F64D8E /* DLNAHTTPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F7271D17DCAE1C615A59A /* DLNAHTTPServer.h */; };
@@ -261,6 +252,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		442B9A431A153F240053AE51 /* SSDPDiscoveryProvider_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSDPDiscoveryProvider_Private.h; sourceTree = "<group>"; };
+		446271D91A14179500DE27A9 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = OCMock/OCMock.framework; sourceTree = "<group>"; };
 		4480857A1A12A7BE00E13938 /* ConnectSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConnectSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4480857D1A12A7BE00E13938 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConnectSDKDefaultPlatformsTests.m; sourceTree = "<group>"; };
@@ -470,6 +463,7 @@
 				44EF61951A12E18D00CF344C /* GoogleCast.framework in Frameworks */,
 				44EF61961A12E1A000CF344C /* SamsungMultiscreen.framework in Frameworks */,
 				44EF61981A12E1C800CF344C /* MediaAccessibility.framework in Frameworks */,
+				446271DA1A14179500DE27A9 /* OCMock.framework in Frameworks */,
 				44EF618D1A12E02700CF344C /* MobileCoreServices.framework in Frameworks */,
 				44EF61921A12E10500CF344C /* SystemConfiguration.framework in Frameworks */,
 				44EF619B1A12E23200CF344C /* libicucore.dylib in Frameworks */,
@@ -591,6 +585,7 @@
 			isa = PBXGroup;
 			children = (
 				EA5FB7B3199AEC550057B4B4 /* SSDPDiscoveryProvider.h */,
+				442B9A431A153F240053AE51 /* SSDPDiscoveryProvider_Private.h */,
 				EA5FB7B4199AEC550057B4B4 /* SSDPDiscoveryProvider.m */,
 				EA5FB7B5199AEC550057B4B4 /* ZeroConfDiscoveryProvider.h */,
 				EA5FB7B6199AEC550057B4B4 /* ZeroConfDiscoveryProvider.m */,
@@ -601,6 +596,7 @@
 		EA5FB7B9199AEC550057B4B4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				446271D91A14179500DE27A9 /* OCMock.framework */,
 				EA5FB7BA199AEC550057B4B4 /* asi-http-request */,
 				EA5FB7D5199AEC550057B4B4 /* CGDWebServer */,
 				EA5FB7F6199AEC550057B4B4 /* objc-guid */,
@@ -1195,18 +1191,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44EF618A1A12DBED00CF344C /* DLNAService.m in Sources */,
-				44EF61941A12E16300CF344C /* MultiScreenService.m in Sources */,
-				44EF619D1A12E29500CF344C /* RokuService.m in Sources */,
 				44EF61A41A12FC8800CF344C /* SSDPDiscoveryProviderTests.m in Sources */,
 				4480857F1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m in Sources */,
-				44EF61911A12E0ED00CF344C /* AirPlayService.m in Sources */,
-				44EF61901A12E0E900CF344C /* DIALService.m in Sources */,
-				44EF619C1A12E27800CF344C /* WebOSTVService.m in Sources */,
-				44EF619F1A12E81F00CF344C /* ZeroConfDiscoveryProvider.m in Sources */,
-				44EF619E1A12E7B200CF344C /* SSDPDiscoveryProvider.m in Sources */,
-				44EF61A01A12E82700CF344C /* CastDiscoveryProvider.m in Sources */,
-				44EF61931A12E16000CF344C /* CastService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1328,6 +1314,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/samsung-multiscreen",
+					"$(PROJECT_DIR)/core/Frameworks/OCMock",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKTests/ConnectSDKTests-Prefix.pch";
@@ -1339,6 +1326,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1353,6 +1346,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/samsung-multiscreen",
+					"$(PROJECT_DIR)/core/Frameworks/OCMock",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKTests/ConnectSDKTests-Prefix.pch";
@@ -1360,6 +1354,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
