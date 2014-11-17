@@ -22,7 +22,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		446271DA1A14179500DE27A9 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 446271D91A14179500DE27A9 /* OCMock.framework */; };
+		442B9A4D1A16F6260053AE51 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 442B9A481A16F61E0053AE51 /* OCMock.framework */; };
+		442B9A501A16F6F00053AE51 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 442B9A4F1A16F6F00053AE51 /* OHHTTPStubs.framework */; };
+		442B9A521A16FFB50053AE51 /* ssdp_device_description.xml in Resources */ = {isa = PBXBuildFile; fileRef = 442B9A511A16FFB50053AE51 /* ssdp_device_description.xml */; };
 		4480857F1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */; };
 		448085801A12A7BE00E13938 /* libConnectSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1018FE485B00D75696 /* libConnectSDK.a */; };
 		4485140B1A02FC2D00D66710 /* SamsungMultiscreen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4485140A1A02FC2D00D66710 /* SamsungMultiscreen.framework */; };
@@ -253,7 +255,9 @@
 
 /* Begin PBXFileReference section */
 		442B9A431A153F240053AE51 /* SSDPDiscoveryProvider_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSDPDiscoveryProvider_Private.h; sourceTree = "<group>"; };
-		446271D91A14179500DE27A9 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = OCMock/OCMock.framework; sourceTree = "<group>"; };
+		442B9A481A16F61E0053AE51 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OCMock.framework; sourceTree = "<group>"; };
+		442B9A4F1A16F6F00053AE51 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OHHTTPStubs.framework; sourceTree = "<group>"; };
+		442B9A511A16FFB50053AE51 /* ssdp_device_description.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description.xml; sourceTree = "<group>"; };
 		4480857A1A12A7BE00E13938 /* ConnectSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConnectSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4480857D1A12A7BE00E13938 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConnectSDKDefaultPlatformsTests.m; sourceTree = "<group>"; };
@@ -463,9 +467,10 @@
 				44EF61951A12E18D00CF344C /* GoogleCast.framework in Frameworks */,
 				44EF61961A12E1A000CF344C /* SamsungMultiscreen.framework in Frameworks */,
 				44EF61981A12E1C800CF344C /* MediaAccessibility.framework in Frameworks */,
-				446271DA1A14179500DE27A9 /* OCMock.framework in Frameworks */,
+				442B9A4D1A16F6260053AE51 /* OCMock.framework in Frameworks */,
 				44EF618D1A12E02700CF344C /* MobileCoreServices.framework in Frameworks */,
 				44EF61921A12E10500CF344C /* SystemConfiguration.framework in Frameworks */,
+				442B9A501A16F6F00053AE51 /* OHHTTPStubs.framework in Frameworks */,
 				44EF619B1A12E23200CF344C /* libicucore.dylib in Frameworks */,
 				44EF618F1A12E0A400CF344C /* libz.dylib in Frameworks */,
 			);
@@ -488,6 +493,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		442B9A471A16F61E0053AE51 /* OCMock */ = {
+			isa = PBXGroup;
+			children = (
+				442B9A481A16F61E0053AE51 /* OCMock.framework */,
+			);
+			path = OCMock;
+			sourceTree = "<group>";
+		};
+		442B9A491A16F61E0053AE51 /* OHHTTPStubs */ = {
+			isa = PBXGroup;
+			children = (
+				442B9A4F1A16F6F00053AE51 /* OHHTTPStubs.framework */,
+			);
+			path = OHHTTPStubs;
+			sourceTree = "<group>";
+		};
 		4480857B1A12A7BE00E13938 /* ConnectSDKTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -518,6 +539,7 @@
 		44EF61A21A12FC5000CF344C /* Providers */ = {
 			isa = PBXGroup;
 			children = (
+				442B9A511A16FFB50053AE51 /* ssdp_device_description.xml */,
 				44EF61A31A12FC8800CF344C /* SSDPDiscoveryProviderTests.m */,
 			);
 			path = Providers;
@@ -596,10 +618,11 @@
 		EA5FB7B9199AEC550057B4B4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				446271D91A14179500DE27A9 /* OCMock.framework */,
 				EA5FB7BA199AEC550057B4B4 /* asi-http-request */,
 				EA5FB7D5199AEC550057B4B4 /* CGDWebServer */,
 				EA5FB7F6199AEC550057B4B4 /* objc-guid */,
+				442B9A471A16F61E0053AE51 /* OCMock */,
+				442B9A491A16F61E0053AE51 /* OHHTTPStubs */,
 				EA5FB7FA199AEC550057B4B4 /* SocketRocket */,
 				EA5FB7FE199AEC550057B4B4 /* XMLReader */,
 			);
@@ -1152,6 +1175,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				442B9A521A16FFB50053AE51 /* ssdp_device_description.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1315,6 +1339,7 @@
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/samsung-multiscreen",
 					"$(PROJECT_DIR)/core/Frameworks/OCMock",
+					"$(PROJECT_DIR)/core/Frameworks/OHHTTPStubs",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKTests/ConnectSDKTests-Prefix.pch";
@@ -1347,6 +1372,7 @@
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/samsung-multiscreen",
 					"$(PROJECT_DIR)/core/Frameworks/OCMock",
+					"$(PROJECT_DIR)/core/Frameworks/OHHTTPStubs",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKTests/ConnectSDKTests-Prefix.pch";
@@ -1446,6 +1472,8 @@
 					"$(PROJECT_DIR)/modules/**",
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/samsung-multiscreen",
+					"$(PROJECT_DIR)/core/Frameworks/OCMock",
+					"$(PROJECT_DIR)/core/Frameworks/OHHTTPStubs",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
@@ -1472,6 +1500,8 @@
 					"$(PROJECT_DIR)/modules/**",
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/samsung-multiscreen",
+					"$(PROJECT_DIR)/core/Frameworks/OCMock",
+					"$(PROJECT_DIR)/core/Frameworks/OHHTTPStubs",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
