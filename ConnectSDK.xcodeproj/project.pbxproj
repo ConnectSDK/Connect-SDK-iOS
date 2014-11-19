@@ -29,6 +29,7 @@
 		448085801A12A7BE00E13938 /* libConnectSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1018FE485B00D75696 /* libConnectSDK.a */; };
 		4485140B1A02FC2D00D66710 /* SamsungMultiscreen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4485140A1A02FC2D00D66710 /* SamsungMultiscreen.framework */; };
 		4485140D1A02FC3200D66710 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4485140C1A02FC3200D66710 /* GoogleCast.framework */; };
+		448F36C51A1BD64200536649 /* ZeroConfDiscoveryProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 448F36C41A1BD64200536649 /* ZeroConfDiscoveryProviderTests.m */; };
 		44EF618B1A12DC7E00CF344C /* ConnectSDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB79E199AEC550057B4B4 /* ConnectSDK-Prefix.pch */; };
 		44EF618D1A12E02700CF344C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
 		44EF618F1A12E0A400CF344C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EF618E1A12E0A400CF344C /* libz.dylib */; };
@@ -263,6 +264,8 @@
 		4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConnectSDKDefaultPlatformsTests.m; sourceTree = "<group>"; };
 		4485140A1A02FC2D00D66710 /* SamsungMultiscreen.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SamsungMultiscreen.framework; sourceTree = "<group>"; };
 		4485140C1A02FC3200D66710 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleCast.framework; sourceTree = "<group>"; };
+		448F36C41A1BD64200536649 /* ZeroConfDiscoveryProviderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroConfDiscoveryProviderTests.m; sourceTree = "<group>"; };
+		448F36C61A1C16FE00536649 /* ZeroConfDiscoveryProvider_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZeroConfDiscoveryProvider_Private.h; sourceTree = "<group>"; };
 		44EF618C1A12DF2D00CF344C /* ConnectSDKTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConnectSDKTests-Prefix.pch"; sourceTree = "<group>"; };
 		44EF618E1A12E0A400CF344C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		44EF61971A12E1C800CF344C /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
@@ -541,6 +544,7 @@
 			children = (
 				442B9A511A16FFB50053AE51 /* ssdp_device_description.xml */,
 				44EF61A31A12FC8800CF344C /* SSDPDiscoveryProviderTests.m */,
+				448F36C41A1BD64200536649 /* ZeroConfDiscoveryProviderTests.m */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -610,6 +614,7 @@
 				442B9A431A153F240053AE51 /* SSDPDiscoveryProvider_Private.h */,
 				EA5FB7B4199AEC550057B4B4 /* SSDPDiscoveryProvider.m */,
 				EA5FB7B5199AEC550057B4B4 /* ZeroConfDiscoveryProvider.h */,
+				448F36C61A1C16FE00536649 /* ZeroConfDiscoveryProvider_Private.h */,
 				EA5FB7B6199AEC550057B4B4 /* ZeroConfDiscoveryProvider.m */,
 			);
 			path = Providers;
@@ -1217,6 +1222,7 @@
 			files = (
 				44EF61A41A12FC8800CF344C /* SSDPDiscoveryProviderTests.m in Sources */,
 				4480857F1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m in Sources */,
+				448F36C51A1BD64200536649 /* ZeroConfDiscoveryProviderTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
