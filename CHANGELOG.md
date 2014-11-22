@@ -1,5 +1,13 @@
 # Connect SDK iOS Changelog
 
+## 1.4.0 -- TBD
+
+- Modularized project to allow easy exclusion of modules that have heavy and/or external dependencies
+- Miscellaneous bug fixes
+- [See commits between 1.3.2 and 1.4.0](https://github.com/ConnectSDK/Connect-SDK-iOS/compare/1.3.2...1.4.0)
+
+[View files at version 1.4.0](https://github.com/ConnectSDK/Connect-SDK-iOS/tree/1.4.0)
+
 ## 1.3.2 -- 6 Aug 2014
 
 - Added launchYouTube:startTime:success:failure: api to Launcher capability
