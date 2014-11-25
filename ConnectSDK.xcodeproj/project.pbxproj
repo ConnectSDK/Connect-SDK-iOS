@@ -22,6 +22,12 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		BB9F706B1155B806AFBF3336 /* DLNAHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F703F509283F37E26C0B4 /* DLNAHTTPServer.m */; };
+		BB9F712900733DE480F64D8E /* DLNAHTTPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F7271D17DCAE1C615A59A /* DLNAHTTPServer.h */; };
+		BB9F726F85973936620CDADD /* MediaInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F735CB760F4387DDA84B4 /* MediaInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB9F776F4924E08D116738B1 /* ImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7AF5170CE02632778263 /* ImageInfo.m */; };
+		BB9F7AD33329FD4AC66C2D12 /* ImageInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F71B68553DCA74ED1C43E /* ImageInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB9F7B7905ABBE72E0843AA0 /* MediaInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7A0E6A6150ACCA2F89B6 /* MediaInfo.m */; };
 		EA5F82F0199BDA2100B7302B /* ConnectSDKDefaultPlatforms.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5F82EF199BD95800B7302B /* ConnectSDKDefaultPlatforms.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA5F82F4199BDCD300B7302B /* ConnectSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5F82F3199BDCD300B7302B /* ConnectSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA5FB86D199AEC550057B4B4 /* ConnectSDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB79E199AEC550057B4B4 /* ConnectSDK-Prefix.pch */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -190,12 +196,6 @@
 		EA5FB910199AEC570057B4B4 /* CastServiceChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB861199AEC550057B4B4 /* CastServiceChannel.m */; };
 		EA5FB911199AEC570057B4B4 /* CastWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB862199AEC550057B4B4 /* CastWebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA5FB912199AEC570057B4B4 /* CastWebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB863199AEC550057B4B4 /* CastWebAppSession.m */; };
-		EA5FB913199AEC570057B4B4 /* MultiScreenDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB866199AEC550057B4B4 /* MultiScreenDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB914199AEC570057B4B4 /* MultiScreenDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB867199AEC550057B4B4 /* MultiScreenDiscoveryProvider.m */; };
-		EA5FB915199AEC570057B4B4 /* MultiScreenService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB868199AEC550057B4B4 /* MultiScreenService.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB916199AEC570057B4B4 /* MultiScreenService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB869199AEC550057B4B4 /* MultiScreenService.m */; };
-		EA5FB917199AEC570057B4B4 /* MultiScreenWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB86A199AEC550057B4B4 /* MultiScreenWebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB918199AEC570057B4B4 /* MultiScreenWebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB86B199AEC550057B4B4 /* MultiScreenWebAppSession.m */; };
 		EA61EB1418FE485B00D75696 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1318FE485B00D75696 /* Foundation.framework */; };
 		EA61EBF018FE48E900D75696 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBEF18FE48E900D75696 /* SystemConfiguration.framework */; };
 		EA61EBF218FE48EF00D75696 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
@@ -226,6 +226,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BB9F703F509283F37E26C0B4 /* DLNAHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLNAHTTPServer.m; sourceTree = "<group>"; };
+		BB9F71B68553DCA74ED1C43E /* ImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageInfo.h; sourceTree = "<group>"; };
+		BB9F7271D17DCAE1C615A59A /* DLNAHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLNAHTTPServer.h; sourceTree = "<group>"; };
+		BB9F735CB760F4387DDA84B4 /* MediaInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaInfo.h; sourceTree = "<group>"; };
+		BB9F7A0E6A6150ACCA2F89B6 /* MediaInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaInfo.m; sourceTree = "<group>"; };
+		BB9F7AF5170CE02632778263 /* ImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageInfo.m; sourceTree = "<group>"; };
 		EA41388A18FE51A9002CB005 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		EA5F82EF199BD95800B7302B /* ConnectSDKDefaultPlatforms.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectSDKDefaultPlatforms.h; sourceTree = "<group>"; };
 		EA5F82F3199BDCD300B7302B /* ConnectSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectSDK.h; sourceTree = "<group>"; };
@@ -396,12 +402,6 @@
 		EA5FB861199AEC550057B4B4 /* CastServiceChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CastServiceChannel.m; sourceTree = "<group>"; };
 		EA5FB862199AEC550057B4B4 /* CastWebAppSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CastWebAppSession.h; sourceTree = "<group>"; };
 		EA5FB863199AEC550057B4B4 /* CastWebAppSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CastWebAppSession.m; sourceTree = "<group>"; };
-		EA5FB866199AEC550057B4B4 /* MultiScreenDiscoveryProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiScreenDiscoveryProvider.h; sourceTree = "<group>"; };
-		EA5FB867199AEC550057B4B4 /* MultiScreenDiscoveryProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiScreenDiscoveryProvider.m; sourceTree = "<group>"; };
-		EA5FB868199AEC550057B4B4 /* MultiScreenService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiScreenService.h; sourceTree = "<group>"; };
-		EA5FB869199AEC550057B4B4 /* MultiScreenService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiScreenService.m; sourceTree = "<group>"; };
-		EA5FB86A199AEC550057B4B4 /* MultiScreenWebAppSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiScreenWebAppSession.h; sourceTree = "<group>"; };
-		EA5FB86B199AEC550057B4B4 /* MultiScreenWebAppSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiScreenWebAppSession.m; sourceTree = "<group>"; };
 		EA61EB1018FE485B00D75696 /* libConnectSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libConnectSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA61EB1318FE485B00D75696 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EA61EBEF18FE48E900D75696 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -667,6 +667,10 @@
 				EA5FB813199AEC550057B4B4 /* SSDPSocketListener.m */,
 				EA5FB814199AEC550057B4B4 /* TextInputStatusInfo.h */,
 				EA5FB815199AEC550057B4B4 /* TextInputStatusInfo.m */,
+				BB9F7A0E6A6150ACCA2F89B6 /* MediaInfo.m */,
+				BB9F735CB760F4387DDA84B4 /* MediaInfo.h */,
+				BB9F7AF5170CE02632778263 /* ImageInfo.m */,
+				BB9F71B68553DCA74ED1C43E /* ImageInfo.h */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -759,6 +763,8 @@
 				EA5FB846199AEC550057B4B4 /* WebOSTVServiceMouse.m */,
 				EA5FB847199AEC550057B4B4 /* WebOSTVServiceSocketClient.h */,
 				EA5FB848199AEC550057B4B4 /* WebOSTVServiceSocketClient.m */,
+				BB9F703F509283F37E26C0B4 /* DLNAHTTPServer.m */,
+				BB9F7271D17DCAE1C615A59A /* DLNAHTTPServer.h */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -783,7 +789,6 @@
 			isa = PBXGroup;
 			children = (
 				EA5FB85A199AEC550057B4B4 /* google-cast */,
-				EA5FB864199AEC550057B4B4 /* samsung-multiscreen */,
 			);
 			path = modules;
 			sourceTree = "<group>";
@@ -801,19 +806,6 @@
 				EA5FB863199AEC550057B4B4 /* CastWebAppSession.m */,
 			);
 			path = "google-cast";
-			sourceTree = "<group>";
-		};
-		EA5FB864199AEC550057B4B4 /* samsung-multiscreen */ = {
-			isa = PBXGroup;
-			children = (
-				EA5FB866199AEC550057B4B4 /* MultiScreenDiscoveryProvider.h */,
-				EA5FB867199AEC550057B4B4 /* MultiScreenDiscoveryProvider.m */,
-				EA5FB868199AEC550057B4B4 /* MultiScreenService.h */,
-				EA5FB869199AEC550057B4B4 /* MultiScreenService.m */,
-				EA5FB86A199AEC550057B4B4 /* MultiScreenWebAppSession.h */,
-				EA5FB86B199AEC550057B4B4 /* MultiScreenWebAppSession.m */,
-			);
-			path = "samsung-multiscreen";
 			sourceTree = "<group>";
 		};
 		EA61EB0718FE485B00D75696 = {
@@ -908,7 +900,6 @@
 				EA5FB870199AEC550057B4B4 /* ConnectableDeviceDelegate.h in Headers */,
 				EA5FB8D2199AEC560057B4B4 /* KeyControl.h in Headers */,
 				EA5FB8A0199AEC560057B4B4 /* GCDWebServerPrivate.h in Headers */,
-				EA5FB917199AEC570057B4B4 /* MultiScreenWebAppSession.h in Headers */,
 				EA5FB8F6199AEC570057B4B4 /* AirPlayServiceMirrored.h in Headers */,
 				EA5FB883199AEC550057B4B4 /* CTASIAuthenticationDialog.h in Headers */,
 				EA5FB8A3199AEC560057B4B4 /* GCDWebServerResponse.h in Headers */,
@@ -919,7 +910,6 @@
 				EA5FB904199AEC570057B4B4 /* WebAppSession.h in Headers */,
 				EA5FB8FE199AEC570057B4B4 /* RokuService.h in Headers */,
 				EA5FB894199AEC560057B4B4 /* CTASINetworkQueue.h in Headers */,
-				EA5FB913199AEC570057B4B4 /* MultiScreenDiscoveryProvider.h in Headers */,
 				EA5FB881199AEC550057B4B4 /* ZeroConfDiscoveryProvider.h in Headers */,
 				EA5FB877199AEC550057B4B4 /* CapabilityFilter.h in Headers */,
 				EA5FB876199AEC550057B4B4 /* DevicePickerDelegate.h in Headers */,
@@ -934,7 +924,6 @@
 				EA5FB87C199AEC550057B4B4 /* DiscoveryProvider.h in Headers */,
 				EA5FB8C7199AEC560057B4B4 /* JSONObjectCoding.h in Headers */,
 				EA5FB8F8199AEC570057B4B4 /* WebOSTVServiceMouse.h in Headers */,
-				EA5FB915199AEC570057B4B4 /* MultiScreenService.h in Headers */,
 				EA5FB8A5199AEC560057B4B4 /* GCDWebServerDataRequest.h in Headers */,
 				EA5FB886199AEC560057B4B4 /* CTASIDataCompressor.h in Headers */,
 				EA5FB871199AEC550057B4B4 /* ConnectableDeviceStore.h in Headers */,
@@ -956,6 +945,9 @@
 				EA5FB8B3199AEC560057B4B4 /* GCDWebServerStreamedResponse.h in Headers */,
 				EA5F82F4199BDCD300B7302B /* ConnectSDK.h in Headers */,
 				EA5F82F0199BDA2100B7302B /* ConnectSDKDefaultPlatforms.h in Headers */,
+				BB9F726F85973936620CDADD /* MediaInfo.h in Headers */,
+				BB9F7AD33329FD4AC66C2D12 /* ImageInfo.h in Headers */,
+				BB9F712900733DE480F64D8E /* DLNAHTTPServer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1048,7 +1040,6 @@
 				EA5FB8F1199AEC570057B4B4 /* DIALService.m in Sources */,
 				EA5FB887199AEC560057B4B4 /* CTASIDataCompressor.m in Sources */,
 				EA5FB8AC199AEC560057B4B4 /* GCDWebServerURLEncodedFormRequest.m in Sources */,
-				EA5FB918199AEC570057B4B4 /* MultiScreenWebAppSession.m in Sources */,
 				EA5FB8CB199AEC560057B4B4 /* SSDPSocketListener.m in Sources */,
 				EA5FB8DE199AEC560057B4B4 /* ServiceAsyncCommand.m in Sources */,
 				EA5FB8B2199AEC560057B4B4 /* GCDWebServerFileResponse.m in Sources */,
@@ -1085,7 +1076,6 @@
 				EA5FB90A199AEC570057B4B4 /* WebOSTVService.m in Sources */,
 				EA5FB8BA199AEC560057B4B4 /* CTXMLReader.m in Sources */,
 				EA5FB90C199AEC570057B4B4 /* CastDiscoveryProvider.m in Sources */,
-				EA5FB914199AEC570057B4B4 /* MultiScreenDiscoveryProvider.m in Sources */,
 				EA5FB88D199AEC560057B4B4 /* CTASIFormDataRequest.m in Sources */,
 				EA5FB893199AEC560057B4B4 /* CTASIInputStream.m in Sources */,
 				EA5FB8B4199AEC560057B4B4 /* GCDWebServerStreamedResponse.m in Sources */,
@@ -1094,7 +1084,6 @@
 				EA5FB86F199AEC550057B4B4 /* ConnectableDevice.m in Sources */,
 				EA5FB8E7199AEC560057B4B4 /* ServiceConfig.m in Sources */,
 				EA5FB8C2199AEC560057B4B4 /* ConnectUtil.m in Sources */,
-				EA5FB916199AEC570057B4B4 /* MultiScreenService.m in Sources */,
 				EA5FB87D199AEC550057B4B4 /* DiscoveryProvider.m in Sources */,
 				EA5FB8FF199AEC570057B4B4 /* RokuService.m in Sources */,
 				EA5FB8AE199AEC560057B4B4 /* GCDWebServerDataResponse.m in Sources */,
@@ -1113,6 +1102,9 @@
 				EA5FB910199AEC570057B4B4 /* CastServiceChannel.m in Sources */,
 				EA5FB8AA199AEC560057B4B4 /* GCDWebServerMultiPartFormRequest.m in Sources */,
 				EA5FB8E0199AEC560057B4B4 /* ServiceCommand.m in Sources */,
+				BB9F7B7905ABBE72E0843AA0 /* MediaInfo.m in Sources */,
+				BB9F776F4924E08D116738B1 /* ImageInfo.m in Sources */,
+				BB9F706B1155B806AFBF3336 /* DLNAHTTPServer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1218,6 +1210,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/modules/**",
+					"$(PROJECT_DIR)/modules/google-cast",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
@@ -1242,6 +1235,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/modules/**",
+					"$(PROJECT_DIR)/modules/google-cast",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";

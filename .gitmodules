@@ -1,9 +1,6 @@
 [submodule "modules/google-cast"]
 	path = modules/google-cast
 	url = https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast.git
-[submodule "modules/samsung-multiscreen"]
-	path = modules/samsung-multiscreen
-	url = https://github.com/ConnectSDK/Connect-SDK-iOS-Samsung-MultiScreen.git
 [submodule "core"]
 	path = core
 	url = https://github.com/ConnectSDK/Connect-SDK-iOS-Core.git

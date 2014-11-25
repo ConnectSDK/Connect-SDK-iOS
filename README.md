@@ -17,8 +17,6 @@ This project has the following dependencies, some of which require manual setup.
 * [Connect-SDK-iOS-Core](https://github.com/ConnectSDK/Connect-SDK-iOS-Core) submodule
 * [Connect-SDK-iOS-Google-Cast](https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast) submodule
   - Requires [GoogleCast.framework](https://developers.google.com/cast/docs/downloads)
-* [Connect-SDK-iOS-Samsung-MultiScreen](https://github.com/ConnectSDK/Connect-SDK-iOS-Samsung-MultiScreen) submodule
-  - Requires [SamsungMultiScreen.framework](http://multiscreen.samsung.com/downloads.html)
 
 ##Including Connect SDK in your app
 ###Using CocoaPods
@@ -26,7 +24,6 @@ This project has the following dependencies, some of which require manual setup.
 2. Run `pod install`
 3. Follow the setup instructions for each of the service submodules
    - [Connect-SDK-iOS-Google-Cast](https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast)
-   - [Connect-SDK-iOS-Samsung-MultiScreen](https://github.com/ConnectSDK/Connect-SDK-iOS-Samsung-MultiScreen)
 4. Open the workspace file and run your project
 
 ###Without CocoaPods
@@ -47,7 +44,6 @@ This project has the following dependencies, some of which require manual setup.
 9. Navigate to the `Build Settings` tab and add `-ObjC` to your target's `Other Linker Flags`
 10. Follow the setup instructions for each of the service submodules
  - [Connect-SDK-iOS-Google-Cast](https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast)
- - [Connect-SDK-iOS-Samsung-MultiScreen](https://github.com/ConnectSDK/Connect-SDK-iOS-Samsung-MultiScreen)
 
 ###Include Strings File for Localization (optional)
 1. Locate the Connect SDK Xcode project in the Finder
@@ -66,7 +62,6 @@ Connect SDK for iOS makes use of the following projects, some of which are open-
 * [Google Cast SDK](https://developers.google.com/cast/)
   - [Google Cast SDK Additional Developer Terms of Service](https://developers.google.com/cast/docs/terms)
   - [Google APIs Terms of Service](https://developers.google.com/terms/)
-* [Samsung MultiScreen SDK](http://multiscreen.samsung.com/)
 * [SocketRocket](https://github.com/Square/SocketRocket) (Apache License, Version 2.0)
   - modifications:
     - stability
