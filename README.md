@@ -46,7 +46,7 @@ This project has the following dependencies, some of which require manual setup.
 10. Follow the setup instructions for each of the service submodules
  - [Connect-SDK-iOS-Google-Cast](https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast)
 
-##Migrating from 1.3 to 1.4 release
+###Migrating from 1.3 to 1.4 release
 
 1. Open terminal and go to your local Connect-SDK-iOS repo
 2. Pull the latest updates by running command `git pull` in Terminal
