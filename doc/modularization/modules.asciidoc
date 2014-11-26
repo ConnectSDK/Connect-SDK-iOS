@@ -1,0 +1,33 @@
+= Modularization
+
+== Structure
+
+The *Connect SDK (git repository?)* has become modularized with the 1.4 release. It allows the SDK users to *choose if they want to use (?)* extra services and install their respective dependencies. Currently, those include the support of https://developers.google.com/cast/[Google Cast] devices only.
+
+The Connect SDK is split into modules with the help of http://git-scm.com/book/en/v2/Git-Tools-Submodules[git submodules]. There are two options:
+
+. The *full* project (`Connect-SDK-iOS` and `Connect-SDK-Android`) includes two submodules: `core` and `google-cast`, and thus provides the full feature set. The latter submodule is located in the `modules` directory.
+. The *lite* project (`Connect-SDK-iOS-Lite` and `Connect-SDK-Android-Lite`) includes the `core` submodule only, therefore there is no need to download any third-party dependencies.
+
+Please refer to the figures below displaying dependencies between different modules and libraries (for iOS and Android). Components with a light green background are external dependencies. The dashed lines show the submodule links, whereas the solid lines depict build and/or runtime dependencies.
+
+image::ios_modules@2x.png[title="iOS SDK Component Diagram"]
+
+image::android_modules@2x.png[title="Android SDK Component Diagram"]
+
+Links to the repositories are provided in the next table:
+
+.Links to the repositories
+|===
+|Module|iOS|Android
+|full|https://github.com/ConnectSDK/Connect-SDK-iOS|https://github.com/ConnectSDK/Connect-SDK-Android
+|lite|https://github.com/ConnectSDK/Connect-SDK-iOS-Lite|https://github.com/ConnectSDK/Connect-SDK-Android-Lite
+|core|https://github.com/ConnectSDK/Connect-SDK-iOS-Core|https://github.com/ConnectSDK/Connect-SDK-Android-Core
+|google-cast|https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast|https://github.com/ConnectSDK/Connect-SDK-Android-Google-Cast
+|===
+
+Usage instructions can be found in the https://github.com/ConnectSDK/Connect-SDK-iOS/blob/master/README.md[`full` README] or https://github.com/ConnectSDK/Connect-SDK-iOS-Lite/blob/master/README.md[`lite` README].
+
+== Contributing
+
+Since the source code is split between three repositories now (in the `full` version, whereas `lite` has only two), contributing is a bit more involved now. If you add a new feature across all the modules, you will have to create two GitHub pull requests, one for each module. Our team will check the code and merge the changes into the submodules, then update the `full` and `lite` repositories (as those just keep the project and track commits from the submodules). If you have a simpler contributing workflow in mind, please mailto:info@connectsdk.com[let us know].
