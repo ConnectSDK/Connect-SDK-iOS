@@ -41,7 +41,6 @@ This project has the following dependencies, some of which require manual setup.
    - libConnectSDK.a
    - libz.dylib
    - libicucore.dylib
-   - MediaAccessibility.framework
 9. Navigate to the `Build Settings` tab and add `-ObjC` to your target's `Other Linker Flags`
 10. Follow the setup instructions for each of the service submodules
  - [Connect-SDK-iOS-Google-Cast](https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast)
