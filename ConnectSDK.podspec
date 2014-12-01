@@ -1,7 +1,6 @@
-
 Pod::Spec.new do |s|
   s.name         = "ConnectSDK"
-  s.version      = "1.3.2"
+  s.version      = "1.4.0"
   s.summary      = "Connect SDK is an open source framework that connects your mobile apps with multiple TV platforms."
 
   s.description  = <<-DESC
@@ -20,17 +19,19 @@ Pod::Spec.new do |s|
   s.license      = { :type => "Apache License, Version 2.0", :file => "LICENSE" }
   s.author             = { "Connect SDK" => "support@connectsdk.com" }
   s.social_media_url   = "http://twitter.com/ConnectSDK"
-  s.platform     = :ios
   s.platform     = :ios, "6.0"
   s.ios.deployment_target = "6.0"
-  s.source       = { :git => "https://github.com/ConnectSDK/Connect-SDK-iOS.git", :tag => "1.3.2" }
+  s.source       = { :git => "https://github.com/ConnectSDK/Connect-SDK-iOS.git",
+                     :tag => s.version,
+                     :submodules => true }
 
   non_arc_files =
-    "ConnectSDK/Frameworks/asi-http-request/External/Reachability/*.{h,m}",
-    "ConnectSDK/Frameworks/asi-http-request/Classes/*.{h,m}"
+    "core/Frameworks/asi-http-request/External/Reachability/*.{h,m}",
+    "core/Frameworks/asi-http-request/Classes/*.{h,m}"
 
-  s.source_files  = "ConnectSDK", "ConnectSDK/**/*.{h,m}"
-  s.exclude_files = non_arc_files
+  s.source_files  = "ConnectSDKDefaultPlatforms.h", "{core,modules}/**/*.{h,m}"
+  s.private_header_files = "{core,modules}/**/*_Private.h"
+  s.exclude_files = (non_arc_files.dup << "core/ConnectSDKTests")
   s.requires_arc = true
 
   s.subspec 'no-arc' do |sp|
@@ -41,10 +42,14 @@ Pod::Spec.new do |s|
   s.framework = "GoogleCast"
   s.libraries = "z", "icucore"
   s.prefix_header_contents = <<-PREFIX
-                                  #define CONNECT_SDK_VERSION @"1.3.2"
+                                  #define CONNECT_SDK_VERSION @"#{s.version}"
 
                                   // Uncomment this line to enable SDK logging
                                   //#define CONNECT_SDK_ENABLE_LOG
+
+                                  #ifndef kConnectSDKWirelessSSIDChanged
+                                  #define kConnectSDKWirelessSSIDChanged @"Connect_SDK_Wireless_SSID_Changed"
+                                  #endif
 
                                   #ifdef CONNECT_SDK_ENABLE_LOG
                                       // credit: http://stackoverflow.com/a/969291/2715
