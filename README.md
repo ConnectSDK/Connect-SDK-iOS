@@ -20,11 +20,11 @@ This project has the following dependencies, some of which require manual setup.
 
 ##Including Connect SDK in your app
 ###Using CocoaPods
-1. Add `pod "ConnectSDK"` to your Podspec file
+1. Add `pod "ConnectSDK"` to your `Podfile`
 2. Run `pod install`
-3. Follow the setup instructions for each of the service submodules
-   - [Connect-SDK-iOS-Google-Cast](https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast)
-4. Open the workspace file and run your project
+3. Open the workspace file and run your project
+
+You can use `pod "ConnectSDK/Core"` to get the [lite version](https://github.com/ConnectSDK/Connect-SDK-iOS-Lite).
 
 ###Without CocoaPods
 
