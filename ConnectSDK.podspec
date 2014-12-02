@@ -1,3 +1,8 @@
+# There are two usage options of this podspec:
+# * pod "ConnectSDK" will install the full ConnectSDK version;
+# * pod "ConnectSDK/Core" will install the core only (Lite version) without
+#   external dependencies.
+
 Pod::Spec.new do |s|
   s.name         = "ConnectSDK"
   s.version      = "1.4.0"
@@ -25,21 +30,10 @@ Pod::Spec.new do |s|
                      :tag => s.version,
                      :submodules => true }
 
-  non_arc_files =
-    "core/Frameworks/asi-http-request/External/Reachability/*.{h,m}",
-    "core/Frameworks/asi-http-request/Classes/*.{h,m}"
+  s.xcconfig = {
+      "OTHER_LDFLAGS" => "$(inherited) -ObjC"
+  }
 
-  s.source_files  = "ConnectSDKDefaultPlatforms.h", "{core,modules}/**/*.{h,m}"
-  s.private_header_files = "{core,modules}/**/*_Private.h"
-  s.exclude_files = (non_arc_files.dup << "core/ConnectSDKTests")
-  s.requires_arc = true
-
-  s.subspec 'no-arc' do |sp|
-    sp.source_files = non_arc_files
-    sp.requires_arc = false
-  end
-
-  s.framework = "GoogleCast"
   s.libraries = "z", "icucore"
   s.prefix_header_contents = <<-PREFIX
                                   #define CONNECT_SDK_VERSION @"#{s.version}"
@@ -63,9 +57,33 @@ Pod::Spec.new do |s|
                                   #endif
                                PREFIX
 
-  s.xcconfig = {
-      "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.4.0-Release",
-      "OTHER_LDFLAGS" => "$(inherited) -ObjC"
-  }
-  s.dependency "google-cast-sdk", "2.4.0"
+  non_arc_files =
+    "core/Frameworks/asi-http-request/External/Reachability/*.{h,m}",
+    "core/Frameworks/asi-http-request/Classes/*.{h,m}"
+
+  s.subspec 'Core' do |sp|
+    sp.source_files  = "ConnectSDKDefaultPlatforms.h", "core/**/*.{h,m}"
+    sp.exclude_files = (non_arc_files.dup << "core/ConnectSDKTests")
+    sp.private_header_files = "core/**/*_Private.h"
+    sp.requires_arc = true
+
+    sp.dependency 'ConnectSDK/no-arc'
+  end
+
+  s.subspec 'no-arc' do |sp|
+    sp.source_files = non_arc_files
+    sp.requires_arc = false
+  end
+
+  s.subspec 'GoogleCast' do |sp|
+    sp.dependency 'ConnectSDK/Core'
+    sp.source_files = "modules/**/*.{h,m}"
+    sp.private_header_files = "modules/**/*_Private.h"
+
+    sp.dependency "google-cast-sdk", "2.4.0"
+    sp.framework = "GoogleCast"
+    sp.xcconfig = {
+        "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.4.0-Release",
+    }
+  end
 end
