@@ -34,6 +34,7 @@ Pod::Spec.new do |s|
       "OTHER_LDFLAGS" => "$(inherited) -ObjC"
   }
 
+  s.requires_arc = true
   s.libraries = "z", "icucore"
   s.prefix_header_contents = <<-PREFIX
                                   #define CONNECT_SDK_VERSION @"#{s.version}"
