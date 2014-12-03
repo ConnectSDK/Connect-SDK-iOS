@@ -1,8 +1,13 @@
 # Connect SDK iOS Changelog
 
-## 1.4.0 -- TBD
+## 1.4.0 -- 3 Dec 2014
 
 - Modularized project to allow easy exclusion of modules that have heavy and/or external dependencies
+- Improved support for DLNA devices
+  - DLNA volume control subscriptions
+  - DLNA play state subscriptions
+  - DLNA media info
+- Unit tests for the discovery services providers
 - Miscellaneous bug fixes
 - [See commits between 1.3.2 and 1.4.0](https://github.com/ConnectSDK/Connect-SDK-iOS/compare/1.3.2...1.4.0)
 
