@@ -8,43 +8,51 @@ For more information, visit our [website](http://www.connectsdk.com/).
 * [API documentation](http://www.connectsdk.com/apis/ios/)
 
 ##Dependencies
-This project has the following dependencies.
-- libicucore.dylib
-- libz.dylib
-- [GoogleCast.framework](https://developers.google.com/cast/docs/downloads)
-- Other linker flags: -ObjC
-- Automatic Reference Counting (ARC)
+This project has the following dependencies, some of which require manual setup. If you would like to use a version of the SDK which has no manual setup, consider using the [lite version](https://github.com/ConnectSDK/Connect-SDK-iOS-Lite) of the SDK.
+
+* libicucore.dylib
+* libz.dylib
+* Other linker flags: -ObjC
+* Automatic Reference Counting (ARC)
+* [Connect-SDK-iOS-Core](https://github.com/ConnectSDK/Connect-SDK-iOS-Core) submodule
+* [Connect-SDK-iOS-Google-Cast](https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast) submodule
+  - Requires [GoogleCast.framework](https://developers.google.com/cast/docs/downloads)
 
 ##Including Connect SDK in your app
 ###Using CocoaPods
-1. Add `pod "ConnectSDK"` to your Podspec file
+1. Add `pod "ConnectSDK"` to your `Podfile`
 2. Run `pod install`
 3. Open the workspace file and run your project
-4. If you get any errors about the Google Cast framework, download the [latest framework](https://developers.google.com/cast/docs/downloads) and include it in your project's `Link Binary With Libraries` build phase
 
-####Important note about google-cast-sdk CocoaPod
-As of this writing, Google does not maintain the links for old versions of the Google Cast iOS sender framework files. This means that the google-cast-sdk CocoaPod will break upon each release of the Google Cast SDK. When this occurs, you will need to do either of the following.
-
-- Check to see if the [google-cast-sdk](https://github.com/CocoaPods/Specs/tree/master/Specs/google-cast-sdk) CocoaPod has been updated
-- Manually download and add/update the GoogleCast.framework file from [Google's site](https://developers.google.com/cast/docs/downloads)
+You can use `pod "ConnectSDK/Core"` to get the [lite version](https://github.com/ConnectSDK/Connect-SDK-iOS-Lite).
 
 ###Without CocoaPods
 
 1. Clone repository (or download & unzip)
-2. Open your project in Xcode
-3. Locate the Connect SDK Xcode project in the Finder
-4. Drag the Connect SDK Xcode project into your project's Xcode library
-5. Navigate to your project's settings screen, then navigate to the Build Phases tab
-6. Add ConnectSDK as a Target Dependency
-7. Add the following in the `Link Binary With Libraries` section
+2. Set up the submodules by running the following commands in Terminal
+   - `git submodule init`
+   - `git submodule update`
+3. Open your project in Xcode
+4. Locate the Connect SDK Xcode project in the Finder
+5. Drag the Connect SDK Xcode project into your project's Xcode library
+6. Navigate to your project's settings screen, then navigate to the Build Phases tab
+7. Add ConnectSDK as a Target Dependency
+8. Add the following in the `Link Binary With Libraries` section
    - libConnectSDK.a
    - libz.dylib
    - libicucore.dylib
-8. Navigate to the `Build Settings` tab and add `-ObjC` to your target's `Other Linker Flags`
-9. Download the [Google Cast SDK iOS sender library file](https://developers.google.com/cast/docs/downloads)
-10. Extract GoogleCast.framework and copy it to $(Connect SDK project directory)/ConnectSDK/Frameworks
-11. Drag and drop GoogleCast.framework into your project's Frameworks folder
+9. Navigate to the `Build Settings` tab and add `-ObjC` to your target's `Other Linker Flags`
+10. Follow the setup instructions for each of the service submodules
+ - [Connect-SDK-iOS-Google-Cast](https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast)
 
+###Migrating from 1.3 to 1.4 release
+
+1. Open terminal and go to your local Connect-SDK-iOS repo
+2. Pull the latest updates by running command `git pull` in Terminal
+3. Set up the submodules by running the following commands in Terminal
+   - `git submodule init`
+   - `git submodule update`
+   
 ###Include Strings File for Localization (optional)
 1. Locate the Connect SDK Xcode project in the Finder
 2. Drag the ConnectSDKStrings folder into your project's library
@@ -53,7 +61,6 @@ As of this writing, Google does not maintain the links for old versions of the G
 ##Contact
 * Twitter: [@ConnectSDK](https://www.twitter.com/ConnectSDK)
 * Ask a question with the "tv" tag on [Stack Overflow](http://stackoverflow.com/tags/tv)
-* General Inquiries: info@connectsdk.com
 * Developer Support: support@connectsdk.com
 * Partnerships: partners@connectsdk.com
 
