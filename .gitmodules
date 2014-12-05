@@ -1,6 +1,8 @@
 [submodule "modules/google-cast"]
 	path = modules/google-cast
 	url = https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast.git
+        branch = sdk_1.4.1-dev
 [submodule "core"]
 	path = core
 	url = https://github.com/ConnectSDK/Connect-SDK-iOS-Core.git
+        branch = sdk_1.4.1-dev
