@@ -25,6 +25,9 @@
 		442B9A4D1A16F6260053AE51 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 442B9A481A16F61E0053AE51 /* OCMock.framework */; };
 		442B9A501A16F6F00053AE51 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 442B9A4F1A16F6F00053AE51 /* OHHTTPStubs.framework */; };
 		442B9A521A16FFB50053AE51 /* ssdp_device_description.xml in Resources */ = {isa = PBXBuildFile; fileRef = 442B9A511A16FFB50053AE51 /* ssdp_device_description.xml */; };
+		443063C11A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.h in Headers */ = {isa = PBXBuildFile; fileRef = 443063BF1A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.h */; };
+		443063C21A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.m in Sources */ = {isa = PBXBuildFile; fileRef = 443063C01A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.m */; };
+		4433F3DF1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4433F3DE1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m */; };
 		4480857F1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */; };
 		448085801A12A7BE00E13938 /* libConnectSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1018FE485B00D75696 /* libConnectSDK.a */; };
 		448F36C51A1BD64200536649 /* ZeroConfDiscoveryProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 448F36C41A1BD64200536649 /* ZeroConfDiscoveryProviderTests.m */; };
@@ -250,6 +253,9 @@
 		442B9A481A16F61E0053AE51 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OCMock.framework; sourceTree = "<group>"; };
 		442B9A4F1A16F6F00053AE51 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OHHTTPStubs.framework; sourceTree = "<group>"; };
 		442B9A511A16FFB50053AE51 /* ssdp_device_description.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description.xml; sourceTree = "<group>"; };
+		443063BF1A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayServiceHTTPKeepAlive.h; sourceTree = "<group>"; };
+		443063C01A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayServiceHTTPKeepAlive.m; sourceTree = "<group>"; };
+		4433F3DE1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayServiceHTTPKeepAliveTests.m; sourceTree = "<group>"; };
 		4480857A1A12A7BE00E13938 /* ConnectSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConnectSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4480857D1A12A7BE00E13938 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConnectSDKDefaultPlatformsTests.m; sourceTree = "<group>"; };
@@ -493,11 +499,28 @@
 			path = OHHTTPStubs;
 			sourceTree = "<group>";
 		};
+		4433F3DC1A421733008D9A04 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4433F3DD1A421733008D9A04 /* Helpers */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		4433F3DD1A421733008D9A04 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4433F3DE1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		4480857B1A12A7BE00E13938 /* ConnectSDKTests */ = {
 			isa = PBXGroup;
 			children = (
 				4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */,
 				44EF61A11A12FC5000CF344C /* Discovery */,
+				4433F3DC1A421733008D9A04 /* Services */,
 				44EF618C1A12DF2D00CF344C /* ConnectSDKTests-Prefix.pch */,
 				4480857C1A12A7BE00E13938 /* Supporting Files */,
 			);
@@ -866,6 +889,8 @@
 			children = (
 				EA5FB841199AEC550057B4B4 /* AirPlayServiceHTTP.h */,
 				EA5FB842199AEC550057B4B4 /* AirPlayServiceHTTP.m */,
+				443063BF1A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.h */,
+				443063C01A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.m */,
 				EA5FB843199AEC550057B4B4 /* AirPlayServiceMirrored.h */,
 				EA5FB844199AEC550057B4B4 /* AirPlayServiceMirrored.m */,
 				EA5FB845199AEC550057B4B4 /* WebOSTVServiceMouse.h */,
@@ -979,6 +1004,7 @@
 				EA5FB8E6199AEC560057B4B4 /* ServiceConfig.h in Headers */,
 				EA5FB89B199AEC560057B4B4 /* GCDWebServerConnection.h in Headers */,
 				EA5FB8D6199AEC560057B4B4 /* MouseControl.h in Headers */,
+				443063C11A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.h in Headers */,
 				EA5FB909199AEC570057B4B4 /* WebOSTVService.h in Headers */,
 				EA5FB8CE199AEC560057B4B4 /* AirPlayService.h in Headers */,
 				EA5FB89F199AEC560057B4B4 /* GCDWebServerHTTPStatusCodes.h in Headers */,
@@ -1184,6 +1210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				44EF61A41A12FC8800CF344C /* SSDPDiscoveryProviderTests.m in Sources */,
+				4433F3DF1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m in Sources */,
 				4480857F1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m in Sources */,
 				448F36C51A1BD64200536649 /* ZeroConfDiscoveryProviderTests.m in Sources */,
 			);
@@ -1202,6 +1229,7 @@
 				EA5FB8CB199AEC560057B4B4 /* SSDPSocketListener.m in Sources */,
 				EA5FB8DE199AEC560057B4B4 /* ServiceAsyncCommand.m in Sources */,
 				EA5FB8B2199AEC560057B4B4 /* GCDWebServerFileResponse.m in Sources */,
+				443063C21A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.m in Sources */,
 				EA5FB8C4199AEC560057B4B4 /* DeviceServiceReachability.m in Sources */,
 				EA5FB873199AEC550057B4B4 /* DefaultConnectableDeviceStore.m in Sources */,
 				EA5FB8E3199AEC560057B4B4 /* ServiceSubscription.m in Sources */,
