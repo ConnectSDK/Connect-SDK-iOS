@@ -1,5 +1,13 @@
 # Connect SDK iOS Changelog
 
+## 1.4.1 -- 18 Dec 2014
+- Added new API's to
+  - Display image (-[MediaPlayer displayImage:success:failure:])
+  - Play media (-[MediaPlayer playMedia:shouldLoop:success:failure:])
+- Miscellaneous bug fixes
+  - Upgraded GCDWebserver to v3.2.1 to fix a crash when the app comes back to foreground when playing media in Debug mode.
+  - Fixed Airplay streaming issue for long Audio/Video.
+
 ## 1.4.0 -- 3 Dec 2014
 
 - Modularized project to allow easy exclusion of modules that have heavy and/or external dependencies
