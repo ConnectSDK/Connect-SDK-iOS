@@ -27,7 +27,8 @@
     @"NetcastTVService"   : @"SSDPDiscoveryProvider", \
     @"RokuService"        : @"SSDPDiscoveryProvider", \
     @"WebOSTVService"     : @"SSDPDiscoveryProvider", \
-    @"CastService"        : @"CastDiscoveryProvider" \
+    @"CastService"        : @"CastDiscoveryProvider", \
+    @"MultiScreenService" : @"MultiScreenDiscoveryProvider" \
 }
 
 #endif
