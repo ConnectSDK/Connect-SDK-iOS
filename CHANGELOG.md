@@ -1,8 +1,21 @@
 # Connect SDK iOS Changelog
 
-## 1.4.0 -- TBD
+## 1.4.1 -- 18 Dec 2014
+- Added new API's to
+  - Display image (-[MediaPlayer displayImage:success:failure:])
+  - Play media (-[MediaPlayer playMedia:shouldLoop:success:failure:])
+- Miscellaneous bug fixes
+  - Upgraded GCDWebserver to v3.2.1 to fix a crash when the app comes back to foreground when playing media in Debug mode.
+  - Fixed Airplay streaming issue for long Audio/Video.
+
+## 1.4.0 -- 3 Dec 2014
 
 - Modularized project to allow easy exclusion of modules that have heavy and/or external dependencies
+- Improved support for DLNA devices
+  - DLNA volume control subscriptions
+  - DLNA play state subscriptions
+  - DLNA media info
+- Unit tests for the discovery services providers
 - Miscellaneous bug fixes
 - [See commits between 1.3.2 and 1.4.0](https://github.com/ConnectSDK/Connect-SDK-iOS/compare/1.3.2...1.4.0)
 

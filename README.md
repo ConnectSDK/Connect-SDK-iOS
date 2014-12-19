@@ -17,17 +17,14 @@ This project has the following dependencies, some of which require manual setup.
 * [Connect-SDK-iOS-Core](https://github.com/ConnectSDK/Connect-SDK-iOS-Core) submodule
 * [Connect-SDK-iOS-Google-Cast](https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast) submodule
   - Requires [GoogleCast.framework](https://developers.google.com/cast/docs/downloads)
-* [Connect-SDK-iOS-Samsung-MultiScreen](https://github.com/ConnectSDK/Connect-SDK-iOS-Samsung-MultiScreen) submodule
-  - Requires [SamsungMultiScreen.framework](http://multiscreen.samsung.com/downloads.html)
 
 ##Including Connect SDK in your app
 ###Using CocoaPods
-1. Add `pod "ConnectSDK"` to your Podspec file
+1. Add `pod "ConnectSDK"` to your `Podfile`
 2. Run `pod install`
-3. Follow the setup instructions for each of the service submodules
-   - [Connect-SDK-iOS-Google-Cast](https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast)
-   - [Connect-SDK-iOS-Samsung-MultiScreen](https://github.com/ConnectSDK/Connect-SDK-iOS-Samsung-MultiScreen)
-4. Open the workspace file and run your project
+3. Open the workspace file and run your project
+
+You can use `pod "ConnectSDK/Core"` to get the [lite version](https://github.com/ConnectSDK/Connect-SDK-iOS-Lite).
 
 ###Without CocoaPods
 
@@ -47,8 +44,15 @@ This project has the following dependencies, some of which require manual setup.
 9. Navigate to the `Build Settings` tab and add `-ObjC` to your target's `Other Linker Flags`
 10. Follow the setup instructions for each of the service submodules
  - [Connect-SDK-iOS-Google-Cast](https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast)
- - [Connect-SDK-iOS-Samsung-MultiScreen](https://github.com/ConnectSDK/Connect-SDK-iOS-Samsung-MultiScreen)
 
+###Migrating from 1.3 to 1.4 release
+
+1. Open terminal and go to your local Connect-SDK-iOS repo
+2. Pull the latest updates by running command `git pull` in Terminal
+3. Set up the submodules by running the following commands in Terminal
+   - `git submodule init`
+   - `git submodule update`
+   
 ###Include Strings File for Localization (optional)
 1. Locate the Connect SDK Xcode project in the Finder
 2. Drag the ConnectSDKStrings folder into your project's library
@@ -66,7 +70,6 @@ Connect SDK for iOS makes use of the following projects, some of which are open-
 * [Google Cast SDK](https://developers.google.com/cast/)
   - [Google Cast SDK Additional Developer Terms of Service](https://developers.google.com/cast/docs/terms)
   - [Google APIs Terms of Service](https://developers.google.com/terms/)
-* [Samsung MultiScreen SDK](http://multiscreen.samsung.com/)
 * [SocketRocket](https://github.com/Square/SocketRocket) (Apache License, Version 2.0)
   - modifications:
     - stability
