@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		146CDDD01A4E2CD800728D66 /* SamsungMultiscreen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 146CDDCF1A4E2CD800728D66 /* SamsungMultiscreen.framework */; };
 		442B9A4D1A16F6260053AE51 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 442B9A481A16F61E0053AE51 /* OCMock.framework */; };
 		442B9A501A16F6F00053AE51 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 442B9A4F1A16F6F00053AE51 /* OHHTTPStubs.framework */; };
 		442B9A521A16FFB50053AE51 /* ssdp_device_description.xml in Resources */ = {isa = PBXBuildFile; fileRef = 442B9A511A16FFB50053AE51 /* ssdp_device_description.xml */; };
@@ -255,6 +256,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		146CDDCF1A4E2CD800728D66 /* SamsungMultiscreen.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SamsungMultiscreen.framework; sourceTree = "<group>"; };
 		442B9A431A153F240053AE51 /* SSDPDiscoveryProvider_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSDPDiscoveryProvider_Private.h; sourceTree = "<group>"; };
 		442B9A481A16F61E0053AE51 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OCMock.framework; sourceTree = "<group>"; };
 		442B9A4F1A16F6F00053AE51 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OHHTTPStubs.framework; sourceTree = "<group>"; };
@@ -475,6 +477,7 @@
 				44EF618D1A12E02700CF344C /* MobileCoreServices.framework in Frameworks */,
 				44EF61921A12E10500CF344C /* SystemConfiguration.framework in Frameworks */,
 				442B9A501A16F6F00053AE51 /* OHHTTPStubs.framework in Frameworks */,
+				146CDDD01A4E2CD800728D66 /* SamsungMultiscreen.framework in Frameworks */,
 				44EF619B1A12E23200CF344C /* libicucore.dylib in Frameworks */,
 				44EF618F1A12E0A400CF344C /* libz.dylib in Frameworks */,
 			);
@@ -959,6 +962,7 @@
 		EA5FB864199AEC550057B4B4 /* samsung-multiscreen */ = {
 			isa = PBXGroup;
 			children = (
+				146CDDCF1A4E2CD800728D66 /* SamsungMultiscreen.framework */,
 				EA5FB866199AEC550057B4B4 /* MultiScreenDiscoveryProvider.h */,
 				EA5FB867199AEC550057B4B4 /* MultiScreenDiscoveryProvider.m */,
 				EA5FB868199AEC550057B4B4 /* MultiScreenService.h */,
@@ -1365,6 +1369,7 @@
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/core/Frameworks/OCMock",
 					"$(PROJECT_DIR)/core/Frameworks/OHHTTPStubs",
+					"$(PROJECT_DIR)/modules/samsung-multiscreen",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKTests/ConnectSDKTests-Prefix.pch";
@@ -1397,6 +1402,7 @@
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/core/Frameworks/OCMock",
 					"$(PROJECT_DIR)/core/Frameworks/OHHTTPStubs",
+					"$(PROJECT_DIR)/modules/samsung-multiscreen",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKTests/ConnectSDKTests-Prefix.pch";
