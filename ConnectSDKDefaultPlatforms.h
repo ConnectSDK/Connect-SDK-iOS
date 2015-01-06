@@ -29,6 +29,7 @@
     @"WebOSTVService"     : @"SSDPDiscoveryProvider", \
     @"CastService"        : @"CastDiscoveryProvider", \
     @"FireTVService"      : @"FireTVDiscoveryProvider", \
+    @"FlintService"       : @"FlintDiscoveryProvider", \
 })
 
 #endif

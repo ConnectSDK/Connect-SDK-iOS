@@ -131,6 +131,18 @@
 		44B11F521B16827C00F0156C /* OCMStubRecorder+SpectaAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B11F511B16827C00F0156C /* OCMStubRecorder+SpectaAsync.m */; };
 		44BCC3F61AB77F7D001BCDAA /* XMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 44BCC3F41AB77F7D001BCDAA /* XMLWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		44BCC3F71AB77F7D001BCDAA /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BCC3F51AB77F7D001BCDAA /* XMLWriter.m */; };
+		44BEBF911B504B7A00DA1A1D /* FlintDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 44BEBF881B504B7A00DA1A1D /* FlintDiscoveryProvider.h */; };
+		44BEBF921B504B7A00DA1A1D /* FlintDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BEBF891B504B7A00DA1A1D /* FlintDiscoveryProvider.m */; };
+		44BEBF931B504B7A00DA1A1D /* FlintService.h in Headers */ = {isa = PBXBuildFile; fileRef = 44BEBF8A1B504B7A00DA1A1D /* FlintService.h */; };
+		44BEBF941B504B7A00DA1A1D /* FlintService.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BEBF8B1B504B7A00DA1A1D /* FlintService.m */; };
+		44BEBF951B504B7A00DA1A1D /* FlintServiceChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 44BEBF8C1B504B7A00DA1A1D /* FlintServiceChannel.h */; };
+		44BEBF961B504B7A00DA1A1D /* FlintServiceChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BEBF8D1B504B7A00DA1A1D /* FlintServiceChannel.m */; };
+		44BEBF971B504B7A00DA1A1D /* FlintWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 44BEBF8E1B504B7A00DA1A1D /* FlintWebAppSession.h */; };
+		44BEBF981B504B7A00DA1A1D /* FlintWebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BEBF8F1B504B7A00DA1A1D /* FlintWebAppSession.m */; };
+		44BEBF9A1B504B8C00DA1A1D /* Matchstick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44BEBF901B504B7A00DA1A1D /* Matchstick.framework */; };
+		44BEBF9B1B504BB000DA1A1D /* Matchstick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44BEBF901B504B7A00DA1A1D /* Matchstick.framework */; };
+		44BEBF9C1B504BB000DA1A1D /* Matchstick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44BEBF901B504B7A00DA1A1D /* Matchstick.framework */; };
+		44BEBF9D1B504BB700DA1A1D /* Matchstick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44BEBF901B504B7A00DA1A1D /* Matchstick.framework */; };
 		44C2CC941AB7948300B20E46 /* XMLWriter+ConvenienceMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = 44C2CC921AB7948300B20E46 /* XMLWriter+ConvenienceMethods.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		44C2CC951AB7948300B20E46 /* XMLWriter+ConvenienceMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C2CC931AB7948300B20E46 /* XMLWriter+ConvenienceMethods.m */; };
 		44C2CCA11AB7A33500B20E46 /* NSString+Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 44C2CC9F1AB7A33500B20E46 /* NSString+Common.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -491,6 +503,15 @@
 		44B4C5B71B0E96E80024F229 /* FireTVAcceptanceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FireTVAcceptanceTests.m; sourceTree = "<group>"; };
 		44BCC3F41AB77F7D001BCDAA /* XMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLWriter.h; sourceTree = "<group>"; };
 		44BCC3F51AB77F7D001BCDAA /* XMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLWriter.m; sourceTree = "<group>"; };
+		44BEBF881B504B7A00DA1A1D /* FlintDiscoveryProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlintDiscoveryProvider.h; sourceTree = "<group>"; };
+		44BEBF891B504B7A00DA1A1D /* FlintDiscoveryProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlintDiscoveryProvider.m; sourceTree = "<group>"; };
+		44BEBF8A1B504B7A00DA1A1D /* FlintService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlintService.h; sourceTree = "<group>"; };
+		44BEBF8B1B504B7A00DA1A1D /* FlintService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlintService.m; sourceTree = "<group>"; };
+		44BEBF8C1B504B7A00DA1A1D /* FlintServiceChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlintServiceChannel.h; sourceTree = "<group>"; };
+		44BEBF8D1B504B7A00DA1A1D /* FlintServiceChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlintServiceChannel.m; sourceTree = "<group>"; };
+		44BEBF8E1B504B7A00DA1A1D /* FlintWebAppSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlintWebAppSession.h; sourceTree = "<group>"; };
+		44BEBF8F1B504B7A00DA1A1D /* FlintWebAppSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlintWebAppSession.m; sourceTree = "<group>"; };
+		44BEBF901B504B7A00DA1A1D /* Matchstick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Matchstick.framework; sourceTree = "<group>"; };
 		44C2CC921AB7948300B20E46 /* XMLWriter+ConvenienceMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XMLWriter+ConvenienceMethods.h"; sourceTree = "<group>"; };
 		44C2CC931AB7948300B20E46 /* XMLWriter+ConvenienceMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XMLWriter+ConvenienceMethods.m"; sourceTree = "<group>"; };
 		44C2CC9F1AB7A33500B20E46 /* NSString+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Common.h"; sourceTree = "<group>"; };
@@ -725,6 +746,7 @@
 				44166C561B4203880052F9EC /* libConnectSDK.a in Frameworks */,
 				44166C681B420DB50052F9EC /* AdSupport.framework in Frameworks */,
 				44166C661B420DA60052F9EC /* Bolts.framework in Frameworks */,
+				44BEBF9C1B504BB000DA1A1D /* Matchstick.framework in Frameworks */,
 				44166C5F1B420C270052F9EC /* Specta.framework in Frameworks */,
 				44166C671B420DAD0052F9EC /* libc++.dylib in Frameworks */,
 				44166C5E1B420C270052F9EC /* Expecta.framework in Frameworks */,
@@ -749,6 +771,7 @@
 				44EF618D1A12E02700CF344C /* MobileCoreServices.framework in Frameworks */,
 				44EF61921A12E10500CF344C /* SystemConfiguration.framework in Frameworks */,
 				44316F041AF2F936000FE655 /* Bolts.framework in Frameworks */,
+				44BEBF9D1B504BB700DA1A1D /* Matchstick.framework in Frameworks */,
 				44EF619B1A12E23200CF344C /* libicucore.dylib in Frameworks */,
 				44316F2B1AF3F17A000FE655 /* OHHTTPStubs.framework in Frameworks */,
 				44316F291AF3F17A000FE655 /* OCMock.framework in Frameworks */,
@@ -767,6 +790,7 @@
 				449A37191B0FE37B00E47DAC /* libc++.dylib in Frameworks */,
 				449A37131B0FE03400E47DAC /* Specta.framework in Frameworks */,
 				447F63411B14F35900699843 /* GoogleCast.framework in Frameworks */,
+				44BEBF9B1B504BB000DA1A1D /* Matchstick.framework in Frameworks */,
 				449A371A1B0FE38700E47DAC /* SystemConfiguration.framework in Frameworks */,
 				449A371B1B0FE39700E47DAC /* AdSupport.framework in Frameworks */,
 				449A37121B0FE03400E47DAC /* Expecta.framework in Frameworks */,
@@ -783,6 +807,7 @@
 				EAD7F8601906E99C00B33AAB /* UIKit.framework in Frameworks */,
 				EAD7F85E1906E98200B33AAB /* AVFoundation.framework in Frameworks */,
 				EA61EBF218FE48EF00D75696 /* MobileCoreServices.framework in Frameworks */,
+				44BEBF9A1B504B8C00DA1A1D /* Matchstick.framework in Frameworks */,
 				EA61EBF018FE48E900D75696 /* SystemConfiguration.framework in Frameworks */,
 				EA61EB1418FE485B00D75696 /* Foundation.framework in Frameworks */,
 			);
@@ -1066,6 +1091,22 @@
 				44BCC3F51AB77F7D001BCDAA /* XMLWriter.m */,
 			);
 			path = xswi;
+			sourceTree = "<group>";
+		};
+		44BEBF871B504B7A00DA1A1D /* matchstick */ = {
+			isa = PBXGroup;
+			children = (
+				44BEBF881B504B7A00DA1A1D /* FlintDiscoveryProvider.h */,
+				44BEBF891B504B7A00DA1A1D /* FlintDiscoveryProvider.m */,
+				44BEBF8A1B504B7A00DA1A1D /* FlintService.h */,
+				44BEBF8B1B504B7A00DA1A1D /* FlintService.m */,
+				44BEBF8C1B504B7A00DA1A1D /* FlintServiceChannel.h */,
+				44BEBF8D1B504B7A00DA1A1D /* FlintServiceChannel.m */,
+				44BEBF8E1B504B7A00DA1A1D /* FlintWebAppSession.h */,
+				44BEBF8F1B504B7A00DA1A1D /* FlintWebAppSession.m */,
+				44BEBF901B504B7A00DA1A1D /* Matchstick.framework */,
+			);
+			path = matchstick;
 			sourceTree = "<group>";
 		};
 		44D88F5A1A717771009D9608 /* sample_data */ = {
@@ -1538,6 +1579,7 @@
 			children = (
 				44316EED1AF2EBF5000FE655 /* firetv */,
 				EA5FB85A199AEC550057B4B4 /* google-cast */,
+				44BEBF871B504B7A00DA1A1D /* matchstick */,
 			);
 			path = modules;
 			sourceTree = "<group>";
@@ -1611,6 +1653,7 @@
 				EA5FB8C5199AEC560057B4B4 /* ExternalInputInfo.h in Headers */,
 				EA5FB87E199AEC550057B4B4 /* DiscoveryProviderDelegate.h in Headers */,
 				EA5FB8DB199AEC560057B4B4 /* VolumeControl.h in Headers */,
+				44BEBF951B504B7A00DA1A1D /* FlintServiceChannel.h in Headers */,
 				EA5FB872199AEC550057B4B4 /* DefaultConnectableDeviceStore.h in Headers */,
 				EA5FB8D5199AEC560057B4B4 /* MediaPlayer.h in Headers */,
 				449426381AF830A1006BAFF2 /* SynchronousBlockRunner.h in Headers */,
@@ -1631,12 +1674,15 @@
 				EA5FB89F199AEC560057B4B4 /* GCDWebServerHTTPStatusCodes.h in Headers */,
 				EA5FB8E4199AEC560057B4B4 /* NetcastTVServiceConfig.h in Headers */,
 				EA5FB906199AEC570057B4B4 /* WebAppSessionDelegate.h in Headers */,
+				44BEBF971B504B7A00DA1A1D /* FlintWebAppSession.h in Headers */,
 				44D90AAC1B06B26C00A5CF2A /* AppStateChangeNotifier.h in Headers */,
 				EA5FB8DD199AEC560057B4B4 /* ServiceAsyncCommand.h in Headers */,
+				44BEBF911B504B7A00DA1A1D /* FlintDiscoveryProvider.h in Headers */,
 				EA5FB90B199AEC570057B4B4 /* CastDiscoveryProvider.h in Headers */,
 				0F446CC91A6D924D000BB1C0 /* MediaLaunchObject.h in Headers */,
 				EA5FB8CA199AEC560057B4B4 /* SSDPSocketListener.h in Headers */,
 				EA5FB8DF199AEC560057B4B4 /* ServiceCommand.h in Headers */,
+				44BEBF931B504B7A00DA1A1D /* FlintService.h in Headers */,
 				EA5FB8E1199AEC560057B4B4 /* ServiceCommandDelegate.h in Headers */,
 				EA5FB8D1199AEC560057B4B4 /* ExternalInputControl.h in Headers */,
 				EA5FB8AB199AEC560057B4B4 /* GCDWebServerURLEncodedFormRequest.h in Headers */,
@@ -2003,6 +2049,7 @@
 				EA5FB8DE199AEC560057B4B4 /* ServiceAsyncCommand.m in Sources */,
 				EA5FB8B2199AEC560057B4B4 /* GCDWebServerFileResponse.m in Sources */,
 				443063C21A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.m in Sources */,
+				44BEBF981B504B7A00DA1A1D /* FlintWebAppSession.m in Sources */,
 				EA5FB8C4199AEC560057B4B4 /* DeviceServiceReachability.m in Sources */,
 				0F446CCA1A6D924D000BB1C0 /* MediaLaunchObject.m in Sources */,
 				EA5FB873199AEC550057B4B4 /* DefaultConnectableDeviceStore.m in Sources */,
@@ -2054,6 +2101,8 @@
 				EA5FB8FF199AEC570057B4B4 /* RokuService.m in Sources */,
 				EA5FB8AE199AEC560057B4B4 /* GCDWebServerDataResponse.m in Sources */,
 				EA5FB8BC199AEC560057B4B4 /* AppInfo.m in Sources */,
+				44BEBF921B504B7A00DA1A1D /* FlintDiscoveryProvider.m in Sources */,
+				44BEBF941B504B7A00DA1A1D /* FlintService.m in Sources */,
 				EA5FB8A4199AEC560057B4B4 /* GCDWebServerResponse.m in Sources */,
 				44BCC3F71AB77F7D001BCDAA /* XMLWriter.m in Sources */,
 				44A499061B0AD0C1002C94E7 /* FireTVCapabilityMixin.m in Sources */,
@@ -2062,6 +2111,7 @@
 				EA5FB901199AEC570057B4B4 /* AirPlayWebAppSession.m in Sources */,
 				4498D98D1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.m in Sources */,
 				EA5FB882199AEC550057B4B4 /* ZeroConfDiscoveryProvider.m in Sources */,
+				44BEBF961B504B7A00DA1A1D /* FlintServiceChannel.m in Sources */,
 				44C2CC951AB7948300B20E46 /* XMLWriter+ConvenienceMethods.m in Sources */,
 				448B28791B041A5600DFF18F /* FireTVMediaPlayer.m in Sources */,
 				EA5FB8F5199AEC570057B4B4 /* AirPlayServiceHTTP.m in Sources */,
@@ -2132,6 +2182,7 @@
 					"$(PROJECT_DIR)/core/ConnectSDKIntegrationTests/Frameworks",
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
+					"$(PROJECT_DIR)/modules/matchstick",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKIntegrationTests/ConnectSDKIntegrationTests-Prefix.pch";
@@ -2168,6 +2219,7 @@
 					"$(PROJECT_DIR)/core/ConnectSDKIntegrationTests/Frameworks",
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
+					"$(PROJECT_DIR)/modules/matchstick",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKIntegrationTests/ConnectSDKIntegrationTests-Prefix.pch";
@@ -2197,6 +2249,7 @@
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
 					"$(PROJECT_DIR)/core/ConnectSDKTests/Frameworks",
+					"$(PROJECT_DIR)/modules/matchstick",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKTests/ConnectSDKTests-Prefix.pch";
@@ -2230,6 +2283,7 @@
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
 					"$(PROJECT_DIR)/core/ConnectSDKTests/Frameworks",
+					"$(PROJECT_DIR)/modules/matchstick",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKTests/ConnectSDKTests-Prefix.pch";
@@ -2261,6 +2315,7 @@
 					"$(PROJECT_DIR)/core/ConnectSDKTests/Frameworks",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
 					"$(PROJECT_DIR)/modules/google-cast",
+					"$(PROJECT_DIR)/modules/matchstick",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKIntegrationTests/ConnectSDKIntegrationTests-Prefix.pch";
@@ -2297,6 +2352,7 @@
 					"$(PROJECT_DIR)/core/ConnectSDKTests/Frameworks",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
 					"$(PROJECT_DIR)/modules/google-cast",
+					"$(PROJECT_DIR)/modules/matchstick",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKIntegrationTests/ConnectSDKIntegrationTests-Prefix.pch";
@@ -2396,6 +2452,7 @@
 					"$(PROJECT_DIR)/modules/**",
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
+					"$(PROJECT_DIR)/modules/matchstick",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
@@ -2421,6 +2478,7 @@
 					"$(PROJECT_DIR)/modules/**",
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
+					"$(PROJECT_DIR)/modules/matchstick",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
