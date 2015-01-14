@@ -38,6 +38,12 @@
 		4498D9921A65B69F008C0B72 /* DLNAServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4498D9911A65B69F008C0B72 /* DLNAServiceTests.m */; };
 		4498D9941A65CC12008C0B72 /* getpositioninfo_response_xbox.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4498D9931A65CC12008C0B72 /* getpositioninfo_response_xbox.xml */; };
 		4498D9961A65ED16008C0B72 /* getpositioninfo_response_sonos.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4498D9951A65ED16008C0B72 /* getpositioninfo_response_sonos.xml */; };
+		4498D9991A660147008C0B72 /* gettransportinfo_response_xbox.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4498D9981A660147008C0B72 /* gettransportinfo_response_xbox.xml */; };
+		4498D99B1A6601A7008C0B72 /* gettransportinfo_response_sonos.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4498D99A1A6601A7008C0B72 /* gettransportinfo_response_sonos.xml */; };
+		4498D99D1A66082B008C0B72 /* getvolume_response_xbox.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4498D99C1A66082B008C0B72 /* getvolume_response_xbox.xml */; };
+		4498D99F1A660835008C0B72 /* getvolume_response_sonos.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4498D99E1A660835008C0B72 /* getvolume_response_sonos.xml */; };
+		4498D9A11A660E82008C0B72 /* getmute_response_sonos.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4498D9A01A660E82008C0B72 /* getmute_response_sonos.xml */; };
+		4498D9A31A660EAE008C0B72 /* getmute_response_xbox.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4498D9A21A660EAE008C0B72 /* getmute_response_xbox.xml */; };
 		44EF618B1A12DC7E00CF344C /* ConnectSDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB79E199AEC550057B4B4 /* ConnectSDK-Prefix.pch */; };
 		44EF618D1A12E02700CF344C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
 		44EF618F1A12E0A400CF344C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EF618E1A12E0A400CF344C /* libz.dylib */; };
@@ -283,6 +289,12 @@
 		4498D9931A65CC12008C0B72 /* getpositioninfo_response_xbox.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = getpositioninfo_response_xbox.xml; sourceTree = "<group>"; };
 		4498D9951A65ED16008C0B72 /* getpositioninfo_response_sonos.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = getpositioninfo_response_sonos.xml; sourceTree = "<group>"; };
 		4498D9971A65F8AB008C0B72 /* DLNAService_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DLNAService_Private.h; sourceTree = "<group>"; };
+		4498D9981A660147008C0B72 /* gettransportinfo_response_xbox.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = gettransportinfo_response_xbox.xml; sourceTree = "<group>"; };
+		4498D99A1A6601A7008C0B72 /* gettransportinfo_response_sonos.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = gettransportinfo_response_sonos.xml; sourceTree = "<group>"; };
+		4498D99C1A66082B008C0B72 /* getvolume_response_xbox.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = getvolume_response_xbox.xml; sourceTree = "<group>"; };
+		4498D99E1A660835008C0B72 /* getvolume_response_sonos.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = getvolume_response_sonos.xml; sourceTree = "<group>"; };
+		4498D9A01A660E82008C0B72 /* getmute_response_sonos.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = getmute_response_sonos.xml; sourceTree = "<group>"; };
+		4498D9A21A660EAE008C0B72 /* getmute_response_xbox.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = getmute_response_xbox.xml; sourceTree = "<group>"; };
 		44EF618C1A12DF2D00CF344C /* ConnectSDKTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConnectSDKTests-Prefix.pch"; sourceTree = "<group>"; };
 		44EF618E1A12E0A400CF344C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		44EF61971A12E1C800CF344C /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
@@ -532,6 +544,12 @@
 			children = (
 				4433F3DD1A421733008D9A04 /* Helpers */,
 				4498D9911A65B69F008C0B72 /* DLNAServiceTests.m */,
+				4498D9A21A660EAE008C0B72 /* getmute_response_xbox.xml */,
+				4498D9A01A660E82008C0B72 /* getmute_response_sonos.xml */,
+				4498D99E1A660835008C0B72 /* getvolume_response_sonos.xml */,
+				4498D99C1A66082B008C0B72 /* getvolume_response_xbox.xml */,
+				4498D99A1A6601A7008C0B72 /* gettransportinfo_response_sonos.xml */,
+				4498D9981A660147008C0B72 /* gettransportinfo_response_xbox.xml */,
 				4498D9931A65CC12008C0B72 /* getpositioninfo_response_xbox.xml */,
 				4498D9951A65ED16008C0B72 /* getpositioninfo_response_sonos.xml */,
 			);
@@ -1231,9 +1249,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4498D99F1A660835008C0B72 /* getvolume_response_sonos.xml in Resources */,
+				4498D9991A660147008C0B72 /* gettransportinfo_response_xbox.xml in Resources */,
 				4498D9941A65CC12008C0B72 /* getpositioninfo_response_xbox.xml in Resources */,
+				4498D9A11A660E82008C0B72 /* getmute_response_sonos.xml in Resources */,
+				4498D99D1A66082B008C0B72 /* getvolume_response_xbox.xml in Resources */,
+				4498D9A31A660EAE008C0B72 /* getmute_response_xbox.xml in Resources */,
 				442B9A521A16FFB50053AE51 /* ssdp_device_description.xml in Resources */,
 				4498D9961A65ED16008C0B72 /* getpositioninfo_response_sonos.xml in Resources */,
+				4498D99B1A6601A7008C0B72 /* gettransportinfo_response_sonos.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
