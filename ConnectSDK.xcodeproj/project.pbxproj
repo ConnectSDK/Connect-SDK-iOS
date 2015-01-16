@@ -23,6 +23,9 @@
 
 /* Begin PBXBuildFile section */
 		146CDDD01A4E2CD800728D66 /* SamsungMultiscreen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 146CDDCF1A4E2CD800728D66 /* SamsungMultiscreen.framework */; };
+		44291C521A68B4C000280E5C /* SSDPDiscoveryProvider_FilteringTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44291C511A68B4C000280E5C /* SSDPDiscoveryProvider_FilteringTests.m */; };
+		44291C541A68B63700280E5C /* ssdp_device_description_sonos.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44291C531A68B63700280E5C /* ssdp_device_description_sonos.xml */; };
+		44291C561A68C06000280E5C /* ssdp_device_description_xbox.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44291C551A68C06000280E5C /* ssdp_device_description_xbox.xml */; };
 		442B9A4D1A16F6260053AE51 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 442B9A481A16F61E0053AE51 /* OCMock.framework */; };
 		442B9A501A16F6F00053AE51 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 442B9A4F1A16F6F00053AE51 /* OHHTTPStubs.framework */; };
 		442B9A521A16FFB50053AE51 /* ssdp_device_description.xml in Resources */ = {isa = PBXBuildFile; fileRef = 442B9A511A16FFB50053AE51 /* ssdp_device_description.xml */; };
@@ -273,6 +276,9 @@
 /* Begin PBXFileReference section */
 		146CDDCF1A4E2CD800728D66 /* SamsungMultiscreen.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SamsungMultiscreen.framework; sourceTree = "<group>"; };
 		44291C481A6705E400280E5C /* DLNAHTTPServer_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DLNAHTTPServer_Private.h; sourceTree = "<group>"; };
+		44291C511A68B4C000280E5C /* SSDPDiscoveryProvider_FilteringTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSDPDiscoveryProvider_FilteringTests.m; sourceTree = "<group>"; };
+		44291C531A68B63700280E5C /* ssdp_device_description_sonos.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_sonos.xml; sourceTree = "<group>"; };
+		44291C551A68C06000280E5C /* ssdp_device_description_xbox.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_xbox.xml; sourceTree = "<group>"; };
 		442B9A431A153F240053AE51 /* SSDPDiscoveryProvider_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSDPDiscoveryProvider_Private.h; sourceTree = "<group>"; };
 		442B9A481A16F61E0053AE51 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OCMock.framework; sourceTree = "<group>"; };
 		442B9A4F1A16F6F00053AE51 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OHHTTPStubs.framework; sourceTree = "<group>"; };
@@ -616,6 +622,9 @@
 			children = (
 				442B9A511A16FFB50053AE51 /* ssdp_device_description.xml */,
 				44EF61A31A12FC8800CF344C /* SSDPDiscoveryProviderTests.m */,
+				44291C511A68B4C000280E5C /* SSDPDiscoveryProvider_FilteringTests.m */,
+				44291C531A68B63700280E5C /* ssdp_device_description_sonos.xml */,
+				44291C551A68C06000280E5C /* ssdp_device_description_xbox.xml */,
 				448F36C41A1BD64200536649 /* ZeroConfDiscoveryProviderTests.m */,
 			);
 			path = Providers;
@@ -1271,6 +1280,8 @@
 				4498D99B1A6601A7008C0B72 /* gettransportinfo_response_sonos.xml in Resources */,
 				4498D9A71A661500008C0B72 /* upnperror_response_sonos.xml in Resources */,
 				4498D9A51A66148F008C0B72 /* upnperror_response_xbox.xml in Resources */,
+				44291C561A68C06000280E5C /* ssdp_device_description_xbox.xml in Resources */,
+				44291C541A68B63700280E5C /* ssdp_device_description_sonos.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1312,6 +1323,7 @@
 			files = (
 				44EF61A41A12FC8800CF344C /* SSDPDiscoveryProviderTests.m in Sources */,
 				4433F3DF1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m in Sources */,
+				44291C521A68B4C000280E5C /* SSDPDiscoveryProvider_FilteringTests.m in Sources */,
 				4480857F1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m in Sources */,
 				4498D9A91A66F027008C0B72 /* DLNAHTTPServerTests.m in Sources */,
 				448F36C51A1BD64200536649 /* ZeroConfDiscoveryProviderTests.m in Sources */,
