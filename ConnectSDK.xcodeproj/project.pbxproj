@@ -50,6 +50,7 @@
 		4498D9A51A66148F008C0B72 /* upnperror_response_xbox.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4498D9A41A66148F008C0B72 /* upnperror_response_xbox.xml */; };
 		4498D9A71A661500008C0B72 /* upnperror_response_sonos.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4498D9A61A661500008C0B72 /* upnperror_response_sonos.xml */; };
 		4498D9A91A66F027008C0B72 /* DLNAHTTPServerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4498D9A81A66F027008C0B72 /* DLNAHTTPServerTests.m */; };
+		449D5D5B1A6EF0890072DD36 /* ssdp_device_description_sonos_no_root_services.xml in Resources */ = {isa = PBXBuildFile; fileRef = 449D5D5A1A6EF0890072DD36 /* ssdp_device_description_sonos_no_root_services.xml */; };
 		44EF618B1A12DC7E00CF344C /* ConnectSDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB79E199AEC550057B4B4 /* ConnectSDK-Prefix.pch */; };
 		44EF618D1A12E02700CF344C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
 		44EF618F1A12E0A400CF344C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EF618E1A12E0A400CF344C /* libz.dylib */; };
@@ -308,6 +309,7 @@
 		4498D9A41A66148F008C0B72 /* upnperror_response_xbox.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = upnperror_response_xbox.xml; sourceTree = "<group>"; };
 		4498D9A61A661500008C0B72 /* upnperror_response_sonos.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = upnperror_response_sonos.xml; sourceTree = "<group>"; };
 		4498D9A81A66F027008C0B72 /* DLNAHTTPServerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLNAHTTPServerTests.m; sourceTree = "<group>"; };
+		449D5D5A1A6EF0890072DD36 /* ssdp_device_description_sonos_no_root_services.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_sonos_no_root_services.xml; sourceTree = "<group>"; };
 		44EF618C1A12DF2D00CF344C /* ConnectSDKTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConnectSDKTests-Prefix.pch"; sourceTree = "<group>"; };
 		44EF618E1A12E0A400CF344C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		44EF61971A12E1C800CF344C /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
@@ -624,6 +626,7 @@
 				44EF61A31A12FC8800CF344C /* SSDPDiscoveryProviderTests.m */,
 				44291C511A68B4C000280E5C /* SSDPDiscoveryProvider_FilteringTests.m */,
 				44291C531A68B63700280E5C /* ssdp_device_description_sonos.xml */,
+				449D5D5A1A6EF0890072DD36 /* ssdp_device_description_sonos_no_root_services.xml */,
 				44291C551A68C06000280E5C /* ssdp_device_description_xbox.xml */,
 				448F36C41A1BD64200536649 /* ZeroConfDiscoveryProviderTests.m */,
 			);
@@ -1279,6 +1282,7 @@
 				4498D9961A65ED16008C0B72 /* getpositioninfo_response_sonos.xml in Resources */,
 				4498D99B1A6601A7008C0B72 /* gettransportinfo_response_sonos.xml in Resources */,
 				4498D9A71A661500008C0B72 /* upnperror_response_sonos.xml in Resources */,
+				449D5D5B1A6EF0890072DD36 /* ssdp_device_description_sonos_no_root_services.xml in Resources */,
 				4498D9A51A66148F008C0B72 /* upnperror_response_xbox.xml in Resources */,
 				44291C561A68C06000280E5C /* ssdp_device_description_xbox.xml in Resources */,
 				44291C541A68B63700280E5C /* ssdp_device_description_sonos.xml in Resources */,
