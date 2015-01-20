@@ -22,6 +22,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		0F446CC21A6D8353000BB1C0 /* PlayListControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F446CC11A6D8353000BB1C0 /* PlayListControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0F446CC91A6D924D000BB1C0 /* MediaLaunchObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F446CC71A6D924D000BB1C0 /* MediaLaunchObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0F446CCA1A6D924D000BB1C0 /* MediaLaunchObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F446CC81A6D924D000BB1C0 /* MediaLaunchObject.m */; };
 		146CDDD01A4E2CD800728D66 /* SamsungMultiscreen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 146CDDCF1A4E2CD800728D66 /* SamsungMultiscreen.framework */; };
 		442B9A4D1A16F6260053AE51 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 442B9A481A16F61E0053AE51 /* OCMock.framework */; };
 		442B9A501A16F6F00053AE51 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 442B9A4F1A16F6F00053AE51 /* OHHTTPStubs.framework */; };
@@ -256,6 +259,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0F446CC11A6D8353000BB1C0 /* PlayListControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayListControl.h; sourceTree = "<group>"; };
+		0F446CC71A6D924D000BB1C0 /* MediaLaunchObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaLaunchObject.h; sourceTree = "<group>"; };
+		0F446CC81A6D924D000BB1C0 /* MediaLaunchObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaLaunchObject.m; sourceTree = "<group>"; };
 		146CDDCF1A4E2CD800728D66 /* SamsungMultiscreen.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SamsungMultiscreen.framework; sourceTree = "<group>"; };
 		442B9A431A153F240053AE51 /* SSDPDiscoveryProvider_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSDPDiscoveryProvider_Private.h; sourceTree = "<group>"; };
 		442B9A481A16F61E0053AE51 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OCMock.framework; sourceTree = "<group>"; };
@@ -818,6 +824,8 @@
 				BB9F735CB760F4387DDA84B4 /* MediaInfo.h */,
 				BB9F7AF5170CE02632778263 /* ImageInfo.m */,
 				BB9F71B68553DCA74ED1C43E /* ImageInfo.h */,
+				0F446CC71A6D924D000BB1C0 /* MediaLaunchObject.h */,
+				0F446CC81A6D924D000BB1C0 /* MediaLaunchObject.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -865,6 +873,7 @@
 				EA5FB824199AEC550057B4B4 /* TVControl.h */,
 				EA5FB825199AEC550057B4B4 /* VolumeControl.h */,
 				EA5FB826199AEC550057B4B4 /* WebAppLauncher.h */,
+				0F446CC11A6D8353000BB1C0 /* PlayListControl.h */,
 			);
 			path = Capabilities;
 			sourceTree = "<group>";
@@ -1042,6 +1051,7 @@
 				EA5FB906199AEC570057B4B4 /* WebAppSessionDelegate.h in Headers */,
 				EA5FB8DD199AEC560057B4B4 /* ServiceAsyncCommand.h in Headers */,
 				EA5FB90B199AEC570057B4B4 /* CastDiscoveryProvider.h in Headers */,
+				0F446CC91A6D924D000BB1C0 /* MediaLaunchObject.h in Headers */,
 				EA5FB8CA199AEC560057B4B4 /* SSDPSocketListener.h in Headers */,
 				EA5FB8DF199AEC560057B4B4 /* ServiceCommand.h in Headers */,
 				EA5FB8E1199AEC560057B4B4 /* ServiceCommandDelegate.h in Headers */,
@@ -1116,6 +1126,7 @@
 				EA5FB902199AEC570057B4B4 /* LaunchSession.h in Headers */,
 				EA5FB8B7199AEC560057B4B4 /* LGSRWebSocket.h in Headers */,
 				EA5FB8B3199AEC560057B4B4 /* GCDWebServerStreamedResponse.h in Headers */,
+				0F446CC21A6D8353000BB1C0 /* PlayListControl.h in Headers */,
 				EA5F82F4199BDCD300B7302B /* ConnectSDK.h in Headers */,
 				EA5F82F0199BDA2100B7302B /* ConnectSDKDefaultPlatforms.h in Headers */,
 				BB9F726F85973936620CDADD /* MediaInfo.h in Headers */,
@@ -1265,6 +1276,7 @@
 				EA5FB8B2199AEC560057B4B4 /* GCDWebServerFileResponse.m in Sources */,
 				443063C21A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.m in Sources */,
 				EA5FB8C4199AEC560057B4B4 /* DeviceServiceReachability.m in Sources */,
+				0F446CCA1A6D924D000BB1C0 /* MediaLaunchObject.m in Sources */,
 				EA5FB873199AEC550057B4B4 /* DefaultConnectableDeviceStore.m in Sources */,
 				EA5FB8E3199AEC560057B4B4 /* ServiceSubscription.m in Sources */,
 				EA5FB8F9199AEC570057B4B4 /* WebOSTVServiceMouse.m in Sources */,
