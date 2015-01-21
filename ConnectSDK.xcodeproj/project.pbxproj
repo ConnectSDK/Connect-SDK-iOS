@@ -232,12 +232,6 @@
 		EA5FB910199AEC570057B4B4 /* CastServiceChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB861199AEC550057B4B4 /* CastServiceChannel.m */; };
 		EA5FB911199AEC570057B4B4 /* CastWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB862199AEC550057B4B4 /* CastWebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA5FB912199AEC570057B4B4 /* CastWebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB863199AEC550057B4B4 /* CastWebAppSession.m */; };
-		EA5FB913199AEC570057B4B4 /* MultiScreenDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB866199AEC550057B4B4 /* MultiScreenDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB914199AEC570057B4B4 /* MultiScreenDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB867199AEC550057B4B4 /* MultiScreenDiscoveryProvider.m */; };
-		EA5FB915199AEC570057B4B4 /* MultiScreenService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB868199AEC550057B4B4 /* MultiScreenService.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB916199AEC570057B4B4 /* MultiScreenService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB869199AEC550057B4B4 /* MultiScreenService.m */; };
-		EA5FB917199AEC570057B4B4 /* MultiScreenWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB86A199AEC550057B4B4 /* MultiScreenWebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB918199AEC570057B4B4 /* MultiScreenWebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB86B199AEC550057B4B4 /* MultiScreenWebAppSession.m */; };
 		EA61EB1418FE485B00D75696 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1318FE485B00D75696 /* Foundation.framework */; };
 		EA61EBF018FE48E900D75696 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBEF18FE48E900D75696 /* SystemConfiguration.framework */; };
 		EA61EBF218FE48EF00D75696 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
@@ -491,12 +485,6 @@
 		EA5FB861199AEC550057B4B4 /* CastServiceChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CastServiceChannel.m; sourceTree = "<group>"; };
 		EA5FB862199AEC550057B4B4 /* CastWebAppSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CastWebAppSession.h; sourceTree = "<group>"; };
 		EA5FB863199AEC550057B4B4 /* CastWebAppSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CastWebAppSession.m; sourceTree = "<group>"; };
-		EA5FB866199AEC550057B4B4 /* MultiScreenDiscoveryProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiScreenDiscoveryProvider.h; sourceTree = "<group>"; };
-		EA5FB867199AEC550057B4B4 /* MultiScreenDiscoveryProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiScreenDiscoveryProvider.m; sourceTree = "<group>"; };
-		EA5FB868199AEC550057B4B4 /* MultiScreenService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiScreenService.h; sourceTree = "<group>"; };
-		EA5FB869199AEC550057B4B4 /* MultiScreenService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiScreenService.m; sourceTree = "<group>"; };
-		EA5FB86A199AEC550057B4B4 /* MultiScreenWebAppSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiScreenWebAppSession.h; sourceTree = "<group>"; };
-		EA5FB86B199AEC550057B4B4 /* MultiScreenWebAppSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiScreenWebAppSession.m; sourceTree = "<group>"; };
 		EA61EB1018FE485B00D75696 /* libConnectSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libConnectSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA61EB1318FE485B00D75696 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EA61EBEF18FE48E900D75696 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -1007,7 +995,6 @@
 			isa = PBXGroup;
 			children = (
 				EA5FB85A199AEC550057B4B4 /* google-cast */,
-				EA5FB864199AEC550057B4B4 /* samsung-multiscreen */,
 			);
 			path = modules;
 			sourceTree = "<group>";
@@ -1028,20 +1015,7 @@
 			path = "google-cast";
 			sourceTree = "<group>";
 		};
-		EA5FB864199AEC550057B4B4 /* samsung-multiscreen */ = {
-			isa = PBXGroup;
-			children = (
-				146CDDCF1A4E2CD800728D66 /* SamsungMultiscreen.framework */,
-				EA5FB866199AEC550057B4B4 /* MultiScreenDiscoveryProvider.h */,
-				EA5FB867199AEC550057B4B4 /* MultiScreenDiscoveryProvider.m */,
-				EA5FB868199AEC550057B4B4 /* MultiScreenService.h */,
-				EA5FB869199AEC550057B4B4 /* MultiScreenService.m */,
-				EA5FB86A199AEC550057B4B4 /* MultiScreenWebAppSession.h */,
-				EA5FB86B199AEC550057B4B4 /* MultiScreenWebAppSession.m */,
-			);
-			path = "samsung-multiscreen";
-			sourceTree = "<group>";
-		};
+
 		EA61EB0718FE485B00D75696 = {
 			isa = PBXGroup;
 			children = (
@@ -1139,7 +1113,6 @@
 				EA5FB870199AEC550057B4B4 /* ConnectableDeviceDelegate.h in Headers */,
 				EA5FB8D2199AEC560057B4B4 /* KeyControl.h in Headers */,
 				EA5FB8A0199AEC560057B4B4 /* GCDWebServerPrivate.h in Headers */,
-				EA5FB917199AEC570057B4B4 /* MultiScreenWebAppSession.h in Headers */,
 				EA5FB8F6199AEC570057B4B4 /* AirPlayServiceMirrored.h in Headers */,
 				EA5FB883199AEC550057B4B4 /* CTASIAuthenticationDialog.h in Headers */,
 				EA5FB8A3199AEC560057B4B4 /* GCDWebServerResponse.h in Headers */,
@@ -1151,7 +1124,6 @@
 				EA5FB904199AEC570057B4B4 /* WebAppSession.h in Headers */,
 				EA5FB8FE199AEC570057B4B4 /* RokuService.h in Headers */,
 				EA5FB894199AEC560057B4B4 /* CTASINetworkQueue.h in Headers */,
-				EA5FB913199AEC570057B4B4 /* MultiScreenDiscoveryProvider.h in Headers */,
 				EA5FB881199AEC550057B4B4 /* ZeroConfDiscoveryProvider.h in Headers */,
 				EA5FB877199AEC550057B4B4 /* CapabilityFilter.h in Headers */,
 				EA5FB876199AEC550057B4B4 /* DevicePickerDelegate.h in Headers */,
@@ -1166,7 +1138,6 @@
 				EA5FB87C199AEC550057B4B4 /* DiscoveryProvider.h in Headers */,
 				EA5FB8C7199AEC560057B4B4 /* JSONObjectCoding.h in Headers */,
 				EA5FB8F8199AEC570057B4B4 /* WebOSTVServiceMouse.h in Headers */,
-				EA5FB915199AEC570057B4B4 /* MultiScreenService.h in Headers */,
 				EA5FB8A5199AEC560057B4B4 /* GCDWebServerDataRequest.h in Headers */,
 				EA5FB886199AEC560057B4B4 /* CTASIDataCompressor.h in Headers */,
 				EA5FB871199AEC550057B4B4 /* ConnectableDeviceStore.h in Headers */,
@@ -1346,7 +1317,6 @@
 				EA5FB8F1199AEC570057B4B4 /* DIALService.m in Sources */,
 				EA5FB887199AEC560057B4B4 /* CTASIDataCompressor.m in Sources */,
 				EA5FB8AC199AEC560057B4B4 /* GCDWebServerURLEncodedFormRequest.m in Sources */,
-				EA5FB918199AEC570057B4B4 /* MultiScreenWebAppSession.m in Sources */,
 				EA5FB8CB199AEC560057B4B4 /* SSDPSocketListener.m in Sources */,
 				EA5FB8DE199AEC560057B4B4 /* ServiceAsyncCommand.m in Sources */,
 				EA5FB8B2199AEC560057B4B4 /* GCDWebServerFileResponse.m in Sources */,
@@ -1384,7 +1354,6 @@
 				EA5FB90A199AEC570057B4B4 /* WebOSTVService.m in Sources */,
 				EA5FB8BA199AEC560057B4B4 /* CTXMLReader.m in Sources */,
 				EA5FB90C199AEC570057B4B4 /* CastDiscoveryProvider.m in Sources */,
-				EA5FB914199AEC570057B4B4 /* MultiScreenDiscoveryProvider.m in Sources */,
 				EA5FB88D199AEC560057B4B4 /* CTASIFormDataRequest.m in Sources */,
 				EA5FB893199AEC560057B4B4 /* CTASIInputStream.m in Sources */,
 				EA5FB8B4199AEC560057B4B4 /* GCDWebServerStreamedResponse.m in Sources */,
@@ -1393,7 +1362,6 @@
 				EA5FB86F199AEC550057B4B4 /* ConnectableDevice.m in Sources */,
 				EA5FB8E7199AEC560057B4B4 /* ServiceConfig.m in Sources */,
 				EA5FB8C2199AEC560057B4B4 /* ConnectUtil.m in Sources */,
-				EA5FB916199AEC570057B4B4 /* MultiScreenService.m in Sources */,
 				EA5FB87D199AEC550057B4B4 /* DiscoveryProvider.m in Sources */,
 				EA5FB8FF199AEC570057B4B4 /* RokuService.m in Sources */,
 				EA5FB8AE199AEC560057B4B4 /* GCDWebServerDataResponse.m in Sources */,
@@ -1591,7 +1559,6 @@
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/core/Frameworks/OCMock",
 					"$(PROJECT_DIR)/core/Frameworks/OHHTTPStubs",
-					"$(PROJECT_DIR)/modules/samsung-multiscreen",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
@@ -1619,7 +1586,6 @@
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/core/Frameworks/OCMock",
 					"$(PROJECT_DIR)/core/Frameworks/OHHTTPStubs",
-					"$(PROJECT_DIR)/modules/samsung-multiscreen",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
