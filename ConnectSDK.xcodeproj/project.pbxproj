@@ -49,6 +49,8 @@
 		4498D9A51A66148F008C0B72 /* upnperror_response_xbox.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4498D9A41A66148F008C0B72 /* upnperror_response_xbox.xml */; };
 		4498D9A71A661500008C0B72 /* upnperror_response_sonos.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4498D9A61A661500008C0B72 /* upnperror_response_sonos.xml */; };
 		4498D9A91A66F027008C0B72 /* DLNAHTTPServerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4498D9A81A66F027008C0B72 /* DLNAHTTPServerTests.m */; };
+		44C162401A78021F0048C608 /* DiscoveryFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 44C1623E1A78021F0048C608 /* DiscoveryFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		44C162411A78021F0048C608 /* DiscoveryFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C1623F1A78021F0048C608 /* DiscoveryFilter.m */; };
 		44D88F891A71C4A8009D9608 /* ssdp_device_description_chromecast.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F7A1A71C4A8009D9608 /* ssdp_device_description_chromecast.xml */; };
 		44D88F8A1A71C4A8009D9608 /* ssdp_device_description_firetv.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F7B1A71C4A8009D9608 /* ssdp_device_description_firetv.xml */; };
 		44D88F8B1A71C4A8009D9608 /* ssdp_device_description_roku2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F7C1A71C4A8009D9608 /* ssdp_device_description_roku2.xml */; };
@@ -315,6 +317,8 @@
 		4498D9A41A66148F008C0B72 /* upnperror_response_xbox.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = upnperror_response_xbox.xml; sourceTree = "<group>"; };
 		4498D9A61A661500008C0B72 /* upnperror_response_sonos.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = upnperror_response_sonos.xml; sourceTree = "<group>"; };
 		4498D9A81A66F027008C0B72 /* DLNAHTTPServerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLNAHTTPServerTests.m; sourceTree = "<group>"; };
+		44C1623E1A78021F0048C608 /* DiscoveryFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoveryFilter.h; sourceTree = "<group>"; };
+		44C1623F1A78021F0048C608 /* DiscoveryFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoveryFilter.m; sourceTree = "<group>"; };
 		44D88F7A1A71C4A8009D9608 /* ssdp_device_description_chromecast.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_chromecast.xml; sourceTree = "<group>"; };
 		44D88F7B1A71C4A8009D9608 /* ssdp_device_description_firetv.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_firetv.xml; sourceTree = "<group>"; };
 		44D88F7C1A71C4A8009D9608 /* ssdp_device_description_roku2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_roku2.xml; sourceTree = "<group>"; };
@@ -736,6 +740,8 @@
 			children = (
 				EA5FB7AA199AEC550057B4B4 /* CapabilityFilter.h */,
 				EA5FB7AB199AEC550057B4B4 /* CapabilityFilter.m */,
+				44C1623E1A78021F0048C608 /* DiscoveryFilter.h */,
+				44C1623F1A78021F0048C608 /* DiscoveryFilter.m */,
 				EA5FB7AC199AEC550057B4B4 /* DiscoveryManager.h */,
 				EA5FB7AD199AEC550057B4B4 /* DiscoveryManager.m */,
 				EA5FB7AE199AEC550057B4B4 /* DiscoveryManagerDelegate.h */,
@@ -1213,6 +1219,7 @@
 				EA5FB886199AEC560057B4B4 /* CTASIDataCompressor.h in Headers */,
 				EA5FB871199AEC550057B4B4 /* ConnectableDeviceStore.h in Headers */,
 				EA5FB8F4199AEC570057B4B4 /* AirPlayServiceHTTP.h in Headers */,
+				44C162401A78021F0048C608 /* DiscoveryFilter.h in Headers */,
 				EA5FB874199AEC550057B4B4 /* DevicePicker.h in Headers */,
 				EA5FB8A1199AEC560057B4B4 /* GCDWebServerRequest.h in Headers */,
 				EA5FB8BF199AEC560057B4B4 /* ConnectError.h in Headers */,
@@ -1443,6 +1450,7 @@
 				EA5FB8B4199AEC560057B4B4 /* GCDWebServerStreamedResponse.m in Sources */,
 				EA5FB90E199AEC570057B4B4 /* CastService.m in Sources */,
 				EA5FB8F7199AEC570057B4B4 /* AirPlayServiceMirrored.m in Sources */,
+				44C162411A78021F0048C608 /* DiscoveryFilter.m in Sources */,
 				EA5FB86F199AEC550057B4B4 /* ConnectableDevice.m in Sources */,
 				EA5FB8E7199AEC560057B4B4 /* ServiceConfig.m in Sources */,
 				EA5FB8C2199AEC560057B4B4 /* ConnectUtil.m in Sources */,
