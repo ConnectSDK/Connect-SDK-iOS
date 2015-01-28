@@ -49,6 +49,8 @@
 		4498D9A51A66148F008C0B72 /* upnperror_response_xbox.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4498D9A41A66148F008C0B72 /* upnperror_response_xbox.xml */; };
 		4498D9A71A661500008C0B72 /* upnperror_response_sonos.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4498D9A61A661500008C0B72 /* upnperror_response_sonos.xml */; };
 		4498D9A91A66F027008C0B72 /* DLNAHTTPServerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4498D9A81A66F027008C0B72 /* DLNAHTTPServerTests.m */; };
+		44C1623C1A7729490048C608 /* FireTVService.h in Headers */ = {isa = PBXBuildFile; fileRef = 44C1623A1A7729490048C608 /* FireTVService.h */; };
+		44C1623D1A7729490048C608 /* FireTVService.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C1623B1A7729490048C608 /* FireTVService.m */; };
 		44C162401A78021F0048C608 /* DiscoveryFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 44C1623E1A78021F0048C608 /* DiscoveryFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		44C162411A78021F0048C608 /* DiscoveryFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C1623F1A78021F0048C608 /* DiscoveryFilter.m */; };
 		44D88F891A71C4A8009D9608 /* ssdp_device_description_chromecast.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F7A1A71C4A8009D9608 /* ssdp_device_description_chromecast.xml */; };
@@ -317,6 +319,8 @@
 		4498D9A41A66148F008C0B72 /* upnperror_response_xbox.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = upnperror_response_xbox.xml; sourceTree = "<group>"; };
 		4498D9A61A661500008C0B72 /* upnperror_response_sonos.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = upnperror_response_sonos.xml; sourceTree = "<group>"; };
 		4498D9A81A66F027008C0B72 /* DLNAHTTPServerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLNAHTTPServerTests.m; sourceTree = "<group>"; };
+		44C1623A1A7729490048C608 /* FireTVService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FireTVService.h; sourceTree = "<group>"; };
+		44C1623B1A7729490048C608 /* FireTVService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FireTVService.m; sourceTree = "<group>"; };
 		44C1623E1A78021F0048C608 /* DiscoveryFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoveryFilter.h; sourceTree = "<group>"; };
 		44C1623F1A78021F0048C608 /* DiscoveryFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoveryFilter.m; sourceTree = "<group>"; };
 		44D88F7A1A71C4A8009D9608 /* ssdp_device_description_chromecast.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_chromecast.xml; sourceTree = "<group>"; };
@@ -969,6 +973,8 @@
 				EA5FB83E199AEC550057B4B4 /* DLNAService.h */,
 				4498D9971A65F8AB008C0B72 /* DLNAService_Private.h */,
 				EA5FB83F199AEC550057B4B4 /* DLNAService.m */,
+				44C1623A1A7729490048C608 /* FireTVService.h */,
+				44C1623B1A7729490048C608 /* FireTVService.m */,
 				EA5FB840199AEC550057B4B4 /* Helpers */,
 				EA5FB849199AEC550057B4B4 /* NetcastTVService.h */,
 				EA5FB84A199AEC550057B4B4 /* NetcastTVService.m */,
@@ -1143,6 +1149,7 @@
 				EA5FB8DB199AEC560057B4B4 /* VolumeControl.h in Headers */,
 				EA5FB872199AEC550057B4B4 /* DefaultConnectableDeviceStore.h in Headers */,
 				EA5FB8D5199AEC560057B4B4 /* MediaPlayer.h in Headers */,
+				44C1623C1A7729490048C608 /* FireTVService.h in Headers */,
 				EA5FB907199AEC570057B4B4 /* WebOSWebAppSession.h in Headers */,
 				EA5FB892199AEC560057B4B4 /* CTASIInputStream.h in Headers */,
 				EA5FB8DC199AEC560057B4B4 /* WebAppLauncher.h in Headers */,
@@ -1402,6 +1409,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA5FB884199AEC560057B4B4 /* CTASIAuthenticationDialog.m in Sources */,
+				44C1623D1A7729490048C608 /* FireTVService.m in Sources */,
 				EA5FB895199AEC560057B4B4 /* CTASINetworkQueue.m in Sources */,
 				EA5FB8B0199AEC560057B4B4 /* GCDWebServerErrorResponse.m in Sources */,
 				EA5FB8F1199AEC570057B4B4 /* DIALService.m in Sources */,

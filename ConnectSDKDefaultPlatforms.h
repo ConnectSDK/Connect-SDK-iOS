@@ -24,6 +24,7 @@
     @"AirPlayService"     : @"ZeroConfDiscoveryProvider", \
     @"DIALService"        : @"SSDPDiscoveryProvider", \
     @"DLNAService"        : @"SSDPDiscoveryProvider", \
+    @"FireTVService"      : @"SSDPDiscoveryProvider", \
     @"NetcastTVService"   : @"SSDPDiscoveryProvider", \
     @"RokuService"        : @"SSDPDiscoveryProvider", \
     @"WebOSTVService"     : @"SSDPDiscoveryProvider", \
