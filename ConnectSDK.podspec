@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "ConnectSDK"
-  s.version      = "1.4.1"
+  s.version      = "1.4.2"
   s.summary      = "Connect SDK is an open source framework that connects your mobile apps with multiple TV platforms."
 
   s.description  = <<-DESC
@@ -81,10 +81,10 @@ Pod::Spec.new do |s|
     sp.source_files = "modules/**/*.{h,m}"
     sp.private_header_files = "modules/**/*_Private.h"
 
-    sp.dependency "google-cast-sdk", "2.4.0"
+    sp.dependency "google-cast-sdk", "2.5.1"
     sp.framework = "GoogleCast"
     sp.xcconfig = {
-        "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.4.0-Release",
+        "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.5.1-Release",
     }
   end
 end
