@@ -80,11 +80,12 @@ Pod::Spec.new do |s|
     sp.dependency 'ConnectSDK/Core'
     sp.source_files = "modules/**/*.{h,m}"
     sp.private_header_files = "modules/**/*_Private.h"
-
-    sp.dependency "google-cast-sdk", "2.5.1"
+    
+    cast_version = "2.5.1"
+    sp.dependency "google-cast-sdk", cast_version
     sp.framework = "GoogleCast"
     sp.xcconfig = {
-        "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.5.1-Release",
+        "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/google-cast-sdk/GoogleCastSDK-#{cast_version}-Release",
     }
   end
 end
