@@ -25,6 +25,7 @@
 		0F446CC21A6D8353000BB1C0 /* PlayListControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F446CC11A6D8353000BB1C0 /* PlayListControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0F446CC91A6D924D000BB1C0 /* MediaLaunchObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F446CC71A6D924D000BB1C0 /* MediaLaunchObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0F446CCA1A6D924D000BB1C0 /* MediaLaunchObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F446CC81A6D924D000BB1C0 /* MediaLaunchObject.m */; };
+		440A031D1A854EDE0007E3D3 /* WebOSTVServiceSocketClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 440A031C1A854EDE0007E3D3 /* WebOSTVServiceSocketClientTests.m */; };
 		44291C521A68B4C000280E5C /* SSDPDiscoveryProvider_FilteringTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44291C511A68B4C000280E5C /* SSDPDiscoveryProvider_FilteringTests.m */; };
 		442B9A4D1A16F6260053AE51 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 442B9A481A16F61E0053AE51 /* OCMock.framework */; };
 		442B9A501A16F6F00053AE51 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 442B9A4F1A16F6F00053AE51 /* OHHTTPStubs.framework */; };
@@ -285,6 +286,8 @@
 		0F446CC11A6D8353000BB1C0 /* PlayListControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayListControl.h; sourceTree = "<group>"; };
 		0F446CC71A6D924D000BB1C0 /* MediaLaunchObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaLaunchObject.h; sourceTree = "<group>"; };
 		0F446CC81A6D924D000BB1C0 /* MediaLaunchObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaLaunchObject.m; sourceTree = "<group>"; };
+		440A031C1A854EDE0007E3D3 /* WebOSTVServiceSocketClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebOSTVServiceSocketClientTests.m; sourceTree = "<group>"; };
+		440A031E1A85536A0007E3D3 /* WebOSTVServiceSocketClient_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebOSTVServiceSocketClient_Private.h; sourceTree = "<group>"; };
 		44291C481A6705E400280E5C /* DLNAHTTPServer_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DLNAHTTPServer_Private.h; sourceTree = "<group>"; };
 		44291C511A68B4C000280E5C /* SSDPDiscoveryProvider_FilteringTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSDPDiscoveryProvider_FilteringTests.m; sourceTree = "<group>"; };
 		442B9A431A153F240053AE51 /* SSDPDiscoveryProvider_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSDPDiscoveryProvider_Private.h; sourceTree = "<group>"; };
@@ -591,6 +594,7 @@
 			children = (
 				4433F3DE1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m */,
 				4498D9A81A66F027008C0B72 /* DLNAHTTPServerTests.m */,
+				440A031C1A854EDE0007E3D3 /* WebOSTVServiceSocketClientTests.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1038,6 +1042,7 @@
 				EA5FB845199AEC550057B4B4 /* WebOSTVServiceMouse.h */,
 				EA5FB846199AEC550057B4B4 /* WebOSTVServiceMouse.m */,
 				EA5FB847199AEC550057B4B4 /* WebOSTVServiceSocketClient.h */,
+				440A031E1A85536A0007E3D3 /* WebOSTVServiceSocketClient_Private.h */,
 				EA5FB848199AEC550057B4B4 /* WebOSTVServiceSocketClient.m */,
 				BB9F703F509283F37E26C0B4 /* DLNAHTTPServer.m */,
 				BB9F7271D17DCAE1C615A59A /* DLNAHTTPServer.h */,
@@ -1386,6 +1391,7 @@
 				4498D9A91A66F027008C0B72 /* DLNAHTTPServerTests.m in Sources */,
 				448F36C51A1BD64200536649 /* ZeroConfDiscoveryProviderTests.m in Sources */,
 				4498D9921A65B69F008C0B72 /* DLNAServiceTests.m in Sources */,
+				440A031D1A854EDE0007E3D3 /* WebOSTVServiceSocketClientTests.m in Sources */,
 				4498D9901A65A1D7008C0B72 /* NSDictionary+KeyPredicateSearchTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
