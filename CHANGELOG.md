@@ -1,12 +1,26 @@
 # Connect SDK iOS Changelog
 
+## 1.4.2 -- 10 Feb 2015
+
+- Support for Xbox One console and Sonos speakers
+- Added playlist support over DLNA
+- Fixed video playing on Roku firmware 6.1
+- Fixed SSDP discovery provider
+- Miscellaneous bug fixes
+- [See commits between 1.4.1 and 1.4.2](https://github.com/ConnectSDK/Connect-SDK-iOS/compare/1.4.1...1.4.2)
+
+[View files at version 1.4.2](https://github.com/ConnectSDK/Connect-SDK-iOS/tree/1.4.2)
+
 ## 1.4.1 -- 18 Dec 2014
 - Added new API's to
-  - Display image (-[MediaPlayer displayImage:success:failure:])
-  - Play media (-[MediaPlayer playMedia:shouldLoop:success:failure:])
+  - Display image (`-[MediaPlayer displayImage:success:failure:]`)
+  - Play media (`-[MediaPlayer playMedia:shouldLoop:success:failure:]`)
 - Miscellaneous bug fixes
   - Upgraded GCDWebserver to v3.2.1 to fix a crash when the app comes back to foreground when playing media in Debug mode.
   - Fixed Airplay streaming issue for long Audio/Video.
+- [See commits between 1.4.0 and 1.4.1](https://github.com/ConnectSDK/Connect-SDK-iOS/compare/1.4.0...1.4.1)
+
+[View files at version 1.4.1](https://github.com/ConnectSDK/Connect-SDK-iOS/tree/1.4.1)
 
 ## 1.4.0 -- 3 Dec 2014
 
