@@ -65,6 +65,7 @@
 		44D88F951A71C4A8009D9608 /* ssdp_device_description_webos_minor_webos.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F881A71C4A8009D9608 /* ssdp_device_description_webos_minor_webos.xml */; };
 		44D88F971A71D6AF009D9608 /* ssdp_device_description_dlna_no_required_services.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F961A71D6AF009D9608 /* ssdp_device_description_dlna_no_required_services.xml */; };
 		44D88F991A71DB15009D9608 /* ssdp_device_description_dlna_root_no_required_services.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F981A71DB15009D9608 /* ssdp_device_description_dlna_root_no_required_services.xml */; };
+		44D8F7DA1AB27B4800559FE3 /* NSInvocation+ObjectGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D8F7D91AB27B4800559FE3 /* NSInvocation+ObjectGetter.m */; };
 		44EF618B1A12DC7E00CF344C /* ConnectSDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB79E199AEC550057B4B4 /* ConnectSDK-Prefix.pch */; };
 		44EF618D1A12E02700CF344C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
 		44EF618F1A12E0A400CF344C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EF618E1A12E0A400CF344C /* libz.dylib */; };
@@ -333,6 +334,8 @@
 		44D88F881A71C4A8009D9608 /* ssdp_device_description_webos_minor_webos.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_webos_minor_webos.xml; sourceTree = "<group>"; };
 		44D88F961A71D6AF009D9608 /* ssdp_device_description_dlna_no_required_services.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_dlna_no_required_services.xml; sourceTree = "<group>"; };
 		44D88F981A71DB15009D9608 /* ssdp_device_description_dlna_root_no_required_services.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_dlna_root_no_required_services.xml; sourceTree = "<group>"; };
+		44D8F7D81AB27B4800559FE3 /* NSInvocation+ObjectGetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+ObjectGetter.h"; sourceTree = "<group>"; };
+		44D8F7D91AB27B4800559FE3 /* NSInvocation+ObjectGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+ObjectGetter.m"; sourceTree = "<group>"; };
 		44EF618C1A12DF2D00CF344C /* ConnectSDKTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConnectSDKTests-Prefix.pch"; sourceTree = "<group>"; };
 		44EF618E1A12E0A400CF344C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		44EF61971A12E1C800CF344C /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
@@ -602,6 +605,8 @@
 		4480857B1A12A7BE00E13938 /* ConnectSDKTests */ = {
 			isa = PBXGroup;
 			children = (
+				44D8F7D81AB27B4800559FE3 /* NSInvocation+ObjectGetter.h */,
+				44D8F7D91AB27B4800559FE3 /* NSInvocation+ObjectGetter.m */,
 				4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */,
 				44EF61A11A12FC5000CF344C /* Discovery */,
 				4498D98E1A65A1B7008C0B72 /* Helpers */,
@@ -1386,6 +1391,7 @@
 			files = (
 				44EF61A41A12FC8800CF344C /* SSDPDiscoveryProviderTests.m in Sources */,
 				4433F3DF1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m in Sources */,
+				44D8F7DA1AB27B4800559FE3 /* NSInvocation+ObjectGetter.m in Sources */,
 				44291C521A68B4C000280E5C /* SSDPDiscoveryProvider_FilteringTests.m in Sources */,
 				4480857F1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m in Sources */,
 				4498D9A91A66F027008C0B72 /* DLNAHTTPServerTests.m in Sources */,
