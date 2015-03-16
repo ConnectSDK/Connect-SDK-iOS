@@ -81,6 +81,7 @@ Connect SDK for iOS makes use of the following projects, some of which are open-
   - modifications:
     - properly return an error if XML parsing has failed
 * [ASIHTTPRequest](https://github.com/pokeb/asi-http-request) (MIT)
+* [xswi](https://github.com/skjolber/xswi) (MIT)
 
 ##License
 Copyright (c) 2013-2014 LG Electronics.
