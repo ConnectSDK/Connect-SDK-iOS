@@ -72,6 +72,7 @@
 		44D88F971A71D6AF009D9608 /* ssdp_device_description_dlna_no_required_services.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F961A71D6AF009D9608 /* ssdp_device_description_dlna_no_required_services.xml */; };
 		44D88F991A71DB15009D9608 /* ssdp_device_description_dlna_root_no_required_services.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F981A71DB15009D9608 /* ssdp_device_description_dlna_root_no_required_services.xml */; };
 		44D8F7DA1AB27B4800559FE3 /* NSInvocation+ObjectGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D8F7D91AB27B4800559FE3 /* NSInvocation+ObjectGetter.m */; };
+		44D8F7D21AB224BB00559FE3 /* ssdp_device_description_lg_speaker.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D8F7D11AB223BF00559FE3 /* ssdp_device_description_lg_speaker.xml */; };
 		44EF618B1A12DC7E00CF344C /* ConnectSDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB79E199AEC550057B4B4 /* ConnectSDK-Prefix.pch */; };
 		44EF618D1A12E02700CF344C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
 		44EF618F1A12E0A400CF344C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EF618E1A12E0A400CF344C /* libz.dylib */; };
@@ -348,6 +349,7 @@
 		44D88F981A71DB15009D9608 /* ssdp_device_description_dlna_root_no_required_services.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_dlna_root_no_required_services.xml; sourceTree = "<group>"; };
 		44D8F7D81AB27B4800559FE3 /* NSInvocation+ObjectGetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+ObjectGetter.h"; sourceTree = "<group>"; };
 		44D8F7D91AB27B4800559FE3 /* NSInvocation+ObjectGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+ObjectGetter.m"; sourceTree = "<group>"; };
+		44D8F7D11AB223BF00559FE3 /* ssdp_device_description_lg_speaker.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_lg_speaker.xml; sourceTree = "<group>"; };
 		44EF618C1A12DF2D00CF344C /* ConnectSDKTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConnectSDKTests-Prefix.pch"; sourceTree = "<group>"; };
 		44EF618E1A12E0A400CF344C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		44EF61971A12E1C800CF344C /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
@@ -683,6 +685,7 @@
 			children = (
 				44D88F961A71D6AF009D9608 /* ssdp_device_description_dlna_no_required_services.xml */,
 				44D88F981A71DB15009D9608 /* ssdp_device_description_dlna_root_no_required_services.xml */,
+				44D8F7D11AB223BF00559FE3 /* ssdp_device_description_lg_speaker.xml */,
 				44D88F811A71C4A8009D9608 /* ssdp_device_description_samsung_tv_dlna.xml */,
 				44D88F821A71C4A8009D9608 /* ssdp_device_description_sonos.xml */,
 				44D88F831A71C4A8009D9608 /* ssdp_device_description_sonos_no_root_services.xml */,
@@ -1369,6 +1372,7 @@
 				4498D9A31A660EAE008C0B72 /* getmute_response_xbox.xml in Resources */,
 				4498D9961A65ED16008C0B72 /* getpositioninfo_response_sonos.xml in Resources */,
 				44D88F8E1A71C4A8009D9608 /* ssdp_device_description_xbox_dial.xml in Resources */,
+				44D8F7D21AB224BB00559FE3 /* ssdp_device_description_lg_speaker.xml in Resources */,
 				44D88F8C1A71C4A8009D9608 /* ssdp_device_description_samsung_tv.xml in Resources */,
 				4498D99B1A6601A7008C0B72 /* gettransportinfo_response_sonos.xml in Resources */,
 				44D88F8D1A71C4A8009D9608 /* ssdp_device_description_webos_minor.xml in Resources */,
