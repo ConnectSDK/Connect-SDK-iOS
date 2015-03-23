@@ -1,5 +1,14 @@
 # Connect SDK iOS Changelog
 
+## 1.4.3 -- 23 Mar 2015
+
+- Reverted Roku 6.1 fix for playing video as Roku has fixed its media player
+- Added proper encoding of special characters for metadata XML in DLNAService
+- Miscellaneous bug fixes
+- [See commits between 1.4.2 and 1.4.3](https://github.com/ConnectSDK/Connect-SDK-iOS/compare/1.4.2...1.4.3)
+
+[View files at version 1.4.3](https://github.com/ConnectSDK/Connect-SDK-iOS/tree/1.4.3)
+
 ## 1.4.2 -- 10 Feb 2015
 
 - Support for Xbox One console and Sonos speakers
