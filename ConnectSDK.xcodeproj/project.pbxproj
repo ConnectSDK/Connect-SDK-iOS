@@ -52,6 +52,7 @@
 		4498D9A91A66F027008C0B72 /* DLNAHTTPServerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4498D9A81A66F027008C0B72 /* DLNAHTTPServerTests.m */; };
 		44A5518F1AC1DF4C001AF783 /* NetcastTVServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44A5518E1AC1DF4C001AF783 /* NetcastTVServiceTests.m */; };
 		44A551991AC338E0001AF783 /* WebOSTVServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44A551981AC338E0001AF783 /* WebOSTVServiceTests.m */; };
+		44A5519F1AC36672001AF783 /* CommonMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 44A5519D1AC36672001AF783 /* CommonMacros.h */; };
 		44BCC3F61AB77F7D001BCDAA /* XMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 44BCC3F41AB77F7D001BCDAA /* XMLWriter.h */; };
 		44BCC3F71AB77F7D001BCDAA /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BCC3F51AB77F7D001BCDAA /* XMLWriter.m */; };
 		44C2CC941AB7948300B20E46 /* XMLWriter+ConvenienceMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = 44C2CC921AB7948300B20E46 /* XMLWriter+ConvenienceMethods.h */; };
@@ -331,6 +332,7 @@
 		44A5518B1AC1D924001AF783 /* NetcastTVService_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetcastTVService_Private.h; sourceTree = "<group>"; };
 		44A5518E1AC1DF4C001AF783 /* NetcastTVServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetcastTVServiceTests.m; sourceTree = "<group>"; };
 		44A551981AC338E0001AF783 /* WebOSTVServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebOSTVServiceTests.m; sourceTree = "<group>"; };
+		44A5519D1AC36672001AF783 /* CommonMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonMacros.h; sourceTree = "<group>"; };
 		44BCC3F41AB77F7D001BCDAA /* XMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLWriter.h; sourceTree = "<group>"; };
 		44BCC3F51AB77F7D001BCDAA /* XMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLWriter.m; sourceTree = "<group>"; };
 		44C2CC921AB7948300B20E46 /* XMLWriter+ConvenienceMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XMLWriter+ConvenienceMethods.h"; sourceTree = "<group>"; };
@@ -986,6 +988,7 @@
 				4498D98B1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.m */,
 				44C2CC9F1AB7A33500B20E46 /* NSString+Common.h */,
 				44C2CCA01AB7A33500B20E46 /* NSString+Common.m */,
+				44A5519D1AC36672001AF783 /* CommonMacros.h */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1224,6 +1227,7 @@
 				44EF618B1A12DC7E00CF344C /* ConnectSDK-Prefix.pch in Headers */,
 				EA5FB8F2199AEC570057B4B4 /* DLNAService.h in Headers */,
 				EA5FB8D3199AEC560057B4B4 /* Launcher.h in Headers */,
+				44A5519F1AC36672001AF783 /* CommonMacros.h in Headers */,
 				EA5FB8FA199AEC570057B4B4 /* WebOSTVServiceSocketClient.h in Headers */,
 				EA5FB890199AEC560057B4B4 /* CTASIHTTPRequestConfig.h in Headers */,
 				EA5FB899199AEC560057B4B4 /* GCDWebServer.h in Headers */,
