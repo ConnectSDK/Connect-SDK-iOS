@@ -806,7 +806,7 @@
 			isa = PBXGroup;
 			children = (
 				EA5FB7BA199AEC550057B4B4 /* asi-http-request */,
-				EA5FB7D5199AEC550057B4B4 /* CGDWebServer */,
+				EA5FB7D5199AEC550057B4B4 /* GCDWebServer */,
 				EA5FB7F6199AEC550057B4B4 /* objc-guid */,
 				442B9A471A16F61E0053AE51 /* OCMock */,
 				442B9A491A16F61E0053AE51 /* OHHTTPStubs */,
@@ -870,14 +870,14 @@
 			path = Reachability;
 			sourceTree = "<group>";
 		};
-		EA5FB7D5199AEC550057B4B4 /* CGDWebServer */ = {
+		EA5FB7D5199AEC550057B4B4 /* GCDWebServer */ = {
 			isa = PBXGroup;
 			children = (
 				EA5FB7D6199AEC550057B4B4 /* Core */,
 				EA5FB7E4199AEC550057B4B4 /* Requests */,
 				EA5FB7ED199AEC550057B4B4 /* Responses */,
 			);
-			path = CGDWebServer;
+			path = GCDWebServer;
 			sourceTree = "<group>";
 		};
 		EA5FB7D6199AEC550057B4B4 /* Core */ = {
