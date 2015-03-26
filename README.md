@@ -75,13 +75,18 @@ Connect SDK for iOS makes use of the following projects, some of which are open-
     - stability
     - self-signed certificate support
     - avoid potential namespace collisions
+    - compiler warning fix
 * [objc-guid](https://code.google.com/p/objc-guid/) (BSD 3-Clause revised)
 * [GCDWebServer](https://github.com/swisspol/GCDWebServer) (MIT)
 * [XMLReader](https://github.com/amarcadet/XMLReader) (MIT)
   - modifications:
     - properly return an error if XML parsing has failed
 * [ASIHTTPRequest](https://github.com/pokeb/asi-http-request) (MIT)
+  - modifications:
+    - static analyzer warning fix
 * [xswi](https://github.com/skjolber/xswi) (MIT)
+  - modifications:
+    - compiler warning fix
 
 ##License
 Copyright (c) 2013-2014 LG Electronics.
