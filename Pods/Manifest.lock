@@ -1,0 +1,13 @@
+PODS:
+  - ASIHTTPRequest/Core (1.8.2):
+    - Reachability
+  - Reachability (3.2)
+
+DEPENDENCIES:
+  - ASIHTTPRequest/Core (~> 1.8.2)
+
+SPEC CHECKSUMS:
+  ASIHTTPRequest: ec013992946676b7978dcbde6396d57312d21db4
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+
+COCOAPODS: 0.36.3

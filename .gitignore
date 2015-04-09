@@ -17,8 +17,5 @@ DerivedData
 .idea/
 *.hmap
 
-#CocoaPods
-Pods
-
 #GoogleCast
 ConnectSDK/Frameworks/GoogleCast.framework

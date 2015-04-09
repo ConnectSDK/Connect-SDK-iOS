@@ -1,0 +1,1 @@
+PODS_ASIHTTPREQUEST_OTHER_LDFLAGS = -l"z.1" -framework "CFNetwork" -framework "CoreGraphics" -framework "MobileCoreServices"
