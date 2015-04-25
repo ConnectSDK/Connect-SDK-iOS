@@ -40,6 +40,7 @@
 		44758BD21AE7070600EC43A6 /* airplay_playbackinfo_rewind.json in Resources */ = {isa = PBXBuildFile; fileRef = 44758BCD1AE7070600EC43A6 /* airplay_playbackinfo_rewind.json */; };
 		4480857F1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */; };
 		448085801A12A7BE00E13938 /* libConnectSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1018FE485B00D75696 /* libConnectSDK.a */; };
+		448414F91AEB27F400124EE9 /* OCMStubRecorder+XCTestExpectation.m in Sources */ = {isa = PBXBuildFile; fileRef = 448414F81AEB27F400124EE9 /* OCMStubRecorder+XCTestExpectation.m */; };
 		448F36C51A1BD64200536649 /* ZeroConfDiscoveryProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 448F36C41A1BD64200536649 /* ZeroConfDiscoveryProviderTests.m */; };
 		4498D98C1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4498D98A1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.h */; };
 		4498D98D1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4498D98B1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.m */; };
@@ -323,6 +324,8 @@
 		4480857A1A12A7BE00E13938 /* ConnectSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConnectSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4480857D1A12A7BE00E13938 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConnectSDKDefaultPlatformsTests.m; sourceTree = "<group>"; };
+		448414F71AEB27F400124EE9 /* OCMStubRecorder+XCTestExpectation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCMStubRecorder+XCTestExpectation.h"; sourceTree = "<group>"; };
+		448414F81AEB27F400124EE9 /* OCMStubRecorder+XCTestExpectation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OCMStubRecorder+XCTestExpectation.m"; sourceTree = "<group>"; };
 		4485140C1A02FC3200D66710 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleCast.framework; sourceTree = "<group>"; };
 		448F36C41A1BD64200536649 /* ZeroConfDiscoveryProviderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroConfDiscoveryProviderTests.m; sourceTree = "<group>"; };
 		448F36C61A1C16FE00536649 /* ZeroConfDiscoveryProvider_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZeroConfDiscoveryProvider_Private.h; sourceTree = "<group>"; };
@@ -655,6 +658,8 @@
 		4480857B1A12A7BE00E13938 /* ConnectSDKTests */ = {
 			isa = PBXGroup;
 			children = (
+				448414F71AEB27F400124EE9 /* OCMStubRecorder+XCTestExpectation.h */,
+				448414F81AEB27F400124EE9 /* OCMStubRecorder+XCTestExpectation.m */,
 				44D8F7D81AB27B4800559FE3 /* NSInvocation+ObjectGetter.h */,
 				44D8F7D91AB27B4800559FE3 /* NSInvocation+ObjectGetter.m */,
 				4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */,
@@ -1478,6 +1483,7 @@
 				4498D9921A65B69F008C0B72 /* DLNAServiceTests.m in Sources */,
 				44758BBB1AE6C06200EC43A6 /* AirPlayServiceHTTPTests.m in Sources */,
 				440A031D1A854EDE0007E3D3 /* WebOSTVServiceSocketClientTests.m in Sources */,
+				448414F91AEB27F400124EE9 /* OCMStubRecorder+XCTestExpectation.m in Sources */,
 				44A5518F1AC1DF4C001AF783 /* NetcastTVServiceTests.m in Sources */,
 				4498D9901A65A1D7008C0B72 /* NSDictionary+KeyPredicateSearchTests.m in Sources */,
 			);
