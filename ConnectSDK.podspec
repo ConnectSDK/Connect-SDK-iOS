@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "ConnectSDK"
-  s.version      = "1.4.3"
+  s.version      = "1.4.4"
   s.summary      = "Connect SDK is an open source framework that connects your mobile apps with multiple TV platforms."
 
   s.description  = <<-DESC
@@ -74,6 +74,8 @@ Pod::Spec.new do |s|
   s.subspec 'no-arc' do |sp|
     sp.source_files = non_arc_files
     sp.requires_arc = false
+    # disable all warnings from asi-http-request
+    sp.compiler_flags = '-w'
   end
 
   s.subspec 'GoogleCast' do |sp|
@@ -81,7 +83,7 @@ Pod::Spec.new do |s|
     sp.source_files = "modules/**/*.{h,m}"
     sp.private_header_files = "modules/**/*_Private.h"
 
-    cast_version = "2.5.1"
+    cast_version = "2.6.0"
     sp.dependency "google-cast-sdk", cast_version
     sp.framework = "GoogleCast"
     sp.xcconfig = {

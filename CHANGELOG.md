@@ -1,5 +1,18 @@
 # Connect SDK iOS Changelog
 
+## 1.4.4 -- 29 Apr 2015
+
+- Allow to set pairing type for WebOS TVs
+- Added LG Music Flow speaker support (Google Cast for Audio and DLNA)
+- Support for Google Cast SDK 2.6.0
+- Fixed a few DLNA issues
+- Fixed compiler and static analyzer warnings
+- Fixed immediate disconnect if Apple TV has an IPv6 address only
+- Miscellaneous bug fixes
+- [See commits between 1.4.3 and 1.4.4](https://github.com/ConnectSDK/Connect-SDK-iOS/compare/1.4.3...1.4.4)
+
+[View files at version 1.4.4](https://github.com/ConnectSDK/Connect-SDK-iOS/tree/1.4.4)
+
 ## 1.4.3 -- 23 Mar 2015
 
 - Reverted Roku 6.1 fix for playing video as Roku has fixed its media player
