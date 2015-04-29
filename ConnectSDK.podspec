@@ -74,6 +74,8 @@ Pod::Spec.new do |s|
   s.subspec 'no-arc' do |sp|
     sp.source_files = non_arc_files
     sp.requires_arc = false
+    # disable all warnings from asi-http-request
+    sp.compiler_flags = '-w'
   end
 
   s.subspec 'GoogleCast' do |sp|
