@@ -59,7 +59,7 @@
 		4498D9A91A66F027008C0B72 /* CNTDLNAHTTPServerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4498D9A81A66F027008C0B72 /* CNTDLNAHTTPServerTests.m */; };
 		44A5518F1AC1DF4C001AF783 /* CNTNetcastTVServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44A5518E1AC1DF4C001AF783 /* CNTNetcastTVServiceTests.m */; };
 		44A551991AC338E0001AF783 /* CNTWebOSTVServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44A551981AC338E0001AF783 /* CNTWebOSTVServiceTests.m */; };
-		44A5519F1AC36672001AF783 /* CommonMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 44A5519D1AC36672001AF783 /* CommonMacros.h */; };
+		44A5519F1AC36672001AF783 /* CNTCommonMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 44A5519D1AC36672001AF783 /* CNTCommonMacros.h */; };
 		44BCC3F61AB77F7D001BCDAA /* XMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 44BCC3F41AB77F7D001BCDAA /* XMLWriter.h */; };
 		44BCC3F71AB77F7D001BCDAA /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BCC3F51AB77F7D001BCDAA /* XMLWriter.m */; };
 		44C2CC941AB7948300B20E46 /* XMLWriter+CNTConvenienceMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = 44C2CC921AB7948300B20E46 /* XMLWriter+CNTConvenienceMethods.h */; };
@@ -348,7 +348,7 @@
 		44A5518B1AC1D924001AF783 /* CNTNetcastTVService_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CNTNetcastTVService_Private.h; sourceTree = "<group>"; };
 		44A5518E1AC1DF4C001AF783 /* CNTNetcastTVServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CNTNetcastTVServiceTests.m; sourceTree = "<group>"; };
 		44A551981AC338E0001AF783 /* CNTWebOSTVServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CNTWebOSTVServiceTests.m; sourceTree = "<group>"; };
-		44A5519D1AC36672001AF783 /* CommonMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonMacros.h; sourceTree = "<group>"; };
+		44A5519D1AC36672001AF783 /* CNTCommonMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CNTCommonMacros.h; sourceTree = "<group>"; };
 		44BCC3F41AB77F7D001BCDAA /* XMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLWriter.h; sourceTree = "<group>"; };
 		44BCC3F51AB77F7D001BCDAA /* XMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLWriter.m; sourceTree = "<group>"; };
 		44C2CC921AB7948300B20E46 /* XMLWriter+CNTConvenienceMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XMLWriter+CNTConvenienceMethods.h"; sourceTree = "<group>"; };
@@ -373,7 +373,7 @@
 		44D8F7D11AB223BF00559FE3 /* ssdp_device_description_lg_speaker.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_lg_speaker.xml; sourceTree = "<group>"; };
 		44D8F7D81AB27B4800559FE3 /* NSInvocation+CNTObjectGetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+CNTObjectGetter.h"; sourceTree = "<group>"; };
 		44D8F7D91AB27B4800559FE3 /* NSInvocation+CNTObjectGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+CNTObjectGetter.m"; sourceTree = "<group>"; };
-		44EF618C1A12DF2D00CF344C /* ConnectSDKTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConnectSDKTests-Prefix.pch"; sourceTree = "<group>"; };
+		44EF618C1A12DF2D00CF344C /* CNTConnectSDKTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CNTConnectSDKTests-Prefix.pch"; sourceTree = "<group>"; };
 		44EF618E1A12E0A400CF344C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		44EF61971A12E1C800CF344C /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
 		44EF619A1A12E23200CF344C /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
@@ -666,7 +666,7 @@
 				44EF61A11A12FC5000CF344C /* Discovery */,
 				4498D98E1A65A1B7008C0B72 /* Helpers */,
 				4433F3DC1A421733008D9A04 /* Services */,
-				44EF618C1A12DF2D00CF344C /* ConnectSDKTests-Prefix.pch */,
+				44EF618C1A12DF2D00CF344C /* CNTConnectSDKTests-Prefix.pch */,
 				4480857C1A12A7BE00E13938 /* Supporting Files */,
 			);
 			path = ConnectSDKTests;
@@ -1020,7 +1020,7 @@
 				4498D98B1A659F43008C0B72 /* NSDictionary+CNTKeyPredicateSearch.m */,
 				44C2CC9F1AB7A33500B20E46 /* NSString+CNTCommon.h */,
 				44C2CCA01AB7A33500B20E46 /* NSString+CNTCommon.m */,
-				44A5519D1AC36672001AF783 /* CommonMacros.h */,
+				44A5519D1AC36672001AF783 /* CNTCommonMacros.h */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1260,7 +1260,7 @@
 				44EF618B1A12DC7E00CF344C /* ConnectSDK-Prefix.pch in Headers */,
 				EA5FB8F2199AEC570057B4B4 /* CNTDLNAService.h in Headers */,
 				EA5FB8D3199AEC560057B4B4 /* CNTLauncher.h in Headers */,
-				44A5519F1AC36672001AF783 /* CommonMacros.h in Headers */,
+				44A5519F1AC36672001AF783 /* CNTCommonMacros.h in Headers */,
 				EA5FB8FA199AEC570057B4B4 /* CNTWebOSTVServiceSocketClient.h in Headers */,
 				EA5FB890199AEC560057B4B4 /* CTASIHTTPRequestConfig.h in Headers */,
 				EA5FB899199AEC560057B4B4 /* GCDWebServer.h in Headers */,
@@ -1615,7 +1615,7 @@
 					"$(PROJECT_DIR)/core/Frameworks/OHHTTPStubs",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "core/ConnectSDKTests/ConnectSDKTests-Prefix.pch";
+				GCC_PREFIX_HEADER = "core/ConnectSDKTests/CNTConnectSDKTests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1648,7 +1648,7 @@
 					"$(PROJECT_DIR)/core/Frameworks/OHHTTPStubs",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "core/ConnectSDKTests/ConnectSDKTests-Prefix.pch";
+				GCC_PREFIX_HEADER = "core/ConnectSDKTests/CNTConnectSDKTests-Prefix.pch";
 				INFOPLIST_FILE = core/ConnectSDKTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
