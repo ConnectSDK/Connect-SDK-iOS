@@ -1,5 +1,5 @@
 //
-//  ConnectSDKDefaultPlatforms.h
+//  CNTConnectSDKDefaultPlatforms.h
 //  Connect SDK
 //
 //  Created by Jeremy White on 8/13/14.
@@ -18,16 +18,16 @@
 //  limitations under the License.
 //
 
-#ifndef kConnectSDKDefaultPlatforms
+#ifndef kCNTConnectSDKDefaultPlatforms
 
-#define kConnectSDKDefaultPlatforms @{ \
-    @"AirPlayService"     : @"ZeroConfDiscoveryProvider", \
-    @"DIALService"        : @"SSDPDiscoveryProvider", \
-    @"DLNAService"        : @"SSDPDiscoveryProvider", \
-    @"NetcastTVService"   : @"SSDPDiscoveryProvider", \
-    @"RokuService"        : @"SSDPDiscoveryProvider", \
-    @"WebOSTVService"     : @"SSDPDiscoveryProvider", \
-    @"CastService"        : @"CastDiscoveryProvider" \
+#define kCNTConnectSDKDefaultPlatforms @{ \
+    @"CNTAirPlayService"     : @"CNTZeroConfDiscoveryProvider", \
+    @"CNTDIALService"        : @"CNTSSDPDiscoveryProvider", \
+    @"CNTDLNAService"        : @"CNTSSDPDiscoveryProvider", \
+    @"CNTNetcastTVService"   : @"CNTSSDPDiscoveryProvider", \
+    @"CNTRokuService"        : @"CNTSSDPDiscoveryProvider", \
+    @"CNTWebOSTVService"     : @"CNTSSDPDiscoveryProvider", \
+    @"CNTCastService"        : @"CNTCastDiscoveryProvider" \
 }
 
 #endif
