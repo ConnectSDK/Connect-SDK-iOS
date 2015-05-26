@@ -34,6 +34,20 @@
                ReferencedContainer = "container:ConnectSDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "44E98F761B1E694A0043BC70"
+               BuildableName = "ConnectSDKIntegrationTests.xctest"
+               BlueprintName = "ConnectSDKIntegrationTests"
+               ReferencedContainer = "container:ConnectSDK.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
