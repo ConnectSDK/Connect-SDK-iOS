@@ -95,6 +95,7 @@
 		44E98F8B1B1E6D000043BC70 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
 		44E98F8C1B1E6D0E0043BC70 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBEF18FE48E900D75696 /* SystemConfiguration.framework */; };
 		44E98F8D1B1E6D7F0043BC70 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4485140C1A02FC3200D66710 /* GoogleCast.framework */; };
+		44E98F901B1E705C0043BC70 /* OCMStubRecorder+SpectaAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E98F8F1B1E705C0043BC70 /* OCMStubRecorder+SpectaAsync.m */; };
 		44EF618B1A12DC7E00CF344C /* ConnectSDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB79E199AEC550057B4B4 /* ConnectSDK-Prefix.pch */; };
 		44EF618D1A12E02700CF344C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
 		44EF618F1A12E0A400CF344C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EF618E1A12E0A400CF344C /* libz.dylib */; };
@@ -402,6 +403,8 @@
 		44E98F6B1B1E67500043BC70 /* Specta.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Specta.framework; sourceTree = "<group>"; };
 		44E98F6C1B1E67500043BC70 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44E98F771B1E694A0043BC70 /* ConnectSDKIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConnectSDKIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		44E98F8E1B1E705C0043BC70 /* OCMStubRecorder+SpectaAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCMStubRecorder+SpectaAsync.h"; sourceTree = "<group>"; };
+		44E98F8F1B1E705C0043BC70 /* OCMStubRecorder+SpectaAsync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OCMStubRecorder+SpectaAsync.m"; sourceTree = "<group>"; };
 		44EF618C1A12DF2D00CF344C /* ConnectSDKTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConnectSDKTests-Prefix.pch"; sourceTree = "<group>"; };
 		44EF618E1A12E0A400CF344C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		44EF61971A12E1C800CF344C /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
@@ -791,6 +794,8 @@
 				44E98F691B1E67500043BC70 /* Frameworks */,
 				44E98F671B1E67500043BC70 /* EXPMatchers+matchRegex.h */,
 				44E98F681B1E67500043BC70 /* EXPMatchers+matchRegex.m */,
+				44E98F8E1B1E705C0043BC70 /* OCMStubRecorder+SpectaAsync.h */,
+				44E98F8F1B1E705C0043BC70 /* OCMStubRecorder+SpectaAsync.m */,
 				44E98F661B1E67500043BC70 /* DLNAServiceIntegrationTests.m */,
 				44E98F651B1E67500043BC70 /* ConnectSDKIntegrationTests-Prefix.pch */,
 				44E98F721B1E67930043BC70 /* Supporting Files */,
@@ -1594,6 +1599,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44E98F901B1E705C0043BC70 /* OCMStubRecorder+SpectaAsync.m in Sources */,
 				44E98F851B1E6A4D0043BC70 /* EXPMatchers+matchRegex.m in Sources */,
 				44E98F861B1E6A500043BC70 /* DLNAServiceIntegrationTests.m in Sources */,
 			);
@@ -2003,6 +2009,7 @@
 				44E98F821B1E694A0043BC70 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EA61EB0B18FE485B00D75696 /* Build configuration list for PBXProject "ConnectSDK" */ = {
 			isa = XCConfigurationList;
