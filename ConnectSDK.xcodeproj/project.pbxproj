@@ -96,6 +96,10 @@
 		44E98F8C1B1E6D0E0043BC70 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBEF18FE48E900D75696 /* SystemConfiguration.framework */; };
 		44E98F8D1B1E6D7F0043BC70 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4485140C1A02FC3200D66710 /* GoogleCast.framework */; };
 		44E98F901B1E705C0043BC70 /* OCMStubRecorder+SpectaAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E98F8F1B1E705C0043BC70 /* OCMStubRecorder+SpectaAsync.m */; };
+		44E98F971B1E72DF0043BC70 /* the-san-francisco-peaks-of-flagstaff-718x544.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 44E98F961B1E72D80043BC70 /* the-san-francisco-peaks-of-flagstaff-718x544.jpg */; };
+		44E98F981B1E72E00043BC70 /* the-san-francisco-peaks-of-flagstaff-718x544.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 44E98F961B1E72D80043BC70 /* the-san-francisco-peaks-of-flagstaff-718x544.jpg */; };
+		44E98F9A1B1E733D0043BC70 /* AirPlayServiceIntegrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E98F991B1E733D0043BC70 /* AirPlayServiceIntegrationTests.m */; };
+		44E98F9B1B1E738F0043BC70 /* OCMArg+ArgumentCaptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E98F621B1E650C0043BC70 /* OCMArg+ArgumentCaptor.m */; };
 		44EF618B1A12DC7E00CF344C /* ConnectSDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB79E199AEC550057B4B4 /* ConnectSDK-Prefix.pch */; };
 		44EF618D1A12E02700CF344C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
 		44EF618F1A12E0A400CF344C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EF618E1A12E0A400CF344C /* libz.dylib */; };
@@ -340,7 +344,6 @@
 		44758BCC1AE7070500EC43A6 /* airplay_playbackinfo_playing.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airplay_playbackinfo_playing.json; sourceTree = "<group>"; };
 		44758BCD1AE7070600EC43A6 /* airplay_playbackinfo_rewind.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airplay_playbackinfo_rewind.json; sourceTree = "<group>"; };
 		4480857A1A12A7BE00E13938 /* ConnectSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConnectSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4480857D1A12A7BE00E13938 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConnectSDKDefaultPlatformsTests.m; sourceTree = "<group>"; };
 		448414F71AEB27F400124EE9 /* OCMStubRecorder+XCTestExpectation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCMStubRecorder+XCTestExpectation.h"; sourceTree = "<group>"; };
 		448414F81AEB27F400124EE9 /* OCMStubRecorder+XCTestExpectation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OCMStubRecorder+XCTestExpectation.m"; sourceTree = "<group>"; };
@@ -401,10 +404,13 @@
 		44E98F681B1E67500043BC70 /* EXPMatchers+matchRegex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EXPMatchers+matchRegex.m"; sourceTree = "<group>"; };
 		44E98F6A1B1E67500043BC70 /* Expecta.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Expecta.framework; sourceTree = "<group>"; };
 		44E98F6B1B1E67500043BC70 /* Specta.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Specta.framework; sourceTree = "<group>"; };
-		44E98F6C1B1E67500043BC70 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44E98F771B1E694A0043BC70 /* ConnectSDKIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConnectSDKIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		44E98F8E1B1E705C0043BC70 /* OCMStubRecorder+SpectaAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCMStubRecorder+SpectaAsync.h"; sourceTree = "<group>"; };
 		44E98F8F1B1E705C0043BC70 /* OCMStubRecorder+SpectaAsync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OCMStubRecorder+SpectaAsync.m"; sourceTree = "<group>"; };
+		44E98F921B1E72CA0043BC70 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		44E98F951B1E72D80043BC70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		44E98F961B1E72D80043BC70 /* the-san-francisco-peaks-of-flagstaff-718x544.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "the-san-francisco-peaks-of-flagstaff-718x544.jpg"; sourceTree = "<group>"; };
+		44E98F991B1E733D0043BC70 /* AirPlayServiceIntegrationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayServiceIntegrationTests.m; sourceTree = "<group>"; };
 		44EF618C1A12DF2D00CF344C /* ConnectSDKTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConnectSDKTests-Prefix.pch"; sourceTree = "<group>"; };
 		44EF618E1A12E0A400CF344C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		44EF61971A12E1C800CF344C /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
@@ -702,17 +708,9 @@
 				4498D98E1A65A1B7008C0B72 /* Helpers */,
 				4433F3DC1A421733008D9A04 /* Services */,
 				44EF618C1A12DF2D00CF344C /* ConnectSDKTests-Prefix.pch */,
-				4480857C1A12A7BE00E13938 /* Supporting Files */,
+				44E98F941B1E72D80043BC70 /* SupportingFiles */,
 			);
 			path = ConnectSDKTests;
-			sourceTree = "<group>";
-		};
-		4480857C1A12A7BE00E13938 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				4480857D1A12A7BE00E13938 /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		4498D98E1A65A1B7008C0B72 /* Helpers */ = {
@@ -796,9 +794,10 @@
 				44E98F681B1E67500043BC70 /* EXPMatchers+matchRegex.m */,
 				44E98F8E1B1E705C0043BC70 /* OCMStubRecorder+SpectaAsync.h */,
 				44E98F8F1B1E705C0043BC70 /* OCMStubRecorder+SpectaAsync.m */,
+				44E98F991B1E733D0043BC70 /* AirPlayServiceIntegrationTests.m */,
 				44E98F661B1E67500043BC70 /* DLNAServiceIntegrationTests.m */,
 				44E98F651B1E67500043BC70 /* ConnectSDKIntegrationTests-Prefix.pch */,
-				44E98F721B1E67930043BC70 /* Supporting Files */,
+				44E98F911B1E72CA0043BC70 /* SupportingFiles */,
 			);
 			path = ConnectSDKIntegrationTests;
 			sourceTree = "<group>";
@@ -812,12 +811,21 @@
 			path = Frameworks;
 			sourceTree = "<group>";
 		};
-		44E98F721B1E67930043BC70 /* Supporting Files */ = {
+		44E98F911B1E72CA0043BC70 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				44E98F6C1B1E67500043BC70 /* Info.plist */,
+				44E98F921B1E72CA0043BC70 /* Info.plist */,
 			);
-			name = "Supporting Files";
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		44E98F941B1E72D80043BC70 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				44E98F951B1E72D80043BC70 /* Info.plist */,
+				44E98F961B1E72D80043BC70 /* the-san-francisco-peaks-of-flagstaff-718x544.jpg */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 		44EF61A11A12FC5000CF344C /* Discovery */ = {
@@ -1520,6 +1528,7 @@
 				44D88F8E1A71C4A8009D9608 /* ssdp_device_description_xbox_dial.xml in Resources */,
 				44D8F7D21AB224BB00559FE3 /* ssdp_device_description_lg_speaker.xml in Resources */,
 				44D88F8C1A71C4A8009D9608 /* ssdp_device_description_samsung_tv.xml in Resources */,
+				44E98F971B1E72DF0043BC70 /* the-san-francisco-peaks-of-flagstaff-718x544.jpg in Resources */,
 				4498D99B1A6601A7008C0B72 /* gettransportinfo_response_sonos.xml in Resources */,
 				44D88F8D1A71C4A8009D9608 /* ssdp_device_description_webos_minor.xml in Resources */,
 				44D88F931A71C4A8009D9608 /* ssdp_device_description_xbox.xml in Resources */,
@@ -1538,6 +1547,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44E98F981B1E72E00043BC70 /* the-san-francisco-peaks-of-flagstaff-718x544.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1601,6 +1611,8 @@
 			files = (
 				44E98F901B1E705C0043BC70 /* OCMStubRecorder+SpectaAsync.m in Sources */,
 				44E98F851B1E6A4D0043BC70 /* EXPMatchers+matchRegex.m in Sources */,
+				44E98F9A1B1E733D0043BC70 /* AirPlayServiceIntegrationTests.m in Sources */,
+				44E98F9B1B1E738F0043BC70 /* OCMArg+ArgumentCaptor.m in Sources */,
 				44E98F861B1E6A500043BC70 /* DLNAServiceIntegrationTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1739,7 +1751,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = core/ConnectSDKTests/Info.plist;
+				INFOPLIST_FILE = core/ConnectSDKTests/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1767,7 +1779,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKTests/ConnectSDKTests-Prefix.pch";
-				INFOPLIST_FILE = core/ConnectSDKTests/Info.plist;
+				INFOPLIST_FILE = core/ConnectSDKTests/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -1803,7 +1815,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = core/ConnectSDKIntegrationTests/Info.plist;
+				INFOPLIST_FILE = core/ConnectSDKIntegrationTests/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1836,7 +1848,7 @@
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKIntegrationTests/ConnectSDKIntegrationTests-Prefix.pch";
-				INFOPLIST_FILE = core/ConnectSDKIntegrationTests/Info.plist;
+				INFOPLIST_FILE = core/ConnectSDKIntegrationTests/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;

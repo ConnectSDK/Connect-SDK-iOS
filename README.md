@@ -95,6 +95,8 @@ These projects are used in tests:
 * [Specta](https://github.com/specta/specta/) (MIT)
 * [Expecta](https://github.com/specta/expecta/) (MIT)
 
+This public domain image is used in tests: [The San Francisco peaks of flagstaff public domain image](http://www.public-domain-image.com/free-images/nature-landscapes/peaks/the-san-francisco-peaks-of-flagstaff).
+
 ##License
 Copyright (c) 2013-2014 LG Electronics.
 
