@@ -65,7 +65,7 @@ You can use `pod "ConnectSDK/Core"` to get the [lite version](https://github.com
 * Partnerships: partners@connectsdk.com
 
 ##Credits
-Connect SDK for iOS makes use of the following projects, some of which are open-source.
+Connect SDK for iOS makes use of the following projects, some of which are open-source:
 
 * [Google Cast SDK](https://developers.google.com/cast/)
   - [Google Cast SDK Additional Developer Terms of Service](https://developers.google.com/cast/docs/terms)
@@ -87,6 +87,13 @@ Connect SDK for iOS makes use of the following projects, some of which are open-
 * [xswi](https://github.com/skjolber/xswi) (MIT)
   - modifications:
     - compiler warning fix
+
+These projects are used in tests:
+
+* [OCMock](http://ocmock.org/) (Apache License, Version 2.0)
+* [OHHTTPStubs](https://github.com/AliSoftware/OHHTTPStubs/) (MIT)
+* [Specta](https://github.com/specta/specta/) (MIT)
+* [Expecta](https://github.com/specta/expecta/) (MIT)
 
 ##License
 Copyright (c) 2013-2014 LG Electronics.
