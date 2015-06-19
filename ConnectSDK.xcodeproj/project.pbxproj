@@ -65,6 +65,7 @@
 		44C2CC951AB7948300B20E46 /* XMLWriter+ConvenienceMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C2CC931AB7948300B20E46 /* XMLWriter+ConvenienceMethods.m */; };
 		44C2CCA11AB7A33500B20E46 /* NSString+Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 44C2CC9F1AB7A33500B20E46 /* NSString+Common.h */; };
 		44C2CCA21AB7A33500B20E46 /* NSString+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C2CCA01AB7A33500B20E46 /* NSString+Common.m */; };
+		44C3900F1B34A7B500723388 /* WebOSWebAppSession_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 44C3900E1B34A7B500723388 /* WebOSWebAppSession_Private.h */; };
 		44D88F891A71C4A8009D9608 /* ssdp_device_description_chromecast.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F7A1A71C4A8009D9608 /* ssdp_device_description_chromecast.xml */; };
 		44D88F8A1A71C4A8009D9608 /* ssdp_device_description_firetv.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F7B1A71C4A8009D9608 /* ssdp_device_description_firetv.xml */; };
 		44D88F8B1A71C4A8009D9608 /* ssdp_device_description_roku2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F7C1A71C4A8009D9608 /* ssdp_device_description_roku2.xml */; };
@@ -378,6 +379,7 @@
 		44C2CC931AB7948300B20E46 /* XMLWriter+ConvenienceMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XMLWriter+ConvenienceMethods.m"; sourceTree = "<group>"; };
 		44C2CC9F1AB7A33500B20E46 /* NSString+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Common.h"; sourceTree = "<group>"; };
 		44C2CCA01AB7A33500B20E46 /* NSString+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Common.m"; sourceTree = "<group>"; };
+		44C3900E1B34A7B500723388 /* WebOSWebAppSession_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebOSWebAppSession_Private.h; sourceTree = "<group>"; };
 		44D88F7A1A71C4A8009D9608 /* ssdp_device_description_chromecast.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_chromecast.xml; sourceTree = "<group>"; };
 		44D88F7B1A71C4A8009D9608 /* ssdp_device_description_firetv.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_firetv.xml; sourceTree = "<group>"; };
 		44D88F7C1A71C4A8009D9608 /* ssdp_device_description_roku2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_roku2.xml; sourceTree = "<group>"; };
@@ -1234,6 +1236,7 @@
 				EA5FB853199AEC550057B4B4 /* WebAppSession.m */,
 				EA5FB854199AEC550057B4B4 /* WebAppSessionDelegate.h */,
 				EA5FB855199AEC550057B4B4 /* WebOSWebAppSession.h */,
+				44C3900E1B34A7B500723388 /* WebOSWebAppSession_Private.h */,
 				EA5FB856199AEC550057B4B4 /* WebOSWebAppSession.m */,
 			);
 			path = Sessions;
@@ -1368,6 +1371,7 @@
 				EA5FB8A0199AEC560057B4B4 /* GCDWebServerPrivate.h in Headers */,
 				EA5FB8F6199AEC570057B4B4 /* AirPlayServiceMirrored.h in Headers */,
 				EA5FB883199AEC550057B4B4 /* CTASIAuthenticationDialog.h in Headers */,
+				44C3900F1B34A7B500723388 /* WebOSWebAppSession_Private.h in Headers */,
 				EA5FB8A3199AEC560057B4B4 /* GCDWebServerResponse.h in Headers */,
 				EA5FB86E199AEC550057B4B4 /* ConnectableDevice.h in Headers */,
 				EA5FB87F199AEC550057B4B4 /* SSDPDiscoveryProvider.h in Headers */,
