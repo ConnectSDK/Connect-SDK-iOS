@@ -91,6 +91,214 @@
 		4494263B1AF8353A006BAFF2 /* DispatchQueueBlockRunnerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4494263A1AF8353A006BAFF2 /* DispatchQueueBlockRunnerTests.m */; };
 		4494263E1AF83588006BAFF2 /* DispatchQueueBlockRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = 4494263C1AF83588006BAFF2 /* DispatchQueueBlockRunner.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4494263F1AF83588006BAFF2 /* DispatchQueueBlockRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = 4494263D1AF83588006BAFF2 /* DispatchQueueBlockRunner.m */; };
+		4494307C1B4C97BA001A2696 /* CTASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7BD199AEC550057B4B4 /* CTASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-w -fno-objc-arc"; }; };
+		4494307D1B4C97BA001A2696 /* CTASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7CE199AEC550057B4B4 /* CTASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-w -fno-objc-arc"; }; };
+		4494307E1B4C97BA001A2696 /* GCDWebServerErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7F1199AEC550057B4B4 /* GCDWebServerErrorResponse.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		4494307F1B4C97BA001A2696 /* DIALService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB83D199AEC550057B4B4 /* DIALService.m */; };
+		449430801B4C97BA001A2696 /* CTASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7C0199AEC550057B4B4 /* CTASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-w -fno-objc-arc"; }; };
+		449430811B4C97BA001A2696 /* GCDWebServerURLEncodedFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7EC199AEC550057B4B4 /* GCDWebServerURLEncodedFormRequest.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		449430831B4C97BA001A2696 /* SSDPSocketListener.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB813199AEC550057B4B4 /* SSDPSocketListener.m */; };
+		449430841B4C97BA001A2696 /* ServiceAsyncCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB829199AEC550057B4B4 /* ServiceAsyncCommand.m */; };
+		449430851B4C97BA001A2696 /* GCDWebServerFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7F3199AEC550057B4B4 /* GCDWebServerFileResponse.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		449430861B4C97BA001A2696 /* AirPlayServiceHTTPKeepAlive.m in Sources */ = {isa = PBXBuildFile; fileRef = 443063C01A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.m */; };
+		449430871B4C97BA001A2696 /* DeviceServiceReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB80C199AEC550057B4B4 /* DeviceServiceReachability.m */; };
+		449430881B4C97BA001A2696 /* MediaLaunchObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F446CC81A6D924D000BB1C0 /* MediaLaunchObject.m */; };
+		449430891B4C97BA001A2696 /* DefaultConnectableDeviceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7A5199AEC550057B4B4 /* DefaultConnectableDeviceStore.m */; };
+		4494308A1B4C97BA001A2696 /* AppStateChangeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D90AAB1B06B26C00A5CF2A /* AppStateChangeNotifier.m */; };
+		4494308B1B4C97BA001A2696 /* ServiceSubscription.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB82E199AEC550057B4B4 /* ServiceSubscription.m */; };
+		4494308C1B4C97BA001A2696 /* WebOSTVServiceMouse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB846199AEC550057B4B4 /* WebOSTVServiceMouse.m */; };
+		4494308D1B4C97BA001A2696 /* CTASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7C4199AEC550057B4B4 /* CTASIDownloadCache.m */; settings = {COMPILER_FLAGS = "-w -fno-objc-arc"; }; };
+		4494308E1B4C97BA001A2696 /* CapabilityFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7AB199AEC550057B4B4 /* CapabilityFilter.m */; };
+		4494308F1B4C97BA001A2696 /* DLNAService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB83F199AEC550057B4B4 /* DLNAService.m */; };
+		449430901B4C97BA001A2696 /* LGSRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7FC199AEC550057B4B4 /* LGSRWebSocket.m */; };
+		449430921B4C97BA001A2696 /* WebOSTVServiceConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB838199AEC550057B4B4 /* WebOSTVServiceConfig.m */; };
+		449430931B4C97BA001A2696 /* CTGuid.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7F8199AEC550057B4B4 /* CTGuid.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		449430941B4C97BA001A2696 /* DispatchQueueBlockRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = 4494263D1AF83588006BAFF2 /* DispatchQueueBlockRunner.m */; };
+		449430951B4C97BA001A2696 /* WebOSTVServiceSocketClient.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB848199AEC550057B4B4 /* WebOSTVServiceSocketClient.m */; };
+		449430961B4C97BA001A2696 /* ProgramInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB811199AEC550057B4B4 /* ProgramInfo.m */; };
+		449430971B4C97BA001A2696 /* ExternalInputInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB80E199AEC550057B4B4 /* ExternalInputInfo.m */; };
+		449430981B4C97BA001A2696 /* GCDWebServerFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7DC199AEC550057B4B4 /* GCDWebServerFunctions.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		449430991B4C97BA001A2696 /* WebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB853199AEC550057B4B4 /* WebAppSession.m */; };
+		4494309B1B4C97BA001A2696 /* DiscoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7AD199AEC550057B4B4 /* DiscoveryManager.m */; };
+		4494309C1B4C97BA001A2696 /* LaunchSession.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB851199AEC550057B4B4 /* LaunchSession.m */; };
+		4494309D1B4C97BA001A2696 /* GCDWebServerFileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7E8199AEC550057B4B4 /* GCDWebServerFileRequest.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		4494309E1B4C97BA001A2696 /* SSDPDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7B4199AEC550057B4B4 /* SSDPDiscoveryProvider.m */; };
+		4494309F1B4C97BA001A2696 /* TextInputStatusInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB815199AEC550057B4B4 /* TextInputStatusInfo.m */; };
+		449430A01B4C97BA001A2696 /* DeviceService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB83A199AEC550057B4B4 /* DeviceService.m */; };
+		449430A11B4C97BA001A2696 /* DevicePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7A7199AEC550057B4B4 /* DevicePicker.m */; };
+		449430A21B4C97BA001A2696 /* AirPlayService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB818199AEC550057B4B4 /* AirPlayService.m */; };
+		449430A31B4C97BA001A2696 /* CTReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7D3199AEC550057B4B4 /* CTReachability.m */; settings = {COMPILER_FLAGS = "-w -fno-objc-arc"; }; };
+		449430A41B4C97BA001A2696 /* ConnectError.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB808199AEC550057B4B4 /* ConnectError.m */; };
+		449430A51B4C97BA001A2696 /* NSString+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C2CCA01AB7A33500B20E46 /* NSString+Common.m */; };
+		449430A61B4C97BA001A2696 /* GCDWebServerDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7E6199AEC550057B4B4 /* GCDWebServerDataRequest.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		449430A71B4C97BA001A2696 /* WebOSWebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB856199AEC550057B4B4 /* WebOSWebAppSession.m */; };
+		449430A81B4C97BA001A2696 /* ServiceDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB836199AEC550057B4B4 /* ServiceDescription.m */; };
+		449430A91B4C97BA001A2696 /* ChannelInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB806199AEC550057B4B4 /* ChannelInfo.m */; };
+		449430AA1B4C97BA001A2696 /* WebOSTVService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB858199AEC550057B4B4 /* WebOSTVService.m */; };
+		449430AB1B4C97BA001A2696 /* CTXMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB800199AEC550057B4B4 /* CTXMLReader.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		449430AD1B4C97BA001A2696 /* CTASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7C6199AEC550057B4B4 /* CTASIFormDataRequest.m */; settings = {COMPILER_FLAGS = "-w -fno-objc-arc"; }; };
+		449430AE1B4C97BA001A2696 /* CTASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7CC199AEC550057B4B4 /* CTASIInputStream.m */; settings = {COMPILER_FLAGS = "-w -fno-objc-arc"; }; };
+		449430AF1B4C97BA001A2696 /* GCDWebServerStreamedResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7F5199AEC550057B4B4 /* GCDWebServerStreamedResponse.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		449430B21B4C97BA001A2696 /* AirPlayServiceMirrored.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB844199AEC550057B4B4 /* AirPlayServiceMirrored.m */; };
+		449430B31B4C97BA001A2696 /* ConnectableDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7A1199AEC550057B4B4 /* ConnectableDevice.m */; };
+		449430B41B4C97BA001A2696 /* ServiceConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB833199AEC550057B4B4 /* ServiceConfig.m */; };
+		449430B51B4C97BA001A2696 /* ConnectUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB80A199AEC550057B4B4 /* ConnectUtil.m */; };
+		449430B61B4C97BA001A2696 /* DiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7B0199AEC550057B4B4 /* DiscoveryProvider.m */; };
+		449430B71B4C97BA001A2696 /* RokuService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB84C199AEC550057B4B4 /* RokuService.m */; };
+		449430B81B4C97BA001A2696 /* GCDWebServerDataResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7EF199AEC550057B4B4 /* GCDWebServerDataResponse.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		449430B91B4C97BA001A2696 /* AppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB804199AEC550057B4B4 /* AppInfo.m */; };
+		449430BA1B4C97BA001A2696 /* GCDWebServerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7E2199AEC550057B4B4 /* GCDWebServerResponse.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		449430BB1B4C97BA001A2696 /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BCC3F51AB77F7D001BCDAA /* XMLWriter.m */; };
+		449430BD1B4C97BA001A2696 /* GCDWebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7D8199AEC550057B4B4 /* GCDWebServer.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		449430BE1B4C97BA001A2696 /* NetcastTVService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB84A199AEC550057B4B4 /* NetcastTVService.m */; };
+		449430BF1B4C97BA001A2696 /* AirPlayWebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB84F199AEC550057B4B4 /* AirPlayWebAppSession.m */; };
+		449430C01B4C97BA001A2696 /* NSDictionary+KeyPredicateSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4498D98B1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.m */; };
+		449430C11B4C97BA001A2696 /* ZeroConfDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7B6199AEC550057B4B4 /* ZeroConfDiscoveryProvider.m */; };
+		449430C21B4C97BA001A2696 /* XMLWriter+ConvenienceMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C2CC931AB7948300B20E46 /* XMLWriter+ConvenienceMethods.m */; };
+		449430C41B4C97BA001A2696 /* AirPlayServiceHTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB842199AEC550057B4B4 /* AirPlayServiceHTTP.m */; };
+		449430C51B4C97BA001A2696 /* SynchronousBlockRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = 449426371AF830A1006BAFF2 /* SynchronousBlockRunner.m */; };
+		449430C61B4C97BA001A2696 /* NetcastTVServiceConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB831199AEC550057B4B4 /* NetcastTVServiceConfig.m */; };
+		449430C71B4C97BA001A2696 /* CTASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7C8199AEC550057B4B4 /* CTASIHTTPRequest.m */; settings = {COMPILER_FLAGS = "-w -fno-objc-arc"; }; };
+		449430C81B4C97BA001A2696 /* SubscriptionDeduplicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 441C9ED41B3DBCB200F912D5 /* SubscriptionDeduplicator.m */; };
+		449430C91B4C97BA001A2696 /* GCDWebServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7DA199AEC550057B4B4 /* GCDWebServerConnection.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		449430CA1B4C97BA001A2696 /* GCDWebServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7E0199AEC550057B4B4 /* GCDWebServerRequest.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		449430CB1B4C97BA001A2696 /* CTASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7C2199AEC550057B4B4 /* CTASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-w -fno-objc-arc"; }; };
+		449430CD1B4C97BA001A2696 /* GCDWebServerMultiPartFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7EA199AEC550057B4B4 /* GCDWebServerMultiPartFormRequest.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		449430CE1B4C97BA001A2696 /* ServiceCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB82B199AEC550057B4B4 /* ServiceCommand.m */; };
+		449430CF1B4C97BA001A2696 /* MediaInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7A0E6A6150ACCA2F89B6 /* MediaInfo.m */; };
+		449430D01B4C97BA001A2696 /* ImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7AF5170CE02632778263 /* ImageInfo.m */; };
+		449430D11B4C97BA001A2696 /* DLNAHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F703F509283F37E26C0B4 /* DLNAHTTPServer.m */; };
+		449430D31B4C97BA001A2696 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7F85F1906E99C00B33AAB /* UIKit.framework */; };
+		449430D41B4C97BA001A2696 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7F85D1906E98200B33AAB /* AVFoundation.framework */; };
+		449430D51B4C97BA001A2696 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
+		449430D61B4C97BA001A2696 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBEF18FE48E900D75696 /* SystemConfiguration.framework */; };
+		449430D71B4C97BA001A2696 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1318FE485B00D75696 /* Foundation.framework */; };
+		449430DA1B4C97BA001A2696 /* ToastControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB823199AEC550057B4B4 /* ToastControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430DB1B4C97BA001A2696 /* XMLWriter+ConvenienceMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = 44C2CC921AB7948300B20E46 /* XMLWriter+ConvenienceMethods.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430DD1B4C97BA001A2696 /* GCDWebServerMultiPartFormRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7E9199AEC550057B4B4 /* GCDWebServerMultiPartFormRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430DE1B4C97BA001A2696 /* CTASIHTTPRequestDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7CA199AEC550057B4B4 /* CTASIHTTPRequestDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430DF1B4C97BA001A2696 /* CTXMLReader.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7FF199AEC550057B4B4 /* CTXMLReader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430E01B4C97BA001A2696 /* NetcastTVService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB849199AEC550057B4B4 /* NetcastTVService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430E11B4C97BA001A2696 /* ExternalInputInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB80D199AEC550057B4B4 /* ExternalInputInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430E21B4C97BA001A2696 /* DiscoveryProviderDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7B1199AEC550057B4B4 /* DiscoveryProviderDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430E31B4C97BA001A2696 /* VolumeControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB825199AEC550057B4B4 /* VolumeControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430E41B4C97BA001A2696 /* DefaultConnectableDeviceStore.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7A4199AEC550057B4B4 /* DefaultConnectableDeviceStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430E51B4C97BA001A2696 /* MediaPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB81F199AEC550057B4B4 /* MediaPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430E61B4C97BA001A2696 /* SynchronousBlockRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = 449426361AF830A1006BAFF2 /* SynchronousBlockRunner.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430E71B4C97BA001A2696 /* WebOSWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB855199AEC550057B4B4 /* WebOSWebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430E81B4C97BA001A2696 /* CTASIInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7CB199AEC550057B4B4 /* CTASIInputStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430E91B4C97BA001A2696 /* WebAppLauncher.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB826199AEC550057B4B4 /* WebAppLauncher.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430EA1B4C97BA001A2696 /* AppInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB803199AEC550057B4B4 /* AppInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430EB1B4C97BA001A2696 /* GCDWebServerFileResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7F2199AEC550057B4B4 /* GCDWebServerFileResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430EC1B4C97BA001A2696 /* CTASIProgressDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7CF199AEC550057B4B4 /* CTASIProgressDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430ED1B4C97BA001A2696 /* CTASIHTTPRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7C7199AEC550057B4B4 /* CTASIHTTPRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430EE1B4C97BA001A2696 /* ServiceConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB832199AEC550057B4B4 /* ServiceConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430EF1B4C97BA001A2696 /* NSString+Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 44C2CC9F1AB7A33500B20E46 /* NSString+Common.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430F01B4C97BA001A2696 /* GCDWebServerConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7D9199AEC550057B4B4 /* GCDWebServerConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430F11B4C97BA001A2696 /* MouseControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB820199AEC550057B4B4 /* MouseControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430F21B4C97BA001A2696 /* AirPlayServiceHTTPKeepAlive.h in Headers */ = {isa = PBXBuildFile; fileRef = 443063BF1A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430F31B4C97BA001A2696 /* WebOSTVService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB857199AEC550057B4B4 /* WebOSTVService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430F41B4C97BA001A2696 /* AirPlayService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB817199AEC550057B4B4 /* AirPlayService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430F51B4C97BA001A2696 /* GCDWebServerHTTPStatusCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7DD199AEC550057B4B4 /* GCDWebServerHTTPStatusCodes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430F61B4C97BA001A2696 /* NetcastTVServiceConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB830199AEC550057B4B4 /* NetcastTVServiceConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430F71B4C97BA001A2696 /* WebAppSessionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB854199AEC550057B4B4 /* WebAppSessionDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430F81B4C97BA001A2696 /* AppStateChangeNotifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D90AAA1B06B26C00A5CF2A /* AppStateChangeNotifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430F91B4C97BA001A2696 /* ServiceAsyncCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB828199AEC550057B4B4 /* ServiceAsyncCommand.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430FB1B4C97BA001A2696 /* MediaLaunchObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F446CC71A6D924D000BB1C0 /* MediaLaunchObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430FC1B4C97BA001A2696 /* SSDPSocketListener.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB812199AEC550057B4B4 /* SSDPSocketListener.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430FD1B4C97BA001A2696 /* ServiceCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB82A199AEC550057B4B4 /* ServiceCommand.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430FE1B4C97BA001A2696 /* ServiceCommandDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB82C199AEC550057B4B4 /* ServiceCommandDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449430FF1B4C97BA001A2696 /* ExternalInputControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB81B199AEC550057B4B4 /* ExternalInputControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431001B4C97BA001A2696 /* GCDWebServerURLEncodedFormRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7EB199AEC550057B4B4 /* GCDWebServerURLEncodedFormRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431021B4C97BA001A2696 /* SubscriptionDeduplicator.h in Headers */ = {isa = PBXBuildFile; fileRef = 441C9ED31B3DBCB200F912D5 /* SubscriptionDeduplicator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431041B4C97BA001A2696 /* TextInputStatusInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB814199AEC550057B4B4 /* TextInputStatusInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431051B4C97BA001A2696 /* CTASIFormDataRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7C5199AEC550057B4B4 /* CTASIFormDataRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431061B4C97BA001A2696 /* ConnectUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB809199AEC550057B4B4 /* ConnectUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431071B4C97BA001A2696 /* TVControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB824199AEC550057B4B4 /* TVControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431081B4C97BA001A2696 /* GCDWebServerDataResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7EE199AEC550057B4B4 /* GCDWebServerDataResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431091B4C97BA001A2696 /* ServiceSubscription.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB82D199AEC550057B4B4 /* ServiceSubscription.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494310A1B4C97BA001A2696 /* ServiceConfigDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB834199AEC550057B4B4 /* ServiceConfigDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494310B1B4C97BA001A2696 /* PowerControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB821199AEC550057B4B4 /* PowerControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494310C1B4C97BA001A2696 /* DIALService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB83C199AEC550057B4B4 /* DIALService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494310D1B4C97BA001A2696 /* ConnectSDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB79E199AEC550057B4B4 /* ConnectSDK-Prefix.pch */; };
+		4494310E1B4C97BA001A2696 /* DLNAService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB83E199AEC550057B4B4 /* DLNAService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494310F1B4C97BA001A2696 /* Launcher.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB81D199AEC550057B4B4 /* Launcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431101B4C97BA001A2696 /* CommonMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 44A5519D1AC36672001AF783 /* CommonMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431111B4C97BA001A2696 /* WebOSTVServiceSocketClient.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB847199AEC550057B4B4 /* WebOSTVServiceSocketClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431121B4C97BA001A2696 /* CTASIHTTPRequestConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7C9199AEC550057B4B4 /* CTASIHTTPRequestConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431131B4C97BA001A2696 /* GCDWebServer.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7D7199AEC550057B4B4 /* GCDWebServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431141B4C97BA001A2696 /* XMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 44BCC3F41AB77F7D001BCDAA /* XMLWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431151B4C97BA001A2696 /* DeviceServiceReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB80B199AEC550057B4B4 /* DeviceServiceReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431171B4C97BA001A2696 /* CTASICacheDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7BE199AEC550057B4B4 /* CTASICacheDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431181B4C97BA001A2696 /* ConnectableDeviceDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7A2199AEC550057B4B4 /* ConnectableDeviceDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431191B4C97BA001A2696 /* KeyControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB81C199AEC550057B4B4 /* KeyControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494311A1B4C97BA001A2696 /* GCDWebServerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7DE199AEC550057B4B4 /* GCDWebServerPrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494311B1B4C97BA001A2696 /* AirPlayServiceMirrored.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB843199AEC550057B4B4 /* AirPlayServiceMirrored.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494311D1B4C97BA001A2696 /* CTASIAuthenticationDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7BC199AEC550057B4B4 /* CTASIAuthenticationDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494311E1B4C97BA001A2696 /* GCDWebServerResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7E1199AEC550057B4B4 /* GCDWebServerResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494311F1B4C97BA001A2696 /* ConnectableDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7A0199AEC550057B4B4 /* ConnectableDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431201B4C97BA001A2696 /* SSDPDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7B3199AEC550057B4B4 /* SSDPDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431211B4C97BA001A2696 /* ServiceDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB835199AEC550057B4B4 /* ServiceDescription.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431221B4C97BA001A2696 /* NSDictionary+KeyPredicateSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4498D98A1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431231B4C97BA001A2696 /* AirPlayWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB84E199AEC550057B4B4 /* AirPlayWebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431241B4C97BA001A2696 /* WebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB852199AEC550057B4B4 /* WebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431251B4C97BA001A2696 /* RokuService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB84B199AEC550057B4B4 /* RokuService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431261B4C97BA001A2696 /* CTASINetworkQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7CD199AEC550057B4B4 /* CTASINetworkQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431271B4C97BA001A2696 /* ZeroConfDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7B5199AEC550057B4B4 /* ZeroConfDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431281B4C97BA001A2696 /* CapabilityFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7AA199AEC550057B4B4 /* CapabilityFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494312A1B4C97BA001A2696 /* DevicePickerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7A8199AEC550057B4B4 /* DevicePickerDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494312B1B4C97BA001A2696 /* DiscoveryManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7AC199AEC550057B4B4 /* DiscoveryManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494312C1B4C97BA001A2696 /* CTASIDataDecompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7C1199AEC550057B4B4 /* CTASIDataDecompressor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494312D1B4C97BA001A2696 /* CTASIDownloadCache.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7C3199AEC550057B4B4 /* CTASIDownloadCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494312E1B4C97BA001A2696 /* CTReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7D2199AEC550057B4B4 /* CTReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494312F1B4C97BA001A2696 /* MediaControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB81E199AEC550057B4B4 /* MediaControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431301B4C97BA001A2696 /* WebOSTVServiceConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB837199AEC550057B4B4 /* WebOSTVServiceConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431311B4C97BA001A2696 /* Capability.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB81A199AEC550057B4B4 /* Capability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431321B4C97BA001A2696 /* DeviceServiceDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB83B199AEC550057B4B4 /* DeviceServiceDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431331B4C97BA001A2696 /* DispatchQueueBlockRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = 4494263C1AF83588006BAFF2 /* DispatchQueueBlockRunner.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431341B4C97BA001A2696 /* DiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7AF199AEC550057B4B4 /* DiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431351B4C97BA001A2696 /* JSONObjectCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB80F199AEC550057B4B4 /* JSONObjectCoding.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431361B4C97BA001A2696 /* WebOSTVServiceMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB845199AEC550057B4B4 /* WebOSTVServiceMouse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431371B4C97BA001A2696 /* GCDWebServerDataRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7E5199AEC550057B4B4 /* GCDWebServerDataRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431381B4C97BA001A2696 /* CTASIDataCompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7BF199AEC550057B4B4 /* CTASIDataCompressor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431391B4C97BA001A2696 /* ConnectableDeviceStore.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7A3199AEC550057B4B4 /* ConnectableDeviceStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494313A1B4C97BA001A2696 /* AirPlayServiceHTTP.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB841199AEC550057B4B4 /* AirPlayServiceHTTP.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494313B1B4C97BA001A2696 /* DevicePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7A6199AEC550057B4B4 /* DevicePicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494313C1B4C97BA001A2696 /* GCDWebServerRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7DF199AEC550057B4B4 /* GCDWebServerRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494313D1B4C97BA001A2696 /* ConnectError.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB807199AEC550057B4B4 /* ConnectError.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494313E1B4C97BA001A2696 /* ChannelInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB805199AEC550057B4B4 /* ChannelInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494313F1B4C97BA001A2696 /* DeviceService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB839199AEC550057B4B4 /* DeviceService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431401B4C97BA001A2696 /* GCDWebServerFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7DB199AEC550057B4B4 /* GCDWebServerFunctions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431411B4C97BA001A2696 /* TextInputControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB822199AEC550057B4B4 /* TextInputControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431421B4C97BA001A2696 /* ProgramInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB810199AEC550057B4B4 /* ProgramInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431431B4C97BA001A2696 /* BlockRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = 4494262F1AF82F49006BAFF2 /* BlockRunner.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431451B4C97BA001A2696 /* DiscoveryManagerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7AE199AEC550057B4B4 /* DiscoveryManagerDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431461B4C97BA001A2696 /* GCDWebServerFileRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7E7199AEC550057B4B4 /* GCDWebServerFileRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431471B4C97BA001A2696 /* GCDWebServerErrorResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7F0199AEC550057B4B4 /* GCDWebServerErrorResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431481B4C97BA001A2696 /* CTGuid.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7F7199AEC550057B4B4 /* CTGuid.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431491B4C97BA001A2696 /* LaunchSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB850199AEC550057B4B4 /* LaunchSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494314A1B4C97BA001A2696 /* LGSRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7FB199AEC550057B4B4 /* LGSRWebSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494314B1B4C97BA001A2696 /* GCDWebServerStreamedResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7F4199AEC550057B4B4 /* GCDWebServerStreamedResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494314C1B4C97BA001A2696 /* PlayListControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F446CC11A6D8353000BB1C0 /* PlayListControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494314D1B4C97BA001A2696 /* ConnectSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5F82F3199BDCD300B7302B /* ConnectSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494314E1B4C97BA001A2696 /* ConnectSDKDefaultPlatforms.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5F82EF199BD95800B7302B /* ConnectSDKDefaultPlatforms.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494314F1B4C97BA001A2696 /* MediaInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F735CB760F4387DDA84B4 /* MediaInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431511B4C97BA001A2696 /* ImageInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F71B68553DCA74ED1C43E /* ImageInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431521B4C97BA001A2696 /* DLNAHTTPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F7271D17DCAE1C615A59A /* DLNAHTTPServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		449431B11B4C9935001A2696 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7F85F1906E99C00B33AAB /* UIKit.framework */; };
+		449431B21B4C9935001A2696 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7F85D1906E98200B33AAB /* AVFoundation.framework */; };
+		449431B31B4C9935001A2696 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
+		449431B41B4C9935001A2696 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBEF18FE48E900D75696 /* SystemConfiguration.framework */; };
+		449431B51B4C9935001A2696 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1318FE485B00D75696 /* Foundation.framework */; };
+		449432361B4C999B001A2696 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4485140C1A02FC3200D66710 /* GoogleCast.framework */; };
+		449432371B4C9A45001A2696 /* CastDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB85D199AEC550057B4B4 /* CastDiscoveryProvider.m */; };
+		449432381B4C9A49001A2696 /* CastService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB85F199AEC550057B4B4 /* CastService.m */; };
+		449432391B4C9A49001A2696 /* CastServiceChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB861199AEC550057B4B4 /* CastServiceChannel.m */; };
+		4494323A1B4C9A49001A2696 /* CastWebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB863199AEC550057B4B4 /* CastWebAppSession.m */; };
+		4494323B1B4C9A6F001A2696 /* CastDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB85C199AEC550057B4B4 /* CastDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494323C1B4C9A6F001A2696 /* CastService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB85E199AEC550057B4B4 /* CastService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494323D1B4C9A6F001A2696 /* CastServiceChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB860199AEC550057B4B4 /* CastServiceChannel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4494323E1B4C9A6F001A2696 /* CastWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB862199AEC550057B4B4 /* CastWebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4498D98C1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4498D98A1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4498D98D1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4498D98B1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.m */; };
 		4498D9901A65A1D7008C0B72 /* NSDictionary+KeyPredicateSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4498D98F1A65A1D7008C0B72 /* NSDictionary+KeyPredicateSearchTests.m */; };
@@ -363,6 +571,13 @@
 			remoteGlobalIDString = EA61EB0F18FE485B00D75696;
 			remoteInfo = ConnectSDK;
 		};
+		449432401B4D86D9001A2696 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA61EB0818FE485B00D75696 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4494307A1B4C97BA001A2696;
+			remoteInfo = "ConnectSDK-Core";
+		};
 		449A37091B0FDC1C00E47DAC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EA61EB0818FE485B00D75696 /* Project object */;
@@ -380,6 +595,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		449430D81B4C97BA001A2696 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		449431B61B4C9935001A2696 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EA61EB0E18FE485B00D75696 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -455,6 +688,8 @@
 		4494263C1AF83588006BAFF2 /* DispatchQueueBlockRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueueBlockRunner.h; sourceTree = "<group>"; };
 		4494263D1AF83588006BAFF2 /* DispatchQueueBlockRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueBlockRunner.m; sourceTree = "<group>"; };
 		449426401AF847D1006BAFF2 /* FireTVDiscoveryProvider_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FireTVDiscoveryProvider_Private.h; sourceTree = "<group>"; };
+		449431571B4C97BA001A2696 /* libConnectSDK-Core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libConnectSDK-Core.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		449432351B4C9935001A2696 /* libConnectSDK-GoogleCast.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libConnectSDK-GoogleCast.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4498D98A1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+KeyPredicateSearch.h"; sourceTree = "<group>"; };
 		4498D98B1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+KeyPredicateSearch.m"; sourceTree = "<group>"; };
 		4498D98F1A65A1D7008C0B72 /* NSDictionary+KeyPredicateSearchTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+KeyPredicateSearchTests.m"; sourceTree = "<group>"; };
@@ -753,6 +988,31 @@
 				44316F2B1AF3F17A000FE655 /* OHHTTPStubs.framework in Frameworks */,
 				44316F291AF3F17A000FE655 /* OCMock.framework in Frameworks */,
 				44EF618F1A12E0A400CF344C /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		449430D21B4C97BA001A2696 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				449430D31B4C97BA001A2696 /* UIKit.framework in Frameworks */,
+				449430D41B4C97BA001A2696 /* AVFoundation.framework in Frameworks */,
+				449430D51B4C97BA001A2696 /* MobileCoreServices.framework in Frameworks */,
+				449430D61B4C97BA001A2696 /* SystemConfiguration.framework in Frameworks */,
+				449430D71B4C97BA001A2696 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		449431B01B4C9935001A2696 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				449432361B4C999B001A2696 /* GoogleCast.framework in Frameworks */,
+				449431B11B4C9935001A2696 /* UIKit.framework in Frameworks */,
+				449431B21B4C9935001A2696 /* AVFoundation.framework in Frameworks */,
+				449431B31B4C9935001A2696 /* MobileCoreServices.framework in Frameworks */,
+				449431B41B4C9935001A2696 /* SystemConfiguration.framework in Frameworks */,
+				449431B51B4C9935001A2696 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1574,6 +1834,8 @@
 				4480857A1A12A7BE00E13938 /* ConnectSDKTests.xctest */,
 				449A37021B0FDC1C00E47DAC /* ConnectSDKIntegrationTests.xctest */,
 				44166C501B4203880052F9EC /* ConnectSDKAcceptanceTests.xctest */,
+				449431571B4C97BA001A2696 /* libConnectSDK-Core.a */,
+				449432351B4C9935001A2696 /* libConnectSDK-GoogleCast.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1597,6 +1859,136 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		449430D91B4C97BA001A2696 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				449430DA1B4C97BA001A2696 /* ToastControl.h in Headers */,
+				449430DB1B4C97BA001A2696 /* XMLWriter+ConvenienceMethods.h in Headers */,
+				449430DD1B4C97BA001A2696 /* GCDWebServerMultiPartFormRequest.h in Headers */,
+				449430DE1B4C97BA001A2696 /* CTASIHTTPRequestDelegate.h in Headers */,
+				449430DF1B4C97BA001A2696 /* CTXMLReader.h in Headers */,
+				449430E01B4C97BA001A2696 /* NetcastTVService.h in Headers */,
+				449430E11B4C97BA001A2696 /* ExternalInputInfo.h in Headers */,
+				449430E21B4C97BA001A2696 /* DiscoveryProviderDelegate.h in Headers */,
+				449430E31B4C97BA001A2696 /* VolumeControl.h in Headers */,
+				449430E41B4C97BA001A2696 /* DefaultConnectableDeviceStore.h in Headers */,
+				449430E51B4C97BA001A2696 /* MediaPlayer.h in Headers */,
+				449430E61B4C97BA001A2696 /* SynchronousBlockRunner.h in Headers */,
+				449430E71B4C97BA001A2696 /* WebOSWebAppSession.h in Headers */,
+				449430E81B4C97BA001A2696 /* CTASIInputStream.h in Headers */,
+				449430E91B4C97BA001A2696 /* WebAppLauncher.h in Headers */,
+				449430EA1B4C97BA001A2696 /* AppInfo.h in Headers */,
+				449430EB1B4C97BA001A2696 /* GCDWebServerFileResponse.h in Headers */,
+				449430EC1B4C97BA001A2696 /* CTASIProgressDelegate.h in Headers */,
+				449430ED1B4C97BA001A2696 /* CTASIHTTPRequest.h in Headers */,
+				449430EE1B4C97BA001A2696 /* ServiceConfig.h in Headers */,
+				449430EF1B4C97BA001A2696 /* NSString+Common.h in Headers */,
+				449430F01B4C97BA001A2696 /* GCDWebServerConnection.h in Headers */,
+				449430F11B4C97BA001A2696 /* MouseControl.h in Headers */,
+				449430F21B4C97BA001A2696 /* AirPlayServiceHTTPKeepAlive.h in Headers */,
+				449430F31B4C97BA001A2696 /* WebOSTVService.h in Headers */,
+				449430F41B4C97BA001A2696 /* AirPlayService.h in Headers */,
+				449430F51B4C97BA001A2696 /* GCDWebServerHTTPStatusCodes.h in Headers */,
+				449430F61B4C97BA001A2696 /* NetcastTVServiceConfig.h in Headers */,
+				449430F71B4C97BA001A2696 /* WebAppSessionDelegate.h in Headers */,
+				449430F81B4C97BA001A2696 /* AppStateChangeNotifier.h in Headers */,
+				449430F91B4C97BA001A2696 /* ServiceAsyncCommand.h in Headers */,
+				449430FB1B4C97BA001A2696 /* MediaLaunchObject.h in Headers */,
+				449430FC1B4C97BA001A2696 /* SSDPSocketListener.h in Headers */,
+				449430FD1B4C97BA001A2696 /* ServiceCommand.h in Headers */,
+				449430FE1B4C97BA001A2696 /* ServiceCommandDelegate.h in Headers */,
+				449430FF1B4C97BA001A2696 /* ExternalInputControl.h in Headers */,
+				449431001B4C97BA001A2696 /* GCDWebServerURLEncodedFormRequest.h in Headers */,
+				449431021B4C97BA001A2696 /* SubscriptionDeduplicator.h in Headers */,
+				449431041B4C97BA001A2696 /* TextInputStatusInfo.h in Headers */,
+				449431051B4C97BA001A2696 /* CTASIFormDataRequest.h in Headers */,
+				449431061B4C97BA001A2696 /* ConnectUtil.h in Headers */,
+				449431071B4C97BA001A2696 /* TVControl.h in Headers */,
+				449431081B4C97BA001A2696 /* GCDWebServerDataResponse.h in Headers */,
+				449431091B4C97BA001A2696 /* ServiceSubscription.h in Headers */,
+				4494310A1B4C97BA001A2696 /* ServiceConfigDelegate.h in Headers */,
+				4494310B1B4C97BA001A2696 /* PowerControl.h in Headers */,
+				4494310C1B4C97BA001A2696 /* DIALService.h in Headers */,
+				4494310D1B4C97BA001A2696 /* ConnectSDK-Prefix.pch in Headers */,
+				4494310E1B4C97BA001A2696 /* DLNAService.h in Headers */,
+				4494310F1B4C97BA001A2696 /* Launcher.h in Headers */,
+				449431101B4C97BA001A2696 /* CommonMacros.h in Headers */,
+				449431111B4C97BA001A2696 /* WebOSTVServiceSocketClient.h in Headers */,
+				449431121B4C97BA001A2696 /* CTASIHTTPRequestConfig.h in Headers */,
+				449431131B4C97BA001A2696 /* GCDWebServer.h in Headers */,
+				449431141B4C97BA001A2696 /* XMLWriter.h in Headers */,
+				449431151B4C97BA001A2696 /* DeviceServiceReachability.h in Headers */,
+				449431171B4C97BA001A2696 /* CTASICacheDelegate.h in Headers */,
+				449431181B4C97BA001A2696 /* ConnectableDeviceDelegate.h in Headers */,
+				449431191B4C97BA001A2696 /* KeyControl.h in Headers */,
+				4494311A1B4C97BA001A2696 /* GCDWebServerPrivate.h in Headers */,
+				4494311B1B4C97BA001A2696 /* AirPlayServiceMirrored.h in Headers */,
+				4494311D1B4C97BA001A2696 /* CTASIAuthenticationDialog.h in Headers */,
+				4494311E1B4C97BA001A2696 /* GCDWebServerResponse.h in Headers */,
+				4494311F1B4C97BA001A2696 /* ConnectableDevice.h in Headers */,
+				449431201B4C97BA001A2696 /* SSDPDiscoveryProvider.h in Headers */,
+				449431211B4C97BA001A2696 /* ServiceDescription.h in Headers */,
+				449431221B4C97BA001A2696 /* NSDictionary+KeyPredicateSearch.h in Headers */,
+				449431231B4C97BA001A2696 /* AirPlayWebAppSession.h in Headers */,
+				449431241B4C97BA001A2696 /* WebAppSession.h in Headers */,
+				449431251B4C97BA001A2696 /* RokuService.h in Headers */,
+				449431261B4C97BA001A2696 /* CTASINetworkQueue.h in Headers */,
+				449431271B4C97BA001A2696 /* ZeroConfDiscoveryProvider.h in Headers */,
+				449431281B4C97BA001A2696 /* CapabilityFilter.h in Headers */,
+				4494312A1B4C97BA001A2696 /* DevicePickerDelegate.h in Headers */,
+				4494312B1B4C97BA001A2696 /* DiscoveryManager.h in Headers */,
+				4494312C1B4C97BA001A2696 /* CTASIDataDecompressor.h in Headers */,
+				4494312D1B4C97BA001A2696 /* CTASIDownloadCache.h in Headers */,
+				4494312E1B4C97BA001A2696 /* CTReachability.h in Headers */,
+				4494312F1B4C97BA001A2696 /* MediaControl.h in Headers */,
+				449431301B4C97BA001A2696 /* WebOSTVServiceConfig.h in Headers */,
+				449431311B4C97BA001A2696 /* Capability.h in Headers */,
+				449431321B4C97BA001A2696 /* DeviceServiceDelegate.h in Headers */,
+				449431331B4C97BA001A2696 /* DispatchQueueBlockRunner.h in Headers */,
+				449431341B4C97BA001A2696 /* DiscoveryProvider.h in Headers */,
+				449431351B4C97BA001A2696 /* JSONObjectCoding.h in Headers */,
+				449431361B4C97BA001A2696 /* WebOSTVServiceMouse.h in Headers */,
+				449431371B4C97BA001A2696 /* GCDWebServerDataRequest.h in Headers */,
+				449431381B4C97BA001A2696 /* CTASIDataCompressor.h in Headers */,
+				449431391B4C97BA001A2696 /* ConnectableDeviceStore.h in Headers */,
+				4494313A1B4C97BA001A2696 /* AirPlayServiceHTTP.h in Headers */,
+				4494313B1B4C97BA001A2696 /* DevicePicker.h in Headers */,
+				4494313C1B4C97BA001A2696 /* GCDWebServerRequest.h in Headers */,
+				4494313D1B4C97BA001A2696 /* ConnectError.h in Headers */,
+				4494313E1B4C97BA001A2696 /* ChannelInfo.h in Headers */,
+				4494313F1B4C97BA001A2696 /* DeviceService.h in Headers */,
+				449431401B4C97BA001A2696 /* GCDWebServerFunctions.h in Headers */,
+				449431411B4C97BA001A2696 /* TextInputControl.h in Headers */,
+				449431421B4C97BA001A2696 /* ProgramInfo.h in Headers */,
+				449431431B4C97BA001A2696 /* BlockRunner.h in Headers */,
+				449431451B4C97BA001A2696 /* DiscoveryManagerDelegate.h in Headers */,
+				449431461B4C97BA001A2696 /* GCDWebServerFileRequest.h in Headers */,
+				449431471B4C97BA001A2696 /* GCDWebServerErrorResponse.h in Headers */,
+				449431481B4C97BA001A2696 /* CTGuid.h in Headers */,
+				449431491B4C97BA001A2696 /* LaunchSession.h in Headers */,
+				4494314A1B4C97BA001A2696 /* LGSRWebSocket.h in Headers */,
+				4494314B1B4C97BA001A2696 /* GCDWebServerStreamedResponse.h in Headers */,
+				4494314C1B4C97BA001A2696 /* PlayListControl.h in Headers */,
+				4494314D1B4C97BA001A2696 /* ConnectSDK.h in Headers */,
+				4494314E1B4C97BA001A2696 /* ConnectSDKDefaultPlatforms.h in Headers */,
+				4494314F1B4C97BA001A2696 /* MediaInfo.h in Headers */,
+				449431511B4C97BA001A2696 /* ImageInfo.h in Headers */,
+				449431521B4C97BA001A2696 /* DLNAHTTPServer.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		449431B71B4C9935001A2696 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4494323B1B4C9A6F001A2696 /* CastDiscoveryProvider.h in Headers */,
+				4494323C1B4C9A6F001A2696 /* CastService.h in Headers */,
+				4494323D1B4C9A6F001A2696 /* CastServiceChannel.h in Headers */,
+				4494323E1B4C9A6F001A2696 /* CastWebAppSession.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EECAED1A193F5ED900D31F61 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1764,6 +2156,45 @@
 			productReference = 4480857A1A12A7BE00E13938 /* ConnectSDKTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		4494307A1B4C97BA001A2696 /* ConnectSDK-Core */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 449431541B4C97BA001A2696 /* Build configuration list for PBXNativeTarget "ConnectSDK-Core" */;
+			buildPhases = (
+				4494307B1B4C97BA001A2696 /* Sources */,
+				449430D21B4C97BA001A2696 /* Frameworks */,
+				449430D81B4C97BA001A2696 /* CopyFiles */,
+				449430D91B4C97BA001A2696 /* Headers */,
+				449431531B4C97BA001A2696 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ConnectSDK-Core";
+			productName = "Connect SDK";
+			productReference = 449431571B4C97BA001A2696 /* libConnectSDK-Core.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		449431581B4C9935001A2696 /* ConnectSDK-GoogleCast */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 449432321B4C9935001A2696 /* Build configuration list for PBXNativeTarget "ConnectSDK-GoogleCast" */;
+			buildPhases = (
+				449431591B4C9935001A2696 /* Sources */,
+				449431B01B4C9935001A2696 /* Frameworks */,
+				449431B61B4C9935001A2696 /* CopyFiles */,
+				449431B71B4C9935001A2696 /* Headers */,
+				449432311B4C9935001A2696 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				449432411B4D86D9001A2696 /* PBXTargetDependency */,
+			);
+			name = "ConnectSDK-GoogleCast";
+			productName = "Connect SDK";
+			productReference = 449432351B4C9935001A2696 /* libConnectSDK-GoogleCast.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		449A37011B0FDC1C00E47DAC /* ConnectSDKIntegrationTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 449A370B1B0FDC1C00E47DAC /* Build configuration list for PBXNativeTarget "ConnectSDKIntegrationTests" */;
@@ -1838,6 +2269,8 @@
 				448085791A12A7BE00E13938 /* ConnectSDKTests */,
 				449A37011B0FDC1C00E47DAC /* ConnectSDKIntegrationTests */,
 				44166C4F1B4203880052F9EC /* ConnectSDKAcceptanceTests */,
+				4494307A1B4C97BA001A2696 /* ConnectSDK-Core */,
+				449431581B4C9935001A2696 /* ConnectSDK-GoogleCast */,
 			);
 		};
 /* End PBXProject section */
@@ -1900,6 +2333,32 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		449431531B4C97BA001A2696 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "exit\nset -e\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n\n# Link the \"Current\" version to \"A\"\n/bin/ln -sfh A \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/Current\"\n/bin/ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Headers\"\n/bin/ln -sfh \"Versions/Current/${PRODUCT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}\"\n\n# The -a ensures that the headers maintain the source modification date so that we don't constantly\n# cause propagating rebuilds of files that import these headers.\n/bin/cp -a \"${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n";
+		};
+		449432311B4C9935001A2696 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "exit\nset -e\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n\n# Link the \"Current\" version to \"A\"\n/bin/ln -sfh A \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/Current\"\n/bin/ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Headers\"\n/bin/ln -sfh \"Versions/Current/${PRODUCT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}\"\n\n# The -a ensures that the headers maintain the source modification date so that we don't constantly\n# cause propagating rebuilds of files that import these headers.\n/bin/cp -a \"${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n";
+		};
 		EECAED51193F60C900D31F61 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1974,6 +2433,101 @@
 				44A5518F1AC1DF4C001AF783 /* NetcastTVServiceTests.m in Sources */,
 				4498D9901A65A1D7008C0B72 /* NSDictionary+KeyPredicateSearchTests.m in Sources */,
 				44A0E1A71B3B31DC00ADF95F /* WebOSWebAppSessionTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4494307B1B4C97BA001A2696 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4494307C1B4C97BA001A2696 /* CTASIAuthenticationDialog.m in Sources */,
+				4494307D1B4C97BA001A2696 /* CTASINetworkQueue.m in Sources */,
+				4494307E1B4C97BA001A2696 /* GCDWebServerErrorResponse.m in Sources */,
+				4494307F1B4C97BA001A2696 /* DIALService.m in Sources */,
+				449430801B4C97BA001A2696 /* CTASIDataCompressor.m in Sources */,
+				449430811B4C97BA001A2696 /* GCDWebServerURLEncodedFormRequest.m in Sources */,
+				449430831B4C97BA001A2696 /* SSDPSocketListener.m in Sources */,
+				449430841B4C97BA001A2696 /* ServiceAsyncCommand.m in Sources */,
+				449430851B4C97BA001A2696 /* GCDWebServerFileResponse.m in Sources */,
+				449430861B4C97BA001A2696 /* AirPlayServiceHTTPKeepAlive.m in Sources */,
+				449430871B4C97BA001A2696 /* DeviceServiceReachability.m in Sources */,
+				449430881B4C97BA001A2696 /* MediaLaunchObject.m in Sources */,
+				449430891B4C97BA001A2696 /* DefaultConnectableDeviceStore.m in Sources */,
+				4494308A1B4C97BA001A2696 /* AppStateChangeNotifier.m in Sources */,
+				4494308B1B4C97BA001A2696 /* ServiceSubscription.m in Sources */,
+				4494308C1B4C97BA001A2696 /* WebOSTVServiceMouse.m in Sources */,
+				4494308D1B4C97BA001A2696 /* CTASIDownloadCache.m in Sources */,
+				4494308E1B4C97BA001A2696 /* CapabilityFilter.m in Sources */,
+				4494308F1B4C97BA001A2696 /* DLNAService.m in Sources */,
+				449430901B4C97BA001A2696 /* LGSRWebSocket.m in Sources */,
+				449430921B4C97BA001A2696 /* WebOSTVServiceConfig.m in Sources */,
+				449430931B4C97BA001A2696 /* CTGuid.m in Sources */,
+				449430941B4C97BA001A2696 /* DispatchQueueBlockRunner.m in Sources */,
+				449430951B4C97BA001A2696 /* WebOSTVServiceSocketClient.m in Sources */,
+				449430961B4C97BA001A2696 /* ProgramInfo.m in Sources */,
+				449430971B4C97BA001A2696 /* ExternalInputInfo.m in Sources */,
+				449430981B4C97BA001A2696 /* GCDWebServerFunctions.m in Sources */,
+				449430991B4C97BA001A2696 /* WebAppSession.m in Sources */,
+				4494309B1B4C97BA001A2696 /* DiscoveryManager.m in Sources */,
+				4494309C1B4C97BA001A2696 /* LaunchSession.m in Sources */,
+				4494309D1B4C97BA001A2696 /* GCDWebServerFileRequest.m in Sources */,
+				4494309E1B4C97BA001A2696 /* SSDPDiscoveryProvider.m in Sources */,
+				4494309F1B4C97BA001A2696 /* TextInputStatusInfo.m in Sources */,
+				449430A01B4C97BA001A2696 /* DeviceService.m in Sources */,
+				449430A11B4C97BA001A2696 /* DevicePicker.m in Sources */,
+				449430A21B4C97BA001A2696 /* AirPlayService.m in Sources */,
+				449430A31B4C97BA001A2696 /* CTReachability.m in Sources */,
+				449430A41B4C97BA001A2696 /* ConnectError.m in Sources */,
+				449430A51B4C97BA001A2696 /* NSString+Common.m in Sources */,
+				449430A61B4C97BA001A2696 /* GCDWebServerDataRequest.m in Sources */,
+				449430A71B4C97BA001A2696 /* WebOSWebAppSession.m in Sources */,
+				449430A81B4C97BA001A2696 /* ServiceDescription.m in Sources */,
+				449430A91B4C97BA001A2696 /* ChannelInfo.m in Sources */,
+				449430AA1B4C97BA001A2696 /* WebOSTVService.m in Sources */,
+				449430AB1B4C97BA001A2696 /* CTXMLReader.m in Sources */,
+				449430AD1B4C97BA001A2696 /* CTASIFormDataRequest.m in Sources */,
+				449430AE1B4C97BA001A2696 /* CTASIInputStream.m in Sources */,
+				449430AF1B4C97BA001A2696 /* GCDWebServerStreamedResponse.m in Sources */,
+				449430B21B4C97BA001A2696 /* AirPlayServiceMirrored.m in Sources */,
+				449430B31B4C97BA001A2696 /* ConnectableDevice.m in Sources */,
+				449430B41B4C97BA001A2696 /* ServiceConfig.m in Sources */,
+				449430B51B4C97BA001A2696 /* ConnectUtil.m in Sources */,
+				449430B61B4C97BA001A2696 /* DiscoveryProvider.m in Sources */,
+				449430B71B4C97BA001A2696 /* RokuService.m in Sources */,
+				449430B81B4C97BA001A2696 /* GCDWebServerDataResponse.m in Sources */,
+				449430B91B4C97BA001A2696 /* AppInfo.m in Sources */,
+				449430BA1B4C97BA001A2696 /* GCDWebServerResponse.m in Sources */,
+				449430BB1B4C97BA001A2696 /* XMLWriter.m in Sources */,
+				449430BD1B4C97BA001A2696 /* GCDWebServer.m in Sources */,
+				449430BE1B4C97BA001A2696 /* NetcastTVService.m in Sources */,
+				449430BF1B4C97BA001A2696 /* AirPlayWebAppSession.m in Sources */,
+				449430C01B4C97BA001A2696 /* NSDictionary+KeyPredicateSearch.m in Sources */,
+				449430C11B4C97BA001A2696 /* ZeroConfDiscoveryProvider.m in Sources */,
+				449430C21B4C97BA001A2696 /* XMLWriter+ConvenienceMethods.m in Sources */,
+				449430C41B4C97BA001A2696 /* AirPlayServiceHTTP.m in Sources */,
+				449430C51B4C97BA001A2696 /* SynchronousBlockRunner.m in Sources */,
+				449430C61B4C97BA001A2696 /* NetcastTVServiceConfig.m in Sources */,
+				449430C71B4C97BA001A2696 /* CTASIHTTPRequest.m in Sources */,
+				449430C81B4C97BA001A2696 /* SubscriptionDeduplicator.m in Sources */,
+				449430C91B4C97BA001A2696 /* GCDWebServerConnection.m in Sources */,
+				449430CA1B4C97BA001A2696 /* GCDWebServerRequest.m in Sources */,
+				449430CB1B4C97BA001A2696 /* CTASIDataDecompressor.m in Sources */,
+				449430CD1B4C97BA001A2696 /* GCDWebServerMultiPartFormRequest.m in Sources */,
+				449430CE1B4C97BA001A2696 /* ServiceCommand.m in Sources */,
+				449430CF1B4C97BA001A2696 /* MediaInfo.m in Sources */,
+				449430D01B4C97BA001A2696 /* ImageInfo.m in Sources */,
+				449430D11B4C97BA001A2696 /* DLNAHTTPServer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		449431591B4C9935001A2696 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4494323A1B4C9A49001A2696 /* CastWebAppSession.m in Sources */,
+				449432381B4C9A49001A2696 /* CastService.m in Sources */,
+				449432371B4C9A45001A2696 /* CastDiscoveryProvider.m in Sources */,
+				449432391B4C9A49001A2696 /* CastServiceChannel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2093,6 +2647,11 @@
 			isa = PBXTargetDependency;
 			target = EA61EB0F18FE485B00D75696 /* ConnectSDK */;
 			targetProxy = 448085811A12A7BE00E13938 /* PBXContainerItemProxy */;
+		};
+		449432411B4D86D9001A2696 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4494307A1B4C97BA001A2696 /* ConnectSDK-Core */;
+			targetProxy = 449432401B4D86D9001A2696 /* PBXContainerItemProxy */;
 		};
 		449A370A1B0FDC1C00E47DAC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2247,6 +2806,74 @@
 			};
 			name = Release;
 		};
+		449431551B4C97BA001A2696 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DSTROOT = /tmp/Connect_SDK.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "ConnectSDK-Core";
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Debug;
+		};
+		449431561B4C97BA001A2696 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DSTROOT = /tmp/Connect_SDK.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "ConnectSDK-Core";
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Release;
+		};
+		449432331B4C9935001A2696 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DSTROOT = /tmp/Connect_SDK.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/modules/google-cast",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "ConnectSDK-GoogleCast";
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Debug;
+		};
+		449432341B4C9935001A2696 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DSTROOT = /tmp/Connect_SDK.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/modules/google-cast",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "ConnectSDK-GoogleCast";
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Release;
+		};
 		449A370C1B0FDC1C00E47DAC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2340,6 +2967,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -2347,6 +2975,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME)Headers";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
 			};
@@ -2372,12 +3001,14 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME)Headers";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
@@ -2469,6 +3100,24 @@
 			buildConfigurations = (
 				448085831A12A7BE00E13938 /* Debug */,
 				448085841A12A7BE00E13938 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		449431541B4C97BA001A2696 /* Build configuration list for PBXNativeTarget "ConnectSDK-Core" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				449431551B4C97BA001A2696 /* Debug */,
+				449431561B4C97BA001A2696 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		449432321B4C9935001A2696 /* Build configuration list for PBXNativeTarget "ConnectSDK-GoogleCast" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				449432331B4C9935001A2696 /* Debug */,
+				449432341B4C9935001A2696 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
