@@ -42,9 +42,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "44E98F761B1E694A0043BC70"
+               BlueprintIdentifier = "449A37011B0FDC1C00E47DAC"
                BuildableName = "ConnectSDKIntegrationTests.xctest"
                BlueprintName = "ConnectSDKIntegrationTests"
+               ReferencedContainer = "container:ConnectSDK.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "44166C4F1B4203880052F9EC"
+               BuildableName = "ConnectSDKAcceptanceTests.xctest"
+               BlueprintName = "ConnectSDKAcceptanceTests"
                ReferencedContainer = "container:ConnectSDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
