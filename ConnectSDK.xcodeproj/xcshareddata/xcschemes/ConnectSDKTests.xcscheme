@@ -9,20 +9,6 @@
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EA61EB0F18FE485B00D75696"
-               BuildableName = "libConnectSDK.a"
-               BlueprintName = "ConnectSDK"
-               ReferencedContainer = "container:ConnectSDK.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
             buildForAnalyzing = "YES">
@@ -37,9 +23,9 @@
          <BuildActionEntry
             buildForTesting = "NO"
             buildForRunning = "YES"
-            buildForProfiling = "YES"
+            buildForProfiling = "NO"
             buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "449A37011B0FDC1C00E47DAC"
@@ -51,9 +37,9 @@
          <BuildActionEntry
             buildForTesting = "NO"
             buildForRunning = "YES"
-            buildForProfiling = "YES"
+            buildForProfiling = "NO"
             buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "44166C4F1B4203880052F9EC"
@@ -67,7 +53,7 @@
    <TestAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "NO"
+      shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
          <TestableReference
@@ -84,19 +70,12 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EA61EB0F18FE485B00D75696"
-            BuildableName = "libConnectSDK.a"
-            BlueprintName = "ConnectSDK"
+            BlueprintIdentifier = "448085791A12A7BE00E13938"
+            BuildableName = "ConnectSDKTests.xctest"
+            BlueprintName = "ConnectSDKTests"
             ReferencedContainer = "container:ConnectSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "NSZombieEnabled"
-            value = "YES"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -110,18 +89,13 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EA61EB0F18FE485B00D75696"
-            BuildableName = "libConnectSDK.a"
-            BlueprintName = "ConnectSDK"
+            BlueprintIdentifier = "448085791A12A7BE00E13938"
+            BuildableName = "ConnectSDKTests.xctest"
+            BlueprintName = "ConnectSDKTests"
             ReferencedContainer = "container:ConnectSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
-         <AdditionalOption
-            key = "NSZombieEnabled"
-            value = "YES"
-            isEnabled = "YES">
-         </AdditionalOption>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
@@ -133,9 +107,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EA61EB0F18FE485B00D75696"
-            BuildableName = "libConnectSDK.a"
-            BlueprintName = "ConnectSDK"
+            BlueprintIdentifier = "448085791A12A7BE00E13938"
+            BuildableName = "ConnectSDKTests.xctest"
+            BlueprintName = "ConnectSDKTests"
             ReferencedContainer = "container:ConnectSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

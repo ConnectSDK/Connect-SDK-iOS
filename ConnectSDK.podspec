@@ -1,11 +1,16 @@
 # There are two usage options of this podspec:
-# * pod "ConnectSDK" will install the full ConnectSDK version;
+# * pod "ConnectSDK" will install the full ConnectSDK version (without Amazon
+#   Fling SDK support; if you need it, please use the source ConnectSDK project
+#   directly);
 # * pod "ConnectSDK/Core" will install the core only (Lite version) without
 #   external dependencies.
+#
+# Unfortunately, Amazon Fling SDK is not distributed via CocoaPods, so we
+# cannot include its support in a subspec in an automated way.
 
 Pod::Spec.new do |s|
   s.name         = "ConnectSDK"
-  s.version      = "1.4.4"
+  s.version      = "1.5.0"
   s.summary      = "Connect SDK is an open source framework that connects your mobile apps with multiple TV platforms."
 
   s.description  = <<-DESC
@@ -24,8 +29,8 @@ Pod::Spec.new do |s|
   s.license      = { :type => "Apache License, Version 2.0", :file => "LICENSE" }
   s.author             = { "Connect SDK" => "support@connectsdk.com" }
   s.social_media_url   = "http://twitter.com/ConnectSDK"
-  s.platform     = :ios, "6.0"
-  s.ios.deployment_target = "6.0"
+  s.platform     = :ios, "7.1"
+  s.ios.deployment_target = "7.1"
   s.source       = { :git => "https://github.com/ConnectSDK/Connect-SDK-iOS.git",
                      :tag => s.version,
                      :submodules => true }
@@ -37,6 +42,26 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.libraries = "z", "icucore"
   s.prefix_header_contents = <<-PREFIX
+                                  //
+                                  //  Prefix header
+                                  //
+                                  //  The contents of this file are implicitly included at the beginning of every source file.
+                                  //
+                                  //  Copyright (c) 2015 LG Electronics.
+                                  //
+                                  //  Licensed under the Apache License, Version 2.0 (the "License");
+                                  //  you may not use this file except in compliance with the License.
+                                  //  You may obtain a copy of the License at
+                                  //
+                                  //      http://www.apache.org/licenses/LICENSE-2.0
+                                  //
+                                  //  Unless required by applicable law or agreed to in writing, software
+                                  //  distributed under the License is distributed on an "AS IS" BASIS,
+                                  //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                                  //  See the License for the specific language governing permissions and
+                                  //  limitations under the License.
+                                  //
+
                                   #define CONNECT_SDK_VERSION @"#{s.version}"
 
                                   // Uncomment this line to enable SDK logging
@@ -64,7 +89,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Core' do |sp|
     sp.source_files  = "ConnectSDKDefaultPlatforms.h", "core/**/*.{h,m}"
-    sp.exclude_files = (non_arc_files.dup << "core/ConnectSDKTests")
+    sp.exclude_files = (non_arc_files.dup << "core/ConnectSDK*Tests/**/*")
     sp.private_header_files = "core/**/*_Private.h"
     sp.requires_arc = true
 
@@ -80,8 +105,8 @@ Pod::Spec.new do |s|
 
   s.subspec 'GoogleCast' do |sp|
     sp.dependency 'ConnectSDK/Core'
-    sp.source_files = "modules/**/*.{h,m}"
-    sp.private_header_files = "modules/**/*_Private.h"
+    sp.source_files = "modules/google-cast/**/*.{h,m}"
+    sp.private_header_files = "modules/google-cast/**/*_Private.h"
 
     cast_version = "2.6.0"
     sp.dependency "google-cast-sdk", cast_version

@@ -1,5 +1,20 @@
 # Connect SDK iOS Changelog
 
+## 1.5.0 -- 09 Jul 2015
+
+- Supports Amazon Fling SDK to play and control media on Fire TV devices
+- Added playlist support for WebOS TVs
+- Added media player loop capability for WebOS TVs
+- Added feature to pin web apps on WebOS TVs
+- Fixed photos not displaying on Apple TV with OS 7.2
+- Fixed launching input picker for new versions of WebOS TVs
+- Extended play state subscription to handle media playback errors on WebOS TVs
+- Created a first set of integration and acceptance tests
+- Miscellaneous bug fixes
+- [See commits between 1.4.4 and 1.5.0](https://github.com/ConnectSDK/Connect-SDK-iOS/compare/1.4.4...1.5.0)
+
+[View files at version 1.5.0](https://github.com/ConnectSDK/Connect-SDK-iOS/tree/1.5.0)
+
 ## 1.4.4 -- 29 Apr 2015
 
 - Allow to set pairing type for WebOS TVs
