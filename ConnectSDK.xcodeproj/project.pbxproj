@@ -576,26 +576,12 @@
 			remoteGlobalIDString = EA61EB0F18FE485B00D75696;
 			remoteInfo = ConnectSDK;
 		};
-		449432401B4D86D9001A2696 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EA61EB0818FE485B00D75696 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4494307A1B4C97BA001A2696;
-			remoteInfo = "ConnectSDK-Core";
-		};
 		449A37091B0FDC1C00E47DAC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EA61EB0818FE485B00D75696 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = EA61EB0F18FE485B00D75696;
 			remoteInfo = ConnectSDK;
-		};
-		44BEBF2F1B4EEA8F00DA1A1D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EA61EB0818FE485B00D75696 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4494307A1B4C97BA001A2696;
-			remoteInfo = "ConnectSDK-Core";
 		};
 		EECAED56193F612100D31F61 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2230,7 +2216,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				449432411B4D86D9001A2696 /* PBXTargetDependency */,
 			);
 			name = "ConnectSDK-GoogleCast";
 			productName = "Connect SDK";
@@ -2268,7 +2253,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				44BEBF301B4EEA8F00DA1A1D /* PBXTargetDependency */,
 			);
 			name = "ConnectSDK-AirPlay";
 			productName = "Connect SDK";
@@ -2731,20 +2715,10 @@
 			target = EA61EB0F18FE485B00D75696 /* ConnectSDK */;
 			targetProxy = 448085811A12A7BE00E13938 /* PBXContainerItemProxy */;
 		};
-		449432411B4D86D9001A2696 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4494307A1B4C97BA001A2696 /* ConnectSDK-Core */;
-			targetProxy = 449432401B4D86D9001A2696 /* PBXContainerItemProxy */;
-		};
 		449A370A1B0FDC1C00E47DAC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EA61EB0F18FE485B00D75696 /* ConnectSDK */;
 			targetProxy = 449A37091B0FDC1C00E47DAC /* PBXContainerItemProxy */;
-		};
-		44BEBF301B4EEA8F00DA1A1D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4494307A1B4C97BA001A2696 /* ConnectSDK-Core */;
-			targetProxy = 44BEBF2F1B4EEA8F00DA1A1D /* PBXContainerItemProxy */;
 		};
 		EECAED57193F612100D31F61 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
