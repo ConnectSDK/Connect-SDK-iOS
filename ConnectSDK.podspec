@@ -83,13 +83,11 @@ Pod::Spec.new do |s|
                                   #endif
                                PREFIX
 
-  non_arc_files =
-    "core/Frameworks/asi-http-request/External/Reachability/*.{h,m}",
-    "core/Frameworks/asi-http-request/Classes/*.{h,m}"
+  non_arc_files = "core/Frameworks/asi-http-request/{Classes,External/Reachability}/*.[hm]"
 
   s.subspec 'Core' do |sp|
-    sp.source_files  = "ConnectSDKDefaultPlatforms.h", "core/**/*.{h,m}"
-    sp.exclude_files = (non_arc_files.dup << "core/ConnectSDK*Tests/**/*")
+    sp.source_files  = "ConnectSDKDefaultPlatforms.h", "core/**/*.[hm]"
+    sp.exclude_files = [non_arc_files, "core/ConnectSDK*Tests/**/*"]
     sp.private_header_files = "core/**/*_Private.h"
     sp.requires_arc = true
 
@@ -105,7 +103,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'GoogleCast' do |sp|
     sp.dependency 'ConnectSDK/Core'
-    sp.source_files = "modules/google-cast/**/*.{h,m}"
+    sp.source_files = "modules/google-cast/**/*.[hm]"
     sp.private_header_files = "modules/google-cast/**/*_Private.h"
 
     cast_version = "2.6.0"
