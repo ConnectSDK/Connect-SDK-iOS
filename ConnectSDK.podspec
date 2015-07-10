@@ -25,10 +25,10 @@ Pod::Spec.new do |s|
                     To support the aforementioned use case without Connect SDK, a developer would need to implement DIAL, ECG, Chromecast, and DLNA in their app. With Connect SDK, discovering the three devices is handled for you. Furthermore, the method calls between each protocol is abstracted. That means you can use one method call to beam a video to Roku, 3 generations of LG Smart TVs, Apple TV, and Chromecast.
                    DESC
 
-  s.homepage     = "http://www.connectsdk.com/"
+  s.homepage     = "http://connectsdk.com/"
   s.license      = { :type => "Apache License, Version 2.0", :file => "LICENSE" }
   s.author             = { "Connect SDK" => "support@connectsdk.com" }
-  s.social_media_url   = "http://twitter.com/ConnectSDK"
+  s.social_media_url   = "https://twitter.com/ConnectSDK"
   s.platform     = :ios, "7.1"
   s.ios.deployment_target = "7.1"
   s.source       = { :git => "https://github.com/ConnectSDK/Connect-SDK-iOS.git",
