@@ -71,6 +71,7 @@
 		44758BD01AE7070600EC43A6 /* airplay_playbackinfo_paused.json in Resources */ = {isa = PBXBuildFile; fileRef = 44758BCB1AE7070500EC43A6 /* airplay_playbackinfo_paused.json */; };
 		44758BD11AE7070600EC43A6 /* airplay_playbackinfo_playing.json in Resources */ = {isa = PBXBuildFile; fileRef = 44758BCC1AE7070500EC43A6 /* airplay_playbackinfo_playing.json */; };
 		44758BD21AE7070600EC43A6 /* airplay_playbackinfo_rewind.json in Resources */ = {isa = PBXBuildFile; fileRef = 44758BCD1AE7070600EC43A6 /* airplay_playbackinfo_rewind.json */; };
+		44789D851B585525001D5098 /* RokuServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44789D841B585525001D5098 /* RokuServiceTests.m */; };
 		447F63411B14F35900699843 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4485140C1A02FC3200D66710 /* GoogleCast.framework */; };
 		4480857F1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4480857E1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m */; };
 		448085801A12A7BE00E13938 /* libConnectSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1018FE485B00D75696 /* libConnectSDK.a */; };
@@ -429,6 +430,8 @@
 		44758BCB1AE7070500EC43A6 /* airplay_playbackinfo_paused.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airplay_playbackinfo_paused.json; sourceTree = "<group>"; };
 		44758BCC1AE7070500EC43A6 /* airplay_playbackinfo_playing.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airplay_playbackinfo_playing.json; sourceTree = "<group>"; };
 		44758BCD1AE7070600EC43A6 /* airplay_playbackinfo_rewind.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airplay_playbackinfo_rewind.json; sourceTree = "<group>"; };
+		44789D841B585525001D5098 /* RokuServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RokuServiceTests.m; sourceTree = "<group>"; };
+		44789D861B5858D2001D5098 /* RokuService_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RokuService_Private.h; sourceTree = "<group>"; };
 		447F63431B14FDC600699843 /* DLNAServiceAcceptanceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLNAServiceAcceptanceTests.m; sourceTree = "<group>"; };
 		447F63451B15000800699843 /* ConnectSDKIntegrationTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConnectSDKIntegrationTests-Prefix.pch"; sourceTree = "<group>"; };
 		4480857A1A12A7BE00E13938 /* ConnectSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConnectSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -890,6 +893,7 @@
 				44A0E1A41B3B2F5C00ADF95F /* Sessions */,
 				4498D9911A65B69F008C0B72 /* DLNAServiceTests.m */,
 				44A5518E1AC1DF4C001AF783 /* NetcastTVServiceTests.m */,
+				44789D841B585525001D5098 /* RokuServiceTests.m */,
 				44A551981AC338E0001AF783 /* WebOSTVServiceTests.m */,
 				4498D9A61A661500008C0B72 /* upnperror_response_sonos.xml */,
 				4498D9A41A66148F008C0B72 /* upnperror_response_xbox.xml */,
@@ -1433,6 +1437,7 @@
 				44A5518B1AC1D924001AF783 /* NetcastTVService_Private.h */,
 				EA5FB84A199AEC550057B4B4 /* NetcastTVService.m */,
 				EA5FB84B199AEC550057B4B4 /* RokuService.h */,
+				44789D861B5858D2001D5098 /* RokuService_Private.h */,
 				EA5FB84C199AEC550057B4B4 /* RokuService.m */,
 				EA5FB84D199AEC550057B4B4 /* Sessions */,
 				EA5FB857199AEC550057B4B4 /* WebOSTVService.h */,
@@ -1962,6 +1967,7 @@
 				44291C521A68B4C000280E5C /* SSDPDiscoveryProvider_FilteringTests.m in Sources */,
 				4480857F1A12A7BE00E13938 /* ConnectSDKDefaultPlatformsTests.m in Sources */,
 				44316F021AF2F09B000FE655 /* FireTVDiscoveryProviderTests.m in Sources */,
+				44789D851B585525001D5098 /* RokuServiceTests.m in Sources */,
 				4498D9A91A66F027008C0B72 /* DLNAHTTPServerTests.m in Sources */,
 				448F36C51A1BD64200536649 /* ZeroConfDiscoveryProviderTests.m in Sources */,
 				441C9EFF1B3DD8C500F912D5 /* SubscriptionDeduplicatorTests.m in Sources */,
