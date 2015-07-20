@@ -138,6 +138,9 @@
 		44C2CCA21AB7A33500B20E46 /* NSString+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C2CCA01AB7A33500B20E46 /* NSString+Common.m */; };
 		44C390121B34DCAE00723388 /* DiscoveryManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C390111B34DCAE00723388 /* DiscoveryManagerTests.m */; };
 		44CF0E1A1B16ACD800B80FEF /* OCMArg+ArgumentCaptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 448B286A1B03DAEA00DFF18F /* OCMArg+ArgumentCaptor.m */; };
+		44D0ECEC1B55D8FC00E02A8B /* SubtitleTrackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D0ECEB1B55D8FC00E02A8B /* SubtitleTrackTests.m */; };
+		44D0ECEF1B55DA9000E02A8B /* SubtitleTrack.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D0ECED1B55DA9000E02A8B /* SubtitleTrack.h */; };
+		44D0ECF01B55DA9000E02A8B /* SubtitleTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D0ECEE1B55DA9000E02A8B /* SubtitleTrack.m */; };
 		44D88F891A71C4A8009D9608 /* ssdp_device_description_chromecast.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F7A1A71C4A8009D9608 /* ssdp_device_description_chromecast.xml */; };
 		44D88F8A1A71C4A8009D9608 /* ssdp_device_description_firetv.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F7B1A71C4A8009D9608 /* ssdp_device_description_firetv.xml */; };
 		44D88F8B1A71C4A8009D9608 /* ssdp_device_description_roku2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F7C1A71C4A8009D9608 /* ssdp_device_description_roku2.xml */; };
@@ -500,6 +503,9 @@
 		44C2CCA01AB7A33500B20E46 /* NSString+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Common.m"; sourceTree = "<group>"; };
 		44C3900E1B34A7B500723388 /* WebOSWebAppSession_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebOSWebAppSession_Private.h; sourceTree = "<group>"; };
 		44C390111B34DCAE00723388 /* DiscoveryManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoveryManagerTests.m; sourceTree = "<group>"; };
+		44D0ECEB1B55D8FC00E02A8B /* SubtitleTrackTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubtitleTrackTests.m; sourceTree = "<group>"; };
+		44D0ECED1B55DA9000E02A8B /* SubtitleTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubtitleTrack.h; sourceTree = "<group>"; };
+		44D0ECEE1B55DA9000E02A8B /* SubtitleTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubtitleTrack.m; sourceTree = "<group>"; };
 		44D2ACD21B30B07700CE4A3A /* DiscoveryManager_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoveryManager_Private.h; sourceTree = "<group>"; };
 		44D88F7A1A71C4A8009D9608 /* ssdp_device_description_chromecast.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_chromecast.xml; sourceTree = "<group>"; };
 		44D88F7B1A71C4A8009D9608 /* ssdp_device_description_firetv.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_firetv.xml; sourceTree = "<group>"; };
@@ -1004,6 +1010,7 @@
 				44D90AA81B06AA9E00A5CF2A /* AppStateChangeNotifierTests.m */,
 				4498D98F1A65A1D7008C0B72 /* NSDictionary+KeyPredicateSearchTests.m */,
 				441C9EFE1B3DD8C500F912D5 /* SubscriptionDeduplicatorTests.m */,
+				44D0ECEB1B55D8FC00E02A8B /* SubtitleTrackTests.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1412,6 +1419,8 @@
 				44D90AAB1B06B26C00A5CF2A /* AppStateChangeNotifier.m */,
 				441C9ED31B3DBCB200F912D5 /* SubscriptionDeduplicator.h */,
 				441C9ED41B3DBCB200F912D5 /* SubscriptionDeduplicator.m */,
+				44D0ECED1B55DA9000E02A8B /* SubtitleTrack.h */,
+				44D0ECEE1B55DA9000E02A8B /* SubtitleTrack.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1698,6 +1707,7 @@
 				4494263E1AF83588006BAFF2 /* DispatchQueueBlockRunner.h in Headers */,
 				EA5FB87C199AEC550057B4B4 /* DiscoveryProvider.h in Headers */,
 				EA5FB8C7199AEC560057B4B4 /* JSONObjectCoding.h in Headers */,
+				44D0ECEF1B55DA9000E02A8B /* SubtitleTrack.h in Headers */,
 				EA5FB8F8199AEC570057B4B4 /* WebOSTVServiceMouse.h in Headers */,
 				EA5FB8A5199AEC560057B4B4 /* GCDWebServerDataRequest.h in Headers */,
 				EA5FB886199AEC560057B4B4 /* CTASIDataCompressor.h in Headers */,
@@ -1978,6 +1988,7 @@
 				448414F91AEB27F400124EE9 /* OCMStubRecorder+XCTestExpectation.m in Sources */,
 				44D90AA91B06AA9E00A5CF2A /* AppStateChangeNotifierTests.m in Sources */,
 				44A5518F1AC1DF4C001AF783 /* NetcastTVServiceTests.m in Sources */,
+				44D0ECEC1B55D8FC00E02A8B /* SubtitleTrackTests.m in Sources */,
 				4498D9901A65A1D7008C0B72 /* NSDictionary+KeyPredicateSearchTests.m in Sources */,
 				44A0E1A71B3B31DC00ADF95F /* WebOSWebAppSessionTests.m in Sources */,
 			);
@@ -2017,6 +2028,7 @@
 				EA5FB8F9199AEC570057B4B4 /* WebOSTVServiceMouse.m in Sources */,
 				EA5FB88B199AEC560057B4B4 /* CTASIDownloadCache.m in Sources */,
 				EA5FB878199AEC550057B4B4 /* CapabilityFilter.m in Sources */,
+				44D0ECF01B55DA9000E02A8B /* SubtitleTrack.m in Sources */,
 				EA5FB8F3199AEC570057B4B4 /* DLNAService.m in Sources */,
 				EA5FB8B8199AEC560057B4B4 /* LGSRWebSocket.m in Sources */,
 				44AD91781AFA7F1000C23A71 /* FireTVService.m in Sources */,
