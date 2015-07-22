@@ -140,7 +140,7 @@
 		44C390121B34DCAE00723388 /* DiscoveryManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C390111B34DCAE00723388 /* DiscoveryManagerTests.m */; };
 		44CF0E1A1B16ACD800B80FEF /* OCMArg+ArgumentCaptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 448B286A1B03DAEA00DFF18F /* OCMArg+ArgumentCaptor.m */; };
 		44D0ECEC1B55D8FC00E02A8B /* SubtitleTrackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D0ECEB1B55D8FC00E02A8B /* SubtitleTrackTests.m */; };
-		44D0ECEF1B55DA9000E02A8B /* SubtitleTrack.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D0ECED1B55DA9000E02A8B /* SubtitleTrack.h */; };
+		44D0ECEF1B55DA9000E02A8B /* SubtitleTrack.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D0ECED1B55DA9000E02A8B /* SubtitleTrack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		44D0ECF01B55DA9000E02A8B /* SubtitleTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D0ECEE1B55DA9000E02A8B /* SubtitleTrack.m */; };
 		44D88F891A71C4A8009D9608 /* ssdp_device_description_chromecast.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F7A1A71C4A8009D9608 /* ssdp_device_description_chromecast.xml */; };
 		44D88F8A1A71C4A8009D9608 /* ssdp_device_description_firetv.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F7B1A71C4A8009D9608 /* ssdp_device_description_firetv.xml */; };
