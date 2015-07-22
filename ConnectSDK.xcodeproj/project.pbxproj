@@ -173,6 +173,7 @@
 		44EF61981A12E1C800CF344C /* MediaAccessibility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EF61971A12E1C800CF344C /* MediaAccessibility.framework */; };
 		44EF619B1A12E23200CF344C /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EF619A1A12E23200CF344C /* libicucore.dylib */; };
 		44EF61A41A12FC8800CF344C /* SSDPDiscoveryProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44EF61A31A12FC8800CF344C /* SSDPDiscoveryProviderTests.m */; };
+		B2FA8F2EAE3B0B60D75F9647 /* CapabilityConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FA8C3DF809E5088781B765 /* CapabilityConstants.m */; };
 		BB9F706B1155B806AFBF3336 /* DLNAHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F703F509283F37E26C0B4 /* DLNAHTTPServer.m */; };
 		BB9F712900733DE480F64D8E /* DLNAHTTPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F7271D17DCAE1C615A59A /* DLNAHTTPServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BB9F726F85973936620CDADD /* MediaInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F735CB760F4387DDA84B4 /* MediaInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -540,6 +541,7 @@
 		44EF61971A12E1C800CF344C /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
 		44EF619A1A12E23200CF344C /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		44EF61A31A12FC8800CF344C /* SSDPDiscoveryProviderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSDPDiscoveryProviderTests.m; sourceTree = "<group>"; };
+		B2FA8C3DF809E5088781B765 /* CapabilityConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CapabilityConstants.m; sourceTree = "<group>"; };
 		BB9F703F509283F37E26C0B4 /* DLNAHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLNAHTTPServer.m; sourceTree = "<group>"; };
 		BB9F71B68553DCA74ED1C43E /* ImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageInfo.h; sourceTree = "<group>"; };
 		BB9F7271D17DCAE1C615A59A /* DLNAHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLNAHTTPServer.h; sourceTree = "<group>"; };
@@ -1462,6 +1464,7 @@
 			isa = PBXGroup;
 			children = (
 				EA5FB81A199AEC550057B4B4 /* Capability.h */,
+				B2FA8C3DF809E5088781B765 /* CapabilityConstants.m */,
 				EA5FB81B199AEC550057B4B4 /* ExternalInputControl.h */,
 				EA5FB81C199AEC550057B4B4 /* KeyControl.h */,
 				EA5FB81D199AEC550057B4B4 /* Launcher.h */,
@@ -2100,6 +2103,7 @@
 				BB9F7B7905ABBE72E0843AA0 /* MediaInfo.m in Sources */,
 				BB9F776F4924E08D116738B1 /* ImageInfo.m in Sources */,
 				BB9F706B1155B806AFBF3336 /* DLNAHTTPServer.m in Sources */,
+				B2FA8F2EAE3B0B60D75F9647 /* CapabilityConstants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
