@@ -76,9 +76,10 @@ All of the test targets are compiled when the main `ConnectSDK` scheme is built,
 
 ###Subtitles
 
-- DLNA service (`SRT` format only): since there is no official specification for them, subtitles may not work on all DLNA-compatible devices. This feature has been tested and works on LG WebOS and Netcast TVs.
-- Google Cast service (`VTT` format only): the server providing subtitles should support CORS headers, otherwise they are not displayed. The simplest change is to send this HTTP response header for your subtitles: `Access-Control-Allow-Origin: *`. More information is here: [https://developers.google.com/cast/docs/ios_sender#cors-requirements](https://developers.google.com/cast/docs/ios_sender#cors-requirements).
-- FireTV service (`VTT` format only): subtitles on Fire TV are off by default. To display them, the user should manually pick one in the media player (click the "Options" button on the remote). The Fling SDK doesn't provide any way to display them remotely.
+- DLNA service supports `SRT` format only. Since there is no official specification for them, subtitles may not work on all DLNA-compatible devices. This feature has been tested and works on LG WebOS and Netcast TVs.
+- Netcast service supports `SRT` format only, through DLNA.
+- Google Cast service supports `VTT` format only. The server providing subtitles should support CORS headers, otherwise they are not displayed. The simplest change is to send this HTTP response header for your subtitles: `Access-Control-Allow-Origin: *`. More information is here: [https://developers.google.com/cast/docs/ios_sender#cors-requirements](https://developers.google.com/cast/docs/ios_sender#cors-requirements).
+- FireTV service supports `VTT` format only. Subtitles on Fire TV are hidden by default. To display them, the user should manually pick one in the media player (click the "Options" button on the remote). The Fling SDK doesn't provide any way to make them appear remotely.
 
 ##Contact
 - Twitter: [@ConnectSDK](https://twitter.com/ConnectSDK)
