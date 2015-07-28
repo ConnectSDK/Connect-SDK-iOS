@@ -130,6 +130,9 @@
 		44AD91771AFA7F1000C23A71 /* FireTVService.h in Headers */ = {isa = PBXBuildFile; fileRef = 44AD91751AFA7F1000C23A71 /* FireTVService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		44AD91781AFA7F1000C23A71 /* FireTVService.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AD91761AFA7F1000C23A71 /* FireTVService.m */; };
 		44B11F521B16827C00F0156C /* OCMStubRecorder+SpectaAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B11F511B16827C00F0156C /* OCMStubRecorder+SpectaAsync.m */; };
+		44B43AF11B5DA99F004083E5 /* MediaInfoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B43AF01B5DA99F004083E5 /* MediaInfoTests.m */; };
+		44B43AFC1B6157F6004083E5 /* NSMutableDictionary+NilSafeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B43AFB1B6157F6004083E5 /* NSMutableDictionary+NilSafeTests.m */; };
+		44B43AFF1B61A497004083E5 /* CastServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B43AFE1B61A497004083E5 /* CastServiceTests.m */; };
 		44BCC3F61AB77F7D001BCDAA /* XMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 44BCC3F41AB77F7D001BCDAA /* XMLWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		44BCC3F71AB77F7D001BCDAA /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BCC3F51AB77F7D001BCDAA /* XMLWriter.m */; };
 		44C2CC941AB7948300B20E46 /* XMLWriter+ConvenienceMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = 44C2CC921AB7948300B20E46 /* XMLWriter+ConvenienceMethods.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -138,6 +141,9 @@
 		44C2CCA21AB7A33500B20E46 /* NSString+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C2CCA01AB7A33500B20E46 /* NSString+Common.m */; };
 		44C390121B34DCAE00723388 /* DiscoveryManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C390111B34DCAE00723388 /* DiscoveryManagerTests.m */; };
 		44CF0E1A1B16ACD800B80FEF /* OCMArg+ArgumentCaptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 448B286A1B03DAEA00DFF18F /* OCMArg+ArgumentCaptor.m */; };
+		44D0ECEC1B55D8FC00E02A8B /* SubtitleInfoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D0ECEB1B55D8FC00E02A8B /* SubtitleInfoTests.m */; };
+		44D0ECEF1B55DA9000E02A8B /* SubtitleInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D0ECED1B55DA9000E02A8B /* SubtitleInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		44D0ECF01B55DA9000E02A8B /* SubtitleInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D0ECEE1B55DA9000E02A8B /* SubtitleInfo.m */; };
 		44D88F891A71C4A8009D9608 /* ssdp_device_description_chromecast.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F7A1A71C4A8009D9608 /* ssdp_device_description_chromecast.xml */; };
 		44D88F8A1A71C4A8009D9608 /* ssdp_device_description_firetv.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F7B1A71C4A8009D9608 /* ssdp_device_description_firetv.xml */; };
 		44D88F8B1A71C4A8009D9608 /* ssdp_device_description_roku2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 44D88F7C1A71C4A8009D9608 /* ssdp_device_description_roku2.xml */; };
@@ -169,6 +175,9 @@
 		44EF61981A12E1C800CF344C /* MediaAccessibility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EF61971A12E1C800CF344C /* MediaAccessibility.framework */; };
 		44EF619B1A12E23200CF344C /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EF619A1A12E23200CF344C /* libicucore.dylib */; };
 		44EF61A41A12FC8800CF344C /* SSDPDiscoveryProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44EF61A31A12FC8800CF344C /* SSDPDiscoveryProviderTests.m */; };
+		B2FA88C0C2447C5CAF1E61A4 /* NSMutableDictionary+NilSafe.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FA8E8AF8F4302A1B5541EA /* NSMutableDictionary+NilSafe.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B2FA8A641C2CBEAFB9CF9097 /* NSMutableDictionary+NilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FA850A1C2BA371738A19B6 /* NSMutableDictionary+NilSafe.m */; };
+		B2FA8F2EAE3B0B60D75F9647 /* CapabilityConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FA8C3DF809E5088781B765 /* CapabilityConstants.m */; };
 		BB9F706B1155B806AFBF3336 /* DLNAHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F703F509283F37E26C0B4 /* DLNAHTTPServer.m */; };
 		BB9F712900733DE480F64D8E /* DLNAHTTPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F7271D17DCAE1C615A59A /* DLNAHTTPServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BB9F726F85973936620CDADD /* MediaInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9F735CB760F4387DDA84B4 /* MediaInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -491,6 +500,10 @@
 		44AD91761AFA7F1000C23A71 /* FireTVService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FireTVService.m; sourceTree = "<group>"; };
 		44B11F501B16827C00F0156C /* OCMStubRecorder+SpectaAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCMStubRecorder+SpectaAsync.h"; sourceTree = "<group>"; };
 		44B11F511B16827C00F0156C /* OCMStubRecorder+SpectaAsync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OCMStubRecorder+SpectaAsync.m"; sourceTree = "<group>"; };
+		44B43AF01B5DA99F004083E5 /* MediaInfoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaInfoTests.m; sourceTree = "<group>"; };
+		44B43AFB1B6157F6004083E5 /* NSMutableDictionary+NilSafeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+NilSafeTests.m"; sourceTree = "<group>"; };
+		44B43AFE1B61A497004083E5 /* CastServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CastServiceTests.m; sourceTree = "<group>"; };
+		44B43B001B62B6AC004083E5 /* CastService_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CastService_Private.h; sourceTree = "<group>"; };
 		44B4C5B71B0E96E80024F229 /* FireTVAcceptanceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FireTVAcceptanceTests.m; sourceTree = "<group>"; };
 		44BCC3F41AB77F7D001BCDAA /* XMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLWriter.h; sourceTree = "<group>"; };
 		44BCC3F51AB77F7D001BCDAA /* XMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLWriter.m; sourceTree = "<group>"; };
@@ -500,6 +513,9 @@
 		44C2CCA01AB7A33500B20E46 /* NSString+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Common.m"; sourceTree = "<group>"; };
 		44C3900E1B34A7B500723388 /* WebOSWebAppSession_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebOSWebAppSession_Private.h; sourceTree = "<group>"; };
 		44C390111B34DCAE00723388 /* DiscoveryManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoveryManagerTests.m; sourceTree = "<group>"; };
+		44D0ECEB1B55D8FC00E02A8B /* SubtitleInfoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubtitleInfoTests.m; sourceTree = "<group>"; };
+		44D0ECED1B55DA9000E02A8B /* SubtitleInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubtitleInfo.h; sourceTree = "<group>"; };
+		44D0ECEE1B55DA9000E02A8B /* SubtitleInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubtitleInfo.m; sourceTree = "<group>"; };
 		44D2ACD21B30B07700CE4A3A /* DiscoveryManager_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoveryManager_Private.h; sourceTree = "<group>"; };
 		44D88F7A1A71C4A8009D9608 /* ssdp_device_description_chromecast.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_chromecast.xml; sourceTree = "<group>"; };
 		44D88F7B1A71C4A8009D9608 /* ssdp_device_description_firetv.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ssdp_device_description_firetv.xml; sourceTree = "<group>"; };
@@ -532,6 +548,9 @@
 		44EF61971A12E1C800CF344C /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
 		44EF619A1A12E23200CF344C /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		44EF61A31A12FC8800CF344C /* SSDPDiscoveryProviderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSDPDiscoveryProviderTests.m; sourceTree = "<group>"; };
+		B2FA850A1C2BA371738A19B6 /* NSMutableDictionary+NilSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+NilSafe.m"; sourceTree = "<group>"; };
+		B2FA8C3DF809E5088781B765 /* CapabilityConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CapabilityConstants.m; sourceTree = "<group>"; };
+		B2FA8E8AF8F4302A1B5541EA /* NSMutableDictionary+NilSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+NilSafe.h"; sourceTree = "<group>"; };
 		BB9F703F509283F37E26C0B4 /* DLNAHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLNAHTTPServer.m; sourceTree = "<group>"; };
 		BB9F71B68553DCA74ED1C43E /* ImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageInfo.h; sourceTree = "<group>"; };
 		BB9F7271D17DCAE1C615A59A /* DLNAHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLNAHTTPServer.h; sourceTree = "<group>"; };
@@ -1002,8 +1021,11 @@
 			children = (
 				449426311AF82F75006BAFF2 /* BlockRunner */,
 				44D90AA81B06AA9E00A5CF2A /* AppStateChangeNotifierTests.m */,
+				44B43AF01B5DA99F004083E5 /* MediaInfoTests.m */,
 				4498D98F1A65A1D7008C0B72 /* NSDictionary+KeyPredicateSearchTests.m */,
+				44B43AFB1B6157F6004083E5 /* NSMutableDictionary+NilSafeTests.m */,
 				441C9EFE1B3DD8C500F912D5 /* SubscriptionDeduplicatorTests.m */,
+				44D0ECEB1B55D8FC00E02A8B /* SubtitleInfoTests.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1061,6 +1083,14 @@
 				44A0E1A51B3B2F5C00ADF95F /* WebOSWebAppSessionTests.m */,
 			);
 			path = Sessions;
+			sourceTree = "<group>";
+		};
+		44B43AFD1B61A46A004083E5 /* GoogleCastTests */ = {
+			isa = PBXGroup;
+			children = (
+				44B43AFE1B61A497004083E5 /* CastServiceTests.m */,
+			);
+			path = GoogleCastTests;
 			sourceTree = "<group>";
 		};
 		44BCC3F31AB77F7D001BCDAA /* xswi */ = {
@@ -1405,6 +1435,8 @@
 				0F446CC81A6D924D000BB1C0 /* MediaLaunchObject.m */,
 				4498D98A1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.h */,
 				4498D98B1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.m */,
+				B2FA8E8AF8F4302A1B5541EA /* NSMutableDictionary+NilSafe.h */,
+				B2FA850A1C2BA371738A19B6 /* NSMutableDictionary+NilSafe.m */,
 				44C2CC9F1AB7A33500B20E46 /* NSString+Common.h */,
 				44C2CCA01AB7A33500B20E46 /* NSString+Common.m */,
 				44A5519D1AC36672001AF783 /* CommonMacros.h */,
@@ -1412,6 +1444,8 @@
 				44D90AAB1B06B26C00A5CF2A /* AppStateChangeNotifier.m */,
 				441C9ED31B3DBCB200F912D5 /* SubscriptionDeduplicator.h */,
 				441C9ED41B3DBCB200F912D5 /* SubscriptionDeduplicator.m */,
+				44D0ECED1B55DA9000E02A8B /* SubtitleInfo.h */,
+				44D0ECEE1B55DA9000E02A8B /* SubtitleInfo.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1450,6 +1484,7 @@
 			isa = PBXGroup;
 			children = (
 				EA5FB81A199AEC550057B4B4 /* Capability.h */,
+				B2FA8C3DF809E5088781B765 /* CapabilityConstants.m */,
 				EA5FB81B199AEC550057B4B4 /* ExternalInputControl.h */,
 				EA5FB81C199AEC550057B4B4 /* KeyControl.h */,
 				EA5FB81D199AEC550057B4B4 /* Launcher.h */,
@@ -1550,10 +1585,12 @@
 		EA5FB85A199AEC550057B4B4 /* google-cast */ = {
 			isa = PBXGroup;
 			children = (
+				44B43AFD1B61A46A004083E5 /* GoogleCastTests */,
 				4485140C1A02FC3200D66710 /* GoogleCast.framework */,
 				EA5FB85C199AEC550057B4B4 /* CastDiscoveryProvider.h */,
 				EA5FB85D199AEC550057B4B4 /* CastDiscoveryProvider.m */,
 				EA5FB85E199AEC550057B4B4 /* CastService.h */,
+				44B43B001B62B6AC004083E5 /* CastService_Private.h */,
 				EA5FB85F199AEC550057B4B4 /* CastService.m */,
 				EA5FB860199AEC550057B4B4 /* CastServiceChannel.h */,
 				EA5FB861199AEC550057B4B4 /* CastServiceChannel.m */,
@@ -1698,6 +1735,7 @@
 				4494263E1AF83588006BAFF2 /* DispatchQueueBlockRunner.h in Headers */,
 				EA5FB87C199AEC550057B4B4 /* DiscoveryProvider.h in Headers */,
 				EA5FB8C7199AEC560057B4B4 /* JSONObjectCoding.h in Headers */,
+				44D0ECEF1B55DA9000E02A8B /* SubtitleInfo.h in Headers */,
 				EA5FB8F8199AEC570057B4B4 /* WebOSTVServiceMouse.h in Headers */,
 				EA5FB8A5199AEC560057B4B4 /* GCDWebServerDataRequest.h in Headers */,
 				EA5FB886199AEC560057B4B4 /* CTASIDataCompressor.h in Headers */,
@@ -1727,6 +1765,7 @@
 				448B28761B041A5600DFF18F /* FireTVMediaControl.h in Headers */,
 				BB9F7AD33329FD4AC66C2D12 /* ImageInfo.h in Headers */,
 				BB9F712900733DE480F64D8E /* DLNAHTTPServer.h in Headers */,
+				B2FA88C0C2447C5CAF1E61A4 /* NSMutableDictionary+NilSafe.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1956,7 +1995,9 @@
 				449426351AF83055006BAFF2 /* SynchronousBlockRunnerTests.m in Sources */,
 				4433F3DF1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m in Sources */,
 				44A551991AC338E0001AF783 /* WebOSTVServiceTests.m in Sources */,
+				44B43AFF1B61A497004083E5 /* CastServiceTests.m in Sources */,
 				448B28701B041A3B00DFF18F /* FireTVMediaPlayerTests.m in Sources */,
+				44B43AF11B5DA99F004083E5 /* MediaInfoTests.m in Sources */,
 				449426331AF82F8E006BAFF2 /* BlockRunnerTests.m in Sources */,
 				4494263B1AF8353A006BAFF2 /* DispatchQueueBlockRunnerTests.m in Sources */,
 				44D8F7DA1AB27B4800559FE3 /* NSInvocation+ObjectGetter.m in Sources */,
@@ -1976,8 +2017,10 @@
 				44AD91741AF9A02300C23A71 /* FireTVServiceTests.m in Sources */,
 				440A031D1A854EDE0007E3D3 /* WebOSTVServiceSocketClientTests.m in Sources */,
 				448414F91AEB27F400124EE9 /* OCMStubRecorder+XCTestExpectation.m in Sources */,
+				44B43AFC1B6157F6004083E5 /* NSMutableDictionary+NilSafeTests.m in Sources */,
 				44D90AA91B06AA9E00A5CF2A /* AppStateChangeNotifierTests.m in Sources */,
 				44A5518F1AC1DF4C001AF783 /* NetcastTVServiceTests.m in Sources */,
+				44D0ECEC1B55D8FC00E02A8B /* SubtitleInfoTests.m in Sources */,
 				4498D9901A65A1D7008C0B72 /* NSDictionary+KeyPredicateSearchTests.m in Sources */,
 				44A0E1A71B3B31DC00ADF95F /* WebOSWebAppSessionTests.m in Sources */,
 			);
@@ -2017,6 +2060,7 @@
 				EA5FB8F9199AEC570057B4B4 /* WebOSTVServiceMouse.m in Sources */,
 				EA5FB88B199AEC560057B4B4 /* CTASIDownloadCache.m in Sources */,
 				EA5FB878199AEC550057B4B4 /* CapabilityFilter.m in Sources */,
+				44D0ECF01B55DA9000E02A8B /* SubtitleInfo.m in Sources */,
 				EA5FB8F3199AEC570057B4B4 /* DLNAService.m in Sources */,
 				EA5FB8B8199AEC560057B4B4 /* LGSRWebSocket.m in Sources */,
 				44AD91781AFA7F1000C23A71 /* FireTVService.m in Sources */,
@@ -2084,6 +2128,8 @@
 				BB9F7B7905ABBE72E0843AA0 /* MediaInfo.m in Sources */,
 				BB9F776F4924E08D116738B1 /* ImageInfo.m in Sources */,
 				BB9F706B1155B806AFBF3336 /* DLNAHTTPServer.m in Sources */,
+				B2FA8F2EAE3B0B60D75F9647 /* CapabilityConstants.m in Sources */,
+				B2FA8A641C2CBEAFB9CF9097 /* NSMutableDictionary+NilSafe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
