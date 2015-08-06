@@ -108,7 +108,7 @@ Pod::Spec.new do |s|
     sp.source_files = "modules/google-cast/**/*.{h,m}"
     sp.private_header_files = "modules/google-cast/**/*_Private.h"
 
-    cast_version = "2.6.0"
+    cast_version = "2.7.1"
     sp.dependency "google-cast-sdk", cast_version
     sp.framework = "GoogleCast"
     sp.xcconfig = {
