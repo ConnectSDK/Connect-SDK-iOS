@@ -79,6 +79,22 @@
 		44316F2B1AF3F17A000FE655 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44316F271AF3F17A000FE655 /* OHHTTPStubs.framework */; };
 		4433F3DF1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4433F3DE1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m */; };
 		444287CA1B055E0C00B1F875 /* XCTestCase+TaskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 444287C91B055E0C00B1F875 /* XCTestCase+TaskTests.m */; };
+		445525A71B756FE7005F2FB1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7F85D1906E98200B33AAB /* AVFoundation.framework */; };
+		445525A81B756FE7005F2FB1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1318FE485B00D75696 /* Foundation.framework */; };
+		445525AC1B756FE7005F2FB1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7F85F1906E99C00B33AAB /* UIKit.framework */; };
+		445525B81B7570C4005F2FB1 /* FireTVService.h in Headers */ = {isa = PBXBuildFile; fileRef = 44AD91751AFA7F1000C23A71 /* FireTVService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		445525B91B7570C4005F2FB1 /* FireTVService.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AD91761AFA7F1000C23A71 /* FireTVService.m */; };
+		445525BA1B7570D0005F2FB1 /* AmazonFling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44316EF31AF2EBF5000FE655 /* AmazonFling.framework */; };
+		445525BB1B7570D0005F2FB1 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44316EF41AF2EBF5000FE655 /* Bolts.framework */; };
+		445525BC1B7570D0005F2FB1 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44316F071AF2F9BF000FE655 /* AdSupport.framework */; };
+		445525BE1B757106005F2FB1 /* FireTVCapabilityMixin.h in Headers */ = {isa = PBXBuildFile; fileRef = 44A499031B0AD0C1002C94E7 /* FireTVCapabilityMixin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		445525BF1B757106005F2FB1 /* FireTVCapabilityMixin.m in Sources */ = {isa = PBXBuildFile; fileRef = 44A499041B0AD0C1002C94E7 /* FireTVCapabilityMixin.m */; };
+		445525C01B757106005F2FB1 /* FireTVMediaControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 448B28721B041A5600DFF18F /* FireTVMediaControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		445525C11B757106005F2FB1 /* FireTVMediaControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 448B28731B041A5600DFF18F /* FireTVMediaControl.m */; };
+		445525C21B757106005F2FB1 /* FireTVMediaPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 448B28741B041A5600DFF18F /* FireTVMediaPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		445525C31B757106005F2FB1 /* FireTVMediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 448B28751B041A5600DFF18F /* FireTVMediaPlayer.m */; };
+		445525C41B757106005F2FB1 /* FireTVDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 44316EFC1AF2F04B000FE655 /* FireTVDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		445525C61B757106005F2FB1 /* FireTVDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 44316EFD1AF2F04B000FE655 /* FireTVDiscoveryProvider.m */; };
 		44758BBB1AE6C06200EC43A6 /* AirPlayServiceHTTPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44758BBA1AE6C06200EC43A6 /* AirPlayServiceHTTPTests.m */; };
 		44758BCE1AE7070600EC43A6 /* airplay_playbackinfo_ff.json in Resources */ = {isa = PBXBuildFile; fileRef = 44758BC91AE7070500EC43A6 /* airplay_playbackinfo_ff.json */; };
 		44758BCF1AE7070600EC43A6 /* airplay_playbackinfo_finished.json in Resources */ = {isa = PBXBuildFile; fileRef = 44758BCA1AE7070500EC43A6 /* airplay_playbackinfo_finished.json */; };
@@ -646,6 +662,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		445525AD1B756FE7005F2FB1 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		449430D81B4C97BA001A2696 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -715,6 +740,7 @@
 		4433F3DE1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayServiceHTTPKeepAliveTests.m; sourceTree = "<group>"; };
 		444287C81B055E0C00B1F875 /* XCTestCase+TaskTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+TaskTests.h"; sourceTree = "<group>"; };
 		444287C91B055E0C00B1F875 /* XCTestCase+TaskTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+TaskTests.m"; sourceTree = "<group>"; };
+		445525B71B756FE7005F2FB1 /* libConnectSDK-FireTV.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libConnectSDK-FireTV.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44758BBA1AE6C06200EC43A6 /* AirPlayServiceHTTPTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayServiceHTTPTests.m; sourceTree = "<group>"; };
 		44758BBC1AE6C6E300EC43A6 /* AirPlayServiceHTTP_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayServiceHTTP_Private.h; sourceTree = "<group>"; };
 		44758BC91AE7070500EC43A6 /* airplay_playbackinfo_ff.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airplay_playbackinfo_ff.json; sourceTree = "<group>"; };
@@ -1048,6 +1074,19 @@
 				44166C691B420DC20052F9EC /* libicucore.dylib in Frameworks */,
 				44166C651B420DA60052F9EC /* AmazonFling.framework in Frameworks */,
 				44166C621B420C550052F9EC /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		445525A61B756FE7005F2FB1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				445525BB1B7570D0005F2FB1 /* Bolts.framework in Frameworks */,
+				445525A71B756FE7005F2FB1 /* AVFoundation.framework in Frameworks */,
+				445525A81B756FE7005F2FB1 /* Foundation.framework in Frameworks */,
+				445525AC1B756FE7005F2FB1 /* UIKit.framework in Frameworks */,
+				445525BA1B7570D0005F2FB1 /* AmazonFling.framework in Frameworks */,
+				445525BC1B7570D0005F2FB1 /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1960,6 +1999,7 @@
 				449431571B4C97BA001A2696 /* libConnectSDK-Core.a */,
 				449432351B4C9935001A2696 /* libConnectSDK-GoogleCast.a */,
 				44BEBF2E1B4EE6D800DA1A1D /* libConnectSDK-AirPlay.a */,
+				445525B71B756FE7005F2FB1 /* libConnectSDK-FireTV.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1983,6 +2023,18 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		445525AE1B756FE7005F2FB1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				445525BE1B757106005F2FB1 /* FireTVCapabilityMixin.h in Headers */,
+				445525C41B757106005F2FB1 /* FireTVDiscoveryProvider.h in Headers */,
+				445525C01B757106005F2FB1 /* FireTVMediaControl.h in Headers */,
+				445525C21B757106005F2FB1 /* FireTVMediaPlayer.h in Headers */,
+				445525B81B7570C4005F2FB1 /* FireTVService.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		449430D91B4C97BA001A2696 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -2272,6 +2324,25 @@
 			productReference = 44166C501B4203880052F9EC /* ConnectSDKAcceptanceTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		445525A01B756FE7005F2FB1 /* ConnectSDK-FireTV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 445525B41B756FE7005F2FB1 /* Build configuration list for PBXNativeTarget "ConnectSDK-FireTV" */;
+			buildPhases = (
+				445525A11B756FE7005F2FB1 /* Sources */,
+				445525A61B756FE7005F2FB1 /* Frameworks */,
+				445525AD1B756FE7005F2FB1 /* CopyFiles */,
+				445525AE1B756FE7005F2FB1 /* Headers */,
+				445525B31B756FE7005F2FB1 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ConnectSDK-FireTV";
+			productName = "Connect SDK";
+			productReference = 445525B71B756FE7005F2FB1 /* libConnectSDK-FireTV.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		448085791A12A7BE00E13938 /* ConnectSDKTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 448085851A12A7BE00E13938 /* Build configuration list for PBXNativeTarget "ConnectSDKTests" */;
@@ -2426,6 +2497,7 @@
 				44166C4F1B4203880052F9EC /* ConnectSDKAcceptanceTests */,
 				4494307A1B4C97BA001A2696 /* ConnectSDK-Core */,
 				449431581B4C9935001A2696 /* ConnectSDK-GoogleCast */,
+				445525A01B756FE7005F2FB1 /* ConnectSDK-FireTV */,
 				44BEBE631B4EE6D800DA1A1D /* ConnectSDK-AirPlay */,
 				44BEBF4C1B4F018300DA1A1D /* ConnectSDK-Full */,
 			);
@@ -2490,6 +2562,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		445525B31B756FE7005F2FB1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "exit\nset -e\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n\n# Link the \"Current\" version to \"A\"\n/bin/ln -sfh A \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/Current\"\n/bin/ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Headers\"\n/bin/ln -sfh \"Versions/Current/${PRODUCT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}\"\n\n# The -a ensures that the headers maintain the source modification date so that we don't constantly\n# cause propagating rebuilds of files that import these headers.\n/bin/cp -a \"${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n";
+		};
 		449431531B4C97BA001A2696 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2583,6 +2668,18 @@
 				44166C6A1B420DE40052F9EC /* OCMArg+ArgumentCaptor.m in Sources */,
 				44166C5D1B420B6A0052F9EC /* DLNAServiceAcceptanceTests.m in Sources */,
 				44166C6C1B420E1A0052F9EC /* EXPMatchers+matchRegex.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		445525A11B756FE7005F2FB1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				445525BF1B757106005F2FB1 /* FireTVCapabilityMixin.m in Sources */,
+				445525C61B757106005F2FB1 /* FireTVDiscoveryProvider.m in Sources */,
+				445525C11B757106005F2FB1 /* FireTVMediaControl.m in Sources */,
+				445525C31B757106005F2FB1 /* FireTVMediaPlayer.m in Sources */,
+				445525B91B7570C4005F2FB1 /* FireTVService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2958,6 +3055,44 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		445525B51B756FE7005F2FB1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DSTROOT = /tmp/Connect_SDK.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/modules/firetv/",
+					"$(PROJECT_DIR)/modules/firetv/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Debug;
+		};
+		445525B61B756FE7005F2FB1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DSTROOT = /tmp/Connect_SDK.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/modules/firetv/",
+					"$(PROJECT_DIR)/modules/firetv/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
 			};
 			name = Release;
 		};
@@ -3348,6 +3483,15 @@
 			buildConfigurations = (
 				44166C591B4203880052F9EC /* Debug */,
 				44166C5A1B4203880052F9EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		445525B41B756FE7005F2FB1 /* Build configuration list for PBXNativeTarget "ConnectSDK-FireTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				445525B51B756FE7005F2FB1 /* Debug */,
+				445525B61B756FE7005F2FB1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
