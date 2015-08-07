@@ -309,6 +309,9 @@
 		449A371B1B0FE39700E47DAC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44316F071AF2F9BF000FE655 /* AdSupport.framework */; };
 		449A371C1B0FE3A500E47DAC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EBF118FE48EF00D75696 /* MobileCoreServices.framework */; };
 		449CC26B1AF9458E0064F2F7 /* ServiceDescriptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 449CC26A1AF9458E0064F2F7 /* ServiceDescriptionTests.m */; };
+		44A04EBA1B756D780049E54C /* SubtitleInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D0ECED1B55DA9000E02A8B /* SubtitleInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		44A04EBB1B756D7D0049E54C /* SubtitleInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D0ECEE1B55DA9000E02A8B /* SubtitleInfo.m */; };
+		44A04EBC1B756D960049E54C /* CapabilityConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FA8C3DF809E5088781B765 /* CapabilityConstants.m */; };
 		44A08FFA1B698E170077E87D /* WebAppSessionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44A08FF91B698E170077E87D /* WebAppSessionTests.m */; };
 		44A08FFC1B698FCB0077E87D /* AirPlayServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44A08FFB1B698FCB0077E87D /* AirPlayServiceTests.m */; };
 		44A090001B6B05850077E87D /* CastWebAppSessionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44A08FFF1B6B05850077E87D /* CastWebAppSessionTests.m */; };
@@ -2068,6 +2071,7 @@
 				449430DA1B4C97BA001A2696 /* ToastControl.h in Headers */,
 				449430E31B4C97BA001A2696 /* VolumeControl.h in Headers */,
 				449430E91B4C97BA001A2696 /* WebAppLauncher.h in Headers */,
+				44A04EBA1B756D780049E54C /* SubtitleInfo.h in Headers */,
 				449431241B4C97BA001A2696 /* WebAppSession.h in Headers */,
 				449430F71B4C97BA001A2696 /* WebAppSessionDelegate.h in Headers */,
 				449430F31B4C97BA001A2696 /* WebOSTVService.h in Headers */,
@@ -2631,6 +2635,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				449430B91B4C97BA001A2696 /* AppInfo.m in Sources */,
+				44A04EBB1B756D7D0049E54C /* SubtitleInfo.m in Sources */,
 				4494308A1B4C97BA001A2696 /* AppStateChangeNotifier.m in Sources */,
 				449430931B4C97BA001A2696 /* CTGuid.m in Sources */,
 				449430AB1B4C97BA001A2696 /* CTXMLReader.m in Sources */,
@@ -2666,6 +2671,7 @@
 				449430D01B4C97BA001A2696 /* ImageInfo.m in Sources */,
 				449430901B4C97BA001A2696 /* LGSRWebSocket.m in Sources */,
 				4494309C1B4C97BA001A2696 /* LaunchSession.m in Sources */,
+				44A04EBC1B756D960049E54C /* CapabilityConstants.m in Sources */,
 				449430CF1B4C97BA001A2696 /* MediaInfo.m in Sources */,
 				449430881B4C97BA001A2696 /* MediaLaunchObject.m in Sources */,
 				449430C01B4C97BA001A2696 /* NSDictionary+KeyPredicateSearch.m in Sources */,
@@ -3398,6 +3404,7 @@
 				44BEBF4E1B4F018300DA1A1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EA61EB0B18FE485B00D75696 /* Build configuration list for PBXProject "ConnectSDK" */ = {
 			isa = XCConfigurationList;
