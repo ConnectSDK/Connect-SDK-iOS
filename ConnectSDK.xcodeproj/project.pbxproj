@@ -7,20 +7,6 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		44BEBF4C1B4F018300DA1A1D /* ConnectSDK-Full */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 44BEBF4F1B4F018300DA1A1D /* Build configuration list for PBXAggregateTarget "ConnectSDK-Full" */;
-			buildPhases = (
-				44BEBF561B4F047900DA1A1D /* Combine all static libraries into one */,
-			);
-			dependencies = (
-				44BEBF511B4F018C00DA1A1D /* PBXTargetDependency */,
-				44BEBF531B4F018C00DA1A1D /* PBXTargetDependency */,
-				44BEBF551B4F018C00DA1A1D /* PBXTargetDependency */,
-			);
-			name = "ConnectSDK-Full";
-			productName = "ConnectSDK-Full";
-		};
 		EECAED52193F611900D31F61 /* Framework */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = EECAED53193F611900D31F61 /* Build configuration list for PBXAggregateTarget "Framework" */;
@@ -95,6 +81,11 @@
 		445525C31B757106005F2FB1 /* FireTVMediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 448B28751B041A5600DFF18F /* FireTVMediaPlayer.m */; };
 		445525C41B757106005F2FB1 /* FireTVDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 44316EFC1AF2F04B000FE655 /* FireTVDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		445525C61B757106005F2FB1 /* FireTVDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 44316EFD1AF2F04B000FE655 /* FireTVDiscoveryProvider.m */; };
+		445525F11B757391005F2FB1 /* libConnectSDK-AirPlay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44BEBF2E1B4EE6D800DA1A1D /* libConnectSDK-AirPlay.a */; };
+		445525F21B757391005F2FB1 /* libConnectSDK-Core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 449431571B4C97BA001A2696 /* libConnectSDK-Core.a */; };
+		445525F31B757391005F2FB1 /* libConnectSDK-FireTV.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 445525B71B756FE7005F2FB1 /* libConnectSDK-FireTV.a */; };
+		445525F41B757391005F2FB1 /* libConnectSDK-GoogleCast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 449432351B4C9935001A2696 /* libConnectSDK-GoogleCast.a */; };
+		445525FB1B757602005F2FB1 /* dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 445525FA1B757602005F2FB1 /* dummy.m */; };
 		44758BBB1AE6C06200EC43A6 /* AirPlayServiceHTTPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44758BBA1AE6C06200EC43A6 /* AirPlayServiceHTTPTests.m */; };
 		44758BCE1AE7070600EC43A6 /* airplay_playbackinfo_ff.json in Resources */ = {isa = PBXBuildFile; fileRef = 44758BC91AE7070500EC43A6 /* airplay_playbackinfo_ff.json */; };
 		44758BCF1AE7070600EC43A6 /* airplay_playbackinfo_finished.json in Resources */ = {isa = PBXBuildFile; fileRef = 44758BCA1AE7070500EC43A6 /* airplay_playbackinfo_finished.json */; };
@@ -631,27 +622,6 @@
 			remoteGlobalIDString = EA61EB0F18FE485B00D75696;
 			remoteInfo = ConnectSDK;
 		};
-		44BEBF501B4F018C00DA1A1D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EA61EB0818FE485B00D75696 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4494307A1B4C97BA001A2696;
-			remoteInfo = "ConnectSDK-Core";
-		};
-		44BEBF521B4F018C00DA1A1D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EA61EB0818FE485B00D75696 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 449431581B4C9935001A2696;
-			remoteInfo = "ConnectSDK-GoogleCast";
-		};
-		44BEBF541B4F018C00DA1A1D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EA61EB0818FE485B00D75696 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 44BEBE631B4EE6D800DA1A1D;
-			remoteInfo = "ConnectSDK-AirPlay";
-		};
 		EECAED56193F612100D31F61 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EA61EB0818FE485B00D75696 /* Project object */;
@@ -741,6 +711,8 @@
 		444287C81B055E0C00B1F875 /* XCTestCase+TaskTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+TaskTests.h"; sourceTree = "<group>"; };
 		444287C91B055E0C00B1F875 /* XCTestCase+TaskTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+TaskTests.m"; sourceTree = "<group>"; };
 		445525B71B756FE7005F2FB1 /* libConnectSDK-FireTV.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libConnectSDK-FireTV.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		445525D71B7572A9005F2FB1 /* libConnectSDK-Full.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libConnectSDK-Full.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		445525FA1B757602005F2FB1 /* dummy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = dummy.m; sourceTree = "<group>"; };
 		44758BBA1AE6C06200EC43A6 /* AirPlayServiceHTTPTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayServiceHTTPTests.m; sourceTree = "<group>"; };
 		44758BBC1AE6C6E300EC43A6 /* AirPlayServiceHTTP_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayServiceHTTP_Private.h; sourceTree = "<group>"; };
 		44758BC91AE7070500EC43A6 /* airplay_playbackinfo_ff.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airplay_playbackinfo_ff.json; sourceTree = "<group>"; };
@@ -1087,6 +1059,17 @@
 				445525AC1B756FE7005F2FB1 /* UIKit.framework in Frameworks */,
 				445525BA1B7570D0005F2FB1 /* AmazonFling.framework in Frameworks */,
 				445525BC1B7570D0005F2FB1 /* AdSupport.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		445525D41B7572A9005F2FB1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				445525F11B757391005F2FB1 /* libConnectSDK-AirPlay.a in Frameworks */,
+				445525F21B757391005F2FB1 /* libConnectSDK-Core.a in Frameworks */,
+				445525F31B757391005F2FB1 /* libConnectSDK-FireTV.a in Frameworks */,
+				445525F41B757391005F2FB1 /* libConnectSDK-GoogleCast.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1578,6 +1561,7 @@
 				44166C511B4203880052F9EC /* ConnectSDKAcceptanceTests */,
 				449A37031B0FDC1C00E47DAC /* ConnectSDKIntegrationTests */,
 				4480857B1A12A7BE00E13938 /* ConnectSDKTests */,
+				445525FA1B757602005F2FB1 /* dummy.m */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -2000,6 +1984,7 @@
 				449432351B4C9935001A2696 /* libConnectSDK-GoogleCast.a */,
 				44BEBF2E1B4EE6D800DA1A1D /* libConnectSDK-AirPlay.a */,
 				445525B71B756FE7005F2FB1 /* libConnectSDK-FireTV.a */,
+				445525D71B7572A9005F2FB1 /* libConnectSDK-Full.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2343,6 +2328,22 @@
 			productReference = 445525B71B756FE7005F2FB1 /* libConnectSDK-FireTV.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		445525D61B7572A9005F2FB1 /* ConnectSDK-Full */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 445525E81B7572A9005F2FB1 /* Build configuration list for PBXNativeTarget "ConnectSDK-Full" */;
+			buildPhases = (
+				445525D31B7572A9005F2FB1 /* Sources */,
+				445525D41B7572A9005F2FB1 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ConnectSDK-Full";
+			productName = "ConnectSDK-Full";
+			productReference = 445525D71B7572A9005F2FB1 /* libConnectSDK-Full.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		448085791A12A7BE00E13938 /* ConnectSDKTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 448085851A12A7BE00E13938 /* Build configuration list for PBXNativeTarget "ConnectSDKTests" */;
@@ -2467,14 +2468,14 @@
 					44166C4F1B4203880052F9EC = {
 						CreatedOnToolsVersion = 6.3.2;
 					};
+					445525D61B7572A9005F2FB1 = {
+						CreatedOnToolsVersion = 6.4;
+					};
 					448085791A12A7BE00E13938 = {
 						CreatedOnToolsVersion = 6.1;
 					};
 					449A37011B0FDC1C00E47DAC = {
 						CreatedOnToolsVersion = 6.3.1;
-					};
-					44BEBF4C1B4F018300DA1A1D = {
-						CreatedOnToolsVersion = 6.4;
 					};
 				};
 			};
@@ -2499,7 +2500,7 @@
 				449431581B4C9935001A2696 /* ConnectSDK-GoogleCast */,
 				445525A01B756FE7005F2FB1 /* ConnectSDK-FireTV */,
 				44BEBE631B4EE6D800DA1A1D /* ConnectSDK-AirPlay */,
-				44BEBF4C1B4F018300DA1A1D /* ConnectSDK-Full */,
+				445525D61B7572A9005F2FB1 /* ConnectSDK-Full */,
 			);
 		};
 /* End PBXProject section */
@@ -2614,21 +2615,6 @@
 			shellPath = /bin/sh;
 			shellScript = "exit\nset -e\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n\n# Link the \"Current\" version to \"A\"\n/bin/ln -sfh A \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/Current\"\n/bin/ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Headers\"\n/bin/ln -sfh \"Versions/Current/${PRODUCT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}\"\n\n# The -a ensures that the headers maintain the source modification date so that we don't constantly\n# cause propagating rebuilds of files that import these headers.\n/bin/cp -a \"${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n";
 		};
-		44BEBF561B4F047900DA1A1D /* Combine all static libraries into one */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Combine all static libraries into one";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -euo pipefail\n\ncd \"${BUILT_PRODUCTS_DIR}\"\nLIB_NAME=\"lib${PRODUCT_NAME}.a\"\nlibtool -static -o \"${LIB_NAME}\" libConnectSDK-{Core,GoogleCast,AirPlay}.a\necho \"The full library is here: $( pwd )/${LIB_NAME}\"";
-			showEnvVarsInLog = 0;
-		};
 		EECAED51193F60C900D31F61 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2680,6 +2666,14 @@
 				445525C11B757106005F2FB1 /* FireTVMediaControl.m in Sources */,
 				445525C31B757106005F2FB1 /* FireTVMediaPlayer.m in Sources */,
 				445525B91B7570C4005F2FB1 /* FireTVService.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		445525D31B7572A9005F2FB1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				445525FB1B757602005F2FB1 /* dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2957,21 +2951,6 @@
 			target = EA61EB0F18FE485B00D75696 /* ConnectSDK */;
 			targetProxy = 449A37091B0FDC1C00E47DAC /* PBXContainerItemProxy */;
 		};
-		44BEBF511B4F018C00DA1A1D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4494307A1B4C97BA001A2696 /* ConnectSDK-Core */;
-			targetProxy = 44BEBF501B4F018C00DA1A1D /* PBXContainerItemProxy */;
-		};
-		44BEBF531B4F018C00DA1A1D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 449431581B4C9935001A2696 /* ConnectSDK-GoogleCast */;
-			targetProxy = 44BEBF521B4F018C00DA1A1D /* PBXContainerItemProxy */;
-		};
-		44BEBF551B4F018C00DA1A1D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 44BEBE631B4EE6D800DA1A1D /* ConnectSDK-AirPlay */;
-			targetProxy = 44BEBF541B4F018C00DA1A1D /* PBXContainerItemProxy */;
-		};
 		EECAED57193F612100D31F61 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EA61EB0F18FE485B00D75696 /* ConnectSDK */;
@@ -3093,6 +3072,39 @@
 				OTHER_LDFLAGS = "-ObjC";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
+			};
+			name = Release;
+		};
+		445525E91B7572A9005F2FB1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		445525EA1B7572A9005F2FB1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -3317,20 +3329,6 @@
 			};
 			name = Release;
 		};
-		44BEBF4D1B4F018300DA1A1D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		44BEBF4E1B4F018300DA1A1D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		EA61EB3118FE485B00D75696 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3496,6 +3494,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		445525E81B7572A9005F2FB1 /* Build configuration list for PBXNativeTarget "ConnectSDK-Full" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				445525E91B7572A9005F2FB1 /* Debug */,
+				445525EA1B7572A9005F2FB1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		448085851A12A7BE00E13938 /* Build configuration list for PBXNativeTarget "ConnectSDKTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -3537,15 +3543,6 @@
 			buildConfigurations = (
 				44BEBF2C1B4EE6D800DA1A1D /* Debug */,
 				44BEBF2D1B4EE6D800DA1A1D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		44BEBF4F1B4F018300DA1A1D /* Build configuration list for PBXAggregateTarget "ConnectSDK-Full" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				44BEBF4D1B4F018300DA1A1D /* Debug */,
-				44BEBF4E1B4F018300DA1A1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
