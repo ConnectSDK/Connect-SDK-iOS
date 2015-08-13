@@ -64,7 +64,13 @@
 		44316F291AF3F17A000FE655 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44316F251AF3F17A000FE655 /* OCMock.framework */; };
 		44316F2B1AF3F17A000FE655 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44316F271AF3F17A000FE655 /* OHHTTPStubs.framework */; };
 		4433F3DF1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4433F3DE1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m */; };
+		4436FB0C1B7D3902004E3B1D /* ZeroConfDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7B6199AEC550057B4B4 /* ZeroConfDiscoveryProvider.m */; };
+		4436FB0D1B7D3904004E3B1D /* DiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7B0199AEC550057B4B4 /* DiscoveryProvider.m */; };
+		4436FB0E1B7D3923004E3B1D /* ServiceDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB836199AEC550057B4B4 /* ServiceDescription.m */; };
+		4436FB0F1B7D392A004E3B1D /* ConnectSDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB79E199AEC550057B4B4 /* ConnectSDK-Prefix.pch */; };
 		444287CA1B055E0C00B1F875 /* XCTestCase+TaskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 444287C91B055E0C00B1F875 /* XCTestCase+TaskTests.m */; };
+		445593021B7D291A00051CE8 /* libConnectSDK-OSX.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 445592F71B7D291900051CE8 /* libConnectSDK-OSX.dylib */; };
+		4455930F1B7D29E700051CE8 /* ZeroconfDiscoveryProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4455930E1B7D29E700051CE8 /* ZeroconfDiscoveryProviderTests.m */; };
 		44758BBB1AE6C06200EC43A6 /* AirPlayServiceHTTPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44758BBA1AE6C06200EC43A6 /* AirPlayServiceHTTPTests.m */; };
 		44758BCE1AE7070600EC43A6 /* airplay_playbackinfo_ff.json in Resources */ = {isa = PBXBuildFile; fileRef = 44758BC91AE7070500EC43A6 /* airplay_playbackinfo_ff.json */; };
 		44758BCF1AE7070600EC43A6 /* airplay_playbackinfo_finished.json in Resources */ = {isa = PBXBuildFile; fileRef = 44758BCA1AE7070500EC43A6 /* airplay_playbackinfo_finished.json */; };
@@ -371,6 +377,13 @@
 			remoteGlobalIDString = EA61EB0F18FE485B00D75696;
 			remoteInfo = ConnectSDK;
 		};
+		445593031B7D291A00051CE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA61EB0818FE485B00D75696 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 445592F61B7D291900051CE8;
+			remoteInfo = "ConnectSDK-OSX";
+		};
 		448085811A12A7BE00E13938 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EA61EB0818FE485B00D75696 /* Project object */;
@@ -437,6 +450,11 @@
 		4433F3DE1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayServiceHTTPKeepAliveTests.m; sourceTree = "<group>"; };
 		444287C81B055E0C00B1F875 /* XCTestCase+TaskTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+TaskTests.h"; sourceTree = "<group>"; };
 		444287C91B055E0C00B1F875 /* XCTestCase+TaskTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+TaskTests.m"; sourceTree = "<group>"; };
+		445592F71B7D291900051CE8 /* libConnectSDK-OSX.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libConnectSDK-OSX.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
+		445593011B7D291A00051CE8 /* ConnectSDK-OSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ConnectSDK-OSXTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		445593071B7D291A00051CE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4455930E1B7D29E700051CE8 /* ZeroconfDiscoveryProviderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZeroconfDiscoveryProviderTests.m; sourceTree = "<group>"; };
+		445593181B7D2D1C00051CE8 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		44758BBA1AE6C06200EC43A6 /* AirPlayServiceHTTPTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayServiceHTTPTests.m; sourceTree = "<group>"; };
 		44758BBC1AE6C6E300EC43A6 /* AirPlayServiceHTTP_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirPlayServiceHTTP_Private.h; sourceTree = "<group>"; };
 		44758BC91AE7070500EC43A6 /* airplay_playbackinfo_ff.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airplay_playbackinfo_ff.json; sourceTree = "<group>"; };
@@ -770,6 +788,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		445592F41B7D291900051CE8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		445592FE1B7D291A00051CE8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				445593021B7D291A00051CE8 /* libConnectSDK-OSX.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		448085771A12A7BE00E13938 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -953,6 +986,31 @@
 				440A031C1A854EDE0007E3D3 /* WebOSTVServiceSocketClientTests.m */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		445592F81B7D291900051CE8 /* ConnectSDK-OSX */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "ConnectSDK-OSX";
+			sourceTree = "<group>";
+		};
+		445593051B7D291A00051CE8 /* ConnectSDK-OSXTests */ = {
+			isa = PBXGroup;
+			children = (
+				4455930E1B7D29E700051CE8 /* ZeroconfDiscoveryProviderTests.m */,
+				445593181B7D2D1C00051CE8 /* PrefixHeader.pch */,
+				445593061B7D291A00051CE8 /* Supporting Files */,
+			);
+			path = "ConnectSDK-OSXTests";
+			sourceTree = "<group>";
+		};
+		445593061B7D291A00051CE8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				445593071B7D291A00051CE8 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		44758BC01AE6DB7400EC43A6 /* sample_data */ = {
@@ -1627,6 +1685,8 @@
 			isa = PBXGroup;
 			children = (
 				EA5FB799199AEC2E0057B4B4 /* Connect SDK */,
+				445592F81B7D291900051CE8 /* ConnectSDK-OSX */,
+				445593051B7D291A00051CE8 /* ConnectSDK-OSXTests */,
 				EA61EB1218FE485B00D75696 /* Frameworks */,
 				EA61EB1118FE485B00D75696 /* Products */,
 			);
@@ -1639,6 +1699,8 @@
 				4480857A1A12A7BE00E13938 /* ConnectSDKTests.xctest */,
 				449A37021B0FDC1C00E47DAC /* ConnectSDKIntegrationTests.xctest */,
 				44166C501B4203880052F9EC /* ConnectSDKAcceptanceTests.xctest */,
+				445592F71B7D291900051CE8 /* libConnectSDK-OSX.dylib */,
+				445593011B7D291A00051CE8 /* ConnectSDK-OSXTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1662,6 +1724,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		445592F51B7D291900051CE8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4436FB0F1B7D392A004E3B1D /* ConnectSDK-Prefix.pch in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EECAED1A193F5ED900D31F61 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1813,6 +1883,41 @@
 			productReference = 44166C501B4203880052F9EC /* ConnectSDKAcceptanceTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		445592F61B7D291900051CE8 /* ConnectSDK-OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4455930C1B7D291A00051CE8 /* Build configuration list for PBXNativeTarget "ConnectSDK-OSX" */;
+			buildPhases = (
+				445592F31B7D291900051CE8 /* Sources */,
+				445592F41B7D291900051CE8 /* Frameworks */,
+				445592F51B7D291900051CE8 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ConnectSDK-OSX";
+			productName = "ConnectSDK-OSX";
+			productReference = 445592F71B7D291900051CE8 /* libConnectSDK-OSX.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		445593001B7D291A00051CE8 /* ConnectSDK-OSXTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4455930D1B7D291A00051CE8 /* Build configuration list for PBXNativeTarget "ConnectSDK-OSXTests" */;
+			buildPhases = (
+				445592FD1B7D291A00051CE8 /* Sources */,
+				445592FE1B7D291A00051CE8 /* Frameworks */,
+				445592FF1B7D291A00051CE8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				445593041B7D291A00051CE8 /* PBXTargetDependency */,
+			);
+			name = "ConnectSDK-OSXTests";
+			productName = "ConnectSDK-OSXTests";
+			productReference = 445593011B7D291A00051CE8 /* ConnectSDK-OSXTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		448085791A12A7BE00E13938 /* ConnectSDKTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 448085851A12A7BE00E13938 /* Build configuration list for PBXNativeTarget "ConnectSDKTests" */;
@@ -1880,6 +1985,12 @@
 					44166C4F1B4203880052F9EC = {
 						CreatedOnToolsVersion = 6.3.2;
 					};
+					445592F61B7D291900051CE8 = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					445593001B7D291A00051CE8 = {
+						CreatedOnToolsVersion = 6.4;
+					};
 					448085791A12A7BE00E13938 = {
 						CreatedOnToolsVersion = 6.1;
 					};
@@ -1905,6 +2016,8 @@
 				448085791A12A7BE00E13938 /* ConnectSDKTests */,
 				449A37011B0FDC1C00E47DAC /* ConnectSDKIntegrationTests */,
 				44166C4F1B4203880052F9EC /* ConnectSDKAcceptanceTests */,
+				445592F61B7D291900051CE8 /* ConnectSDK-OSX */,
+				445593001B7D291A00051CE8 /* ConnectSDK-OSXTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1915,6 +2028,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				44166CB31B4AFE060052F9EC /* the-san-francisco-peaks-of-flagstaff-718x544.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		445592FF1B7D291A00051CE8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2006,6 +2126,24 @@
 				44166C6A1B420DE40052F9EC /* OCMArg+ArgumentCaptor.m in Sources */,
 				44166C5D1B420B6A0052F9EC /* DLNAServiceAcceptanceTests.m in Sources */,
 				44166C6C1B420E1A0052F9EC /* EXPMatchers+matchRegex.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		445592F31B7D291900051CE8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4436FB0E1B7D3923004E3B1D /* ServiceDescription.m in Sources */,
+				4436FB0C1B7D3902004E3B1D /* ZeroConfDiscoveryProvider.m in Sources */,
+				4436FB0D1B7D3904004E3B1D /* DiscoveryProvider.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		445592FD1B7D291A00051CE8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4455930F1B7D29E700051CE8 /* ZeroconfDiscoveryProviderTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2169,6 +2307,11 @@
 			target = EA61EB0F18FE485B00D75696 /* ConnectSDK */;
 			targetProxy = 44166C571B4203880052F9EC /* PBXContainerItemProxy */;
 		};
+		445593041B7D291A00051CE8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 445592F61B7D291900051CE8 /* ConnectSDK-OSX */;
+			targetProxy = 445593031B7D291A00051CE8 /* PBXContainerItemProxy */;
+		};
 		448085821A12A7BE00E13938 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EA61EB0F18FE485B00D75696 /* ConnectSDK */;
@@ -2262,6 +2405,96 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		445593081B7D291A00051CE8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		445593091B7D291A00051CE8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4455930A1B7D291A00051CE8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "ConnectSDK-OSXTests/PrefixHeader.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ConnectSDK-OSXTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4455930B1B7D291A00051CE8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "ConnectSDK-OSXTests/PrefixHeader.pch";
+				INFOPLIST_FILE = "ConnectSDK-OSXTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -2540,6 +2773,24 @@
 			buildConfigurations = (
 				44166C591B4203880052F9EC /* Debug */,
 				44166C5A1B4203880052F9EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4455930C1B7D291A00051CE8 /* Build configuration list for PBXNativeTarget "ConnectSDK-OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				445593081B7D291A00051CE8 /* Debug */,
+				445593091B7D291A00051CE8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4455930D1B7D291A00051CE8 /* Build configuration list for PBXNativeTarget "ConnectSDK-OSXTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4455930A1B7D291A00051CE8 /* Debug */,
+				4455930B1B7D291A00051CE8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

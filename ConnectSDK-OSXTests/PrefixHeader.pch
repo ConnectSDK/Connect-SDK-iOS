@@ -1,0 +1,17 @@
+//
+//  PrefixHeader.pch
+//  ConnectSDK
+//
+//  Created by Eugene Nikolskyi on 2015-08-13.
+//  Copyright (c) 2015 LG Electronics. All rights reserved.
+//
+
+#ifndef ConnectSDK_PrefixHeader_pch
+#define ConnectSDK_PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#define DLog(...)
+
+#endif
