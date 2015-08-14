@@ -1,12 +1,12 @@
 //
-//  ZeroconfDiscoveryProviderTests.m
+//  SSDPDiscoveryProviderTests.m
 //  ConnectSDK
 //
 //  Created by Eugene Nikolskyi on 2015-08-13.
 //  Copyright (c) 2015 LG Electronics. All rights reserved.
 //
 
-#import "ZeroConfDiscoveryProvider.h"
+#import "SSDPDiscoveryProvider.h"
 
 #import "ServiceDescription.h"
 
@@ -14,17 +14,17 @@
 
 #import <XCTest/XCTest.h>
 
-@interface ZeroConfDiscoveryProviderTests : XCTestCase
+@interface SSDPDiscoveryProviderTests : XCTestCase
 
 @end
 
-@implementation ZeroConfDiscoveryProviderTests
+@implementation SSDPDiscoveryProviderTests
 
-- (void)testShouldDiscoverAppleTVDevice {
-    ZeroConfDiscoveryProvider *provider = [ZeroConfDiscoveryProvider new];
+- (void)testShouldDiscoverDLNADevice {
+    SSDPDiscoveryProvider *provider = [SSDPDiscoveryProvider new];
     [provider addDeviceFilter:@{@"serviceId": @"A",
-                                @"zeroconf": @{
-                                        @"filter": @"_airplay._tcp"
+                                @"ssdp": @{
+                                        @"filter": @"urn:schemas-upnp-org:device:MediaRenderer:1",
                                         }}];
 
     DelegateMock *delegateMock = [DelegateMock new];
@@ -34,11 +34,9 @@
     delegateMock.exp = exp;
 
     [provider startDiscovery];
-    [self waitForExpectationsWithTimeout:1.0 handler:nil];
+    [self waitForExpectationsWithTimeout:10.0 handler:nil];
 
     ServiceDescription *desc = delegateMock.capturedServiceDescription;
-    XCTAssertNotEqual([desc.friendlyName rangeOfString:@"Apple TV"].location,
-                      NSNotFound);
     XCTAssertEqual([desc.address rangeOfString:@"192.168.1."].location, 0);
 }
 

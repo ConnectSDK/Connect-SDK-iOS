@@ -26,6 +26,12 @@
 		0F446CC91A6D924D000BB1C0 /* MediaLaunchObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F446CC71A6D924D000BB1C0 /* MediaLaunchObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0F446CCA1A6D924D000BB1C0 /* MediaLaunchObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F446CC81A6D924D000BB1C0 /* MediaLaunchObject.m */; };
 		146A7D1B1B2896C300260441 /* FireTVIntegrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 146A7D1A1B2896C300260441 /* FireTVIntegrationTests.m */; };
+		14B50FAD1B7DB4C400E9B2A9 /* DelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B50FAC1B7DB4C400E9B2A9 /* DelegateMock.m */; };
+		14EBD3B91B7DB14200ABA0FF /* SSDPDiscoveryProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14EBD3B81B7DB14200ABA0FF /* SSDPDiscoveryProviderTests.m */; };
+		14EBD3BA1B7DB21000ABA0FF /* SSDPDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7B4199AEC550057B4B4 /* SSDPDiscoveryProvider.m */; };
+		14EBD3BB1B7DB24100ABA0FF /* SSDPSocketListener.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB813199AEC550057B4B4 /* SSDPSocketListener.m */; };
+		14EBD3BC1B7DB24C00ABA0FF /* CTXMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB800199AEC550057B4B4 /* CTXMLReader.m */; };
+		14EBD3BD1B7DB25500ABA0FF /* ConnectError.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB808199AEC550057B4B4 /* ConnectError.m */; };
 		440A031D1A854EDE0007E3D3 /* WebOSTVServiceSocketClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 440A031C1A854EDE0007E3D3 /* WebOSTVServiceSocketClientTests.m */; };
 		44166C561B4203880052F9EC /* libConnectSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1018FE485B00D75696 /* libConnectSDK.a */; };
 		44166C5C1B420B6A0052F9EC /* AirPlayServiceAcceptanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E98F991B1E733D0043BC70 /* AirPlayServiceAcceptanceTests.m */; };
@@ -424,6 +430,9 @@
 		0F446CC71A6D924D000BB1C0 /* MediaLaunchObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaLaunchObject.h; sourceTree = "<group>"; };
 		0F446CC81A6D924D000BB1C0 /* MediaLaunchObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaLaunchObject.m; sourceTree = "<group>"; };
 		146A7D1A1B2896C300260441 /* FireTVIntegrationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FireTVIntegrationTests.m; sourceTree = "<group>"; };
+		14B50FAB1B7DB4C400E9B2A9 /* DelegateMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DelegateMock.h; sourceTree = "<group>"; };
+		14B50FAC1B7DB4C400E9B2A9 /* DelegateMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DelegateMock.m; sourceTree = "<group>"; };
+		14EBD3B81B7DB14200ABA0FF /* SSDPDiscoveryProviderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSDPDiscoveryProviderTests.m; sourceTree = "<group>"; };
 		440A031C1A854EDE0007E3D3 /* WebOSTVServiceSocketClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebOSTVServiceSocketClientTests.m; sourceTree = "<group>"; };
 		440A031E1A85536A0007E3D3 /* WebOSTVServiceSocketClient_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebOSTVServiceSocketClient_Private.h; sourceTree = "<group>"; };
 		44166C501B4203880052F9EC /* ConnectSDKAcceptanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConnectSDKAcceptanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -998,7 +1007,10 @@
 		445593051B7D291A00051CE8 /* ConnectSDK-OSXTests */ = {
 			isa = PBXGroup;
 			children = (
+				14EBD3B81B7DB14200ABA0FF /* SSDPDiscoveryProviderTests.m */,
 				4455930E1B7D29E700051CE8 /* ZeroconfDiscoveryProviderTests.m */,
+				14B50FAB1B7DB4C400E9B2A9 /* DelegateMock.h */,
+				14B50FAC1B7DB4C400E9B2A9 /* DelegateMock.m */,
 				445593181B7D2D1C00051CE8 /* PrefixHeader.pch */,
 				445593061B7D291A00051CE8 /* Supporting Files */,
 			);
@@ -2135,7 +2147,11 @@
 			files = (
 				4436FB0E1B7D3923004E3B1D /* ServiceDescription.m in Sources */,
 				4436FB0C1B7D3902004E3B1D /* ZeroConfDiscoveryProvider.m in Sources */,
+				14EBD3BD1B7DB25500ABA0FF /* ConnectError.m in Sources */,
 				4436FB0D1B7D3904004E3B1D /* DiscoveryProvider.m in Sources */,
+				14EBD3BC1B7DB24C00ABA0FF /* CTXMLReader.m in Sources */,
+				14EBD3BA1B7DB21000ABA0FF /* SSDPDiscoveryProvider.m in Sources */,
+				14EBD3BB1B7DB24100ABA0FF /* SSDPSocketListener.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2143,7 +2159,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14B50FAD1B7DB4C400E9B2A9 /* DelegateMock.m in Sources */,
 				4455930F1B7D29E700051CE8 /* ZeroconfDiscoveryProviderTests.m in Sources */,
+				14EBD3B91B7DB14200ABA0FF /* SSDPDiscoveryProviderTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
