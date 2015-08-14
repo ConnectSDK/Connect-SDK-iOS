@@ -74,6 +74,59 @@
 		4436FB0D1B7D3904004E3B1D /* DiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7B0199AEC550057B4B4 /* DiscoveryProvider.m */; };
 		4436FB0E1B7D3923004E3B1D /* ServiceDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB836199AEC550057B4B4 /* ServiceDescription.m */; };
 		4436FB0F1B7D392A004E3B1D /* ConnectSDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB79E199AEC550057B4B4 /* ConnectSDK-Prefix.pch */; };
+		4436FB431B7E8557004E3B1D /* WebOSServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4436FB421B7E8557004E3B1D /* WebOSServiceTests.m */; };
+		4436FB441B7E8576004E3B1D /* Specta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 449A37111B0FE03400E47DAC /* Specta.framework */; };
+		4436FB451B7E85B8004E3B1D /* Expecta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 449A37101B0FE03400E47DAC /* Expecta.framework */; };
+		4436FB461B7E8662004E3B1D /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44316F251AF3F17A000FE655 /* OCMock.framework */; };
+		4436FB471B7E881E004E3B1D /* DiscoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7AD199AEC550057B4B4 /* DiscoveryManager.m */; };
+		4436FB481B7E8823004E3B1D /* WebOSTVService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB858199AEC550057B4B4 /* WebOSTVService.m */; };
+		4436FB491B7E8A4C004E3B1D /* AppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB804199AEC550057B4B4 /* AppInfo.m */; };
+		4436FB4A1B7E8A56004E3B1D /* ChannelInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB806199AEC550057B4B4 /* ChannelInfo.m */; };
+		4436FB4B1B7E8A5A004E3B1D /* AppStateChangeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D90AAB1B06B26C00A5CF2A /* AppStateChangeNotifier.m */; };
+		4436FB4C1B7E8A86004E3B1D /* ConnectableDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7A1199AEC550057B4B4 /* ConnectableDevice.m */; };
+		4436FB4D1B7E8A8C004E3B1D /* DLNAService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB83F199AEC550057B4B4 /* DLNAService.m */; };
+		4436FB4E1B7E8AB0004E3B1D /* CTGuid.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7F8199AEC550057B4B4 /* CTGuid.m */; };
+		4436FB4F1B7E8B00004E3B1D /* DLNAHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F703F509283F37E26C0B4 /* DLNAHTTPServer.m */; };
+		4436FB501B7E8B1C004E3B1D /* DefaultConnectableDeviceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7A5199AEC550057B4B4 /* DefaultConnectableDeviceStore.m */; };
+		4436FB511B7E8B59004E3B1D /* ImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7AF5170CE02632778263 /* ImageInfo.m */; };
+		4436FB521B7E8B5B004E3B1D /* MediaInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9F7A0E6A6150ACCA2F89B6 /* MediaInfo.m */; };
+		4436FB531B7E8B6C004E3B1D /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BCC3F51AB77F7D001BCDAA /* XMLWriter.m */; };
+		4436FB541B7E8B70004E3B1D /* TextInputStatusInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB815199AEC550057B4B4 /* TextInputStatusInfo.m */; };
+		4436FB551B7E8BA7004E3B1D /* ServiceConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB833199AEC550057B4B4 /* ServiceConfig.m */; };
+		4436FB561B7E8BC2004E3B1D /* DispatchQueueBlockRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = 4494263D1AF83588006BAFF2 /* DispatchQueueBlockRunner.m */; };
+		4436FB571B7E8BD2004E3B1D /* WebOSWebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB856199AEC550057B4B4 /* WebOSWebAppSession.m */; };
+		4436FB581B7E8BE9004E3B1D /* WebOSTVServiceSocketClient.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB848199AEC550057B4B4 /* WebOSTVServiceSocketClient.m */; };
+		4436FB591B7E8BF3004E3B1D /* WebOSTVServiceConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB838199AEC550057B4B4 /* WebOSTVServiceConfig.m */; };
+		4436FB5A1B7E8C4E004E3B1D /* GCDWebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7D8199AEC550057B4B4 /* GCDWebServer.m */; };
+		4436FB5B1B7E8C70004E3B1D /* ExternalInputInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB80E199AEC550057B4B4 /* ExternalInputInfo.m */; };
+		4436FB5C1B7E8C8C004E3B1D /* DeviceService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB83A199AEC550057B4B4 /* DeviceService.m */; };
+		4436FB5D1B7E8C97004E3B1D /* WebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB853199AEC550057B4B4 /* WebAppSession.m */; };
+		4436FB5E1B7E8CAD004E3B1D /* GCDWebServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7DA199AEC550057B4B4 /* GCDWebServerConnection.m */; };
+		4436FB5F1B7E8CAD004E3B1D /* GCDWebServerFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7DC199AEC550057B4B4 /* GCDWebServerFunctions.m */; };
+		4436FB601B7E8CAD004E3B1D /* GCDWebServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7E0199AEC550057B4B4 /* GCDWebServerRequest.m */; };
+		4436FB611B7E8CAD004E3B1D /* GCDWebServerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7E2199AEC550057B4B4 /* GCDWebServerResponse.m */; };
+		4436FB621B7E8CAD004E3B1D /* GCDWebServerDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7E6199AEC550057B4B4 /* GCDWebServerDataRequest.m */; };
+		4436FB631B7E8CAD004E3B1D /* GCDWebServerFileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7E8199AEC550057B4B4 /* GCDWebServerFileRequest.m */; };
+		4436FB641B7E8CAD004E3B1D /* GCDWebServerMultiPartFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7EA199AEC550057B4B4 /* GCDWebServerMultiPartFormRequest.m */; };
+		4436FB651B7E8CAD004E3B1D /* GCDWebServerURLEncodedFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7EC199AEC550057B4B4 /* GCDWebServerURLEncodedFormRequest.m */; };
+		4436FB661B7E8CAD004E3B1D /* GCDWebServerDataResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7EF199AEC550057B4B4 /* GCDWebServerDataResponse.m */; };
+		4436FB671B7E8CAD004E3B1D /* GCDWebServerErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7F1199AEC550057B4B4 /* GCDWebServerErrorResponse.m */; };
+		4436FB681B7E8CAD004E3B1D /* GCDWebServerFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7F3199AEC550057B4B4 /* GCDWebServerFileResponse.m */; };
+		4436FB691B7E8CAD004E3B1D /* GCDWebServerStreamedResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7F5199AEC550057B4B4 /* GCDWebServerStreamedResponse.m */; };
+		4436FB6A1B7E8CBB004E3B1D /* WebOSTVServiceMouse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB846199AEC550057B4B4 /* WebOSTVServiceMouse.m */; };
+		4436FB6B1B7E8CC3004E3B1D /* ServiceSubscription.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB82E199AEC550057B4B4 /* ServiceSubscription.m */; };
+		4436FB6C1B7E8CC7004E3B1D /* ServiceCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB82B199AEC550057B4B4 /* ServiceCommand.m */; };
+		4436FB6D1B7E8CDE004E3B1D /* MediaLaunchObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F446CC81A6D924D000BB1C0 /* MediaLaunchObject.m */; };
+		4436FB6E1B7E8CEA004E3B1D /* LaunchSession.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB851199AEC550057B4B4 /* LaunchSession.m */; };
+		4436FB6F1B7E8CF4004E3B1D /* LGSRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7FC199AEC550057B4B4 /* LGSRWebSocket.m */; };
+		4436FB701B7E8CFD004E3B1D /* ServiceAsyncCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB829199AEC550057B4B4 /* ServiceAsyncCommand.m */; };
+		4436FB711B7E8D04004E3B1D /* NetcastTVService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB84A199AEC550057B4B4 /* NetcastTVService.m */; };
+		4436FB721B7E8D5E004E3B1D /* ConnectUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB80A199AEC550057B4B4 /* ConnectUtil.m */; };
+		4436FB731B7E8D6E004E3B1D /* CapabilityConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FA8C3DF809E5088781B765 /* CapabilityConstants.m */; };
+		4436FB741B7E8D7A004E3B1D /* NetcastTVServiceConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB831199AEC550057B4B4 /* NetcastTVServiceConfig.m */; };
+		4436FB751B7E8D8A004E3B1D /* DIALService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB83D199AEC550057B4B4 /* DIALService.m */; };
+		4436FB771B7E8D9E004E3B1D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4436FB761B7E8D9E004E3B1D /* libz.dylib */; };
+		4436FB781B7E8DAF004E3B1D /* DeviceServiceReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB80C199AEC550057B4B4 /* DeviceServiceReachability.m */; };
 		444287CA1B055E0C00B1F875 /* XCTestCase+TaskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 444287C91B055E0C00B1F875 /* XCTestCase+TaskTests.m */; };
 		445593021B7D291A00051CE8 /* libConnectSDK-OSX.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 445592F71B7D291900051CE8 /* libConnectSDK-OSX.dylib */; };
 		4455930F1B7D29E700051CE8 /* ZeroconfDiscoveryProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4455930E1B7D29E700051CE8 /* ZeroconfDiscoveryProviderTests.m */; };
@@ -457,6 +510,8 @@
 		44316F251AF3F17A000FE655 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OCMock.framework; sourceTree = "<group>"; };
 		44316F271AF3F17A000FE655 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OHHTTPStubs.framework; sourceTree = "<group>"; };
 		4433F3DE1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirPlayServiceHTTPKeepAliveTests.m; sourceTree = "<group>"; };
+		4436FB421B7E8557004E3B1D /* WebOSServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebOSServiceTests.m; sourceTree = "<group>"; };
+		4436FB761B7E8D9E004E3B1D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		444287C81B055E0C00B1F875 /* XCTestCase+TaskTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+TaskTests.h"; sourceTree = "<group>"; };
 		444287C91B055E0C00B1F875 /* XCTestCase+TaskTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+TaskTests.m"; sourceTree = "<group>"; };
 		445592F71B7D291900051CE8 /* libConnectSDK-OSX.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libConnectSDK-OSX.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -801,6 +856,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4436FB771B7E8D9E004E3B1D /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -808,6 +864,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4436FB461B7E8662004E3B1D /* OCMock.framework in Frameworks */,
+				4436FB451B7E85B8004E3B1D /* Expecta.framework in Frameworks */,
+				4436FB441B7E8576004E3B1D /* Specta.framework in Frameworks */,
 				445593021B7D291A00051CE8 /* libConnectSDK-OSX.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1009,6 +1068,7 @@
 			children = (
 				14EBD3B81B7DB14200ABA0FF /* SSDPDiscoveryProviderTests.m */,
 				4455930E1B7D29E700051CE8 /* ZeroconfDiscoveryProviderTests.m */,
+				4436FB421B7E8557004E3B1D /* WebOSServiceTests.m */,
 				14B50FAB1B7DB4C400E9B2A9 /* DelegateMock.h */,
 				14B50FAC1B7DB4C400E9B2A9 /* DelegateMock.m */,
 				445593181B7D2D1C00051CE8 /* PrefixHeader.pch */,
@@ -1720,6 +1780,7 @@
 		EA61EB1218FE485B00D75696 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4436FB761B7E8D9E004E3B1D /* libz.dylib */,
 				44EF619A1A12E23200CF344C /* libicucore.dylib */,
 				44EF61971A12E1C800CF344C /* MediaAccessibility.framework */,
 				44EF618E1A12E0A400CF344C /* libz.dylib */,
@@ -2145,13 +2206,61 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4436FB471B7E881E004E3B1D /* DiscoveryManager.m in Sources */,
+				4436FB4F1B7E8B00004E3B1D /* DLNAHTTPServer.m in Sources */,
+				4436FB681B7E8CAD004E3B1D /* GCDWebServerFileResponse.m in Sources */,
+				4436FB571B7E8BD2004E3B1D /* WebOSWebAppSession.m in Sources */,
+				4436FB6D1B7E8CDE004E3B1D /* MediaLaunchObject.m in Sources */,
+				4436FB4E1B7E8AB0004E3B1D /* CTGuid.m in Sources */,
+				4436FB591B7E8BF3004E3B1D /* WebOSTVServiceConfig.m in Sources */,
+				4436FB5A1B7E8C4E004E3B1D /* GCDWebServer.m in Sources */,
 				4436FB0E1B7D3923004E3B1D /* ServiceDescription.m in Sources */,
+				4436FB621B7E8CAD004E3B1D /* GCDWebServerDataRequest.m in Sources */,
+				4436FB611B7E8CAD004E3B1D /* GCDWebServerResponse.m in Sources */,
+				4436FB731B7E8D6E004E3B1D /* CapabilityConstants.m in Sources */,
+				4436FB601B7E8CAD004E3B1D /* GCDWebServerRequest.m in Sources */,
+				4436FB5C1B7E8C8C004E3B1D /* DeviceService.m in Sources */,
 				4436FB0C1B7D3902004E3B1D /* ZeroConfDiscoveryProvider.m in Sources */,
+				4436FB4C1B7E8A86004E3B1D /* ConnectableDevice.m in Sources */,
+				4436FB561B7E8BC2004E3B1D /* DispatchQueueBlockRunner.m in Sources */,
+				4436FB4D1B7E8A8C004E3B1D /* DLNAService.m in Sources */,
+				4436FB511B7E8B59004E3B1D /* ImageInfo.m in Sources */,
 				14EBD3BD1B7DB25500ABA0FF /* ConnectError.m in Sources */,
+				4436FB6E1B7E8CEA004E3B1D /* LaunchSession.m in Sources */,
+				4436FB691B7E8CAD004E3B1D /* GCDWebServerStreamedResponse.m in Sources */,
+				4436FB5F1B7E8CAD004E3B1D /* GCDWebServerFunctions.m in Sources */,
+				4436FB551B7E8BA7004E3B1D /* ServiceConfig.m in Sources */,
+				4436FB721B7E8D5E004E3B1D /* ConnectUtil.m in Sources */,
+				4436FB651B7E8CAD004E3B1D /* GCDWebServerURLEncodedFormRequest.m in Sources */,
+				4436FB701B7E8CFD004E3B1D /* ServiceAsyncCommand.m in Sources */,
 				4436FB0D1B7D3904004E3B1D /* DiscoveryProvider.m in Sources */,
+				4436FB741B7E8D7A004E3B1D /* NetcastTVServiceConfig.m in Sources */,
+				4436FB751B7E8D8A004E3B1D /* DIALService.m in Sources */,
+				4436FB6F1B7E8CF4004E3B1D /* LGSRWebSocket.m in Sources */,
+				4436FB491B7E8A4C004E3B1D /* AppInfo.m in Sources */,
+				4436FB6A1B7E8CBB004E3B1D /* WebOSTVServiceMouse.m in Sources */,
 				14EBD3BC1B7DB24C00ABA0FF /* CTXMLReader.m in Sources */,
+				4436FB711B7E8D04004E3B1D /* NetcastTVService.m in Sources */,
+				4436FB531B7E8B6C004E3B1D /* XMLWriter.m in Sources */,
+				4436FB4B1B7E8A5A004E3B1D /* AppStateChangeNotifier.m in Sources */,
 				14EBD3BA1B7DB21000ABA0FF /* SSDPDiscoveryProvider.m in Sources */,
+				4436FB671B7E8CAD004E3B1D /* GCDWebServerErrorResponse.m in Sources */,
+				4436FB481B7E8823004E3B1D /* WebOSTVService.m in Sources */,
+				4436FB661B7E8CAD004E3B1D /* GCDWebServerDataResponse.m in Sources */,
+				4436FB5B1B7E8C70004E3B1D /* ExternalInputInfo.m in Sources */,
 				14EBD3BB1B7DB24100ABA0FF /* SSDPSocketListener.m in Sources */,
+				4436FB501B7E8B1C004E3B1D /* DefaultConnectableDeviceStore.m in Sources */,
+				4436FB5D1B7E8C97004E3B1D /* WebAppSession.m in Sources */,
+				4436FB4A1B7E8A56004E3B1D /* ChannelInfo.m in Sources */,
+				4436FB581B7E8BE9004E3B1D /* WebOSTVServiceSocketClient.m in Sources */,
+				4436FB631B7E8CAD004E3B1D /* GCDWebServerFileRequest.m in Sources */,
+				4436FB781B7E8DAF004E3B1D /* DeviceServiceReachability.m in Sources */,
+				4436FB5E1B7E8CAD004E3B1D /* GCDWebServerConnection.m in Sources */,
+				4436FB641B7E8CAD004E3B1D /* GCDWebServerMultiPartFormRequest.m in Sources */,
+				4436FB541B7E8B70004E3B1D /* TextInputStatusInfo.m in Sources */,
+				4436FB6B1B7E8CC3004E3B1D /* ServiceSubscription.m in Sources */,
+				4436FB521B7E8B5B004E3B1D /* MediaInfo.m in Sources */,
+				4436FB6C1B7E8CC7004E3B1D /* ServiceCommand.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2161,6 +2270,7 @@
 			files = (
 				14B50FAD1B7DB4C400E9B2A9 /* DelegateMock.m in Sources */,
 				4455930F1B7D29E700051CE8 /* ZeroconfDiscoveryProviderTests.m in Sources */,
+				4436FB431B7E8557004E3B1D /* WebOSServiceTests.m in Sources */,
 				14EBD3B91B7DB14200ABA0FF /* SSDPDiscoveryProviderTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2477,6 +2587,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/core/ConnectSDKIntegrationTests/Frameworks",
+					"$(PROJECT_DIR)/core/ConnectSDKTests/Frameworks",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "ConnectSDK-OSXTests/PrefixHeader.pch";
@@ -2488,6 +2600,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -2504,6 +2617,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/core/ConnectSDKIntegrationTests/Frameworks",
+					"$(PROJECT_DIR)/core/ConnectSDKTests/Frameworks",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "ConnectSDK-OSXTests/PrefixHeader.pch";
@@ -2511,6 +2626,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
