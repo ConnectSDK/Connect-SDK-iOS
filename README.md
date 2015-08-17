@@ -1,4 +1,9 @@
 #Connect SDK iOS
+
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/ConnectSDK.svg)](https://cocoapods.org/pods/ConnectSDK)
+[![Apache License, 2.0](https://img.shields.io/cocoapods/l/ConnectSDK.svg)](https://github.com/ConnectSDK/Connect-SDK-iOS/blob/master/LICENSE)
+[![Platform: iOS](https://img.shields.io/cocoapods/p/ConnectSDK.svg)](http://cocoadocs.org/docsets/ConnectSDK/)
+
 Connect SDK is an open source framework that connects your mobile apps with multiple TV platforms. Because most TV platforms support a variety of protocols, Connect SDK integrates and abstracts the discovery and connectivity between all supported protocols.
 
 For more information, visit our [website](http://www.connectsdk.com/).
