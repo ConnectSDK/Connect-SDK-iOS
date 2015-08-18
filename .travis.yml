@@ -1,0 +1,6 @@
+language: objective-c
+osx_image: xcode6.4
+
+xcode_project: ConnectSDK.xcodeproj
+xcode_scheme: ConnectSDKTests
+xcode_sdk: iphonesimulator
