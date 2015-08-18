@@ -4,3 +4,13 @@ osx_image: xcode6.4
 xcode_project: ConnectSDK.xcodeproj
 xcode_scheme: ConnectSDKTests
 xcode_sdk: iphonesimulator
+
+before_script:
+  - curl -L -ocast.zip https://redirector.gvt1.com/edgedl/chromecast/sdk/ios/GoogleCastSDK-2.7.1-Release-ios-default.zip
+  - unzip cast.zip 'GoogleCastSDK-2.7.1-Release/GoogleCast.framework/*'
+  - mv -v GoogleCastSDK-2.7.1-Release/GoogleCast.framework modules/google-cast/
+  - curl -L -ofling.zip https://s3-us-west-1.amazonaws.com/amazon-fling/AmazonFling-SDK.zip
+  - unzip fling.zip 'ios-sdk/frameworks/*'
+  - mv -v ios-sdk/frameworks/{AmazonFling,third_party_framework/Bolts}.framework modules/firetv/Frameworks/
+
+# vim: set sw=2 ts=2 sts=2
