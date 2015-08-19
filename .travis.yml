@@ -13,7 +13,7 @@ before_script:
   - mv -v ios-sdk/frameworks/{AmazonFling,third_party_framework/Bolts}.framework modules/firetv/Frameworks/
 
 script:
-  - xctool -scheme ConnectSDK -configuration Debug -sdk iphonesimulator -IDECustomDerivedDataLocation="out/tests_build" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES build test
+  - xctool -scheme ConnectSDK -configuration Debug -sdk iphonesimulator -IDECustomDerivedDataLocation="out/tests_build" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES test
   - xctool -scheme ConnectSDKIntegrationTests -configuration Debug -sdk iphonesimulator -IDECustomDerivedDataLocation="out/integration_tests_build" test
 
 after_success:
