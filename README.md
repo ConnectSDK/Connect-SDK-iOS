@@ -1,5 +1,7 @@
 #Connect SDK iOS
 
+[![Build Status](https://travis-ci.org/ConnectSDK/Connect-SDK-iOS.svg)](https://travis-ci.org/ConnectSDK/Connect-SDK-iOS)
+
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/ConnectSDK.svg)](https://cocoapods.org/pods/ConnectSDK)
 [![Apache License, 2.0](https://img.shields.io/cocoapods/l/ConnectSDK.svg)](https://github.com/ConnectSDK/Connect-SDK-iOS/blob/master/LICENSE)
 [![Platform: iOS](https://img.shields.io/cocoapods/p/ConnectSDK.svg)](http://cocoadocs.org/docsets/ConnectSDK/)
