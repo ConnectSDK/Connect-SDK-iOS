@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4479567B1B854F8C002873A0"
-               BuildableName = "ConnectSDKDynamic.framework"
+               BuildableName = "ConnectSDK.framework"
                BlueprintName = "ConnectSDKDynamic"
                ReferencedContainer = "container:ConnectSDK.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4479567B1B854F8C002873A0"
-            BuildableName = "ConnectSDKDynamic.framework"
+            BuildableName = "ConnectSDK.framework"
             BlueprintName = "ConnectSDKDynamic"
             ReferencedContainer = "container:ConnectSDK.xcodeproj">
          </BuildableReference>
@@ -52,7 +52,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4479567B1B854F8C002873A0"
-            BuildableName = "ConnectSDKDynamic.framework"
+            BuildableName = "ConnectSDK.framework"
             BlueprintName = "ConnectSDKDynamic"
             ReferencedContainer = "container:ConnectSDK.xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4479567B1B854F8C002873A0"
-            BuildableName = "ConnectSDKDynamic.framework"
+            BuildableName = "ConnectSDK.framework"
             BlueprintName = "ConnectSDKDynamic"
             ReferencedContainer = "container:ConnectSDK.xcodeproj">
          </BuildableReference>

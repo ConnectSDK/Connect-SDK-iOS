@@ -643,7 +643,7 @@
 		44758BCD1AE7070600EC43A6 /* airplay_playbackinfo_rewind.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airplay_playbackinfo_rewind.json; sourceTree = "<group>"; };
 		44789D841B585525001D5098 /* RokuServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RokuServiceTests.m; sourceTree = "<group>"; };
 		44789D861B5858D2001D5098 /* RokuService_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RokuService_Private.h; sourceTree = "<group>"; };
-		4479567C1B854F8C002873A0 /* ConnectSDKDynamic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ConnectSDKDynamic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4479567C1B854F8C002873A0 /* ConnectSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ConnectSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4479567F1B854F8C002873A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		447956801B854F8C002873A0 /* ConnectSDKDynamic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectSDKDynamic.h; sourceTree = "<group>"; };
 		447F63431B14FDC600699843 /* DLNAServiceAcceptanceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLNAServiceAcceptanceTests.m; sourceTree = "<group>"; };
@@ -1866,7 +1866,7 @@
 				4480857A1A12A7BE00E13938 /* ConnectSDKTests.xctest */,
 				449A37021B0FDC1C00E47DAC /* ConnectSDKIntegrationTests.xctest */,
 				44166C501B4203880052F9EC /* ConnectSDKAcceptanceTests.xctest */,
-				4479567C1B854F8C002873A0 /* ConnectSDKDynamic.framework */,
+				4479567C1B854F8C002873A0 /* ConnectSDK.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2177,7 +2177,7 @@
 			);
 			name = ConnectSDKDynamic;
 			productName = ConnectSDKDynamic;
-			productReference = 4479567C1B854F8C002873A0 /* ConnectSDKDynamic.framework */;
+			productReference = 4479567C1B854F8C002873A0 /* ConnectSDK.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		448085791A12A7BE00E13938 /* ConnectSDKTests */ = {
@@ -2754,7 +2754,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2782,7 +2782,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -3076,6 +3076,7 @@
 				447956901B854F8D002873A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		448085851A12A7BE00E13938 /* Build configuration list for PBXNativeTarget "ConnectSDKTests" */ = {
 			isa = XCConfigurationList;
