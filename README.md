@@ -24,7 +24,7 @@ This project has the following dependencies, some of which require manual setup.
 * Automatic Reference Counting (ARC)
 * [Connect-SDK-iOS-Core](https://github.com/ConnectSDK/Connect-SDK-iOS-Core) submodule
 * [Connect-SDK-iOS-Google-Cast](https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast) submodule
-  - Requires [`GoogleCast.framework`](https://developers.google.com/cast/docs/downloads)
+  - Requires [`GoogleCast.framework`](https://developers.google.com/cast/docs/developers#libraries)
 * [Connect-SDK-iOS-FireTV](https://github.com/ConnectSDK/Connect-SDK-iOS-FireTV) submodule
   - Requires [`AmazonFling.framework`](https://developer.amazon.com/public/apis/experience/fling/docs/amazon-fling-sdk-download)
 
