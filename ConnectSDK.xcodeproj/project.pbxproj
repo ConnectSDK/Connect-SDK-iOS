@@ -47,6 +47,29 @@
 		44166C6C1B420E1A0052F9EC /* EXPMatchers+matchRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = 441FE0EE1B1528D0006C47CE /* EXPMatchers+matchRegex.m */; };
 		44166C6E1B420ED80052F9EC /* FireTVAcceptanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B4C5B71B0E96E80024F229 /* FireTVAcceptanceTests.m */; };
 		44166CB31B4AFE060052F9EC /* the-san-francisco-peaks-of-flagstaff-718x544.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 44E98F961B1E72D80043BC70 /* the-san-francisco-peaks-of-flagstaff-718x544.jpg */; };
+		441C73151B863B23000209BA /* FireTVCapabilityMixin.m in Sources */ = {isa = PBXBuildFile; fileRef = 44A499041B0AD0C1002C94E7 /* FireTVCapabilityMixin.m */; };
+		441C73161B863B23000209BA /* FireTVMediaControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 448B28731B041A5600DFF18F /* FireTVMediaControl.m */; };
+		441C73171B863B23000209BA /* FireTVMediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 448B28751B041A5600DFF18F /* FireTVMediaPlayer.m */; };
+		441C73181B863B23000209BA /* FireTVDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 44316EFD1AF2F04B000FE655 /* FireTVDiscoveryProvider.m */; };
+		441C73191B863B28000209BA /* FireTVService.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AD91761AFA7F1000C23A71 /* FireTVService.m */; };
+		441C731A1B863B2F000209BA /* FireTVCapabilityMixin.h in Headers */ = {isa = PBXBuildFile; fileRef = 44A499031B0AD0C1002C94E7 /* FireTVCapabilityMixin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		441C731B1B863B2F000209BA /* FireTVMediaControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 448B28721B041A5600DFF18F /* FireTVMediaControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		441C731C1B863B2F000209BA /* FireTVMediaPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 448B28741B041A5600DFF18F /* FireTVMediaPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		441C731D1B863B2F000209BA /* FireTVDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 44316EFC1AF2F04B000FE655 /* FireTVDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		441C731E1B863B2F000209BA /* FireTVService.h in Headers */ = {isa = PBXBuildFile; fileRef = 44AD91751AFA7F1000C23A71 /* FireTVService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		441C731F1B863B3C000209BA /* CastDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB85C199AEC550057B4B4 /* CastDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		441C73201B863B3C000209BA /* CastService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB85E199AEC550057B4B4 /* CastService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		441C73211B863B3C000209BA /* CastServiceChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB860199AEC550057B4B4 /* CastServiceChannel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		441C73221B863B3C000209BA /* CastWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB862199AEC550057B4B4 /* CastWebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		441C73231B863B42000209BA /* CastDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB85D199AEC550057B4B4 /* CastDiscoveryProvider.m */; };
+		441C73241B863B42000209BA /* CastService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB85F199AEC550057B4B4 /* CastService.m */; };
+		441C73251B863B42000209BA /* CastServiceChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB861199AEC550057B4B4 /* CastServiceChannel.m */; };
+		441C73261B863B42000209BA /* CastWebAppSession.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB863199AEC550057B4B4 /* CastWebAppSession.m */; };
+		441C73271B863B66000209BA /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44316EF41AF2EBF5000FE655 /* Bolts.framework */; };
+		441C73281B863B6E000209BA /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4485140C1A02FC3200D66710 /* GoogleCast.framework */; };
+		441C73291B863B75000209BA /* AmazonFling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44316EF31AF2EBF5000FE655 /* AmazonFling.framework */; };
+		441C732A1B863B7B000209BA /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 44316F051AF2F9AD000FE655 /* libc++.dylib */; };
+		441C732B1B863B81000209BA /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44316F071AF2F9BF000FE655 /* AdSupport.framework */; };
 		441C9ED51B3DBCB200F912D5 /* SubscriptionDeduplicator.h in Headers */ = {isa = PBXBuildFile; fileRef = 441C9ED31B3DBCB200F912D5 /* SubscriptionDeduplicator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		441C9ED61B3DBCB200F912D5 /* SubscriptionDeduplicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 441C9ED41B3DBCB200F912D5 /* SubscriptionDeduplicator.m */; };
 		441C9EFF1B3DD8C500F912D5 /* SubscriptionDeduplicatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 441C9EFE1B3DD8C500F912D5 /* SubscriptionDeduplicatorTests.m */; };
@@ -974,8 +997,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				441C73281B863B6E000209BA /* GoogleCast.framework in Frameworks */,
+				441C73291B863B75000209BA /* AmazonFling.framework in Frameworks */,
+				441C73271B863B66000209BA /* Bolts.framework in Frameworks */,
 				447956E61B85519C002873A0 /* libicucore.dylib in Frameworks */,
+				441C732A1B863B7B000209BA /* libc++.dylib in Frameworks */,
 				447956E71B85519E002873A0 /* libz.dylib in Frameworks */,
+				441C732B1B863B81000209BA /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1919,6 +1947,10 @@
 				447957161B8554C5002873A0 /* CTXMLReader.h in Headers */,
 				447957301B8554D9002873A0 /* Capability.h in Headers */,
 				447956F11B8552C7002873A0 /* CapabilityFilter.h in Headers */,
+				441C731F1B863B3C000209BA /* CastDiscoveryProvider.h in Headers */,
+				441C73201B863B3C000209BA /* CastService.h in Headers */,
+				441C73211B863B3C000209BA /* CastServiceChannel.h in Headers */,
+				441C73221B863B3C000209BA /* CastWebAppSession.h in Headers */,
 				4479571C1B8554CD002873A0 /* ChannelInfo.h in Headers */,
 				4479572B1B8554CD002873A0 /* CommonMacros.h in Headers */,
 				4479571D1B8554CD002873A0 /* ConnectError.h in Headers */,
@@ -1945,6 +1977,11 @@
 				447957191B8554CD002873A0 /* DispatchQueueBlockRunner.h in Headers */,
 				447957311B8554D9002873A0 /* ExternalInputControl.h in Headers */,
 				447957201B8554CD002873A0 /* ExternalInputInfo.h in Headers */,
+				441C731A1B863B2F000209BA /* FireTVCapabilityMixin.h in Headers */,
+				441C731D1B863B2F000209BA /* FireTVDiscoveryProvider.h in Headers */,
+				441C731B1B863B2F000209BA /* FireTVMediaControl.h in Headers */,
+				441C731C1B863B2F000209BA /* FireTVMediaPlayer.h in Headers */,
+				441C731E1B863B2F000209BA /* FireTVService.h in Headers */,
 				447957051B8554BD002873A0 /* GCDWebServer.h in Headers */,
 				447957061B8554BD002873A0 /* GCDWebServerConnection.h in Headers */,
 				4479570C1B8554BD002873A0 /* GCDWebServerDataRequest.h in Headers */,
@@ -2411,6 +2448,10 @@
 				447956B51B855176002873A0 /* CTXMLReader.m in Sources */,
 				447956CC1B855181002873A0 /* CapabilityConstants.m in Sources */,
 				447956981B855119002873A0 /* CapabilityFilter.m in Sources */,
+				441C73231B863B42000209BA /* CastDiscoveryProvider.m in Sources */,
+				441C73241B863B42000209BA /* CastService.m in Sources */,
+				441C73251B863B42000209BA /* CastServiceChannel.m in Sources */,
+				441C73261B863B42000209BA /* CastWebAppSession.m in Sources */,
 				447956BA1B85517C002873A0 /* ChannelInfo.m in Sources */,
 				447956BB1B85517C002873A0 /* ConnectError.m in Sources */,
 				447956BC1B85517C002873A0 /* ConnectUtil.m in Sources */,
@@ -2426,6 +2467,11 @@
 				4479569A1B855119002873A0 /* DiscoveryProvider.m in Sources */,
 				447956B71B85517C002873A0 /* DispatchQueueBlockRunner.m in Sources */,
 				447956BE1B85517C002873A0 /* ExternalInputInfo.m in Sources */,
+				441C73151B863B23000209BA /* FireTVCapabilityMixin.m in Sources */,
+				441C73181B863B23000209BA /* FireTVDiscoveryProvider.m in Sources */,
+				441C73161B863B23000209BA /* FireTVMediaControl.m in Sources */,
+				441C73171B863B23000209BA /* FireTVMediaPlayer.m in Sources */,
+				441C73191B863B28000209BA /* FireTVService.m in Sources */,
 				447956A61B855123002873A0 /* GCDWebServer.m in Sources */,
 				447956A71B855123002873A0 /* GCDWebServerConnection.m in Sources */,
 				447956AB1B855123002873A0 /* GCDWebServerDataRequest.m in Sources */,
@@ -2743,6 +2789,11 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/modules/firetv/Frameworks",
+					"$(PROJECT_DIR)/modules/google-cast",
+				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2775,6 +2826,11 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/modules/firetv/Frameworks",
+					"$(PROJECT_DIR)/modules/google-cast",
+				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
 				INFOPLIST_FILE = ConnectSDKDynamic/Info.plist;
