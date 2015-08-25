@@ -2495,6 +2495,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = NO;
+				DEPLOYMENT_POSTPROCESSING = YES;
 				DSTROOT = /tmp/Connect_SDK.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2502,6 +2503,7 @@
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
 				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
