@@ -52,14 +52,13 @@
 		441C73171B863B23000209BA /* FireTVMediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 448B28751B041A5600DFF18F /* FireTVMediaPlayer.m */; };
 		441C73181B863B23000209BA /* FireTVDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 44316EFD1AF2F04B000FE655 /* FireTVDiscoveryProvider.m */; };
 		441C73191B863B28000209BA /* FireTVService.m in Sources */ = {isa = PBXBuildFile; fileRef = 44AD91761AFA7F1000C23A71 /* FireTVService.m */; };
-		441C731A1B863B2F000209BA /* FireTVCapabilityMixin.h in Headers */ = {isa = PBXBuildFile; fileRef = 44A499031B0AD0C1002C94E7 /* FireTVCapabilityMixin.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		441C731B1B863B2F000209BA /* FireTVMediaControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 448B28721B041A5600DFF18F /* FireTVMediaControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		441C731C1B863B2F000209BA /* FireTVMediaPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 448B28741B041A5600DFF18F /* FireTVMediaPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		441C731A1B863B2F000209BA /* FireTVCapabilityMixin.h in Headers */ = {isa = PBXBuildFile; fileRef = 44A499031B0AD0C1002C94E7 /* FireTVCapabilityMixin.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		441C731B1B863B2F000209BA /* FireTVMediaControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 448B28721B041A5600DFF18F /* FireTVMediaControl.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		441C731C1B863B2F000209BA /* FireTVMediaPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 448B28741B041A5600DFF18F /* FireTVMediaPlayer.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		441C731D1B863B2F000209BA /* FireTVDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 44316EFC1AF2F04B000FE655 /* FireTVDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		441C731E1B863B2F000209BA /* FireTVService.h in Headers */ = {isa = PBXBuildFile; fileRef = 44AD91751AFA7F1000C23A71 /* FireTVService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		441C731F1B863B3C000209BA /* CastDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB85C199AEC550057B4B4 /* CastDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		441C73201B863B3C000209BA /* CastService.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB85E199AEC550057B4B4 /* CastService.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		441C73211B863B3C000209BA /* CastServiceChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB860199AEC550057B4B4 /* CastServiceChannel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		441C73221B863B3C000209BA /* CastWebAppSession.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB862199AEC550057B4B4 /* CastWebAppSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		441C73231B863B42000209BA /* CastDiscoveryProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB85D199AEC550057B4B4 /* CastDiscoveryProvider.m */; };
 		441C73241B863B42000209BA /* CastService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB85F199AEC550057B4B4 /* CastService.m */; };
@@ -87,6 +86,7 @@
 		44316F291AF3F17A000FE655 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44316F251AF3F17A000FE655 /* OCMock.framework */; };
 		44316F2B1AF3F17A000FE655 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44316F271AF3F17A000FE655 /* OHHTTPStubs.framework */; };
 		4433F3DF1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4433F3DE1A421750008D9A04 /* AirPlayServiceHTTPKeepAliveTests.m */; };
+		443B41611B90F0B900EB472E /* CastServiceChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB860199AEC550057B4B4 /* CastServiceChannel.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		444287CA1B055E0C00B1F875 /* XCTestCase+TaskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 444287C91B055E0C00B1F875 /* XCTestCase+TaskTests.m */; };
 		44758BBB1AE6C06200EC43A6 /* AirPlayServiceHTTPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44758BBA1AE6C06200EC43A6 /* AirPlayServiceHTTPTests.m */; };
 		44758BCE1AE7070600EC43A6 /* airplay_playbackinfo_ff.json in Resources */ = {isa = PBXBuildFile; fileRef = 44758BC91AE7070500EC43A6 /* airplay_playbackinfo_ff.json */; };
@@ -194,18 +194,18 @@
 		447956F51B8552C7002873A0 /* DiscoveryProviderDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7B1199AEC550057B4B4 /* DiscoveryProviderDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		447956F61B8552CD002873A0 /* SSDPDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7B3199AEC550057B4B4 /* SSDPDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		447956F71B8552CD002873A0 /* ZeroConfDiscoveryProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7B5199AEC550057B4B4 /* ZeroConfDiscoveryProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		447956F81B8552D8002873A0 /* CTASIAuthenticationDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7BC199AEC550057B4B4 /* CTASIAuthenticationDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		447956F91B8552D8002873A0 /* CTASICacheDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7BE199AEC550057B4B4 /* CTASICacheDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		447956FA1B8552D8002873A0 /* CTASIDataCompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7BF199AEC550057B4B4 /* CTASIDataCompressor.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		447956FB1B8552D8002873A0 /* CTASIDataDecompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7C1199AEC550057B4B4 /* CTASIDataDecompressor.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		447956FC1B8552D8002873A0 /* CTASIDownloadCache.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7C3199AEC550057B4B4 /* CTASIDownloadCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		447956FD1B8552D8002873A0 /* CTASIFormDataRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7C5199AEC550057B4B4 /* CTASIFormDataRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		447956FE1B8552D8002873A0 /* CTASIHTTPRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7C7199AEC550057B4B4 /* CTASIHTTPRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		447956FF1B8552D8002873A0 /* CTASIHTTPRequestConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7C9199AEC550057B4B4 /* CTASIHTTPRequestConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		447957001B8552D8002873A0 /* CTASIHTTPRequestDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7CA199AEC550057B4B4 /* CTASIHTTPRequestDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		447957011B8552D8002873A0 /* CTASIInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7CB199AEC550057B4B4 /* CTASIInputStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		447957021B8552D8002873A0 /* CTASINetworkQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7CD199AEC550057B4B4 /* CTASINetworkQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		447957031B8552D8002873A0 /* CTASIProgressDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7CF199AEC550057B4B4 /* CTASIProgressDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		447956F81B8552D8002873A0 /* CTASIAuthenticationDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7BC199AEC550057B4B4 /* CTASIAuthenticationDialog.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		447956F91B8552D8002873A0 /* CTASICacheDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7BE199AEC550057B4B4 /* CTASICacheDelegate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		447956FA1B8552D8002873A0 /* CTASIDataCompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7BF199AEC550057B4B4 /* CTASIDataCompressor.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		447956FB1B8552D8002873A0 /* CTASIDataDecompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7C1199AEC550057B4B4 /* CTASIDataDecompressor.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		447956FC1B8552D8002873A0 /* CTASIDownloadCache.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7C3199AEC550057B4B4 /* CTASIDownloadCache.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		447956FD1B8552D8002873A0 /* CTASIFormDataRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7C5199AEC550057B4B4 /* CTASIFormDataRequest.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		447956FE1B8552D8002873A0 /* CTASIHTTPRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7C7199AEC550057B4B4 /* CTASIHTTPRequest.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		447956FF1B8552D8002873A0 /* CTASIHTTPRequestConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7C9199AEC550057B4B4 /* CTASIHTTPRequestConfig.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		447957001B8552D8002873A0 /* CTASIHTTPRequestDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7CA199AEC550057B4B4 /* CTASIHTTPRequestDelegate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		447957011B8552D8002873A0 /* CTASIInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7CB199AEC550057B4B4 /* CTASIInputStream.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		447957021B8552D8002873A0 /* CTASINetworkQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7CD199AEC550057B4B4 /* CTASINetworkQueue.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		447957031B8552D8002873A0 /* CTASIProgressDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7CF199AEC550057B4B4 /* CTASIProgressDelegate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		447957041B8552D8002873A0 /* CTReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7D2199AEC550057B4B4 /* CTReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		447957051B8554BD002873A0 /* GCDWebServer.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7D7199AEC550057B4B4 /* GCDWebServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		447957061B8554BD002873A0 /* GCDWebServerConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7D9199AEC550057B4B4 /* GCDWebServerConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1930,26 +1930,14 @@
 				4479571B1B8554CD002873A0 /* AppInfo.h in Headers */,
 				4479572C1B8554CD002873A0 /* AppStateChangeNotifier.h in Headers */,
 				447957181B8554CD002873A0 /* BlockRunner.h in Headers */,
-				447956F81B8552D8002873A0 /* CTASIAuthenticationDialog.h in Headers */,
-				447956F91B8552D8002873A0 /* CTASICacheDelegate.h in Headers */,
-				447956FA1B8552D8002873A0 /* CTASIDataCompressor.h in Headers */,
-				447956FB1B8552D8002873A0 /* CTASIDataDecompressor.h in Headers */,
-				447956FC1B8552D8002873A0 /* CTASIDownloadCache.h in Headers */,
-				447956FD1B8552D8002873A0 /* CTASIFormDataRequest.h in Headers */,
-				447956FE1B8552D8002873A0 /* CTASIHTTPRequest.h in Headers */,
-				447956FF1B8552D8002873A0 /* CTASIHTTPRequestConfig.h in Headers */,
-				447957001B8552D8002873A0 /* CTASIHTTPRequestDelegate.h in Headers */,
-				447957011B8552D8002873A0 /* CTASIInputStream.h in Headers */,
-				447957021B8552D8002873A0 /* CTASINetworkQueue.h in Headers */,
-				447957031B8552D8002873A0 /* CTASIProgressDelegate.h in Headers */,
 				447957141B8554C5002873A0 /* CTGuid.h in Headers */,
 				447957041B8552D8002873A0 /* CTReachability.h in Headers */,
+				443B41611B90F0B900EB472E /* CastServiceChannel.h in Headers */,
 				447957161B8554C5002873A0 /* CTXMLReader.h in Headers */,
 				447957301B8554D9002873A0 /* Capability.h in Headers */,
 				447956F11B8552C7002873A0 /* CapabilityFilter.h in Headers */,
 				441C731F1B863B3C000209BA /* CastDiscoveryProvider.h in Headers */,
 				441C73201B863B3C000209BA /* CastService.h in Headers */,
-				441C73211B863B3C000209BA /* CastServiceChannel.h in Headers */,
 				441C73221B863B3C000209BA /* CastWebAppSession.h in Headers */,
 				4479571C1B8554CD002873A0 /* ChannelInfo.h in Headers */,
 				4479572B1B8554CD002873A0 /* CommonMacros.h in Headers */,
@@ -2041,6 +2029,18 @@
 				447957461B8554EB002873A0 /* WebOSTVServiceConfig.h in Headers */,
 				4479574E1B8554EB002873A0 /* WebOSTVServiceMouse.h in Headers */,
 				4479574F1B8554EB002873A0 /* WebOSTVServiceSocketClient.h in Headers */,
+				447956F81B8552D8002873A0 /* CTASIAuthenticationDialog.h in Headers */,
+				447956F91B8552D8002873A0 /* CTASICacheDelegate.h in Headers */,
+				447956FA1B8552D8002873A0 /* CTASIDataCompressor.h in Headers */,
+				447956FB1B8552D8002873A0 /* CTASIDataDecompressor.h in Headers */,
+				447956FC1B8552D8002873A0 /* CTASIDownloadCache.h in Headers */,
+				447956FD1B8552D8002873A0 /* CTASIFormDataRequest.h in Headers */,
+				447956FE1B8552D8002873A0 /* CTASIHTTPRequest.h in Headers */,
+				447956FF1B8552D8002873A0 /* CTASIHTTPRequestConfig.h in Headers */,
+				447957001B8552D8002873A0 /* CTASIHTTPRequestDelegate.h in Headers */,
+				447957011B8552D8002873A0 /* CTASIInputStream.h in Headers */,
+				447957021B8552D8002873A0 /* CTASINetworkQueue.h in Headers */,
+				447957031B8552D8002873A0 /* CTASIProgressDelegate.h in Headers */,
 				447957581B855501002873A0 /* WebOSWebAppSession.h in Headers */,
 				447957511B8554EB002873A0 /* XMLWriter+ConvenienceMethods.h in Headers */,
 				447957171B8554C5002873A0 /* XMLWriter.h in Headers */,
