@@ -1,4 +1,12 @@
 #Connect SDK iOS
+
+[![Build Status](https://travis-ci.org/ConnectSDK/Connect-SDK-iOS.svg)](https://travis-ci.org/ConnectSDK/Connect-SDK-iOS)
+[![Code Coverage](https://img.shields.io/codecov/c/github/ConnectSDK/Connect-SDK-iOS/dev.svg)](https://codecov.io/github/ConnectSDK/Connect-SDK-iOS)
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/ConnectSDK.svg)](https://cocoapods.org/pods/ConnectSDK)
+[![Apache License, 2.0](https://img.shields.io/cocoapods/l/ConnectSDK.svg)](https://github.com/ConnectSDK/Connect-SDK-iOS/blob/master/LICENSE)
+[![Platform: iOS](https://img.shields.io/cocoapods/p/ConnectSDK.svg)](http://cocoadocs.org/docsets/ConnectSDK/)
+[![Twitter: @ConnectSDK](https://img.shields.io/badge/twitter-@ConnectSDK-blue.svg)](https://twitter.com/ConnectSDK)
+
 Connect SDK is an open source framework that connects your mobile apps with multiple TV platforms. Because most TV platforms support a variety of protocols, Connect SDK integrates and abstracts the discovery and connectivity between all supported protocols.
 
 For more information, visit our [website](http://www.connectsdk.com/).
@@ -16,7 +24,7 @@ This project has the following dependencies, some of which require manual setup.
 * Automatic Reference Counting (ARC)
 * [Connect-SDK-iOS-Core](https://github.com/ConnectSDK/Connect-SDK-iOS-Core) submodule
 * [Connect-SDK-iOS-Google-Cast](https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast) submodule
-  - Requires [`GoogleCast.framework`](https://developers.google.com/cast/docs/downloads)
+  - Requires [`GoogleCast.framework`](https://developers.google.com/cast/docs/developers#libraries)
 * [Connect-SDK-iOS-FireTV](https://github.com/ConnectSDK/Connect-SDK-iOS-FireTV) submodule
   - Requires [`AmazonFling.framework`](https://developer.amazon.com/public/apis/experience/fling/docs/amazon-fling-sdk-download)
 
@@ -71,6 +79,16 @@ Acceptance (aka End-To-End) tests | `ConnectSDKAcceptanceTests` | `Expecta`, `OC
 The required third-party test frameworks are already pre-built and included in the `core` submodule.
 
 All of the test targets are compiled when the main `ConnectSDK` scheme is built, but only the unit tests are setup to run when testing the scheme. The other tests can be run by selecting the corresponding scheme.
+
+##Limitations/Caveats
+
+###Subtitles
+
+- DLNA service supports `SRT` format only. Since there is no official specification for them, subtitles may not work on all DLNA-compatible devices. This feature has been tested and works on LG WebOS and Netcast TVs.
+- Netcast service supports `SRT` format only, through DLNA.
+- Google Cast service supports `WebVTT` format only. Servers providing subtitles and media files should support [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) headers (unless they are of the same origin). The simplest change is to send this HTTP response header for your files: `Access-Control-Allow-Origin: *`. More information is here: [https://developers.google.com/cast/docs/ios_sender#cors-requirements](https://developers.google.com/cast/docs/ios_sender#cors-requirements).
+- FireTV service supports `WebVTT` format only. Subtitles on Fire TV are hidden by default. To display them, the user should manually pick one in the media player (click the "Options" button on the remote). The Fling SDK doesn't provide any way to make them appear remotely.
+- WebOS service supports `WebVTT` format only. Server providing subtitles should support CORS headers, similarly to Cast service's requirements.
 
 ##Contact
 - Twitter: [@ConnectSDK](https://twitter.com/ConnectSDK)

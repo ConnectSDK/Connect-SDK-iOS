@@ -1,0 +1,23 @@
+language: objective-c
+osx_image: xcode6.4
+
+install:
+  - brew install gcovr
+
+before_script:
+  - curl -L -ocast.zip https://redirector.gvt1.com/edgedl/chromecast/sdk/ios/GoogleCastSDK-2.7.1-Release-ios-default.zip
+  - unzip cast.zip 'GoogleCastSDK-2.7.1-Release/GoogleCast.framework/*'
+  - mv -v GoogleCastSDK-2.7.1-Release/GoogleCast.framework modules/google-cast/
+  - curl -L -ofling.zip https://s3-us-west-1.amazonaws.com/amazon-fling/AmazonFling-SDK.zip
+  - unzip fling.zip 'ios-sdk/frameworks/*'
+  - mv -v ios-sdk/frameworks/{AmazonFling,third_party_framework/Bolts}.framework modules/firetv/Frameworks/
+
+script:
+  - xctool -scheme ConnectSDK -configuration Debug -sdk iphonesimulator -IDECustomDerivedDataLocation="out/tests_build" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES test
+  - xctool -scheme ConnectSDKIntegrationTests -configuration Debug -sdk iphonesimulator -IDECustomDerivedDataLocation="out/integration_tests_build" test
+
+after_success:
+  - gcovr --object-directory="out/tests_build/ConnectSDK/Build/Intermediates/ConnectSDK.build/Debug-iphonesimulator/ConnectSDK.build/Objects-normal/i386/" --root=. --xml-pretty --gcov-exclude='.*#(?:\w*Tests|Frameworks)#.*' --print-summary --output="cobertura.xml"
+  - bash <(curl -s https://codecov.io/bash) -f "cobertura.xml"
+
+# vim: set sw=2 ts=2 sts=2
