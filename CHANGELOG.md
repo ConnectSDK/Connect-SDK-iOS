@@ -1,5 +1,16 @@
 # Connect SDK iOS Changelog
 
+## 1.6.0 -- 09 Sep 2015
+
+- Added subtitles support for WebOS, Netcast, DLNA, Chromecast and FireTV
+- Supports Android TV devices
+- Fixed playing media on Roku 6.2
+- Removed Rewind and FastForward capabilities from Netcast service because they are not supported
+- Miscellaneous bug fixes
+- [See commits between 1.5.0 and 1.6.0](https://github.com/ConnectSDK/Connect-SDK-iOS/compare/1.5.0...1.6.0)
+
+[View files at version 1.6.0](https://github.com/ConnectSDK/Connect-SDK-iOS/tree/1.6.0)
+
 ## 1.5.0 -- 09 Jul 2015
 
 - Supports Amazon Fling SDK to play and control media on Fire TV devices
