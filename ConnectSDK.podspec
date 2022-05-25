@@ -29,8 +29,8 @@ Pod::Spec.new do |s|
   s.license      = { :type => "Apache License, Version 2.0", :file => "LICENSE" }
   s.author             = { "Connect SDK" => "support@connectsdk.com" }
   s.social_media_url   = "http://twitter.com/ConnectSDK"
-  s.platform     = :ios, "7.1"
-  s.ios.deployment_target = "7.1"
+  s.platform     = :ios, "11.0"
+  s.ios.deployment_target = "11.0"
   s.source       = { :git => "https://github.com/ConnectSDK/Connect-SDK-iOS.git",
                      :tag => s.version,
                      :submodules => true }
@@ -94,6 +94,12 @@ Pod::Spec.new do |s|
     sp.requires_arc = true
 
     sp.dependency 'ConnectSDK/no-arc'
+    sp.ios.vendored_frameworks = 'core/Frameworks/LGCast/LGCast.framework', 'core/Frameworks/LGCast/GStreamerForLGCast.framework'
+    
+    sp.preserve_path = 'core/Frameworks/LGCast/*.framework'
+    sp.xcconfig = {
+        "HEADER_SEARCH_PATHS" => '"$(PODS_ROOT)/ConnectSDK/core/Frameworks/LGCast/LGCast.framework/Headers" "$(PODS_ROOT)/ConnectSDK/core/Frameworks/LGCast/GStreamerForLGCast.framework/Headers"',
+    }
   end
 
   s.subspec 'no-arc' do |sp|
