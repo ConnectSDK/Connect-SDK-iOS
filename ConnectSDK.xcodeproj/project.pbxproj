@@ -26,6 +26,36 @@
 		0F446CC91A6D924D000BB1C0 /* MediaLaunchObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F446CC71A6D924D000BB1C0 /* MediaLaunchObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0F446CCA1A6D924D000BB1C0 /* MediaLaunchObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F446CC81A6D924D000BB1C0 /* MediaLaunchObject.m */; };
 		146A7D1B1B2896C300260441 /* FireTVIntegrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 146A7D1A1B2896C300260441 /* FireTVIntegrationTests.m */; };
+		22D1EDA1282D0F9600D74B56 /* LGCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D1ED9F282D0F9600D74B56 /* LGCast.framework */; };
+		22D1EDA2282D0F9600D74B56 /* GStreamerForLGCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D1EDA0282D0F9600D74B56 /* GStreamerForLGCast.framework */; };
+		22D1EDBB282D0FBD00D74B56 /* WebOSTVService+LGCast.h in Headers */ = {isa = PBXBuildFile; fileRef = 22D1EDA4282D0FBD00D74B56 /* WebOSTVService+LGCast.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22D1EDBC282D0FBD00D74B56 /* ConnectionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 22D1EDA5282D0FBD00D74B56 /* ConnectionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22D1EDBD282D0FBD00D74B56 /* CameraSinkCapability.h in Headers */ = {isa = PBXBuildFile; fileRef = 22D1EDA7282D0FBD00D74B56 /* CameraSinkCapability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22D1EDBE282D0FBD00D74B56 /* CameraSourceCapability.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D1EDA8282D0FBD00D74B56 /* CameraSourceCapability.m */; };
+		22D1EDBF282D0FBD00D74B56 /* RemoteCameraService.h in Headers */ = {isa = PBXBuildFile; fileRef = 22D1EDA9282D0FBD00D74B56 /* RemoteCameraService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22D1EDC0282D0FBD00D74B56 /* CameraParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = 22D1EDAA282D0FBD00D74B56 /* CameraParameter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22D1EDC1282D0FBD00D74B56 /* CameraSourceCapability.h in Headers */ = {isa = PBXBuildFile; fileRef = 22D1EDAB282D0FBD00D74B56 /* CameraSourceCapability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22D1EDC2282D0FBD00D74B56 /* CameraSinkCapability.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D1EDAC282D0FBD00D74B56 /* CameraSinkCapability.m */; };
+		22D1EDC3282D0FBD00D74B56 /* CameraParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D1EDAD282D0FBD00D74B56 /* CameraParameter.m */; };
+		22D1EDC4282D0FBD00D74B56 /* RemoteCameraService.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D1EDAE282D0FBD00D74B56 /* RemoteCameraService.m */; };
+		22D1EDC5282D0FBD00D74B56 /* WebOSTVService+LGCast.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D1EDAF282D0FBD00D74B56 /* WebOSTVService+LGCast.m */; };
+		22D1EDC6282D0FBD00D74B56 /* ConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D1EDB0282D0FBD00D74B56 /* ConnectionManager.m */; };
+		22D1EDC7282D0FBD00D74B56 /* MobileCapability.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D1EDB2282D0FBD00D74B56 /* MobileCapability.m */; };
+		22D1EDC8282D0FBD00D74B56 /* MobileCapability.h in Headers */ = {isa = PBXBuildFile; fileRef = 22D1EDB3282D0FBD00D74B56 /* MobileCapability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22D1EDC9282D0FBD00D74B56 /* ScreenMirroringService.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D1EDB5282D0FBD00D74B56 /* ScreenMirroringService.m */; };
+		22D1EDCA282D0FBD00D74B56 /* MirroringSinkCapability.h in Headers */ = {isa = PBXBuildFile; fileRef = 22D1EDB6282D0FBD00D74B56 /* MirroringSinkCapability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22D1EDCB282D0FBD00D74B56 /* MirroringSourceCapability.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D1EDB7282D0FBD00D74B56 /* MirroringSourceCapability.m */; };
+		22D1EDCC282D0FBD00D74B56 /* MirroringSinkCapability.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D1EDB8282D0FBD00D74B56 /* MirroringSinkCapability.m */; };
+		22D1EDCD282D0FBD00D74B56 /* ScreenMirroringService.h in Headers */ = {isa = PBXBuildFile; fileRef = 22D1EDB9282D0FBD00D74B56 /* ScreenMirroringService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22D1EDCE282D0FBD00D74B56 /* MirroringSourceCapability.h in Headers */ = {isa = PBXBuildFile; fileRef = 22D1EDBA282D0FBD00D74B56 /* MirroringSourceCapability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22D1EDD1282D101300D74B56 /* ScreenMirroringControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 22D1EDCF282D101300D74B56 /* ScreenMirroringControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22D1EDD2282D101300D74B56 /* RemoteCameraControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 22D1EDD0282D101300D74B56 /* RemoteCameraControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22D1EDD3282D149800D74B56 /* GStreamerForLGCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D1EDA0282D0F9600D74B56 /* GStreamerForLGCast.framework */; };
+		22D1EDD4282D149800D74B56 /* LGCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D1ED9F282D0F9600D74B56 /* LGCast.framework */; };
+		22D1EDD5282D14A000D74B56 /* GStreamerForLGCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D1EDA0282D0F9600D74B56 /* GStreamerForLGCast.framework */; };
+		22D1EDD6282D14A000D74B56 /* LGCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D1ED9F282D0F9600D74B56 /* LGCast.framework */; };
+		22D1EDD7282D14A500D74B56 /* GStreamerForLGCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D1EDA0282D0F9600D74B56 /* GStreamerForLGCast.framework */; };
+		22D1EDD8282D14A500D74B56 /* LGCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D1ED9F282D0F9600D74B56 /* LGCast.framework */; };
 		440A031D1A854EDE0007E3D3 /* WebOSTVServiceSocketClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 440A031C1A854EDE0007E3D3 /* WebOSTVServiceSocketClientTests.m */; };
 		44166C561B4203880052F9EC /* libConnectSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA61EB1018FE485B00D75696 /* libConnectSDK.a */; };
 		44166C5C1B420B6A0052F9EC /* AirPlayServiceAcceptanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E98F991B1E733D0043BC70 /* AirPlayServiceAcceptanceTests.m */; };
@@ -411,6 +441,30 @@
 		0F446CC71A6D924D000BB1C0 /* MediaLaunchObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaLaunchObject.h; sourceTree = "<group>"; };
 		0F446CC81A6D924D000BB1C0 /* MediaLaunchObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaLaunchObject.m; sourceTree = "<group>"; };
 		146A7D1A1B2896C300260441 /* FireTVIntegrationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FireTVIntegrationTests.m; sourceTree = "<group>"; };
+		22D1ED9F282D0F9600D74B56 /* LGCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LGCast.framework; path = core/Frameworks/LGCast/LGCast.framework; sourceTree = "<group>"; };
+		22D1EDA0282D0F9600D74B56 /* GStreamerForLGCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GStreamerForLGCast.framework; path = core/Frameworks/LGCast/GStreamerForLGCast.framework; sourceTree = "<group>"; };
+		22D1EDA4282D0FBD00D74B56 /* WebOSTVService+LGCast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebOSTVService+LGCast.h"; sourceTree = "<group>"; };
+		22D1EDA5282D0FBD00D74B56 /* ConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionManager.h; sourceTree = "<group>"; };
+		22D1EDA7282D0FBD00D74B56 /* CameraSinkCapability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraSinkCapability.h; sourceTree = "<group>"; };
+		22D1EDA8282D0FBD00D74B56 /* CameraSourceCapability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraSourceCapability.m; sourceTree = "<group>"; };
+		22D1EDA9282D0FBD00D74B56 /* RemoteCameraService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteCameraService.h; sourceTree = "<group>"; };
+		22D1EDAA282D0FBD00D74B56 /* CameraParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraParameter.h; sourceTree = "<group>"; };
+		22D1EDAB282D0FBD00D74B56 /* CameraSourceCapability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraSourceCapability.h; sourceTree = "<group>"; };
+		22D1EDAC282D0FBD00D74B56 /* CameraSinkCapability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraSinkCapability.m; sourceTree = "<group>"; };
+		22D1EDAD282D0FBD00D74B56 /* CameraParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraParameter.m; sourceTree = "<group>"; };
+		22D1EDAE282D0FBD00D74B56 /* RemoteCameraService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteCameraService.m; sourceTree = "<group>"; };
+		22D1EDAF282D0FBD00D74B56 /* WebOSTVService+LGCast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebOSTVService+LGCast.m"; sourceTree = "<group>"; };
+		22D1EDB0282D0FBD00D74B56 /* ConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionManager.m; sourceTree = "<group>"; };
+		22D1EDB2282D0FBD00D74B56 /* MobileCapability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileCapability.m; sourceTree = "<group>"; };
+		22D1EDB3282D0FBD00D74B56 /* MobileCapability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileCapability.h; sourceTree = "<group>"; };
+		22D1EDB5282D0FBD00D74B56 /* ScreenMirroringService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenMirroringService.m; sourceTree = "<group>"; };
+		22D1EDB6282D0FBD00D74B56 /* MirroringSinkCapability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MirroringSinkCapability.h; sourceTree = "<group>"; };
+		22D1EDB7282D0FBD00D74B56 /* MirroringSourceCapability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MirroringSourceCapability.m; sourceTree = "<group>"; };
+		22D1EDB8282D0FBD00D74B56 /* MirroringSinkCapability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MirroringSinkCapability.m; sourceTree = "<group>"; };
+		22D1EDB9282D0FBD00D74B56 /* ScreenMirroringService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenMirroringService.h; sourceTree = "<group>"; };
+		22D1EDBA282D0FBD00D74B56 /* MirroringSourceCapability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MirroringSourceCapability.h; sourceTree = "<group>"; };
+		22D1EDCF282D101300D74B56 /* ScreenMirroringControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenMirroringControl.h; sourceTree = "<group>"; };
+		22D1EDD0282D101300D74B56 /* RemoteCameraControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteCameraControl.h; sourceTree = "<group>"; };
 		440A031C1A854EDE0007E3D3 /* WebOSTVServiceSocketClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebOSTVServiceSocketClientTests.m; sourceTree = "<group>"; };
 		440A031E1A85536A0007E3D3 /* WebOSTVServiceSocketClient_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebOSTVServiceSocketClient_Private.h; sourceTree = "<group>"; };
 		44166C501B4203880052F9EC /* ConnectSDKAcceptanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConnectSDKAcceptanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -767,6 +821,8 @@
 				44166C691B420DC20052F9EC /* libicucore.dylib in Frameworks */,
 				44166C651B420DA60052F9EC /* AmazonFling.framework in Frameworks */,
 				44166C621B420C550052F9EC /* libz.dylib in Frameworks */,
+				22D1EDD7282D14A500D74B56 /* GStreamerForLGCast.framework in Frameworks */,
+				22D1EDD8282D14A500D74B56 /* LGCast.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,6 +845,8 @@
 				44316F2B1AF3F17A000FE655 /* OHHTTPStubs.framework in Frameworks */,
 				44316F291AF3F17A000FE655 /* OCMock.framework in Frameworks */,
 				44EF618F1A12E0A400CF344C /* libz.dylib in Frameworks */,
+				22D1EDD3282D149800D74B56 /* GStreamerForLGCast.framework in Frameworks */,
+				22D1EDD4282D149800D74B56 /* LGCast.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -809,6 +867,8 @@
 				449A371C1B0FE3A500E47DAC /* MobileCoreServices.framework in Frameworks */,
 				449A37171B0FE36E00E47DAC /* Bolts.framework in Frameworks */,
 				449A37181B0FE37100E47DAC /* AmazonFling.framework in Frameworks */,
+				22D1EDD5282D14A000D74B56 /* GStreamerForLGCast.framework in Frameworks */,
+				22D1EDD6282D14A000D74B56 /* LGCast.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -821,12 +881,74 @@
 				EA61EBF218FE48EF00D75696 /* MobileCoreServices.framework in Frameworks */,
 				EA61EBF018FE48E900D75696 /* SystemConfiguration.framework in Frameworks */,
 				EA61EB1418FE485B00D75696 /* Foundation.framework in Frameworks */,
+				22D1EDA1282D0F9600D74B56 /* LGCast.framework in Frameworks */,
+				22D1EDA2282D0F9600D74B56 /* GStreamerForLGCast.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		22D1ED9E282D0F2800D74B56 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				44E98F5E1B1E63570043BC70 /* OHHTTPStubs.framework */,
+				44E98F5D1B1E63570043BC70 /* OCMock.framework */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		22D1EDA3282D0FBD00D74B56 /* LGCast */ = {
+			isa = PBXGroup;
+			children = (
+				22D1EDA4282D0FBD00D74B56 /* WebOSTVService+LGCast.h */,
+				22D1EDA5282D0FBD00D74B56 /* ConnectionManager.h */,
+				22D1EDA6282D0FBD00D74B56 /* RemoteCameraService */,
+				22D1EDAF282D0FBD00D74B56 /* WebOSTVService+LGCast.m */,
+				22D1EDB0282D0FBD00D74B56 /* ConnectionManager.m */,
+				22D1EDB1282D0FBD00D74B56 /* Device */,
+				22D1EDB4282D0FBD00D74B56 /* ScreenMirroringService */,
+			);
+			path = LGCast;
+			sourceTree = "<group>";
+		};
+		22D1EDA6282D0FBD00D74B56 /* RemoteCameraService */ = {
+			isa = PBXGroup;
+			children = (
+				22D1EDA7282D0FBD00D74B56 /* CameraSinkCapability.h */,
+				22D1EDA8282D0FBD00D74B56 /* CameraSourceCapability.m */,
+				22D1EDA9282D0FBD00D74B56 /* RemoteCameraService.h */,
+				22D1EDAA282D0FBD00D74B56 /* CameraParameter.h */,
+				22D1EDAB282D0FBD00D74B56 /* CameraSourceCapability.h */,
+				22D1EDAC282D0FBD00D74B56 /* CameraSinkCapability.m */,
+				22D1EDAD282D0FBD00D74B56 /* CameraParameter.m */,
+				22D1EDAE282D0FBD00D74B56 /* RemoteCameraService.m */,
+			);
+			path = RemoteCameraService;
+			sourceTree = "<group>";
+		};
+		22D1EDB1282D0FBD00D74B56 /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				22D1EDB2282D0FBD00D74B56 /* MobileCapability.m */,
+				22D1EDB3282D0FBD00D74B56 /* MobileCapability.h */,
+			);
+			path = Device;
+			sourceTree = "<group>";
+		};
+		22D1EDB4282D0FBD00D74B56 /* ScreenMirroringService */ = {
+			isa = PBXGroup;
+			children = (
+				22D1EDB5282D0FBD00D74B56 /* ScreenMirroringService.m */,
+				22D1EDB6282D0FBD00D74B56 /* MirroringSinkCapability.h */,
+				22D1EDB7282D0FBD00D74B56 /* MirroringSourceCapability.m */,
+				22D1EDB8282D0FBD00D74B56 /* MirroringSinkCapability.m */,
+				22D1EDB9282D0FBD00D74B56 /* ScreenMirroringService.h */,
+				22D1EDBA282D0FBD00D74B56 /* MirroringSourceCapability.h */,
+			);
+			path = ScreenMirroringService;
+			sourceTree = "<group>";
+		};
 		44166C511B4203880052F9EC /* ConnectSDKAcceptanceTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1519,6 +1641,8 @@
 				EA5FB825199AEC550057B4B4 /* VolumeControl.h */,
 				EA5FB826199AEC550057B4B4 /* WebAppLauncher.h */,
 				0F446CC11A6D8353000BB1C0 /* PlayListControl.h */,
+				22D1EDD0282D101300D74B56 /* RemoteCameraControl.h */,
+				22D1EDCF282D101300D74B56 /* ScreenMirroringControl.h */,
 			);
 			path = Capabilities;
 			sourceTree = "<group>";
@@ -1556,6 +1680,7 @@
 		EA5FB840199AEC550057B4B4 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				22D1EDA3282D0FBD00D74B56 /* LGCast */,
 				EA5FB841199AEC550057B4B4 /* AirPlayServiceHTTP.h */,
 				44758BBC1AE6C6E300EC43A6 /* AirPlayServiceHTTP_Private.h */,
 				EA5FB842199AEC550057B4B4 /* AirPlayServiceHTTP.m */,
@@ -1629,6 +1754,7 @@
 				EA5FB799199AEC2E0057B4B4 /* Connect SDK */,
 				EA61EB1218FE485B00D75696 /* Frameworks */,
 				EA61EB1118FE485B00D75696 /* Products */,
+				22D1ED9E282D0F2800D74B56 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1646,6 +1772,8 @@
 		EA61EB1218FE485B00D75696 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				22D1EDA0282D0F9600D74B56 /* GStreamerForLGCast.framework */,
+				22D1ED9F282D0F9600D74B56 /* LGCast.framework */,
 				44EF619A1A12E23200CF344C /* libicucore.dylib */,
 				44EF61971A12E1C800CF344C /* MediaAccessibility.framework */,
 				44EF618E1A12E0A400CF344C /* libz.dylib */,
@@ -1779,6 +1907,16 @@
 				EA5FB8AF199AEC560057B4B4 /* GCDWebServerErrorResponse.h in Headers */,
 				EA5FB8B5199AEC560057B4B4 /* CTGuid.h in Headers */,
 				EA5FB902199AEC570057B4B4 /* LaunchSession.h in Headers */,
+				22D1EDBD282D0FBD00D74B56 /* CameraSinkCapability.h in Headers */,
+				22D1EDC0282D0FBD00D74B56 /* CameraParameter.h in Headers */,
+				22D1EDCE282D0FBD00D74B56 /* MirroringSourceCapability.h in Headers */,
+				22D1EDCD282D0FBD00D74B56 /* ScreenMirroringService.h in Headers */,
+				22D1EDBF282D0FBD00D74B56 /* RemoteCameraService.h in Headers */,
+				22D1EDC1282D0FBD00D74B56 /* CameraSourceCapability.h in Headers */,
+				22D1EDBC282D0FBD00D74B56 /* ConnectionManager.h in Headers */,
+				22D1EDBB282D0FBD00D74B56 /* WebOSTVService+LGCast.h in Headers */,
+				22D1EDC8282D0FBD00D74B56 /* MobileCapability.h in Headers */,
+				22D1EDCA282D0FBD00D74B56 /* MirroringSinkCapability.h in Headers */,
 				EA5FB8B7199AEC560057B4B4 /* LGSRWebSocket.h in Headers */,
 				EA5FB8B3199AEC560057B4B4 /* GCDWebServerStreamedResponse.h in Headers */,
 				0F446CC21A6D8353000BB1C0 /* PlayListControl.h in Headers */,
@@ -1786,6 +1924,8 @@
 				EA5F82F0199BDA2100B7302B /* ConnectSDKDefaultPlatforms.h in Headers */,
 				BB9F726F85973936620CDADD /* MediaInfo.h in Headers */,
 				448B28761B041A5600DFF18F /* FireTVMediaControl.h in Headers */,
+				22D1EDD1282D101300D74B56 /* ScreenMirroringControl.h in Headers */,
+				22D1EDD2282D101300D74B56 /* RemoteCameraControl.h in Headers */,
 				BB9F7AD33329FD4AC66C2D12 /* ImageInfo.h in Headers */,
 				BB9F712900733DE480F64D8E /* DLNAHTTPServer.h in Headers */,
 				B2FA88C0C2447C5CAF1E61A4 /* NSMutableDictionary+NilSafe.h in Headers */,
@@ -1853,8 +1993,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA61EB3318FE485B00D75696 /* Build configuration list for PBXNativeTarget "ConnectSDK" */;
 			buildPhases = (
-				EA61EB0C18FE485B00D75696 /* Sources */,
 				EA61EB0D18FE485B00D75696 /* Frameworks */,
+				EA61EB0C18FE485B00D75696 /* Sources */,
 				EA61EB0E18FE485B00D75696 /* CopyFiles */,
 				EECAED1A193F5ED900D31F61 /* Headers */,
 				EECAED51193F60C900D31F61 /* ShellScript */,
@@ -1893,6 +2033,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = EA61EB0718FE485B00D75696;
@@ -2080,6 +2221,7 @@
 				EA5FB8B2199AEC560057B4B4 /* GCDWebServerFileResponse.m in Sources */,
 				443063C21A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.m in Sources */,
 				EA5FB8C4199AEC560057B4B4 /* DeviceServiceReachability.m in Sources */,
+				22D1EDCC282D0FBD00D74B56 /* MirroringSinkCapability.m in Sources */,
 				0F446CCA1A6D924D000BB1C0 /* MediaLaunchObject.m in Sources */,
 				EA5FB873199AEC550057B4B4 /* DefaultConnectableDeviceStore.m in Sources */,
 				44D90AAD1B06B26C00A5CF2A /* AppStateChangeNotifier.m in Sources */,
@@ -2094,7 +2236,9 @@
 				44AD91781AFA7F1000C23A71 /* FireTVService.m in Sources */,
 				EA5FB8EC199AEC570057B4B4 /* WebOSTVServiceConfig.m in Sources */,
 				EA5FB8B6199AEC560057B4B4 /* CTGuid.m in Sources */,
+				22D1EDCB282D0FBD00D74B56 /* MirroringSourceCapability.m in Sources */,
 				4494263F1AF83588006BAFF2 /* DispatchQueueBlockRunner.m in Sources */,
+				22D1EDC3282D0FBD00D74B56 /* CameraParameter.m in Sources */,
 				EA5FB8FB199AEC570057B4B4 /* WebOSTVServiceSocketClient.m in Sources */,
 				EA5FB8C9199AEC560057B4B4 /* ProgramInfo.m in Sources */,
 				EA5FB8C6199AEC560057B4B4 /* ExternalInputInfo.m in Sources */,
@@ -2106,9 +2250,11 @@
 				EA5FB8A8199AEC560057B4B4 /* GCDWebServerFileRequest.m in Sources */,
 				EA5FB880199AEC550057B4B4 /* SSDPDiscoveryProvider.m in Sources */,
 				EA5FB8CD199AEC560057B4B4 /* TextInputStatusInfo.m in Sources */,
+				22D1EDC5282D0FBD00D74B56 /* WebOSTVService+LGCast.m in Sources */,
 				EA5FB8EE199AEC570057B4B4 /* DeviceService.m in Sources */,
 				EA5FB875199AEC550057B4B4 /* DevicePicker.m in Sources */,
 				EA5FB8CF199AEC560057B4B4 /* AirPlayService.m in Sources */,
+				22D1EDC2282D0FBD00D74B56 /* CameraSinkCapability.m in Sources */,
 				EA5FB898199AEC560057B4B4 /* CTReachability.m in Sources */,
 				EA5FB8C0199AEC560057B4B4 /* ConnectError.m in Sources */,
 				44C2CCA21AB7A33500B20E46 /* NSString+Common.m in Sources */,
@@ -2118,9 +2264,11 @@
 				EA5FB8BE199AEC560057B4B4 /* ChannelInfo.m in Sources */,
 				EA5FB90A199AEC570057B4B4 /* WebOSTVService.m in Sources */,
 				EA5FB8BA199AEC560057B4B4 /* CTXMLReader.m in Sources */,
+				22D1EDBE282D0FBD00D74B56 /* CameraSourceCapability.m in Sources */,
 				EA5FB90C199AEC570057B4B4 /* CastDiscoveryProvider.m in Sources */,
 				EA5FB88D199AEC560057B4B4 /* CTASIFormDataRequest.m in Sources */,
 				EA5FB893199AEC560057B4B4 /* CTASIInputStream.m in Sources */,
+				22D1EDC6282D0FBD00D74B56 /* ConnectionManager.m in Sources */,
 				EA5FB8B4199AEC560057B4B4 /* GCDWebServerStreamedResponse.m in Sources */,
 				EA5FB90E199AEC570057B4B4 /* CastService.m in Sources */,
 				44316EFF1AF2F04B000FE655 /* FireTVDiscoveryProvider.m in Sources */,
@@ -2131,6 +2279,7 @@
 				EA5FB87D199AEC550057B4B4 /* DiscoveryProvider.m in Sources */,
 				EA5FB8FF199AEC570057B4B4 /* RokuService.m in Sources */,
 				EA5FB8AE199AEC560057B4B4 /* GCDWebServerDataResponse.m in Sources */,
+				22D1EDC4282D0FBD00D74B56 /* RemoteCameraService.m in Sources */,
 				EA5FB8BC199AEC560057B4B4 /* AppInfo.m in Sources */,
 				EA5FB8A4199AEC560057B4B4 /* GCDWebServerResponse.m in Sources */,
 				44BCC3F71AB77F7D001BCDAA /* XMLWriter.m in Sources */,
@@ -2147,6 +2296,7 @@
 				EA5FB8E5199AEC560057B4B4 /* NetcastTVServiceConfig.m in Sources */,
 				EA5FB88F199AEC560057B4B4 /* CTASIHTTPRequest.m in Sources */,
 				441C9ED61B3DBCB200F912D5 /* SubscriptionDeduplicator.m in Sources */,
+				22D1EDC9282D0FBD00D74B56 /* ScreenMirroringService.m in Sources */,
 				EA5FB89C199AEC560057B4B4 /* GCDWebServerConnection.m in Sources */,
 				EA5FB8A2199AEC560057B4B4 /* GCDWebServerRequest.m in Sources */,
 				EA5FB889199AEC560057B4B4 /* CTASIDataDecompressor.m in Sources */,
@@ -2158,6 +2308,7 @@
 				BB9F706B1155B806AFBF3336 /* DLNAHTTPServer.m in Sources */,
 				B2FA8F2EAE3B0B60D75F9647 /* CapabilityConstants.m in Sources */,
 				B2FA8A641C2CBEAFB9CF9097 /* NSMutableDictionary+NilSafe.m in Sources */,
+				22D1EDC7282D0FBD00D74B56 /* MobileCapability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2204,6 +2355,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -2212,6 +2364,7 @@
 					"$(PROJECT_DIR)/core/ConnectSDKIntegrationTests/Frameworks",
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
+					"$(PROJECT_DIR)/core/Frameworks/LGCast",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKIntegrationTests/ConnectSDKIntegrationTests-Prefix.pch";
@@ -2240,6 +2393,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -2248,6 +2402,7 @@
 					"$(PROJECT_DIR)/core/ConnectSDKIntegrationTests/Frameworks",
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
+					"$(PROJECT_DIR)/core/Frameworks/LGCast",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKIntegrationTests/ConnectSDKIntegrationTests-Prefix.pch";
@@ -2270,6 +2425,7 @@
 			buildSettings = {
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -2277,6 +2433,7 @@
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
 					"$(PROJECT_DIR)/core/ConnectSDKTests/Frameworks",
+					"$(PROJECT_DIR)/core/Frameworks/LGCast",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKTests/ConnectSDKTests-Prefix.pch";
@@ -2303,6 +2460,7 @@
 			buildSettings = {
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -2310,6 +2468,7 @@
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
 					"$(PROJECT_DIR)/core/ConnectSDKTests/Frameworks",
+					"$(PROJECT_DIR)/core/Frameworks/LGCast",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKTests/ConnectSDKTests-Prefix.pch";
@@ -2333,6 +2492,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2342,6 +2502,7 @@
 					"$(PROJECT_DIR)/core/ConnectSDKTests/Frameworks",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
 					"$(PROJECT_DIR)/modules/google-cast",
+					"$(PROJECT_DIR)/core/Frameworks/LGCast",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKIntegrationTests/ConnectSDKIntegrationTests-Prefix.pch";
@@ -2370,6 +2531,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2379,6 +2541,7 @@
 					"$(PROJECT_DIR)/core/ConnectSDKTests/Frameworks",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
 					"$(PROJECT_DIR)/modules/google-cast",
+					"$(PROJECT_DIR)/core/Frameworks/LGCast",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDKIntegrationTests/ConnectSDKIntegrationTests-Prefix.pch";
@@ -2481,6 +2644,7 @@
 					"$(PROJECT_DIR)/modules/**",
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
+					"$(PROJECT_DIR)/core/Frameworks/LGCast",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "core/ConnectSDK-Prefix.pch";
@@ -2508,6 +2672,7 @@
 					"$(PROJECT_DIR)/modules/**",
 					"$(PROJECT_DIR)/modules/google-cast",
 					"$(PROJECT_DIR)/modules/firetv/Frameworks",
+					"$(PROJECT_DIR)/core/Frameworks/LGCast",
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
