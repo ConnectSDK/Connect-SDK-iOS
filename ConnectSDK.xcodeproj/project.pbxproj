@@ -258,34 +258,6 @@
 		EA5FB896199AEC560057B4B4 /* CTASIProgressDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7CF199AEC550057B4B4 /* CTASIProgressDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA5FB897199AEC560057B4B4 /* CTReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7D2199AEC550057B4B4 /* CTReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA5FB898199AEC560057B4B4 /* CTReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7D3199AEC550057B4B4 /* CTReachability.m */; settings = {COMPILER_FLAGS = "-w -fno-objc-arc"; }; };
-		EA5FB899199AEC560057B4B4 /* GCDWebServer.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7D7199AEC550057B4B4 /* GCDWebServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB89A199AEC560057B4B4 /* GCDWebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7D8199AEC550057B4B4 /* GCDWebServer.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		EA5FB89B199AEC560057B4B4 /* GCDWebServerConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7D9199AEC550057B4B4 /* GCDWebServerConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB89C199AEC560057B4B4 /* GCDWebServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7DA199AEC550057B4B4 /* GCDWebServerConnection.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		EA5FB89D199AEC560057B4B4 /* GCDWebServerFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7DB199AEC550057B4B4 /* GCDWebServerFunctions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB89E199AEC560057B4B4 /* GCDWebServerFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7DC199AEC550057B4B4 /* GCDWebServerFunctions.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		EA5FB89F199AEC560057B4B4 /* GCDWebServerHTTPStatusCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7DD199AEC550057B4B4 /* GCDWebServerHTTPStatusCodes.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB8A0199AEC560057B4B4 /* GCDWebServerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7DE199AEC550057B4B4 /* GCDWebServerPrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB8A1199AEC560057B4B4 /* GCDWebServerRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7DF199AEC550057B4B4 /* GCDWebServerRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB8A2199AEC560057B4B4 /* GCDWebServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7E0199AEC550057B4B4 /* GCDWebServerRequest.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		EA5FB8A3199AEC560057B4B4 /* GCDWebServerResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7E1199AEC550057B4B4 /* GCDWebServerResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB8A4199AEC560057B4B4 /* GCDWebServerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7E2199AEC550057B4B4 /* GCDWebServerResponse.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		EA5FB8A5199AEC560057B4B4 /* GCDWebServerDataRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7E5199AEC550057B4B4 /* GCDWebServerDataRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB8A6199AEC560057B4B4 /* GCDWebServerDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7E6199AEC550057B4B4 /* GCDWebServerDataRequest.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		EA5FB8A7199AEC560057B4B4 /* GCDWebServerFileRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7E7199AEC550057B4B4 /* GCDWebServerFileRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB8A8199AEC560057B4B4 /* GCDWebServerFileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7E8199AEC550057B4B4 /* GCDWebServerFileRequest.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		EA5FB8A9199AEC560057B4B4 /* GCDWebServerMultiPartFormRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7E9199AEC550057B4B4 /* GCDWebServerMultiPartFormRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB8AA199AEC560057B4B4 /* GCDWebServerMultiPartFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7EA199AEC550057B4B4 /* GCDWebServerMultiPartFormRequest.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		EA5FB8AB199AEC560057B4B4 /* GCDWebServerURLEncodedFormRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7EB199AEC550057B4B4 /* GCDWebServerURLEncodedFormRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB8AC199AEC560057B4B4 /* GCDWebServerURLEncodedFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7EC199AEC550057B4B4 /* GCDWebServerURLEncodedFormRequest.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		EA5FB8AD199AEC560057B4B4 /* GCDWebServerDataResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7EE199AEC550057B4B4 /* GCDWebServerDataResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB8AE199AEC560057B4B4 /* GCDWebServerDataResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7EF199AEC550057B4B4 /* GCDWebServerDataResponse.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		EA5FB8AF199AEC560057B4B4 /* GCDWebServerErrorResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7F0199AEC550057B4B4 /* GCDWebServerErrorResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB8B0199AEC560057B4B4 /* GCDWebServerErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7F1199AEC550057B4B4 /* GCDWebServerErrorResponse.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		EA5FB8B1199AEC560057B4B4 /* GCDWebServerFileResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7F2199AEC550057B4B4 /* GCDWebServerFileResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB8B2199AEC560057B4B4 /* GCDWebServerFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7F3199AEC550057B4B4 /* GCDWebServerFileResponse.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		EA5FB8B3199AEC560057B4B4 /* GCDWebServerStreamedResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7F4199AEC550057B4B4 /* GCDWebServerStreamedResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EA5FB8B4199AEC560057B4B4 /* GCDWebServerStreamedResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7F5199AEC550057B4B4 /* GCDWebServerStreamedResponse.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		EA5FB8B5199AEC560057B4B4 /* CTGuid.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7F7199AEC550057B4B4 /* CTGuid.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA5FB8B6199AEC560057B4B4 /* CTGuid.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5FB7F8199AEC550057B4B4 /* CTGuid.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		EA5FB8B7199AEC560057B4B4 /* LGSRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = EA5FB7FB199AEC550057B4B4 /* LGSRWebSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -667,34 +639,6 @@
 		EA5FB7CF199AEC550057B4B4 /* CTASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTASIProgressDelegate.h; sourceTree = "<group>"; };
 		EA5FB7D2199AEC550057B4B4 /* CTReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTReachability.h; sourceTree = "<group>"; };
 		EA5FB7D3199AEC550057B4B4 /* CTReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTReachability.m; sourceTree = "<group>"; };
-		EA5FB7D7199AEC550057B4B4 /* GCDWebServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServer.h; sourceTree = "<group>"; };
-		EA5FB7D8199AEC550057B4B4 /* GCDWebServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServer.m; sourceTree = "<group>"; };
-		EA5FB7D9199AEC550057B4B4 /* GCDWebServerConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerConnection.h; sourceTree = "<group>"; };
-		EA5FB7DA199AEC550057B4B4 /* GCDWebServerConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerConnection.m; sourceTree = "<group>"; };
-		EA5FB7DB199AEC550057B4B4 /* GCDWebServerFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerFunctions.h; sourceTree = "<group>"; };
-		EA5FB7DC199AEC550057B4B4 /* GCDWebServerFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerFunctions.m; sourceTree = "<group>"; };
-		EA5FB7DD199AEC550057B4B4 /* GCDWebServerHTTPStatusCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerHTTPStatusCodes.h; sourceTree = "<group>"; };
-		EA5FB7DE199AEC550057B4B4 /* GCDWebServerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerPrivate.h; sourceTree = "<group>"; };
-		EA5FB7DF199AEC550057B4B4 /* GCDWebServerRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerRequest.h; sourceTree = "<group>"; };
-		EA5FB7E0199AEC550057B4B4 /* GCDWebServerRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerRequest.m; sourceTree = "<group>"; };
-		EA5FB7E1199AEC550057B4B4 /* GCDWebServerResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerResponse.h; sourceTree = "<group>"; };
-		EA5FB7E2199AEC550057B4B4 /* GCDWebServerResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerResponse.m; sourceTree = "<group>"; };
-		EA5FB7E5199AEC550057B4B4 /* GCDWebServerDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerDataRequest.h; sourceTree = "<group>"; };
-		EA5FB7E6199AEC550057B4B4 /* GCDWebServerDataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerDataRequest.m; sourceTree = "<group>"; };
-		EA5FB7E7199AEC550057B4B4 /* GCDWebServerFileRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerFileRequest.h; sourceTree = "<group>"; };
-		EA5FB7E8199AEC550057B4B4 /* GCDWebServerFileRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerFileRequest.m; sourceTree = "<group>"; };
-		EA5FB7E9199AEC550057B4B4 /* GCDWebServerMultiPartFormRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerMultiPartFormRequest.h; sourceTree = "<group>"; };
-		EA5FB7EA199AEC550057B4B4 /* GCDWebServerMultiPartFormRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerMultiPartFormRequest.m; sourceTree = "<group>"; };
-		EA5FB7EB199AEC550057B4B4 /* GCDWebServerURLEncodedFormRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerURLEncodedFormRequest.h; sourceTree = "<group>"; };
-		EA5FB7EC199AEC550057B4B4 /* GCDWebServerURLEncodedFormRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerURLEncodedFormRequest.m; sourceTree = "<group>"; };
-		EA5FB7EE199AEC550057B4B4 /* GCDWebServerDataResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerDataResponse.h; sourceTree = "<group>"; };
-		EA5FB7EF199AEC550057B4B4 /* GCDWebServerDataResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerDataResponse.m; sourceTree = "<group>"; };
-		EA5FB7F0199AEC550057B4B4 /* GCDWebServerErrorResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerErrorResponse.h; sourceTree = "<group>"; };
-		EA5FB7F1199AEC550057B4B4 /* GCDWebServerErrorResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerErrorResponse.m; sourceTree = "<group>"; };
-		EA5FB7F2199AEC550057B4B4 /* GCDWebServerFileResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerFileResponse.h; sourceTree = "<group>"; };
-		EA5FB7F3199AEC550057B4B4 /* GCDWebServerFileResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerFileResponse.m; sourceTree = "<group>"; };
-		EA5FB7F4199AEC550057B4B4 /* GCDWebServerStreamedResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServerStreamedResponse.h; sourceTree = "<group>"; };
-		EA5FB7F5199AEC550057B4B4 /* GCDWebServerStreamedResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebServerStreamedResponse.m; sourceTree = "<group>"; };
 		EA5FB7F7199AEC550057B4B4 /* CTGuid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTGuid.h; sourceTree = "<group>"; };
 		EA5FB7F8199AEC550057B4B4 /* CTGuid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTGuid.m; sourceTree = "<group>"; };
 		EA5FB7FB199AEC550057B4B4 /* LGSRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGSRWebSocket.h; sourceTree = "<group>"; };
@@ -1385,7 +1329,6 @@
 			isa = PBXGroup;
 			children = (
 				EA5FB7BA199AEC550057B4B4 /* asi-http-request */,
-				EA5FB7D5199AEC550057B4B4 /* GCDWebServer */,
 				EA5FB7F6199AEC550057B4B4 /* objc-guid */,
 				EA5FB7FA199AEC550057B4B4 /* SocketRocket */,
 				EA5FB7FE199AEC550057B4B4 /* XMLReader */,
@@ -1445,65 +1388,6 @@
 				EA5FB7D3199AEC550057B4B4 /* CTReachability.m */,
 			);
 			path = Reachability;
-			sourceTree = "<group>";
-		};
-		EA5FB7D5199AEC550057B4B4 /* GCDWebServer */ = {
-			isa = PBXGroup;
-			children = (
-				EA5FB7D6199AEC550057B4B4 /* Core */,
-				EA5FB7E4199AEC550057B4B4 /* Requests */,
-				EA5FB7ED199AEC550057B4B4 /* Responses */,
-			);
-			path = GCDWebServer;
-			sourceTree = "<group>";
-		};
-		EA5FB7D6199AEC550057B4B4 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				EA5FB7D7199AEC550057B4B4 /* GCDWebServer.h */,
-				EA5FB7D8199AEC550057B4B4 /* GCDWebServer.m */,
-				EA5FB7D9199AEC550057B4B4 /* GCDWebServerConnection.h */,
-				EA5FB7DA199AEC550057B4B4 /* GCDWebServerConnection.m */,
-				EA5FB7DB199AEC550057B4B4 /* GCDWebServerFunctions.h */,
-				EA5FB7DC199AEC550057B4B4 /* GCDWebServerFunctions.m */,
-				EA5FB7DD199AEC550057B4B4 /* GCDWebServerHTTPStatusCodes.h */,
-				EA5FB7DE199AEC550057B4B4 /* GCDWebServerPrivate.h */,
-				EA5FB7DF199AEC550057B4B4 /* GCDWebServerRequest.h */,
-				EA5FB7E0199AEC550057B4B4 /* GCDWebServerRequest.m */,
-				EA5FB7E1199AEC550057B4B4 /* GCDWebServerResponse.h */,
-				EA5FB7E2199AEC550057B4B4 /* GCDWebServerResponse.m */,
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
-		EA5FB7E4199AEC550057B4B4 /* Requests */ = {
-			isa = PBXGroup;
-			children = (
-				EA5FB7E5199AEC550057B4B4 /* GCDWebServerDataRequest.h */,
-				EA5FB7E6199AEC550057B4B4 /* GCDWebServerDataRequest.m */,
-				EA5FB7E7199AEC550057B4B4 /* GCDWebServerFileRequest.h */,
-				EA5FB7E8199AEC550057B4B4 /* GCDWebServerFileRequest.m */,
-				EA5FB7E9199AEC550057B4B4 /* GCDWebServerMultiPartFormRequest.h */,
-				EA5FB7EA199AEC550057B4B4 /* GCDWebServerMultiPartFormRequest.m */,
-				EA5FB7EB199AEC550057B4B4 /* GCDWebServerURLEncodedFormRequest.h */,
-				EA5FB7EC199AEC550057B4B4 /* GCDWebServerURLEncodedFormRequest.m */,
-			);
-			path = Requests;
-			sourceTree = "<group>";
-		};
-		EA5FB7ED199AEC550057B4B4 /* Responses */ = {
-			isa = PBXGroup;
-			children = (
-				EA5FB7EE199AEC550057B4B4 /* GCDWebServerDataResponse.h */,
-				EA5FB7EF199AEC550057B4B4 /* GCDWebServerDataResponse.m */,
-				EA5FB7F0199AEC550057B4B4 /* GCDWebServerErrorResponse.h */,
-				EA5FB7F1199AEC550057B4B4 /* GCDWebServerErrorResponse.m */,
-				EA5FB7F2199AEC550057B4B4 /* GCDWebServerFileResponse.h */,
-				EA5FB7F3199AEC550057B4B4 /* GCDWebServerFileResponse.m */,
-				EA5FB7F4199AEC550057B4B4 /* GCDWebServerStreamedResponse.h */,
-				EA5FB7F5199AEC550057B4B4 /* GCDWebServerStreamedResponse.m */,
-			);
-			path = Responses;
 			sourceTree = "<group>";
 		};
 		EA5FB7F6199AEC550057B4B4 /* objc-guid */ = {
@@ -1785,7 +1669,6 @@
 				EA5FB8D9199AEC560057B4B4 /* ToastControl.h in Headers */,
 				44C2CC941AB7948300B20E46 /* XMLWriter+ConvenienceMethods.h in Headers */,
 				44316EFE1AF2F04B000FE655 /* FireTVDiscoveryProvider.h in Headers */,
-				EA5FB8A9199AEC560057B4B4 /* GCDWebServerMultiPartFormRequest.h in Headers */,
 				EA5FB891199AEC560057B4B4 /* CTASIHTTPRequestDelegate.h in Headers */,
 				EA5FB8B9199AEC560057B4B4 /* CTXMLReader.h in Headers */,
 				EA5FB8FC199AEC570057B4B4 /* NetcastTVService.h in Headers */,
@@ -1799,17 +1682,14 @@
 				EA5FB892199AEC560057B4B4 /* CTASIInputStream.h in Headers */,
 				EA5FB8DC199AEC560057B4B4 /* WebAppLauncher.h in Headers */,
 				EA5FB8BB199AEC560057B4B4 /* AppInfo.h in Headers */,
-				EA5FB8B1199AEC560057B4B4 /* GCDWebServerFileResponse.h in Headers */,
 				EA5FB896199AEC560057B4B4 /* CTASIProgressDelegate.h in Headers */,
 				EA5FB88E199AEC560057B4B4 /* CTASIHTTPRequest.h in Headers */,
 				EA5FB8E6199AEC560057B4B4 /* ServiceConfig.h in Headers */,
 				44C2CCA11AB7A33500B20E46 /* NSString+Common.h in Headers */,
-				EA5FB89B199AEC560057B4B4 /* GCDWebServerConnection.h in Headers */,
 				EA5FB8D6199AEC560057B4B4 /* MouseControl.h in Headers */,
 				443063C11A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.h in Headers */,
 				EA5FB909199AEC570057B4B4 /* WebOSTVService.h in Headers */,
 				EA5FB8CE199AEC560057B4B4 /* AirPlayService.h in Headers */,
-				EA5FB89F199AEC560057B4B4 /* GCDWebServerHTTPStatusCodes.h in Headers */,
 				EA5FB8E4199AEC560057B4B4 /* NetcastTVServiceConfig.h in Headers */,
 				EA5FB906199AEC570057B4B4 /* WebAppSessionDelegate.h in Headers */,
 				44D90AAC1B06B26C00A5CF2A /* AppStateChangeNotifier.h in Headers */,
@@ -1820,7 +1700,6 @@
 				EA5FB8DF199AEC560057B4B4 /* ServiceCommand.h in Headers */,
 				EA5FB8E1199AEC560057B4B4 /* ServiceCommandDelegate.h in Headers */,
 				EA5FB8D1199AEC560057B4B4 /* ExternalInputControl.h in Headers */,
-				EA5FB8AB199AEC560057B4B4 /* GCDWebServerURLEncodedFormRequest.h in Headers */,
 				EA5FB911199AEC570057B4B4 /* CastWebAppSession.h in Headers */,
 				441C9ED51B3DBCB200F912D5 /* SubscriptionDeduplicator.h in Headers */,
 				EA5FB90F199AEC570057B4B4 /* CastServiceChannel.h in Headers */,
@@ -1828,7 +1707,6 @@
 				EA5FB88C199AEC560057B4B4 /* CTASIFormDataRequest.h in Headers */,
 				EA5FB8C1199AEC560057B4B4 /* ConnectUtil.h in Headers */,
 				EA5FB8DA199AEC560057B4B4 /* TVControl.h in Headers */,
-				EA5FB8AD199AEC560057B4B4 /* GCDWebServerDataResponse.h in Headers */,
 				EA5FB8E2199AEC560057B4B4 /* ServiceSubscription.h in Headers */,
 				EA5FB8E8199AEC560057B4B4 /* ServiceConfigDelegate.h in Headers */,
 				EA5FB8D7199AEC560057B4B4 /* PowerControl.h in Headers */,
@@ -1839,18 +1717,15 @@
 				44A5519F1AC36672001AF783 /* CommonMacros.h in Headers */,
 				EA5FB8FA199AEC570057B4B4 /* WebOSTVServiceSocketClient.h in Headers */,
 				EA5FB890199AEC560057B4B4 /* CTASIHTTPRequestConfig.h in Headers */,
-				EA5FB899199AEC560057B4B4 /* GCDWebServer.h in Headers */,
 				44BCC3F61AB77F7D001BCDAA /* XMLWriter.h in Headers */,
 				EA5FB8C3199AEC560057B4B4 /* DeviceServiceReachability.h in Headers */,
 				EA5FB90D199AEC570057B4B4 /* CastService.h in Headers */,
 				EA5FB885199AEC560057B4B4 /* CTASICacheDelegate.h in Headers */,
 				EA5FB870199AEC550057B4B4 /* ConnectableDeviceDelegate.h in Headers */,
 				EA5FB8D2199AEC560057B4B4 /* KeyControl.h in Headers */,
-				EA5FB8A0199AEC560057B4B4 /* GCDWebServerPrivate.h in Headers */,
 				EA5FB8F6199AEC570057B4B4 /* AirPlayServiceMirrored.h in Headers */,
 				448B28781B041A5600DFF18F /* FireTVMediaPlayer.h in Headers */,
 				EA5FB883199AEC550057B4B4 /* CTASIAuthenticationDialog.h in Headers */,
-				EA5FB8A3199AEC560057B4B4 /* GCDWebServerResponse.h in Headers */,
 				EA5FB86E199AEC550057B4B4 /* ConnectableDevice.h in Headers */,
 				EA5FB87F199AEC550057B4B4 /* SSDPDiscoveryProvider.h in Headers */,
 				EA5FB8E9199AEC570057B4B4 /* ServiceDescription.h in Headers */,
@@ -1876,23 +1751,18 @@
 				EA5FB8C7199AEC560057B4B4 /* JSONObjectCoding.h in Headers */,
 				44D0ECEF1B55DA9000E02A8B /* SubtitleInfo.h in Headers */,
 				EA5FB8F8199AEC570057B4B4 /* WebOSTVServiceMouse.h in Headers */,
-				EA5FB8A5199AEC560057B4B4 /* GCDWebServerDataRequest.h in Headers */,
 				EA5FB886199AEC560057B4B4 /* CTASIDataCompressor.h in Headers */,
 				EA5FB871199AEC550057B4B4 /* ConnectableDeviceStore.h in Headers */,
 				EA5FB8F4199AEC570057B4B4 /* AirPlayServiceHTTP.h in Headers */,
 				EA5FB874199AEC550057B4B4 /* DevicePicker.h in Headers */,
-				EA5FB8A1199AEC560057B4B4 /* GCDWebServerRequest.h in Headers */,
 				EA5FB8BF199AEC560057B4B4 /* ConnectError.h in Headers */,
 				EA5FB8BD199AEC560057B4B4 /* ChannelInfo.h in Headers */,
 				EA5FB8ED199AEC570057B4B4 /* DeviceService.h in Headers */,
-				EA5FB89D199AEC560057B4B4 /* GCDWebServerFunctions.h in Headers */,
 				EA5FB8D8199AEC560057B4B4 /* TextInputControl.h in Headers */,
 				EA5FB8C8199AEC560057B4B4 /* ProgramInfo.h in Headers */,
 				449426301AF82F49006BAFF2 /* BlockRunner.h in Headers */,
 				44AD91771AFA7F1000C23A71 /* FireTVService.h in Headers */,
 				EA5FB87B199AEC550057B4B4 /* DiscoveryManagerDelegate.h in Headers */,
-				EA5FB8A7199AEC560057B4B4 /* GCDWebServerFileRequest.h in Headers */,
-				EA5FB8AF199AEC560057B4B4 /* GCDWebServerErrorResponse.h in Headers */,
 				EA5FB8B5199AEC560057B4B4 /* CTGuid.h in Headers */,
 				EA5FB902199AEC570057B4B4 /* LaunchSession.h in Headers */,
 				22D1EDBD282D0FBD00D74B56 /* CameraSinkCapability.h in Headers */,
@@ -1906,7 +1776,6 @@
 				22D1EDC8282D0FBD00D74B56 /* MobileCapability.h in Headers */,
 				22D1EDCA282D0FBD00D74B56 /* MirroringSinkCapability.h in Headers */,
 				EA5FB8B7199AEC560057B4B4 /* LGSRWebSocket.h in Headers */,
-				EA5FB8B3199AEC560057B4B4 /* GCDWebServerStreamedResponse.h in Headers */,
 				0F446CC21A6D8353000BB1C0 /* PlayListControl.h in Headers */,
 				EA5F82F4199BDCD300B7302B /* ConnectSDK.h in Headers */,
 				EA5F82F0199BDA2100B7302B /* ConnectSDKDefaultPlatforms.h in Headers */,
@@ -2199,14 +2068,11 @@
 			files = (
 				EA5FB884199AEC560057B4B4 /* CTASIAuthenticationDialog.m in Sources */,
 				EA5FB895199AEC560057B4B4 /* CTASINetworkQueue.m in Sources */,
-				EA5FB8B0199AEC560057B4B4 /* GCDWebServerErrorResponse.m in Sources */,
 				EA5FB8F1199AEC570057B4B4 /* DIALService.m in Sources */,
 				EA5FB887199AEC560057B4B4 /* CTASIDataCompressor.m in Sources */,
-				EA5FB8AC199AEC560057B4B4 /* GCDWebServerURLEncodedFormRequest.m in Sources */,
 				448B28771B041A5600DFF18F /* FireTVMediaControl.m in Sources */,
 				EA5FB8CB199AEC560057B4B4 /* SSDPSocketListener.m in Sources */,
 				EA5FB8DE199AEC560057B4B4 /* ServiceAsyncCommand.m in Sources */,
-				EA5FB8B2199AEC560057B4B4 /* GCDWebServerFileResponse.m in Sources */,
 				443063C21A4210F0007779DA /* AirPlayServiceHTTPKeepAlive.m in Sources */,
 				EA5FB8C4199AEC560057B4B4 /* DeviceServiceReachability.m in Sources */,
 				22D1EDCC282D0FBD00D74B56 /* MirroringSinkCapability.m in Sources */,
@@ -2230,12 +2096,10 @@
 				EA5FB8FB199AEC570057B4B4 /* WebOSTVServiceSocketClient.m in Sources */,
 				EA5FB8C9199AEC560057B4B4 /* ProgramInfo.m in Sources */,
 				EA5FB8C6199AEC560057B4B4 /* ExternalInputInfo.m in Sources */,
-				EA5FB89E199AEC560057B4B4 /* GCDWebServerFunctions.m in Sources */,
 				EA5FB905199AEC570057B4B4 /* WebAppSession.m in Sources */,
 				EA5FB912199AEC570057B4B4 /* CastWebAppSession.m in Sources */,
 				EA5FB87A199AEC550057B4B4 /* DiscoveryManager.m in Sources */,
 				EA5FB903199AEC570057B4B4 /* LaunchSession.m in Sources */,
-				EA5FB8A8199AEC560057B4B4 /* GCDWebServerFileRequest.m in Sources */,
 				EA5FB880199AEC550057B4B4 /* SSDPDiscoveryProvider.m in Sources */,
 				EA5FB8CD199AEC560057B4B4 /* TextInputStatusInfo.m in Sources */,
 				22D1EDC5282D0FBD00D74B56 /* WebOSTVService+LGCast.m in Sources */,
@@ -2246,7 +2110,6 @@
 				EA5FB898199AEC560057B4B4 /* CTReachability.m in Sources */,
 				EA5FB8C0199AEC560057B4B4 /* ConnectError.m in Sources */,
 				44C2CCA21AB7A33500B20E46 /* NSString+Common.m in Sources */,
-				EA5FB8A6199AEC560057B4B4 /* GCDWebServerDataRequest.m in Sources */,
 				EA5FB908199AEC570057B4B4 /* WebOSWebAppSession.m in Sources */,
 				EA5FB8EA199AEC570057B4B4 /* ServiceDescription.m in Sources */,
 				EA5FB8BE199AEC560057B4B4 /* ChannelInfo.m in Sources */,
@@ -2257,7 +2120,6 @@
 				EA5FB88D199AEC560057B4B4 /* CTASIFormDataRequest.m in Sources */,
 				EA5FB893199AEC560057B4B4 /* CTASIInputStream.m in Sources */,
 				22D1EDC6282D0FBD00D74B56 /* ConnectionManager.m in Sources */,
-				EA5FB8B4199AEC560057B4B4 /* GCDWebServerStreamedResponse.m in Sources */,
 				EA5FB90E199AEC570057B4B4 /* CastService.m in Sources */,
 				44316EFF1AF2F04B000FE655 /* FireTVDiscoveryProvider.m in Sources */,
 				EA5FB8F7199AEC570057B4B4 /* AirPlayServiceMirrored.m in Sources */,
@@ -2266,13 +2128,10 @@
 				EA5FB8C2199AEC560057B4B4 /* ConnectUtil.m in Sources */,
 				EA5FB87D199AEC550057B4B4 /* DiscoveryProvider.m in Sources */,
 				EA5FB8FF199AEC570057B4B4 /* RokuService.m in Sources */,
-				EA5FB8AE199AEC560057B4B4 /* GCDWebServerDataResponse.m in Sources */,
 				22D1EDC4282D0FBD00D74B56 /* RemoteCameraService.m in Sources */,
 				EA5FB8BC199AEC560057B4B4 /* AppInfo.m in Sources */,
-				EA5FB8A4199AEC560057B4B4 /* GCDWebServerResponse.m in Sources */,
 				44BCC3F71AB77F7D001BCDAA /* XMLWriter.m in Sources */,
 				44A499061B0AD0C1002C94E7 /* FireTVCapabilityMixin.m in Sources */,
-				EA5FB89A199AEC560057B4B4 /* GCDWebServer.m in Sources */,
 				EA5FB8FD199AEC570057B4B4 /* NetcastTVService.m in Sources */,
 				EA5FB901199AEC570057B4B4 /* AirPlayWebAppSession.m in Sources */,
 				4498D98D1A659F43008C0B72 /* NSDictionary+KeyPredicateSearch.m in Sources */,
@@ -2285,11 +2144,8 @@
 				EA5FB88F199AEC560057B4B4 /* CTASIHTTPRequest.m in Sources */,
 				441C9ED61B3DBCB200F912D5 /* SubscriptionDeduplicator.m in Sources */,
 				22D1EDC9282D0FBD00D74B56 /* ScreenMirroringService.m in Sources */,
-				EA5FB89C199AEC560057B4B4 /* GCDWebServerConnection.m in Sources */,
-				EA5FB8A2199AEC560057B4B4 /* GCDWebServerRequest.m in Sources */,
 				EA5FB889199AEC560057B4B4 /* CTASIDataDecompressor.m in Sources */,
 				EA5FB910199AEC570057B4B4 /* CastServiceChannel.m in Sources */,
-				EA5FB8AA199AEC560057B4B4 /* GCDWebServerMultiPartFormRequest.m in Sources */,
 				EA5FB8E0199AEC560057B4B4 /* ServiceCommand.m in Sources */,
 				BB9F7B7905ABBE72E0843AA0 /* MediaInfo.m in Sources */,
 				BB9F776F4924E08D116738B1 /* ImageInfo.m in Sources */,
