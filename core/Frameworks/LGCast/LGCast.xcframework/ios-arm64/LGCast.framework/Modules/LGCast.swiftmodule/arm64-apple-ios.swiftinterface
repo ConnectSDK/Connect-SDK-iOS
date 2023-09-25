@@ -1,0 +1,479 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
+// swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name LGCast
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import AVFoundation
+import AudioToolbox
+import CoreImage
+import Foundation
+import GStreamerForLGCast
+@_exported import LGCast
+import MediaPlayer
+import OSLog
+import QuartzCore
+import ReplayKit
+import Swift
+import UIKit
+import VideoToolbox
+import _Concurrency
+import _StringProcessing
+@objc public enum LGCastCameraError : Swift.Int {
+  case unknown
+  case connectionClosed
+  case deviceShutdown
+  case rendererTerminated
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum LGCastMirroringEvent : Swift.Int {
+  case unknown
+  case updateVideoInfo
+  case updateVideoVideoSize
+  case updateAudioInfo
+  case updatePlayerInfo
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public protocol LGCastMirroringApiDelegate {
+  @objc func lgcastMirroringDidStart(result: Swift.Bool)
+  @objc func lgcastMirroringDidStop(result: Swift.Bool)
+  @objc func lgcastMirroringErrorDidOccur(error: LGCast.LGCastMirroringError)
+  @objc func lgcastMirroringUpdateEvent(event: LGCast.LGCastMirroringEvent, info: LGCast.LGCastMirroringInfo?)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class LGCastMirroringApi : ObjectiveC.NSObject {
+  @objc public static let shared: LGCast.LGCastMirroringApi
+  public var isRunning: Swift.Bool {
+    get
+  }
+  public var isTvInputEnabled: Swift.Bool {
+    get
+  }
+  @objc public func isSupportedOsVersion() -> Swift.Bool
+  @objc public func setDelegate(_ delegate: LGCast.LGCastMirroringApiDelegate)
+  @objc public func setMediaSettings(_ mediaInfo: LGCast.LGCastMirroringMediaSettings?) -> LGCast.LGCastMirroringInfo?
+  @objc public func generateMirroringMasterKey(_ publicKey: Swift.String) -> Swift.Array<LGCast.LGCastSecurityKey>?
+  @objc public func startMirroring(_ settings: LGCast.LGCastDeviceSettings?)
+  @objc public func updateDisplayOrientation(isPortraitMode: Swift.Bool) -> LGCast.LGCastMirroringInfo?
+  @objc public func stopMirroring()
+  public func startMirroringWithCapture(_ settings: LGCast.LGCastDeviceSettings?)
+  public func stopMirroringWithCapture()
+  @objc public func pushSampleBuffer(_ sampleBuffer: CoreMedia.CMSampleBuffer, with sampleBufferType: ReplayKit.RPSampleBufferType)
+  public func pushSampleBuffer(_ sampleBuffer: CoreMedia.CMSampleBuffer, with mediaType: LGCast.RTPStreamerMediaType)
+  @objc deinit
+}
+@objc public enum LGCastMirroringError : Swift.Int {
+  case unknown
+  case connectionClosed
+  case deviceShutdown
+  case rendererTerminated
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @objc public class LGCastSecurityKey : ObjectiveC.NSObject {
+  @objc public var masterKey: Swift.String?
+  @objc public var mki: Swift.String?
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class LGCastDeviceSettings : ObjectiveC.NSObject {
+  @objc public var host: Swift.String?
+  @objc public var audioPort: Swift.Int
+  @objc public var videoPort: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class LGCastMirroringAudioSettings : ObjectiveC.NSObject {
+  @objc public var sampleRate: Swift.Int
+  @objc public var bitrate: Swift.Int
+  @objc public var channelCnt: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class LGCastMirroringVideoSettings : ObjectiveC.NSObject {
+  @objc public var width: Swift.Int
+  @objc public var height: Swift.Int
+  @objc public var isPortraitMode: Swift.Bool
+  @objc public var framerate: Swift.Int
+  @objc public var bitrate: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class LGCastMirroringMediaSettings : ObjectiveC.NSObject {
+  @objc public var audio: LGCast.LGCastMirroringAudioSettings?
+  @objc public var video: LGCast.LGCastMirroringVideoSettings?
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class LGCastMirroringAudioInfo : ObjectiveC.NSObject {
+  @objc public var type: LGCast.MTAudioType
+  @objc public var codec: Swift.String {
+    @objc get
+  }
+  @objc public var samplingRate: Swift.Int
+  @objc public var channelCnt: Swift.Int
+  @objc public var bitrate: Swift.Int
+  @objc public var streamMuxConfig: Swift.String
+  @objc public var codecData: Foundation.Data?
+  @objc public var host: Swift.String?
+  @objc public var port: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class LGCastMirroringVideoInfo : ObjectiveC.NSObject {
+  @objc public var type: LGCast.MTVideoType
+  @objc public var codec: Swift.String {
+    @objc get
+  }
+  @objc public var width: Swift.Int
+  @objc public var height: Swift.Int
+  @objc public var activeWidth: Swift.Int
+  @objc public var activeHeight: Swift.Int
+  @objc public var framerate: Swift.Int
+  @objc public var samplingRate: Swift.Int
+  @objc public var bitrate: Swift.Int
+  @objc public var supportOrientation: Swift.String
+  @objc public var isPortraitMode: Swift.Bool
+  @objc public var screenOrientation: Swift.String
+  @objc public var streamMuxConfig: Swift.String?
+  @objc public var codecData: Foundation.Data?
+  @objc public var host: Swift.String?
+  @objc public var port: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class LGCastMirroringPlayerInfo : ObjectiveC.NSObject {
+  @objc public var width: Swift.Int
+  @objc public var height: Swift.Int
+  @objc public var isPortraitMode: Swift.Bool
+  @objc public var ipAddress: Swift.String
+  @objc public var audioPort: Swift.Int
+  @objc public var videoPort: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class LGCastMirroringInfo : ObjectiveC.NSObject {
+  @objc public var audioInfo: LGCast.LGCastMirroringAudioInfo?
+  @objc public var videoInfo: LGCast.LGCastMirroringVideoInfo?
+  @objc public var playerInfo: LGCast.LGCastMirroringPlayerInfo?
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class LGCastCameraParameterInfo : ObjectiveC.NSObject {
+  @objc public var audio: LGCast.LGCastCamperaPropertyStatus
+  @objc public var autoWhiteBalance: LGCast.LGCastCamperaPropertyStatus
+  @objc public var brightness: Swift.Int
+  @objc public var width: Swift.Int
+  @objc public var height: Swift.Int
+  @objc public var facing: LGCast.LGCastCameraPosition
+  @objc public var whiteBalance: Swift.Int
+  @objc public var rotation: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public protocol LGCastCameraApiDelegate {
+  @objc func lgcastCameraDidPlay()
+  @objc func lgcastCameraDidChange(property: LGCast.LGCastCameraProperty)
+  @objc func lgcastCameraErrorDidOccur(error: LGCast.LGCastCameraError)
+}
+@_inheritsConvenienceInitializers @objc public class LGCastCameraResolutionInfo : ObjectiveC.NSObject {
+  @objc public var width: Swift.Int
+  @objc public var height: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class LGCastCameraApi : ObjectiveC.NSObject {
+  @objc public static let KEY_CAMERA_POSITION: Swift.String
+  @objc public static let KEY_PREVIEW_VIDEO_GRAVITY: Swift.String
+  @objc public static let KEY_IS_SUPPORT_LANDSCAPE_MODE: Swift.String
+  @objc public static let shared: LGCast.LGCastCameraApi
+  @objc weak public var delegate: LGCast.LGCastCameraApiDelegate?
+  @objc public var isRunning: Swift.Bool {
+    get
+  }
+  public var isTvInputEnabled: Swift.Bool {
+    get
+  }
+  @objc public func isSupportedOsVersion() -> Swift.Bool
+  @objc public func createCameraPreviewView(_ options: [Swift.String : Any]? = nil) -> UIKit.UIView
+  @objc public func setPreviewView(_ view: LGCast.LGCastCameraPreviewView, options: [Swift.String : Any]? = nil)
+  @objc public func generateCameraMasterKey(_ publicKey: Swift.String) -> Swift.Array<LGCast.LGCastSecurityKey>?
+  @objc public func getCameraProperties() -> LGCast.LGCastCameraParameterInfo?
+  @objc public func setCameraProperties(property: LGCast.LGCastCameraProperty, value: Swift.Int) -> Swift.Bool
+  @objc public func startRemoteCamera(_ settings: LGCast.LGCastDeviceSettings)
+  @objc public func stopRemoteCamera()
+  @objc public func getSupportedResolutions() -> [LGCast.LGCastCameraResolutionInfo]
+  @objc public func getCurrentResolution() -> LGCast.LGCastCameraResolutionInfo
+  @objc public func setResolution(_ resolution: LGCast.LGCastCameraResolutionInfo) -> Swift.Bool
+  @objc public func changeCameraPosition(_ position: LGCast.LGCastCameraPosition) -> Swift.Bool
+  @objc public func muteMicrophone(_ isMuted: Swift.Bool) -> Swift.Bool
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class LGCastCameraPreviewView : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public class var layerClass: Swift.AnyClass {
+    @objc get
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@objc public enum LGCastCameraProperty : Swift.Int {
+  case audio
+  case autoWhiteBalance
+  case brightness
+  case facing
+  case resolution
+  case whitebalance
+  case rotation
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum LGCastCameraPosition : Swift.Int {
+  case front = 0
+  case back = 1
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum LGCastCameraPreviewVideoGravity : Swift.Int {
+  case resize
+  case resizeAspect
+  case resizeAspectFill
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum LGCastCamperaPropertyStatus : Swift.Int {
+  case disable = 0
+  case enable = 1
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum LGCastCameraResolution : Swift.Int {
+  case low
+  case medium
+  case high
+  case cif352x288
+  case vga640x480
+  case hd1280x720
+  case hd1920x1080
+  case hd4K3840x2160
+  case iFrame960x540
+  case iFrame1280x720
+  public init(width: Swift.Int, height: Swift.Int)
+  public var description: Swift.String {
+    get
+  }
+  public func getSize() -> (width: Swift.Int, height: Swift.Int)
+  public func getWidth() -> Swift.Int
+  public func getHeight() -> Swift.Int
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@propertyWrapper public struct LGCastUserDefaults<T> {
+  public var wrappedValue: T {
+    get
+    set
+  }
+}
+public protocol AudioEncoderDelegate : AnyObject {
+  func audioEncoder(_ encoder: LGCast.AudioEncoder, didPrepare result: Swift.Bool)
+  func audioEncoder(_ encoder: LGCast.AudioEncoder, didStart result: Swift.Bool, startPts: CoreMedia.CMTime, startTime: Dispatch.DispatchTime)
+  func audioEncoder(_ encoder: LGCast.AudioEncoder, with type: LGCast.MTAudioType, didEncode data: Foundation.Data, pts: CoreMedia.CMTime, priority: Swift.Int)
+}
+@_hasMissingDesignatedInitializers public class AudioEncoder {
+  public func prepareAudioEncoder(_ sampleBuffer: CoreMedia.CMSampleBuffer)
+  public func processAudioSampleBuffer(_ sampleBuffer: CoreMedia.CMSampleBuffer, baseTime: CoreMedia.CMTime)
+  @objc deinit
+}
+extension CoreAudioTypes.AudioStreamBasicDescription : Swift.Equatable {
+  public static func == (lhs: CoreAudioTypes.AudioStreamBasicDescription, rhs: CoreAudioTypes.AudioStreamBasicDescription) -> Swift.Bool
+}
+public enum RTPStreamerMediaType : Swift.Int32 {
+  case VIDEO
+  case AUDIO
+  case AV
+  public init?(rawValue: Swift.Int32)
+  public typealias RawValue = Swift.Int32
+  public var rawValue: Swift.Int32 {
+    get
+  }
+}
+public enum RTPStreamerRscType : Swift.Int32 {
+  case APP
+  case FILE
+  case SOCKET
+  case CAMERA
+  public init?(rawValue: Swift.Int32)
+  public typealias RawValue = Swift.Int32
+  public var rawValue: Swift.Int32 {
+    get
+  }
+}
+public enum RTPStreamerSRTPAuthType : Swift.Int32 {
+  case NONE
+  case HMAC_SHA1_32
+  case HMAC_SHA1_80
+  public init?(rawValue: Swift.Int32)
+  public typealias RawValue = Swift.Int32
+  public var rawValue: Swift.Int32 {
+    get
+  }
+}
+public enum RTPStreamerSRTPCipherType : Swift.Int32 {
+  case NONE
+  case AES_128_ICM
+  case AES_256_ICM
+  case AES_128_GCM
+  case AES_256_GCM
+  public init?(rawValue: Swift.Int32)
+  public typealias RawValue = Swift.Int32
+  public var rawValue: Swift.Int32 {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class MTRTPPipeline {
+  public static func getPipeline(_ ssrc: Swift.UInt32, info: LGCast.MTMediaInfo, isSecure: Swift.Bool) -> Swift.String?
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class MTRTPSecurity : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class MTRTPSecurityKey : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+public enum MTMediaType : Swift.Int32 {
+  case video
+  case audio
+  case av
+  public init?(rawValue: Swift.Int32)
+  public typealias RawValue = Swift.Int32
+  public var rawValue: Swift.Int32 {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers public class MTMediaInfo : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public enum MTVideoType : Swift.Int32 {
+  case raw
+  case h264
+  case mjpeg
+  public init?(rawValue: Swift.Int32)
+  public typealias RawValue = Swift.Int32
+  public var rawValue: Swift.Int32 {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers public class MTVideoInfo : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public enum MTAudioType : Swift.Int32 {
+  case pcm
+  case aac
+  public init?(rawValue: Swift.Int32)
+  public typealias RawValue = Swift.Int32
+  public var rawValue: Swift.Int32 {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers public class MTAudioInfo : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class Log : ObjectiveC.NSObject {
+  public static func debug(_ items: Any..., file: Swift.String = #file, function: Swift.String = #function, line: Swift.Int = #line)
+  public static func info(_ items: Any..., file: Swift.String = #file, function: Swift.String = #function, line: Swift.Int = #line)
+  public static func notice(_ items: Any..., file: Swift.String = #file, function: Swift.String = #function, line: Swift.Int = #line)
+  public static func error(_ items: Any..., file: Swift.String = #file, function: Swift.String = #function, line: Swift.Int = #line)
+  public static func fault(_ items: Any..., file: Swift.String = #file, function: Swift.String = #function, line: Swift.Int = #line)
+  @objc deinit
+}
+extension UIKit.UIDevice {
+  @_Concurrency.MainActor(unsafe) public var isPhoneDevice: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public var isPadDevice: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public var modelName: Swift.String {
+    get
+  }
+}
+extension LGCast.Log {
+  @objc public static func debugLGCast(_ message: Swift.String)
+  @objc public static func infoLGCast(_ message: Swift.String)
+  @objc public static func noticeLGCast(_ message: Swift.String)
+  @objc public static func errorLGCast(_ message: Swift.String)
+  @objc public static func faultLGCast(_ message: Swift.String)
+}
+extension LGCast.LGCastCameraError : Swift.Equatable {}
+extension LGCast.LGCastCameraError : Swift.Hashable {}
+extension LGCast.LGCastCameraError : Swift.RawRepresentable {}
+extension LGCast.LGCastMirroringEvent : Swift.Equatable {}
+extension LGCast.LGCastMirroringEvent : Swift.Hashable {}
+extension LGCast.LGCastMirroringEvent : Swift.RawRepresentable {}
+extension LGCast.LGCastMirroringError : Swift.Equatable {}
+extension LGCast.LGCastMirroringError : Swift.Hashable {}
+extension LGCast.LGCastMirroringError : Swift.RawRepresentable {}
+extension LGCast.LGCastCameraProperty : Swift.Equatable {}
+extension LGCast.LGCastCameraProperty : Swift.Hashable {}
+extension LGCast.LGCastCameraProperty : Swift.RawRepresentable {}
+extension LGCast.LGCastCameraPosition : Swift.Equatable {}
+extension LGCast.LGCastCameraPosition : Swift.Hashable {}
+extension LGCast.LGCastCameraPosition : Swift.RawRepresentable {}
+extension LGCast.LGCastCameraPreviewVideoGravity : Swift.Equatable {}
+extension LGCast.LGCastCameraPreviewVideoGravity : Swift.Hashable {}
+extension LGCast.LGCastCameraPreviewVideoGravity : Swift.RawRepresentable {}
+extension LGCast.LGCastCamperaPropertyStatus : Swift.Equatable {}
+extension LGCast.LGCastCamperaPropertyStatus : Swift.Hashable {}
+extension LGCast.LGCastCamperaPropertyStatus : Swift.RawRepresentable {}
+extension LGCast.LGCastCameraResolution : Swift.Equatable {}
+extension LGCast.LGCastCameraResolution : Swift.Hashable {}
+extension LGCast.LGCastCameraResolution : Swift.RawRepresentable {}
+extension LGCast.RTPStreamerMediaType : Swift.Equatable {}
+extension LGCast.RTPStreamerMediaType : Swift.Hashable {}
+extension LGCast.RTPStreamerMediaType : Swift.RawRepresentable {}
+extension LGCast.RTPStreamerRscType : Swift.Equatable {}
+extension LGCast.RTPStreamerRscType : Swift.Hashable {}
+extension LGCast.RTPStreamerRscType : Swift.RawRepresentable {}
+extension LGCast.RTPStreamerSRTPAuthType : Swift.Equatable {}
+extension LGCast.RTPStreamerSRTPAuthType : Swift.Hashable {}
+extension LGCast.RTPStreamerSRTPAuthType : Swift.RawRepresentable {}
+extension LGCast.RTPStreamerSRTPCipherType : Swift.Equatable {}
+extension LGCast.RTPStreamerSRTPCipherType : Swift.Hashable {}
+extension LGCast.RTPStreamerSRTPCipherType : Swift.RawRepresentable {}
+extension LGCast.MTMediaType : Swift.Equatable {}
+extension LGCast.MTMediaType : Swift.Hashable {}
+extension LGCast.MTMediaType : Swift.RawRepresentable {}
+extension LGCast.MTVideoType : Swift.Equatable {}
+extension LGCast.MTVideoType : Swift.Hashable {}
+extension LGCast.MTVideoType : Swift.RawRepresentable {}
+extension LGCast.MTAudioType : Swift.Equatable {}
+extension LGCast.MTAudioType : Swift.Hashable {}
+extension LGCast.MTAudioType : Swift.RawRepresentable {}

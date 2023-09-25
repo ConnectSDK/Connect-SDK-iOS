@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!--
+Copyright (c) 2015 LG Electronics.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<root xmlns='urn:schemas-upnp-org:device-1-0' xmlns:pnpx='http://schemas.microsoft.com/windows/pnpx/2005/11' xmlns:df='http://schemas.microsoft.com/windows/2008/09/devicefoundation' xmlns:sec='http://www.sec.co.kr/dlna'>
+ <specVersion>
+  <major>1</major>
+  <minor>0</minor>
+ </specVersion>
+ <device>
+  <deviceType>urn:schemas-upnp-org:device:MediaRenderer:1</deviceType>
+  <pnpx:X_compatibleId>MS_DigitalMediaDeviceClass_DMR_V001</pnpx:X_compatibleId>
+  <df:X_deviceCategory>Display.TV.LCD Multimedia.DMR</df:X_deviceCategory>
+  <dlna:X_DLNADOC xmlns:dlna='urn:schemas-dlna-org:device-1-0'>DMR-1.50</dlna:X_DLNADOC>
+  <friendlyName>Samsung LED</friendlyName>
+  <manufacturer>Samsung Electronics</manufacturer>
+  <manufacturerURL>http://www.samsung.com/sec</manufacturerURL>
+  <modelDescription>Samsung RVU TV 2013</modelDescription>
+  <modelName>UN46F8000</modelName>
+  <modelNumber>AllShare1.0</modelNumber>
+  <modelURL>http://www.samsung.com/sec</modelURL>
+  <serialNumber>20138413DML</serialNumber>
+  <UDN>uuid:0a21fe80-00aa-1000-8e5a-f47b5e7672cf</UDN>
+  <sec:deviceID>KPEHCBZXDAQYU</sec:deviceID>
+  <iconList>
+   <icon>
+    <mimetype>image/jpeg</mimetype>
+    <width>48</width>
+    <height>48</height>
+    <depth>24</depth>
+    <url>/dmr/icon_SML.jpg</url>
+   </icon>
+   <icon>
+    <mimetype>image/jpeg</mimetype>
+    <width>120</width>
+    <height>120</height>
+    <depth>24</depth>
+    <url>/dmr/icon_LRG.jpg</url>
+   </icon>
+   <icon>
+    <mimetype>image/png</mimetype>
+    <width>48</width>
+    <height>48</height>
+    <depth>24</depth>
+    <url>/dmr/icon_SML.png</url>
+   </icon>
+   <icon>
+    <mimetype>image/png</mimetype>
+    <width>120</width>
+    <height>120</height>
+    <depth>24</depth>
+    <url>/dmr/icon_LRG.png</url>
+   </icon>
+  </iconList>
+  <serviceList>
+   <service>
+    <serviceType>urn:schemas-upnp-org:service:RenderingControl:1</serviceType>
+    <serviceId>urn:upnp-org:serviceId:RenderingControl</serviceId>
+    <controlURL>/smp_21_</controlURL>
+    <eventSubURL>/smp_22_</eventSubURL>
+    <SCPDURL>/smp_20_</SCPDURL>
+   </service>
+   <service>
+    <serviceType>urn:schemas-upnp-org:service:ConnectionManager:1</serviceType>
+    <serviceId>urn:upnp-org:serviceId:ConnectionManager</serviceId>
+    <controlURL>/smp_24_</controlURL>
+    <eventSubURL>/smp_25_</eventSubURL>
+    <SCPDURL>/smp_23_</SCPDURL>
+   </service>
+   <service>
+    <serviceType>urn:schemas-upnp-org:service:AVTransport:1</serviceType>
+    <serviceId>urn:upnp-org:serviceId:AVTransport</serviceId>
+    <controlURL>/smp_27_</controlURL>
+    <eventSubURL>/smp_28_</eventSubURL>
+    <SCPDURL>/smp_26_</SCPDURL>
+   </service>
+  </serviceList>
+  <sec:ProductCap>Y2013,WebURIPlayable,SeekTRACK_NR,NavigateInPause</sec:ProductCap>
+  <pnpx:X_hardwareId>VEN_0105&amp;DEV_VD0001</pnpx:X_hardwareId>
+ </device>
+</root>

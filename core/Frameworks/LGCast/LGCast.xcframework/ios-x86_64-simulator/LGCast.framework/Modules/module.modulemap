@@ -1,0 +1,11 @@
+framework module LGCast {
+  umbrella header "LGCast.h"
+
+  export *
+  module * { export * }
+}
+
+module LGCast.Swift {
+  header "LGCast-Swift.h"
+  requires objc
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+Copyright (c) 2015 LG Electronics.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<root xmlns="urn:schemas-upnp-org:device-1-0" xmlns:df="http://schemas.microsoft.com/windows/2008/09/devicefoundation" xmlns:microsoft="urn:schemas-microsoft-com:WMPDMR-1-0" xmlns:pnpx="http://schemas.microsoft.com/windows/pnpx/2005/11">
+    <specVersion>
+        <major>1</major>
+        <minor>0</minor>
+    </specVersion>
+    <device>
+        <deviceType>urn:schemas-upnp-org:device:MediaRenderer:1</deviceType><friendlyName>XboxOne</friendlyName><modelName>Xbox One</modelName><modelDescription>Digital Media Renderer</modelDescription><manufacturer>Microsoft Corporation</manufacturer><manufacturerURL>http://www.microsoft.com</manufacturerURL><modelURL>http://xbox.com</modelURL>
+        <UDN>uuid:f887c686-27c7-4fa7-b8d4-43d7d74da84f</UDN>
+        <df:X_containerId>{F887C686-27C7-4FA7-B8D4-43D7D74DA84F}</df:X_containerId><dlna:X_DLNACAP xmlns:dlna="urn:schemas-dlna-org:device-1-0"></dlna:X_DLNACAP><dlna:X_DLNADOC xmlns:dlna="urn:schemas-dlna-org:device-1-0">DMR-1.50</dlna:X_DLNADOC><pnpx:X_deviceCategory>MediaDevices</pnpx:X_deviceCategory><pnpx:X_hardwareId>VEN_0125&amp;DEV_0002&amp;REV_0001 VEN_0125&amp;DEV_0002</pnpx:X_hardwareId><iconList><icon><mimetype>image/jpeg</mimetype><width>120</width><height>120</height><depth>24</depth><url>/upnphost/udhisapi.dll?content=uuid:8df04193-da4e-4764-a20d-155c9f7f1795</url></icon><icon><mimetype>image/jpeg</mimetype><width>48</width><height>48</height><depth>24</depth><url>/upnphost/udhisapi.dll?content=uuid:fec54d6c-8653-49ae-8e84-7863b4a6a436</url></icon><icon><mimetype>image/png</mimetype><width>120</width><height>120</height><depth>24</depth><url>/upnphost/udhisapi.dll?content=uuid:f32bca00-fe56-4c9b-97c0-7107e498a763</url></icon><icon><mimetype>image/png</mimetype><width>48</width><height>48</height><depth>24</depth><url>/upnphost/udhisapi.dll?content=uuid:cdad2c8e-023f-4a3b-82ea-573048f043e8</url></icon></iconList>
+        <serviceList>
+            <service>
+                <serviceType>urn:schemas-upnp-org:service:RenderingControl:1</serviceType>
+                <serviceId>urn:upnp-org:serviceId:RenderingControl</serviceId>
+                <controlURL>/upnphost/udhisapi.dll?control=uuid:f887c686-27c7-4fa7-b8d4-43d7d74da84f+urn:upnp-org:serviceId:RenderingControl</controlURL>
+                <eventSubURL>/upnphost/udhisapi.dll?event=uuid:f887c686-27c7-4fa7-b8d4-43d7d74da84f+urn:upnp-org:serviceId:RenderingControl</eventSubURL>
+                <SCPDURL>/upnphost/udhisapi.dll?content=uuid:c027b4c1-527e-4f85-985a-b9948b931c2c</SCPDURL>
+            </service>
+            <service>
+                <serviceType>urn:schemas-upnp-org:service:AVTransport:1</serviceType>
+                <serviceId>urn:upnp-org:serviceId:AVTransport</serviceId>
+                <controlURL>/upnphost/udhisapi.dll?control=uuid:f887c686-27c7-4fa7-b8d4-43d7d74da84f+urn:upnp-org:serviceId:AVTransport</controlURL>
+                <eventSubURL>/upnphost/udhisapi.dll?event=uuid:f887c686-27c7-4fa7-b8d4-43d7d74da84f+urn:upnp-org:serviceId:AVTransport</eventSubURL>
+                <SCPDURL>/upnphost/udhisapi.dll?content=uuid:48e34611-1834-484a-8333-779ee1bc26e3</SCPDURL>
+            </service>
+            <service>
+                <serviceType>urn:schemas-upnp-org:service:ConnectionManager:1</serviceType>
+                <serviceId>urn:upnp-org:serviceId:ConnectionManager</serviceId>
+                <controlURL>/upnphost/udhisapi.dll?control=uuid:f887c686-27c7-4fa7-b8d4-43d7d74da84f+urn:upnp-org:serviceId:ConnectionManager</controlURL>
+                <eventSubURL>/upnphost/udhisapi.dll?event=uuid:f887c686-27c7-4fa7-b8d4-43d7d74da84f+urn:upnp-org:serviceId:ConnectionManager</eventSubURL>
+                <SCPDURL>/upnphost/udhisapi.dll?content=uuid:9c3570a8-913a-4807-9537-62b282e178f1</SCPDURL>
+            </service>
+        </serviceList>
+    </device>
+</root>
+

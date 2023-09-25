@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) 2015 LG Electronics.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<root xmlns="urn:schemas-upnp-org:device-1-0" xmlns:dlna="urn:schemas-dlna-org:device-1-0" xmlns:pnpx="http://schemas.microsoft.com/windows/pnpx/2005/11" xmlns:df="http://schemas.microsoft.com/windows/2008/09/devicefoundation">
+  <specVersion>
+    <major>1</major>
+    <minor>0</minor>
+  </specVersion>
+  <device>
+    <deviceType>urn:schemas-upnp-org:device:MediaRenderer:1</deviceType>
+    <friendlyName>MR</friendlyName>
+    <manufacturer>LG Electronics.</manufacturer>
+    <manufacturerURL>http://www.lge.com</manufacturerURL>
+    <modelDescription>LG WebOSTV DMRplus</modelDescription>
+    <modelName>LG TV</modelName>
+    <modelURL></modelURL>
+    <modelNumber>1.0</modelNumber>
+    <serialNumber></serialNumber>
+    <UDN>uuid:5bb03745-4532-2c55-f48f-99742ab93698</UDN>
+    <pnpx:X_compatibleId>MS_DigitalMediaDeviceClass_DMR_V001</pnpx:X_compatibleId>
+    <pnpx:X_deviceCategory>MediaDevices</pnpx:X_deviceCategory>
+    <df:X_deviceCategory>Multimedia.DMR</df:X_deviceCategory>
+    <df:X_modelId>LG Digital Media Renderer TV</df:X_modelId>
+    <lge:X_LG_DLNA_DOC xmlns:lge="urn:lge-com:device-1-0">1.0</lge:X_LG_DLNA_DOC>
+    <dlna:X_DLNADOC xmlns:dlna="urn:schemas-dlna-org:device-1-0">DMR-1.50</dlna:X_DLNADOC>
+    <iconList>
+      <icon>
+        <mimetype>image/png</mimetype>
+        <width>191</width>
+        <height>191</height>
+        <depth>32</depth>
+        <url>/dmrIcon.png</url>
+      </icon>
+    </iconList>
+    <serviceList>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:AVTransport:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:AVTransport</serviceId>
+        <SCPDURL>/AVTransport/5bb03745-4532-2c55-f48f-99742ab93698/scpd.xml</SCPDURL>
+        <controlURL>/AVTransport/5bb03745-4532-2c55-f48f-99742ab93698/control.xml</controlURL>
+        <eventSubURL>/AVTransport/5bb03745-4532-2c55-f48f-99742ab93698/event.xml</eventSubURL>
+      </service>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:ConnectionManager:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:ConnectionManager</serviceId>
+        <SCPDURL>/ConnectionManager/5bb03745-4532-2c55-f48f-99742ab93698/scpd.xml</SCPDURL>
+        <controlURL>/ConnectionManager/5bb03745-4532-2c55-f48f-99742ab93698/control.xml</controlURL>
+        <eventSubURL>/ConnectionManager/5bb03745-4532-2c55-f48f-99742ab93698/event.xml</eventSubURL>
+      </service>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:RenderingControl:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:RenderingControl</serviceId>
+        <SCPDURL>/RenderingControl/5bb03745-4532-2c55-f48f-99742ab93698/scpd.xml</SCPDURL>
+        <controlURL>/RenderingControl/5bb03745-4532-2c55-f48f-99742ab93698/control.xml</controlURL>
+        <eventSubURL>/RenderingControl/5bb03745-4532-2c55-f48f-99742ab93698/event.xml</eventSubURL>
+      </service>
+    </serviceList>
+  </device>
+</root>

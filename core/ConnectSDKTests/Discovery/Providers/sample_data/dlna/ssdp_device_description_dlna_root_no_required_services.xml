@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+Copyright (c) 2015 LG Electronics.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<root xmlns="urn:schemas-upnp-org:device-1-0" xmlns:df="http://schemas.microsoft.com/windows/2008/09/devicefoundation" xmlns:microsoft="urn:schemas-microsoft-com:WMPDMR-1-0" xmlns:pnpx="http://schemas.microsoft.com/windows/pnpx/2005/11">
+    <specVersion>
+        <major>1</major>
+        <minor>0</minor>
+    </specVersion>
+    <device>
+        <deviceType>urn:schemas-upnp-org:device:MediaRenderer:1</deviceType><friendlyName>XboxOne</friendlyName><modelName>Xbox One</modelName><modelDescription>Digital Media Renderer</modelDescription><manufacturer>Microsoft Corporation</manufacturer><manufacturerURL>http://www.microsoft.com</manufacturerURL><modelURL>http://xbox.com</modelURL>
+        <UDN>uuid:f887c686-27c7-4fa7-b8d4-43d7d74da84f</UDN>
+    </device>
+</root>
+
