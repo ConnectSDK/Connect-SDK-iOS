@@ -29,9 +29,9 @@ Pod::Spec.new do |s|
   s.license      = { :type => "Apache License, Version 2.0", :file => "LICENSE" }
   s.author             = { "Connect SDK" => "support@connectsdk.com" }
   s.social_media_url   = "http://twitter.com/ConnectSDK"
-  s.platform     = :ios, "11.0"
-  s.ios.deployment_target = "11.0"
-  s.source       = { :git => "https://github.com/tuanvucourse/Connect-SDK-iOS.git",
+  s.platform     = :ios, "14.0"
+  s.ios.deployment_target = "14.0"
+  s.source       = { :git => "https://github.com/ConnectSDK/Connect-SDK-iOS.git",
                      :tag => s.version,
                      :submodules => true }
 
@@ -93,7 +93,7 @@ Pod::Spec.new do |s|
     sp.private_header_files = "core/**/*_Private.h"
     sp.requires_arc = true
     sp.dependency 'GCDWebServer', '~> 3.2'
-
+    
     sp.dependency 'ConnectSDK/no-arc'
     sp.ios.vendored_frameworks = 'core/Frameworks/LGCast/LGCast.xcframework', 'core/Frameworks/LGCast/GStreamerForLGCast.xcframework'
     sp.preserve_paths =  'core/Frameworks/LGCast/LGCast.xcframework', 'core/Frameworks/LGCast/GStreamerForLGCast.xcframework'
