@@ -67,7 +67,7 @@
 @implementation AirPlayServiceMirrored
 {
     NSTimer *_connectTimer;
-    UIAlertView *_connectingAlertView;
+    UIAlertController *_connectingAlertView;
 }
 
 - (instancetype) initWithAirPlayService:(AirPlayService *)service
@@ -107,7 +107,29 @@
         NSString *ok = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_OK" value:@"OK" table:@"ConnectSDK"];
         NSString *cancel = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_AirPlay_Mirror_Cancel" value:@"Cancel" table:@"ConnectSDK"];
 
-        _connectingAlertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:ok, nil];
+        _connectingAlertView = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:ok
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction *action) {
+            [_connectingAlertView dismissViewControllerAnimated:NO completion:^{
+                [self actionAlert:TRUE];
+            }];
+
+        }];
+
+        UIAlertAction *cancelAction = [UIAlertAction
+                                       actionWithTitle: cancel
+                                       style:UIAlertActionStyleCancel
+                                       handler:^(UIAlertAction *action) {
+            [_connectingAlertView dismissViewControllerAnimated:NO completion:^{
+                [self actionAlert:FALSE];
+            }];
+        }];
+
+        [_connectingAlertView addAction: okAction];
+        [_connectingAlertView addAction: cancelAction];
+
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hScreenConnected:) name:UIScreenDidConnectNotification object:nil];
 
@@ -139,19 +161,21 @@
         _connectTimer = nil;
     }
 
-    if (_connectingAlertView)
-        dispatch_on_main(^{ [_connectingAlertView dismissWithClickedButtonIndex:0 animated:NO]; });
+    if (_connectingAlertView){
+        dispatch_on_main(^{
+            [_connectingAlertView dismissViewControllerAnimated:NO completion:^{
+                [self actionAlert:FALSE];
+            }];
+        });
+    }
 
     if (self.service && self.service.delegate && [self.service.delegate respondsToSelector:@selector(deviceService:disconnectedWithError:)])
         [self.service.delegate deviceService:self.service disconnectedWithError:nil];
 }
 
-- (void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    _connectingAlertView.delegate = nil;
+-(void) actionAlert:(BOOL) isOkAction {
     _connectingAlertView = nil;
-
-    if (buttonIndex == 0 && _connecting)
+    if (isOkAction == FALSE && _connecting)
         [self disconnect];
 }
 
@@ -189,9 +213,13 @@
         _connecting = NO;
         _connected = YES;
 
-        if (_connectingAlertView)
-            dispatch_on_main(^{ [_connectingAlertView dismissWithClickedButtonIndex:1 animated:NO]; });
-
+        if (_connectingAlertView) {
+            dispatch_on_main(^{
+                [_connectingAlertView dismissViewControllerAnimated:NO completion:^{
+                    [self actionAlert:TRUE];
+                }];
+            });
+        }
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hScreenDisconnected:) name:UIScreenDidDisconnectNotification object:nil];
 
         if (self.service.connected && self.service.delegate && [self.service.delegate respondsToSelector:@selector(deviceServiceConnectionSuccess:)])

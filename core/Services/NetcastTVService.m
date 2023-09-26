@@ -54,7 +54,7 @@ typedef enum {
     NSString *_keyboardString;
 
     // TODO: pull pairing timer from WebOSTVService
-    UIAlertView *_pairingAlert;
+    UIAlertController *_pairingAlert;
 
     NSMutableDictionary *_subscribed;
     NSURL *_commandURL;
@@ -352,9 +352,37 @@ NSString *lgeUDAPRequestURI[8] = {
     NSString *ok = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Pair_OK" value:@"OK" table:@"ConnectSDK"];
     NSString *cancel = [[NSBundle mainBundle] localizedStringForKey:@"Connect_SDK_Pair_Cancel" value:@"Cancel" table:@"ConnectSDK"];
 
-    _pairingAlert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancel otherButtonTitles:ok, nil];
-    _pairingAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [_pairingAlert show];
+    _pairingAlert = [UIAlertController alertControllerWithTitle:title
+                                                        message:message
+                                                 preferredStyle:UIAlertControllerStyleAlert];
+
+    // Add a text field to the alert controller
+    [_pairingAlert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }];
+
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancel
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction *action) {
+        [self dismissPairingWithSuccess:nil failure:nil];
+    }];
+
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:ok
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction *action) {
+        UITextField *textField = _pairingAlert.textFields.firstObject;
+        NSString *pairingCode = textField.text;
+        [self pairWithData:pairingCode];
+    }];
+
+    // Add the actions to the alert controller
+    [_pairingAlert addAction:cancelAction];
+    [_pairingAlert addAction:okAction];
+
+    // Present the alert controller
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    UIViewController *rootViewController = window.rootViewController;
+    [rootViewController presentViewController: _pairingAlert animated:YES completion:nil];
 }
 
 - (void)willPresentAlertView:(UIAlertView *)alertView

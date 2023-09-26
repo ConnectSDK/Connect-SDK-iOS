@@ -454,8 +454,11 @@
             dispatch_on_main(^{ [self.delegate connectableDevice:self service:service pairingRequiredOfType:pairingType withData:pairingData]; });
         else
         {
-            if (pairingType == DeviceServicePairingTypeAirPlayMirroring)
-                [(UIAlertView *)pairingData show];
+            if (pairingType == DeviceServicePairingTypeAirPlayMirroring) {
+                UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                UIViewController *rootViewController = window.rootViewController;
+                [rootViewController presentViewController: (UIAlertController *)pairingData animated:YES completion:nil];
+            } 
         }
     }
 }
