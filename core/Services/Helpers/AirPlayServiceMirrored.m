@@ -54,7 +54,7 @@
 }
 @end
 
-@interface AirPlayServiceMirrored () <ServiceCommandDelegate, WKNavigationDelegate, UIAlertViewDelegate>
+@interface AirPlayServiceMirrored () <ServiceCommandDelegate, WKNavigationDelegate>
 
 @property (nonatomic, copy) SuccessBlock launchSuccessBlock;
 @property (nonatomic, copy) FailureBlock launchFailureBlock;

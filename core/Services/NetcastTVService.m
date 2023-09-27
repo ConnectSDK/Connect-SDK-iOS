@@ -45,7 +45,7 @@ typedef enum {
     LGE_APPTOAPP_DATA_REQUEST
 } LGE_REQUEST_TYPE;
 
-@interface NetcastTVService() <ServiceCommandDelegate, UIAlertViewDelegate, DeviceServiceReachabilityDelegate>
+@interface NetcastTVService() <ServiceCommandDelegate, DeviceServiceReachabilityDelegate>
 {
     NSOperationQueue *_commandQueue;
     BOOL _mouseVisible;
@@ -383,22 +383,6 @@ NSString *lgeUDAPRequestURI[8] = {
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     UIViewController *rootViewController = window.rootViewController;
     [rootViewController presentViewController: _pairingAlert animated:YES completion:nil];
-}
-
-- (void)willPresentAlertView:(UIAlertView *)alertView
-{
-    [alertView textFieldAtIndex:0].keyboardType = UIKeyboardTypeNumberPad;
-}
-
--(void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0)
-        [self dismissPairingWithSuccess:nil failure:nil];
-    else if (buttonIndex == 1)
-    {
-        NSString *pairingCode = [_pairingAlert textFieldAtIndex:0].text;
-        [self pairWithData:pairingCode];
-    }
 }
 
 - (void) dismissPairingWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure

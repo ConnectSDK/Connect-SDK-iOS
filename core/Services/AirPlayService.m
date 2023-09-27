@@ -23,7 +23,7 @@
 
 #import "NSObject+FeatureNotSupported_Private.h"
 
-@interface AirPlayService () <WKNavigationDelegate, ServiceCommandDelegate, UIAlertViewDelegate>
+@interface AirPlayService () <WKNavigationDelegate, ServiceCommandDelegate>
 
 @end
 
