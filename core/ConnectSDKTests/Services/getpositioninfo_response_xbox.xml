@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+Copyright (c) 2015 LG Electronics.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><m:GetPositionInfoResponse xmlns:m="urn:schemas-upnp-org:service:AVTransport:1"><Track xmlns:dt="urn:schemas-microsoft-com:datatypes" dt:dt="ui4">1</Track><TrackDuration xmlns:dt="urn:schemas-microsoft-com:datatypes" dt:dt="string">0:08:52</TrackDuration><TrackMetaData xmlns:dt="urn:schemas-microsoft-com:datatypes" dt:dt="string">&lt;DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:dc="http://purl.org/dc/elements/1.1/"&gt;&lt;item id="0" parentID="0" restricted="0"&gt;&lt;dc:title&gt;Sintel Character Design&lt;/dc:title&gt;&lt;dc:description&gt;Blender Open Movie Project&lt;/dc:description&gt;&lt;res protocolInfo="http-get:*:video/mp4:DLNA.ORG_PN=MP3;DLNA.ORG_OP=01;DLNA.ORG_FLAGS=01500000000000000000000000000000"&gt;http://ec2-54-201-108-205.us-west-2.compute.amazonaws.com/samples/media/video.mp4&lt;/res&gt;&lt;upnp:albumArtURI&gt;http://ec2-54-201-108-205.us-west-2.compute.amazonaws.com/samples/media/videoIcon.jpg&lt;/upnp:albumArtURI&gt;&lt;upnp:class&gt;object.item.videoItem&lt;/upnp:class&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;</TrackMetaData><TrackURI xmlns:dt="urn:schemas-microsoft-com:datatypes" dt:dt="string">http://ec2-54-201-108-205.us-west-2.compute.amazonaws.com/samples/media/video.mp4</TrackURI><RelTime xmlns:dt="urn:schemas-microsoft-com:datatypes" dt:dt="string">0:01:06</RelTime><AbsTime xmlns:dt="urn:schemas-microsoft-com:datatypes" dt:dt="string">NOT_IMPLEMENTED</AbsTime><RelCount xmlns:dt="urn:schemas-microsoft-com:datatypes" dt:dt="i4">2147483647</RelCount><AbsCount xmlns:dt="urn:schemas-microsoft-com:datatypes" dt:dt="i4">2147483647</AbsCount></m:GetPositionInfoResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>

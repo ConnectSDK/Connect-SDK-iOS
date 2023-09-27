@@ -92,7 +92,8 @@ Pod::Spec.new do |s|
     sp.exclude_files = (non_arc_files.dup << "core/ConnectSDK*Tests/**/*" << "core/Frameworks/LGCast/**/*.h")
     sp.private_header_files = "core/**/*_Private.h"
     sp.requires_arc = true
-
+    sp.dependency 'GCDWebServer', '~> 3.2'
+    
     sp.dependency 'ConnectSDK/no-arc'
     sp.ios.vendored_frameworks = 'core/Frameworks/LGCast/LGCast.xcframework', 'core/Frameworks/LGCast/GStreamerForLGCast.xcframework'
     sp.preserve_paths =  'core/Frameworks/LGCast/LGCast.xcframework', 'core/Frameworks/LGCast/GStreamerForLGCast.xcframework'

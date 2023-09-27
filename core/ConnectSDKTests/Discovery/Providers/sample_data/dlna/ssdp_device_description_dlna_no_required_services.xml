@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright (c) 2015 LG Electronics.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<root xmlns="urn:schemas-upnp-org:device-1-0">
+  <specVersion>
+    <major>1</major>
+    <minor>0</minor>
+  </specVersion>
+  <device>
+    <deviceType>urn:schemas-upnp-org:device:ZonePlayer:1</deviceType>
+    <friendlyName>192.168.1.99 - Sonos PLAY:1</friendlyName>
+    <manufacturer>Sonos, Inc.</manufacturer>
+    <manufacturerURL>http://www.sonos.com</manufacturerURL>
+    <modelNumber>S1</modelNumber>
+    <modelDescription>Sonos PLAY:1</modelDescription>
+    <modelName>Sonos PLAY:1</modelName>
+    <modelURL>http://www.sonos.com/products/zoneplayers/S1</modelURL>
+    <softwareVersion>27.2-80271</softwareVersion>
+    <hardwareVersion>1.8.3.7-1</hardwareVersion>
+    <serialNum>09-9E-44-90-F9-1C:E</serialNum>
+    <UDN>uuid:RINCON_B8E93443F9A609059</UDN>
+    <iconList>
+      <icon>
+        <id>0</id>
+        <mimetype>image/png</mimetype>
+        <width>48</width>
+        <height>48</height>
+        <depth>24</depth>
+        <url>/img/icon-S1.png</url>
+      </icon>
+    </iconList>
+    <minCompatibleVersion>26.0-00000</minCompatibleVersion>
+    <legacyCompatibleVersion>24.0-0000</legacyCompatibleVersion>
+    <displayVersion>5.1</displayVersion>
+    <extraVersion>OTP: </extraVersion>
+    <roomName>Office</roomName>
+    <displayName>PLAY:1</displayName>
+    <zoneType>9</zoneType>
+    <feature1>0x00000000</feature1>
+    <feature2>0x00403332</feature2>
+    <feature3>0x0001000e</feature3>
+    <internalSpeakerSize>5</internalSpeakerSize>
+    <bassExtension>75.000</bassExtension>
+    <satGainOffset>6.000</satGainOffset>
+    <memory>128</memory>
+    <flash>64</flash>
+    <ampOnTime>10</ampOnTime>
+    <serviceList>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:AlarmClock:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:AlarmClock</serviceId>
+        <controlURL>/AlarmClock/Control</controlURL>
+        <eventSubURL>/AlarmClock/Event</eventSubURL>
+        <SCPDURL>/xml/AlarmClock1.xml</SCPDURL>
+      </service>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:MusicServices:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:MusicServices</serviceId>
+        <controlURL>/MusicServices/Control</controlURL>
+        <eventSubURL>/MusicServices/Event</eventSubURL>
+        <SCPDURL>/xml/MusicServices1.xml</SCPDURL>
+      </service>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:DeviceProperties:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:DeviceProperties</serviceId>
+        <controlURL>/DeviceProperties/Control</controlURL>
+        <eventSubURL>/DeviceProperties/Event</eventSubURL>
+        <SCPDURL>/xml/DeviceProperties1.xml</SCPDURL>
+      </service>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:SystemProperties:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:SystemProperties</serviceId>
+        <controlURL>/SystemProperties/Control</controlURL>
+        <eventSubURL>/SystemProperties/Event</eventSubURL>
+        <SCPDURL>/xml/SystemProperties1.xml</SCPDURL>
+      </service>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:ZoneGroupTopology:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:ZoneGroupTopology</serviceId>
+        <controlURL>/ZoneGroupTopology/Control</controlURL>
+        <eventSubURL>/ZoneGroupTopology/Event</eventSubURL>
+        <SCPDURL>/xml/ZoneGroupTopology1.xml</SCPDURL>
+      </service>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:GroupManagement:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:GroupManagement</serviceId>
+        <controlURL>/GroupManagement/Control</controlURL>
+        <eventSubURL>/GroupManagement/Event</eventSubURL>
+        <SCPDURL>/xml/GroupManagement1.xml</SCPDURL>
+      </service>
+      <service>
+        <serviceType>urn:schemas-tencent-com:service:QPlay:1</serviceType>
+        <serviceId>urn:tencent-com:serviceId:QPlay</serviceId>
+        <controlURL>/QPlay/Control</controlURL>
+        <eventSubURL>/QPlay/Event</eventSubURL>
+        <SCPDURL>/xml/QPlay1.xml</SCPDURL>
+      </service>
+    </serviceList>
+    <deviceList>
+      <device>
+        <deviceType>urn:schemas-upnp-org:device:MediaServer:1</deviceType>
+        <friendlyName>192.168.1.99 - Sonos PLAY:1 Media Server</friendlyName>
+        <manufacturer>Sonos, Inc.</manufacturer>
+        <manufacturerURL>http://www.sonos.com</manufacturerURL>
+        <modelNumber>S1</modelNumber>
+        <modelDescription>Sonos PLAY:1 Media Server</modelDescription>
+        <modelName>Sonos PLAY:1</modelName>
+        <modelURL>http://www.sonos.com/products/zoneplayers/S1</modelURL>
+        <UDN>uuid:RINCON_B8E93443F9A609059_MS</UDN>
+        <serviceList>
+          <service>
+            <serviceType>urn:schemas-upnp-org:service:ContentDirectory:1</serviceType>
+            <serviceId>urn:upnp-org:serviceId:ContentDirectory</serviceId>
+            <controlURL>/MediaServer/ContentDirectory/Control</controlURL>
+            <eventSubURL>/MediaServer/ContentDirectory/Event</eventSubURL>
+            <SCPDURL>/xml/ContentDirectory1.xml</SCPDURL>
+          </service>
+          <service>
+            <serviceType>urn:schemas-upnp-org:service:ConnectionManager:1</serviceType>
+            <serviceId>urn:upnp-org:serviceId:ConnectionManager</serviceId>
+            <controlURL>/MediaServer/ConnectionManager/Control</controlURL>
+            <eventSubURL>/MediaServer/ConnectionManager/Event</eventSubURL>
+            <SCPDURL>/xml/ConnectionManager1.xml</SCPDURL>
+          </service>
+        </serviceList>
+      </device>
+      <device>
+        <deviceType>urn:schemas-upnp-org:device:MediaRenderer:1</deviceType>
+        <friendlyName>Office - Sonos PLAY:1 Media Renderer</friendlyName>
+        <manufacturer>Sonos, Inc.</manufacturer>
+        <manufacturerURL>http://www.sonos.com</manufacturerURL>
+        <modelNumber>S1</modelNumber>
+        <modelDescription>Sonos PLAY:1 Media Renderer</modelDescription>
+        <modelName>Sonos PLAY:1</modelName>
+        <modelURL>http://www.sonos.com/products/zoneplayers/S1</modelURL>
+        <UDN>uuid:RINCON_B8E93443F9A609059_MR</UDN>
+        <iconList>
+          <icon>
+            <mimetype>image/png</mimetype>
+            <width>48</width>
+            <height>48</height>
+            <depth>24</depth>
+            <url>/img/icon-S1.png</url>
+          </icon>
+        </iconList>
+      </device>
+    </deviceList>
+  </device>
+</root>

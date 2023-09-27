@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+Copyright (c) 2015 LG Electronics.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<root xmlns="urn:schemas-upnp-org:device-1-0" xmlns:df="http://schemas.microsoft.com/windows/2008/09/devicefoundation"><specVersion><major>1</major><minor>0</minor></specVersion><device><deviceType>urn:dial-multiscreen-org:device:dial:1</deviceType><friendlyName>XboxOne</friendlyName><manufacturer>Microsoft Corporation</manufacturer><modelName>Xbox One</modelName><UDN>uuid:aa3da5dd-935e-4148-969b-8d5997a67207</UDN><df:X_containerId>{0F4810A6-4FB4-4FDF-8ACC-81E751E7EC8A}</df:X_containerId><serviceList><service><serviceType>urn:dial-multiscreen-org:service:dial:1</serviceType><serviceId>urn:dial-multiscreen-org:serviceId:dial</serviceId><controlURL>/upnphost/udhisapi.dll?control=uuid:aa3da5dd-935e-4148-969b-8d5997a67207+urn:dial-multiscreen-org:serviceId:dial</controlURL><eventSubURL></eventSubURL><SCPDURL>/upnphost/udhisapi.dll?content=uuid:72133162-b195-4fac-869b-ca5a12b29839</SCPDURL></service></serviceList></device></root>

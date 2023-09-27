@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><root xmlns="urn:schemas-upnp-org:device-1-0"><specVersion><major>1</major><minor>0</minor></specVersion><device><deviceType>urn:dial-multiscreen-org:device:dial:1</deviceType><friendlyName>Fire TV</friendlyName><manufacturer>Amazon.com, Inc.</manufacturer><modelName>FireTV</modelName><UDN>uuid:198f731a-a6a2-da41-0000-00001df7c1e2</UDN><serviceList><service><serviceType>urn:dial-multiscreen-org:service:dial:1</serviceType><serviceId>urn:dial-multiscreen-org:serviceId:dial</serviceId><SCPDURL>/upnp/dev/198f731a-a6a2-da41-0000-00001df7c1e2/svc/dial-multiscreen-org/dial/desc</SCPDURL><controlURL>/upnp/dev/198f731a-a6a2-da41-0000-00001df7c1e2/svc/dial-multiscreen-org/dial/action</controlURL><eventSubURL>/upnp/dev/198f731a-a6a2-da41-0000-00001df7c1e2/svc/dial-multiscreen-org/dial/event</eventSubURL></service></serviceList></device></root>
+<!--
+Copyright (c) 2015 LG Electronics.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->

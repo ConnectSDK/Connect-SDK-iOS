@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+Copyright (c) 2015 LG Electronics.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<root xmlns='urn:schemas-upnp-org:device-1-0' xmlns:sec='http://www.sec.co.kr/dlna' xmlns:dlna='urn:schemas-dlna-org:device-1-0'>
+ <specVersion>
+  <major>1</major>
+  <minor>0</minor>
+ </specVersion>
+ <device>
+  <deviceType>urn:dial-multiscreen-org:device:dialreceiver:1</deviceType>
+  <friendlyName>Samsung LED</friendlyName>
+  <manufacturer>Samsung Electronics</manufacturer>
+  <manufacturerURL>http://www.samsung.com/sec</manufacturerURL>
+  <modelDescription>Samsung TV NS</modelDescription>
+  <modelName>UN46F8000</modelName>
+  <modelNumber>1.0</modelNumber>
+  <modelURL>http://www.samsung.com/sec</modelURL>
+  <serialNumber>20098138ACB</serialNumber>
+  <UDN>uuid:0b532b80-00be-1000-9e19-f47b5e7672cf</UDN>
+  <sec:deviceID>CNCACBZIDAHUU</sec:deviceID>
+  <sec:ProductCap>Resolution:1920X1080,Y2013</sec:ProductCap>
+  <serviceList>
+   <service>
+    <serviceType>urn:dial-multiscreen-org:service:dial:1</serviceType>
+    <serviceId>urn:dial-multiscreen-org:serviceId:dial</serviceId>
+    <controlURL>/smp_31_</controlURL>
+    <eventSubURL>/smp_32_</eventSubURL>
+    <SCPDURL>/smp_30_</SCPDURL>
+   </service>
+  </serviceList>
+ </device>
+</root>

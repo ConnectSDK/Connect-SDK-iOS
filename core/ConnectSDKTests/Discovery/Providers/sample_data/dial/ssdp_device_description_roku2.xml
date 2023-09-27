@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+Copyright (c) 2015 LG Electronics.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<root xmlns="urn:schemas-upnp-org:device-1-0">
+<specVersion>
+<major>1</major>
+<minor>0</minor>
+</specVersion>
+<device>
+<deviceType>urn:roku-com:device:player:1-0</deviceType>
+<friendlyName>Roku2</friendlyName>
+<manufacturer>Roku</manufacturer>
+<manufacturerURL>http://www.roku.com/</manufacturerURL>
+<modelDescription>Roku Streaming Player Network Media</modelDescription>
+<modelName>Roku 2</modelName>
+<modelNumber>2720X</modelNumber>
+<modelURL>http://www.roku.com/</modelURL>
+<serialNumber>4RB3CL080248</serialNumber>
+<UDN>uuid:018950d3-7401-1011-8077-dc3a5e453531</UDN>
+<serviceList>
+<service>
+<serviceType>urn:roku-com:service:ecp:1</serviceType>
+<serviceId>urn:roku-com:serviceId:ecp1-0</serviceId>
+<controlURL></controlURL>
+<eventSubURL></eventSubURL>
+<SCPDURL>ecp_SCPD.xml</SCPDURL>
+</service>
+<service>
+<serviceType>urn:dial-multiscreen-org:service:dial:1</serviceType>
+<serviceId>urn:dial-multiscreen-org:serviceId:dial1-0</serviceId>
+<controlURL></controlURL>
+<eventSubURL></eventSubURL>
+<SCPDURL>dial_SCPD.xml</SCPDURL>
+</service>
+</serviceList>
+</device>
+</root>

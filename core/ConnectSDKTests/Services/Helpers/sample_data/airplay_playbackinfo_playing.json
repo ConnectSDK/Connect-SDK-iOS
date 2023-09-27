@@ -1,0 +1,24 @@
+{
+    "duration": 5.568,
+    "loadedTimeRanges": [
+        {
+            "duration": 5.568,
+            "start": 0
+        }
+    ],
+    "playbackBufferEmpty": 1,
+    "playbackBufferFull": 0,
+    "playbackLikelyToKeepUp": 1,
+    "position": 1.207569559,
+    "rate": 1,
+    "readyToPlay": 1,
+    "readyToPlayMs": 432,
+    "seekableTimeRanges": [
+        {
+            "duration": 5.568,
+            "start": 0
+        }
+    ],
+    "stallCount": 0,
+    "uuid": "C9E28C31-59FB-4F78-97C7-C8CF8960F243-1410-000003E741054B97"
+}
