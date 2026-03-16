@@ -1,4 +1,4 @@
-#Connect SDK iOS
+# Connect SDK iOS
 
 [![Build Status](https://travis-ci.org/ConnectSDK/Connect-SDK-iOS.svg)](https://travis-ci.org/ConnectSDK/Connect-SDK-iOS)
 [![Code Coverage](https://img.shields.io/codecov/c/github/ConnectSDK/Connect-SDK-iOS/dev.svg)](https://codecov.io/github/ConnectSDK/Connect-SDK-iOS)
@@ -15,7 +15,7 @@ For more information, visit our [website](http://www.connectsdk.com/).
 * [Platform documentation & FAQs](http://www.connectsdk.com/docs/ios/)
 * [API documentation](http://www.connectsdk.com/apis/ios/)
 
-##Dependencies
+## Dependencies
 This project has the following dependencies, some of which require manual setup. If you would like to use a version of the SDK which has no manual setup, consider using the [lite version](https://github.com/ConnectSDK/Connect-SDK-iOS-Lite) of the SDK.
 
 * `libicucore.dylib`
@@ -28,8 +28,8 @@ This project has the following dependencies, some of which require manual setup.
 * [Connect-SDK-iOS-FireTV](https://github.com/ConnectSDK/Connect-SDK-iOS-FireTV) submodule
   - Requires [`AmazonFling.framework`](https://developer.amazon.com/public/apis/experience/fling/docs/amazon-fling-sdk-download)
 
-##Including Connect SDK in your app
-###Using CocoaPods
+## Including Connect SDK in your app
+### Using CocoaPods
 1. Add `pod "ConnectSDK"` to your `Podfile`
 2. Run `pod install`
 3. Open the workspace file and run your project
@@ -38,7 +38,7 @@ This project has the following dependencies, some of which require manual setup.
 
 You can use `pod "ConnectSDK/Core"` to get the [lite version](https://github.com/ConnectSDK/Connect-SDK-iOS-Lite).
 
-###Without CocoaPods
+### Without CocoaPods
 
 1. Clone the repository (`git clone https://github.com/ConnectSDK/Connect-SDK-iOS.git`)
 2. Set up the submodules by running the following command (in the `Connect-SDK-iOS/` directory in this example): `git submodule update --init`
@@ -55,7 +55,7 @@ You can use `pod "ConnectSDK/Core"` to get the [lite version](https://github.com
  - [Connect-SDK-iOS-Google-Cast](https://github.com/ConnectSDK/Connect-SDK-iOS-Google-Cast)
  - [Connect-SDK-iOS-FireTV](https://github.com/ConnectSDK/Connect-SDK-iOS-FireTV)
 
-###Include Strings File for Localization (optional)
+### Include Strings File for Localization (optional)
 1. Locate the Connect SDK Xcode project in the Finder
 2. Drag the ConnectSDKStrings folder into your project's library
 3. You may make whatever changes you would like to the values and the SDK will use your strings file
@@ -80,9 +80,9 @@ The required third-party test frameworks are already pre-built and included in t
 
 All of the test targets are compiled when the main `ConnectSDK` scheme is built, but only the unit tests are setup to run when testing the scheme. The other tests can be run by selecting the corresponding scheme.
 
-##Limitations/Caveats
+## Limitations/Caveats
 
-###Subtitles
+### Subtitles
 
 - DLNA service supports `SRT` format only. Since there is no official specification for them, subtitles may not work on all DLNA-compatible devices. This feature has been tested and works on LG WebOS and Netcast TVs.
 - Netcast service supports `SRT` format only, through DLNA.
@@ -90,13 +90,13 @@ All of the test targets are compiled when the main `ConnectSDK` scheme is built,
 - FireTV service supports `WebVTT` format only. Subtitles on Fire TV are hidden by default. To display them, the user should manually pick one in the media player (click the "Options" button on the remote). The Fling SDK doesn't provide any way to make them appear remotely.
 - WebOS service supports `WebVTT` format only. Server providing subtitles should support CORS headers, similarly to Cast service's requirements.
 
-##Contact
+## Contact
 - Twitter: [@ConnectSDK](https://twitter.com/ConnectSDK)
 - Ask a question on Stack Overflow with the [Connect-SDK tag](https://stackoverflow.com/tags/connect-sdk) (or [TV tag](https://stackoverflow.com/tags/tv))
 - Developer Support: [support@connectsdk.com](mailto:support@connectsdk.com)
 - Partnerships: [partners@connectsdk.com](mailto:partners@connectsdk.com)
 
-##Credits
+## Credits
 Connect SDK for iOS makes use of the following projects, some of which are open-source:
 
 * [Google Cast SDK](https://developers.google.com/cast/)
@@ -131,7 +131,7 @@ These projects are used in tests:
 
 This public domain image is used in tests: [The San Francisco peaks of flagstaff public domain image](http://www.public-domain-image.com/free-images/nature-landscapes/peaks/the-san-francisco-peaks-of-flagstaff).
 
-##License
+## License
 Copyright (c) 2013-2015 LG Electronics.
 
 Licensed under the Apache License, Version 2.0 (the "License");
